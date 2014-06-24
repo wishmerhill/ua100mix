@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'main.ui'
 #
-# Created: Wed Jun 25 00:44:43 2014
+# Created: Wed Jun 25 01:10:08 2014
 #      by: PyQt4 UI code generator 4.10.3
 #
 # WARNING! All changes made in this file will be lost!
@@ -44,6 +44,21 @@ class Ui_MainWindow(object):
         self.masterLabel.setGeometry(QtCore.QRect(20, 430, 111, 21))
         self.masterLabel.setStyleSheet(_fromUtf8(""))
         self.masterLabel.setObjectName(_fromUtf8("masterLabel"))
+        self.wave1Label = QtGui.QLabel(self.centralwidget)
+        self.wave1Label.setGeometry(QtCore.QRect(140, 430, 111, 21))
+        self.wave1Label.setStyleSheet(_fromUtf8(""))
+        self.wave1Label.setObjectName(_fromUtf8("wave1Label"))
+        self.Wave1 = QtGui.QSlider(self.centralwidget)
+        self.Wave1.setGeometry(QtCore.QRect(180, 100, 23, 301))
+        self.Wave1.setMaximum(127)
+        self.Wave1.setProperty("value", 0)
+        self.Wave1.setOrientation(QtCore.Qt.Vertical)
+        self.Wave1.setProperty("channel", 0)
+        self.Wave1.setProperty("parameter", 0)
+        self.Wave1.setObjectName(_fromUtf8("Wave1"))
+        self.Wave1Lcd = QtGui.QLCDNumber(self.centralwidget)
+        self.Wave1Lcd.setGeometry(QtCore.QRect(160, 60, 64, 23))
+        self.Wave1Lcd.setObjectName(_fromUtf8("Wave1Lcd"))
         MainWindow.setCentralWidget(self.centralwidget)
         self.menubar = QtGui.QMenuBar(MainWindow)
         self.menubar.setGeometry(QtCore.QRect(0, 0, 629, 20))
@@ -62,5 +77,6 @@ class Ui_MainWindow(object):
     def retranslateUi(self, MainWindow):
         MainWindow.setWindowTitle(_translate("MainWindow", "MainWindow", None))
         self.masterLabel.setText(_translate("MainWindow", "<html><head/><body><p align=\"center\"><span style=\" font-size:12pt;\">MASTER</span></p></body></html>", None))
+        self.wave1Label.setText(_translate("MainWindow", "<html><head/><body><p align=\"center\"><span style=\" font-size:12pt;\">WAVE1</span></p></body></html>", None))
         self.menuAbout.setTitle(_translate("MainWindow", "About", None))
 
