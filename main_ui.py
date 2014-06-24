@@ -2,13 +2,12 @@
 
 # Form implementation generated from reading ui file 'main.ui'
 #
-# Created: Sun Jun 22 23:08:23 2014
+# Created: Wed Jun 25 00:44:43 2014
 #      by: PyQt4 UI code generator 4.10.3
 #
 # WARNING! All changes made in this file will be lost!
 
 from PyQt4 import QtCore, QtGui
-import functools
 
 try:
     _fromUtf8 = QtCore.QString.fromUtf8
@@ -58,8 +57,6 @@ class Ui_MainWindow(object):
         self.menubar.addAction(self.menuAbout.menuAction())
 
         self.retranslateUi(MainWindow)
-        QtCore.QObject.connect(self.MasterLine, QtCore.SIGNAL(_fromUtf8("valueChanged(int)")), self.MasterLineLcd.display)
-        QtCore.QObject.connect(self.MasterLine, QtCore.SIGNAL(_fromUtf8("valueChanged(int)")), functools.partial(MainWindow.volumeChange, 0xBF,7))
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
 
     def retranslateUi(self, MainWindow):

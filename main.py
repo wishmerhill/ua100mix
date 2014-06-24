@@ -4,6 +4,7 @@ import pyportmidi as pm
 from PyQt4 import QtGui, QtCore
 from main_ui import *
 from types import MethodType
+import functools
 
 def pm_init(device):
     pm.init()
