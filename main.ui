@@ -88,40 +88,7 @@
   <widget class="QStatusBar" name="statusbar"/>
  </widget>
  <resources/>
- <connections>
-  <connection>
-   <sender>MasterLine</sender>
-   <signal>valueChanged(int)</signal>
-   <receiver>MasterLineLcd</receiver>
-   <slot>display(int)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>71</x>
-     <y>270</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>71</x>
-     <y>91</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>MasterLine</sender>
-   <signal>valueChanged(int)</signal>
-   <receiver>MainWindow</receiver>
-   <slot>volumeChange(int)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>75</x>
-     <y>353</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>240</x>
-     <y>361</y>
-    </hint>
-   </hints>
-  </connection>
- </connections>
+ <connections/>
  <slots>
   <slot>volumeChange(int)</slot>
  </slots>

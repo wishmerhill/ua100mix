@@ -40,7 +40,11 @@ def main():
     ui.MasterLine.setProperty("channel", 0xBF)
     ui.MasterLine.setProperty("parameter", 7)
     #portmidi init
-      
+    #QtCore.QObject.connect(ui.MasterLine, QtCore.SIGNAL("valueChanged(int)"), ui.MasterLineLcd.display)
+    #QtCore.QObject.connect(ui.MasterLine, QtCore.SIGNAL("valueChanged(int)"), functools.partial(window.volumeChange, 0xBF,7))
+    #QtCore.QMetaObject.connectSlotsByName(window)
+    ui.MasterLine.valueChanged.connect(ui.MasterLineLcd.display)
+    ui.MasterLine.valueChanged.connect(functools.partial(window.volumeChange, 0xBF,7))
     
     window.show()
     sys.exit(app.exec_())
