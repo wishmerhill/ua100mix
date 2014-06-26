@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>629</width>
-    <height>564</height>
+    <width>944</width>
+    <height>675</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -17,8 +17,8 @@
    <widget class="QSlider" name="MasterLine">
     <property name="geometry">
      <rect>
-      <x>60</x>
-      <y>100</y>
+      <x>800</x>
+      <y>220</y>
       <width>23</width>
       <height>301</height>
      </rect>
@@ -42,8 +42,8 @@
    <widget class="QLCDNumber" name="MasterLineLcd">
     <property name="geometry">
      <rect>
-      <x>40</x>
-      <y>60</y>
+      <x>780</x>
+      <y>580</y>
       <width>64</width>
       <height>23</height>
      </rect>
@@ -52,8 +52,8 @@
    <widget class="QLabel" name="masterLabel">
     <property name="geometry">
      <rect>
-      <x>20</x>
-      <y>430</y>
+      <x>760</x>
+      <y>550</y>
       <width>111</width>
       <height>21</height>
      </rect>
@@ -68,8 +68,8 @@
    <widget class="QLabel" name="wave1Label">
     <property name="geometry">
      <rect>
-      <x>140</x>
-      <y>430</y>
+      <x>330</x>
+      <y>540</y>
       <width>111</width>
       <height>21</height>
      </rect>
@@ -84,8 +84,8 @@
    <widget class="QSlider" name="Wave1">
     <property name="geometry">
      <rect>
-      <x>180</x>
-      <y>100</y>
+      <x>370</x>
+      <y>210</y>
       <width>23</width>
       <height>301</height>
      </rect>
@@ -109,8 +109,197 @@
    <widget class="QLCDNumber" name="Wave1Lcd">
     <property name="geometry">
      <rect>
-      <x>160</x>
-      <y>60</y>
+      <x>350</x>
+      <y>560</y>
+      <width>64</width>
+      <height>23</height>
+     </rect>
+    </property>
+   </widget>
+   <widget class="QComboBox" name="outputSource">
+    <property name="geometry">
+     <rect>
+      <x>750</x>
+      <y>140</y>
+      <width>121</width>
+      <height>23</height>
+     </rect>
+    </property>
+   </widget>
+   <widget class="QSlider" name="Mic1">
+    <property name="geometry">
+     <rect>
+      <x>150</x>
+      <y>220</y>
+      <width>23</width>
+      <height>301</height>
+     </rect>
+    </property>
+    <property name="maximum">
+     <number>127</number>
+    </property>
+    <property name="value">
+     <number>0</number>
+    </property>
+    <property name="orientation">
+     <enum>Qt::Vertical</enum>
+    </property>
+    <property name="channel" stdset="0">
+     <number>0</number>
+    </property>
+    <property name="parameter" stdset="0">
+     <number>0</number>
+    </property>
+   </widget>
+   <widget class="QLCDNumber" name="Mic1Lcd">
+    <property name="geometry">
+     <rect>
+      <x>130</x>
+      <y>560</y>
+      <width>64</width>
+      <height>23</height>
+     </rect>
+    </property>
+   </widget>
+   <widget class="QLabel" name="mic1Label">
+    <property name="geometry">
+     <rect>
+      <x>110</x>
+      <y>540</y>
+      <width>111</width>
+      <height>21</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true"/>
+    </property>
+    <property name="text">
+     <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:12pt;&quot;&gt;MIC1/GUITAR&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+    </property>
+   </widget>
+   <widget class="QDial" name="Mic1Pan">
+    <property name="geometry">
+     <rect>
+      <x>140</x>
+      <y>150</y>
+      <width>50</width>
+      <height>64</height>
+     </rect>
+    </property>
+    <property name="maximum">
+     <number>127</number>
+    </property>
+    <property name="value">
+     <number>0</number>
+    </property>
+    <property name="sliderPosition">
+     <number>0</number>
+    </property>
+    <property name="wrapping">
+     <bool>false</bool>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label">
+    <property name="geometry">
+     <rect>
+      <x>50</x>
+      <y>180</y>
+      <width>57</width>
+      <height>14</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>PAN</string>
+    </property>
+   </widget>
+   <widget class="QLCDNumber" name="Mic1PanLcd">
+    <property name="geometry">
+     <rect>
+      <x>130</x>
+      <y>130</y>
+      <width>64</width>
+      <height>23</height>
+     </rect>
+    </property>
+   </widget>
+   <widget class="QDial" name="Mic2Pan">
+    <property name="geometry">
+     <rect>
+      <x>250</x>
+      <y>150</y>
+      <width>50</width>
+      <height>64</height>
+     </rect>
+    </property>
+    <property name="maximum">
+     <number>127</number>
+    </property>
+    <property name="value">
+     <number>0</number>
+    </property>
+    <property name="sliderPosition">
+     <number>0</number>
+    </property>
+    <property name="wrapping">
+     <bool>false</bool>
+    </property>
+   </widget>
+   <widget class="QSlider" name="Mic2">
+    <property name="geometry">
+     <rect>
+      <x>260</x>
+      <y>220</y>
+      <width>23</width>
+      <height>301</height>
+     </rect>
+    </property>
+    <property name="maximum">
+     <number>127</number>
+    </property>
+    <property name="value">
+     <number>0</number>
+    </property>
+    <property name="orientation">
+     <enum>Qt::Vertical</enum>
+    </property>
+    <property name="channel" stdset="0">
+     <number>0</number>
+    </property>
+    <property name="parameter" stdset="0">
+     <number>0</number>
+    </property>
+   </widget>
+   <widget class="QLCDNumber" name="Mic2Lcd">
+    <property name="geometry">
+     <rect>
+      <x>240</x>
+      <y>560</y>
+      <width>64</width>
+      <height>23</height>
+     </rect>
+    </property>
+   </widget>
+   <widget class="QLabel" name="mic2Label">
+    <property name="geometry">
+     <rect>
+      <x>220</x>
+      <y>540</y>
+      <width>111</width>
+      <height>21</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true"/>
+    </property>
+    <property name="text">
+     <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:12pt;&quot;&gt;MIC2&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+    </property>
+   </widget>
+   <widget class="QLCDNumber" name="Mic2PanLcd">
+    <property name="geometry">
+     <rect>
+      <x>240</x>
+      <y>130</y>
       <width>64</width>
       <height>23</height>
      </rect>
@@ -122,22 +311,18 @@
    <zorder>wave1Label</zorder>
    <zorder>Wave1</zorder>
    <zorder>Wave1Lcd</zorder>
-  </widget>
-  <widget class="QMenuBar" name="menubar">
-   <property name="geometry">
-    <rect>
-     <x>0</x>
-     <y>0</y>
-     <width>629</width>
-     <height>20</height>
-    </rect>
-   </property>
-   <widget class="QMenu" name="menuAbout">
-    <property name="title">
-     <string>About</string>
-    </property>
-   </widget>
-   <addaction name="menuAbout"/>
+   <zorder>outputSource</zorder>
+   <zorder>Mic1</zorder>
+   <zorder>Mic1Lcd</zorder>
+   <zorder>mic1Label</zorder>
+   <zorder>Mic1Pan</zorder>
+   <zorder>label</zorder>
+   <zorder>Mic1PanLcd</zorder>
+   <zorder>Mic2Pan</zorder>
+   <zorder>Mic2</zorder>
+   <zorder>Mic2Lcd</zorder>
+   <zorder>mic2Label</zorder>
+   <zorder>Mic2PanLcd</zorder>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
  </widget>
