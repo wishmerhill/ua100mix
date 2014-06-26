@@ -43,7 +43,7 @@
     <property name="geometry">
      <rect>
       <x>780</x>
-      <y>580</y>
+      <y>590</y>
       <width>64</width>
       <height>23</height>
      </rect>
@@ -85,7 +85,7 @@
     <property name="geometry">
      <rect>
       <x>370</x>
-      <y>210</y>
+      <y>220</y>
       <width>23</width>
       <height>301</height>
      </rect>
@@ -110,7 +110,7 @@
     <property name="geometry">
      <rect>
       <x>350</x>
-      <y>560</y>
+      <y>590</y>
       <width>64</width>
       <height>23</height>
      </rect>
@@ -155,7 +155,7 @@
     <property name="geometry">
      <rect>
       <x>130</x>
-      <y>560</y>
+      <y>590</y>
       <width>64</width>
       <height>23</height>
      </rect>
@@ -273,7 +273,7 @@
     <property name="geometry">
      <rect>
       <x>240</x>
-      <y>560</y>
+      <y>590</y>
       <width>64</width>
       <height>23</height>
      </rect>
@@ -305,6 +305,57 @@
      </rect>
     </property>
    </widget>
+   <widget class="QSlider" name="Wave2">
+    <property name="geometry">
+     <rect>
+      <x>480</x>
+      <y>220</y>
+      <width>23</width>
+      <height>301</height>
+     </rect>
+    </property>
+    <property name="maximum">
+     <number>127</number>
+    </property>
+    <property name="value">
+     <number>0</number>
+    </property>
+    <property name="orientation">
+     <enum>Qt::Vertical</enum>
+    </property>
+    <property name="channel" stdset="0">
+     <number>0</number>
+    </property>
+    <property name="parameter" stdset="0">
+     <number>0</number>
+    </property>
+   </widget>
+   <widget class="QLCDNumber" name="Wave2Lcd">
+    <property name="geometry">
+     <rect>
+      <x>460</x>
+      <y>590</y>
+      <width>64</width>
+      <height>23</height>
+     </rect>
+    </property>
+   </widget>
+   <widget class="QLabel" name="wave1Label_2">
+    <property name="geometry">
+     <rect>
+      <x>440</x>
+      <y>540</y>
+      <width>111</width>
+      <height>21</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true"/>
+    </property>
+    <property name="text">
+     <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:12pt;&quot;&gt;WAVE2&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+    </property>
+   </widget>
    <zorder>MasterLineLcd</zorder>
    <zorder>MasterLine</zorder>
    <zorder>masterLabel</zorder>
@@ -323,6 +374,9 @@
    <zorder>Mic2Lcd</zorder>
    <zorder>mic2Label</zorder>
    <zorder>Mic2PanLcd</zorder>
+   <zorder>Wave2</zorder>
+   <zorder>Wave2Lcd</zorder>
+   <zorder>wave1Label_2</zorder>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
  </widget>

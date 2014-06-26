@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'main.ui'
 #
-# Created: Thu Jun 26 23:19:40 2014
+# Created: Thu Jun 26 23:30:23 2014
 #      by: PyQt4 UI code generator 4.10.3
 #
 # WARNING! All changes made in this file will be lost!
@@ -38,7 +38,7 @@ class Ui_MainWindow(object):
         self.MasterLine.setProperty("parameter", 0)
         self.MasterLine.setObjectName(_fromUtf8("MasterLine"))
         self.MasterLineLcd = QtGui.QLCDNumber(self.centralwidget)
-        self.MasterLineLcd.setGeometry(QtCore.QRect(780, 580, 64, 23))
+        self.MasterLineLcd.setGeometry(QtCore.QRect(780, 590, 64, 23))
         self.MasterLineLcd.setObjectName(_fromUtf8("MasterLineLcd"))
         self.masterLabel = QtGui.QLabel(self.centralwidget)
         self.masterLabel.setGeometry(QtCore.QRect(760, 550, 111, 21))
@@ -49,7 +49,7 @@ class Ui_MainWindow(object):
         self.wave1Label.setStyleSheet(_fromUtf8(""))
         self.wave1Label.setObjectName(_fromUtf8("wave1Label"))
         self.Wave1 = QtGui.QSlider(self.centralwidget)
-        self.Wave1.setGeometry(QtCore.QRect(370, 210, 23, 301))
+        self.Wave1.setGeometry(QtCore.QRect(370, 220, 23, 301))
         self.Wave1.setMaximum(127)
         self.Wave1.setProperty("value", 0)
         self.Wave1.setOrientation(QtCore.Qt.Vertical)
@@ -57,7 +57,7 @@ class Ui_MainWindow(object):
         self.Wave1.setProperty("parameter", 0)
         self.Wave1.setObjectName(_fromUtf8("Wave1"))
         self.Wave1Lcd = QtGui.QLCDNumber(self.centralwidget)
-        self.Wave1Lcd.setGeometry(QtCore.QRect(350, 560, 64, 23))
+        self.Wave1Lcd.setGeometry(QtCore.QRect(350, 590, 64, 23))
         self.Wave1Lcd.setObjectName(_fromUtf8("Wave1Lcd"))
         self.outputSource = QtGui.QComboBox(self.centralwidget)
         self.outputSource.setGeometry(QtCore.QRect(750, 140, 121, 23))
@@ -71,7 +71,7 @@ class Ui_MainWindow(object):
         self.Mic1.setProperty("parameter", 0)
         self.Mic1.setObjectName(_fromUtf8("Mic1"))
         self.Mic1Lcd = QtGui.QLCDNumber(self.centralwidget)
-        self.Mic1Lcd.setGeometry(QtCore.QRect(130, 560, 64, 23))
+        self.Mic1Lcd.setGeometry(QtCore.QRect(130, 590, 64, 23))
         self.Mic1Lcd.setObjectName(_fromUtf8("Mic1Lcd"))
         self.mic1Label = QtGui.QLabel(self.centralwidget)
         self.mic1Label.setGeometry(QtCore.QRect(110, 540, 111, 21))
@@ -106,7 +106,7 @@ class Ui_MainWindow(object):
         self.Mic2.setProperty("parameter", 0)
         self.Mic2.setObjectName(_fromUtf8("Mic2"))
         self.Mic2Lcd = QtGui.QLCDNumber(self.centralwidget)
-        self.Mic2Lcd.setGeometry(QtCore.QRect(240, 560, 64, 23))
+        self.Mic2Lcd.setGeometry(QtCore.QRect(240, 590, 64, 23))
         self.Mic2Lcd.setObjectName(_fromUtf8("Mic2Lcd"))
         self.mic2Label = QtGui.QLabel(self.centralwidget)
         self.mic2Label.setGeometry(QtCore.QRect(220, 540, 111, 21))
@@ -115,6 +115,21 @@ class Ui_MainWindow(object):
         self.Mic2PanLcd = QtGui.QLCDNumber(self.centralwidget)
         self.Mic2PanLcd.setGeometry(QtCore.QRect(240, 130, 64, 23))
         self.Mic2PanLcd.setObjectName(_fromUtf8("Mic2PanLcd"))
+        self.Wave2 = QtGui.QSlider(self.centralwidget)
+        self.Wave2.setGeometry(QtCore.QRect(480, 220, 23, 301))
+        self.Wave2.setMaximum(127)
+        self.Wave2.setProperty("value", 0)
+        self.Wave2.setOrientation(QtCore.Qt.Vertical)
+        self.Wave2.setProperty("channel", 0)
+        self.Wave2.setProperty("parameter", 0)
+        self.Wave2.setObjectName(_fromUtf8("Wave2"))
+        self.Wave2Lcd = QtGui.QLCDNumber(self.centralwidget)
+        self.Wave2Lcd.setGeometry(QtCore.QRect(460, 590, 64, 23))
+        self.Wave2Lcd.setObjectName(_fromUtf8("Wave2Lcd"))
+        self.wave1Label_2 = QtGui.QLabel(self.centralwidget)
+        self.wave1Label_2.setGeometry(QtCore.QRect(440, 540, 111, 21))
+        self.wave1Label_2.setStyleSheet(_fromUtf8(""))
+        self.wave1Label_2.setObjectName(_fromUtf8("wave1Label_2"))
         MainWindow.setCentralWidget(self.centralwidget)
         self.statusbar = QtGui.QStatusBar(MainWindow)
         self.statusbar.setObjectName(_fromUtf8("statusbar"))
@@ -130,4 +145,5 @@ class Ui_MainWindow(object):
         self.mic1Label.setText(_translate("MainWindow", "<html><head/><body><p align=\"center\"><span style=\" font-size:12pt;\">MIC1/GUITAR</span></p></body></html>", None))
         self.label.setText(_translate("MainWindow", "PAN", None))
         self.mic2Label.setText(_translate("MainWindow", "<html><head/><body><p align=\"center\"><span style=\" font-size:12pt;\">MIC2</span></p></body></html>", None))
+        self.wave1Label_2.setText(_translate("MainWindow", "<html><head/><body><p align=\"center\"><span style=\" font-size:12pt;\">WAVE2</span></p></body></html>", None))
 
