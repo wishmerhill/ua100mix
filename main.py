@@ -76,6 +76,8 @@ def valueChange(a,b,val):
     global pmout
     #pmout.write_short(0xBF,7,volume)
     pmout.write_short(a,b,val)
+    
+    # output for debug purposes
     print hex(a),b,val
 
 def setupMixer(ui,window):
@@ -131,12 +133,13 @@ def setupMixer(ui,window):
     ui.MasterLine.setProperty("parameter", CC_MAIN_FADER_PAR)    
 
 def resetMixer(ui,window):
-     ui.MasterLine.setProperty("value", CC_0127_DEFAULT)
-     ui.Wave1.setProperty("value", CC_0127_DEFAULT)
-     ui.Mic1.setProperty("value", CC_0127_DEFAULT)
-     ui.Mic1Pan.setProperty("value", CC_0127_DEFAULT)
-     ui.Mic2.setProperty("value", CC_0127_DEFAULT)
-     ui.Mic2Pan.setProperty("value", CC_0127_DEFAULT)
+    # Reset all mixer values to average ones.
+    ui.MasterLine.setProperty("value", CC_0127_DEFAULT)
+    ui.Wave1.setProperty("value", CC_0127_DEFAULT)
+    ui.Mic1.setProperty("value", CC_0127_DEFAULT)
+    ui.Mic1Pan.setProperty("value", CC_0127_DEFAULT)
+    ui.Mic2.setProperty("value", CC_0127_DEFAULT)
+    ui.Mic2Pan.setProperty("value", CC_0127_DEFAULT)
 
 def main():
     pm_init(4) 
