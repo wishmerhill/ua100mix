@@ -10,6 +10,9 @@ I decided anyway to try write a pyQT4 mixer to control the old Roland UA-100.
 There was a working one, written in C++ and MOTIF (http://michaelminn.com/linux/mmusbaudio/), 
 but it relies on OSS and thus is not working with ALSA.
 
+Better said, Michael's mixer do work with alsa with some workaround. Nevertheless, the lack af a modern interface 
+makes it not so easy to manage.
+
 If anyone is interested in helping, YOU ARE WELCOME! I'd appreciate even corrections or comments on my 
 awful coding!
 
