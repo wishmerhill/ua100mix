@@ -66,6 +66,9 @@ CC_0127_DEFAULT = 64
 
 
 def pm_open(device):
+    '''
+    Possibly not the best solution.
+    '''
     global pmout
     pmout = pm.midi.Output(device)
     #pmout.write_short(0xBF,7,60)
@@ -73,6 +76,9 @@ def pm_open(device):
 
 @QtCore.pyqtSlot()
 def valueChange(a,b,val):
+    '''
+    I had to create a custom slot to connect to the changes in the interface. Hope it's the right way.
+    '''
     global pmout
     #pmout.write_short(0xBF,7,volume)
     pmout.write_short(a,b,val)
@@ -92,6 +98,11 @@ def actualMidiDevices():
 
 
 def rightMidiDevice(midiDevs):
+    '''
+    Guess the right device for sending Control Change and SysEx messages.
+    
+    I suppose is HEAVY dependant on pyPortMidi and ALSA: if they change something in the structure of the device info, we are lost!
+    '''
     for i in range(0,len(midiDevs)):
         print i
         if (midiDevs[i][1] == 'UA-100 Control') & (midiDevs[i][3] == 1):
@@ -100,6 +111,9 @@ def rightMidiDevice(midiDevs):
 
 
 def setupMixer(ui,window):
+    '''
+    I thought it'd be better to setup the connections here, as qt4designer is not so nice with custom slots.
+    '''
     
     # *************** MIC1 *********************
 
@@ -181,7 +195,10 @@ def resetMixer(ui,window):
     ui.Mic2Pan.setProperty("value", CC_0127_DEFAULT)
 
 def main(): 
+    '''
+    it already needs a big clean-up. *Andiamo bene...*
     
+    '''
     
     # **************************** MIDI PART: could it go somewhere else? **********************************************
     pm.init()
