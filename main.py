@@ -65,11 +65,11 @@ CC_EFFECTSWITHC_PAR = 23 # 0x23
 CC_0127_DEFAULT = 64
 
 
-def pm_init(device):
-    pm.init()
+def pm_open(device):
     global pmout
     pmout = pm.midi.Output(device)
     #pmout.write_short(0xBF,7,60)
+    
 
 @QtCore.pyqtSlot()
 def valueChange(a,b,val):
@@ -79,6 +79,25 @@ def valueChange(a,b,val):
     
     # output for debug purposes
     print hex(a),b,val
+
+def actualMidiDevices():
+    '''
+    This should enumerate the devices to (later on) give then the possibility to choose one or guess the right one
+    '''
+    numDevs = pm.get_count()
+    midiDevs = {}
+    for dev in range(0,numDevs):
+        midiDevs[dev]=pm.get_device_info(dev)
+    return midiDevs
+
+
+def rightMidiDevice(midiDevs):
+    for i in range(0,len(midiDevs)):
+        print i
+        if (midiDevs[i][1] == 'UA-100 Control') & (midiDevs[i][3] == 1):
+            print 'Trovato! Il controller e il device ',i, ', ovvero ',midiDevs[i][1]
+            return int(i)
+
 
 def setupMixer(ui,window):
     
@@ -121,7 +140,16 @@ def setupMixer(ui,window):
     ui.Wave1.valueChanged.connect(functools.partial(window.valueChange, CC_WAVE1_CH, CC_MAIN_FADER_PAR))
     #ui.Wave1.setProperty("value", CC_0127_DEFAULT)
     ui.Wave1.setProperty("channel", CC_WAVE1_CH)
-    ui.Wave1.setProperty("parameter", CC_MAIN_FADER_PAR)    
+    ui.Wave1.setProperty("parameter", CC_MAIN_FADER_PAR)
+    
+    # *************** WAVE2 *********************
+    
+    # Setting up the Wave1 Fader
+    ui.Wave2.valueChanged.connect(ui.Wave2Lcd.display)
+    ui.Wave2.valueChanged.connect(functools.partial(window.valueChange, CC_WAVE2_CH, CC_MAIN_FADER_PAR))
+    #ui.Wave2.setProperty("value", CC_0127_DEFAULT)
+    ui.Wave2.setProperty("channel", CC_WAVE2_CH)
+    ui.Wave2.setProperty("parameter", CC_MAIN_FADER_PAR)    
     
     # *************** MASTERLINE *********************
     
@@ -130,29 +158,52 @@ def setupMixer(ui,window):
     ui.MasterLine.valueChanged.connect(functools.partial(window.valueChange, CC_LINE_MASTER_CH, CC_MAIN_FADER_PAR))
     #ui.MasterLine.setProperty("value", CC_0127_DEFAULT)
     ui.MasterLine.setProperty("channel", CC_LINE_MASTER_CH)
-    ui.MasterLine.setProperty("parameter", CC_MAIN_FADER_PAR)    
+    ui.MasterLine.setProperty("parameter", CC_MAIN_FADER_PAR)
+    
+def setupDevicesList(ui,window,midiDevs,UA100CONTROL):
+    '''
+    Sets up the ComboBox with a list of MIDI devices. Not that the combo box must be connected: at the moment it is not.
+    '''
+    for i in range(0,len(midiDevs)):
+        ui.outputDevicesList.addItem(str(midiDevs[i]), i)
+    ui.outputDevicesList.setCurrentIndex(UA100CONTROL)
 
 def resetMixer(ui,window):
-    # Reset all mixer values to average ones.
+    '''
+        Reset all mixer values to average ones.
+    '''
     ui.MasterLine.setProperty("value", CC_0127_DEFAULT)
     ui.Wave1.setProperty("value", CC_0127_DEFAULT)
+    ui.Wave2.setProperty("value", CC_0127_DEFAULT)
     ui.Mic1.setProperty("value", CC_0127_DEFAULT)
     ui.Mic1Pan.setProperty("value", CC_0127_DEFAULT)
     ui.Mic2.setProperty("value", CC_0127_DEFAULT)
     ui.Mic2Pan.setProperty("value", CC_0127_DEFAULT)
 
-def main():
-    pm_init(4) 
+def main(): 
+    
+    
+    # **************************** MIDI PART: could it go somewhere else? **********************************************
+    pm.init()
+    midiDevs=actualMidiDevices()
+    #print midiDevs
+    #print len(midiDevs)
+    UA100CONTROL = rightMidiDevice(midiDevs)
+    pm_open(UA100CONTROL)
+    # *******************************************************************************************************************
     app = QtGui.QApplication(sys.argv)
     window = QtGui.QMainWindow()
     window.valueChange = valueChange
     ui = Ui_MainWindow()
     ui.setupUi(window)
+    
+    # Changing the device in the device list ACTUALLY DOES NOT WORK!
+    # **************************************************************
+    setupDevicesList(ui,window,midiDevs,UA100CONTROL)
+    # **************************************************************
     setupMixer(ui,window)
     resetMixer(ui,window)
-    
-    
-    
+
     window.show()
     sys.exit(app.exec_())
 

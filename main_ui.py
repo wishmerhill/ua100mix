@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'main.ui'
 #
-# Created: Thu Jun 26 23:30:23 2014
+# Created: Sun Jun 29 23:25:23 2014
 #      by: PyQt4 UI code generator 4.10.3
 #
 # WARNING! All changes made in this file will be lost!
@@ -59,9 +59,9 @@ class Ui_MainWindow(object):
         self.Wave1Lcd = QtGui.QLCDNumber(self.centralwidget)
         self.Wave1Lcd.setGeometry(QtCore.QRect(350, 590, 64, 23))
         self.Wave1Lcd.setObjectName(_fromUtf8("Wave1Lcd"))
-        self.outputSource = QtGui.QComboBox(self.centralwidget)
-        self.outputSource.setGeometry(QtCore.QRect(750, 140, 121, 23))
-        self.outputSource.setObjectName(_fromUtf8("outputSource"))
+        self.outputDevicesList = QtGui.QComboBox(self.centralwidget)
+        self.outputDevicesList.setGeometry(QtCore.QRect(210, 20, 311, 23))
+        self.outputDevicesList.setObjectName(_fromUtf8("outputDevicesList"))
         self.Mic1 = QtGui.QSlider(self.centralwidget)
         self.Mic1.setGeometry(QtCore.QRect(150, 220, 23, 301))
         self.Mic1.setMaximum(127)
@@ -130,6 +130,9 @@ class Ui_MainWindow(object):
         self.wave1Label_2.setGeometry(QtCore.QRect(440, 540, 111, 21))
         self.wave1Label_2.setStyleSheet(_fromUtf8(""))
         self.wave1Label_2.setObjectName(_fromUtf8("wave1Label_2"))
+        self.label_2 = QtGui.QLabel(self.centralwidget)
+        self.label_2.setGeometry(QtCore.QRect(20, 20, 191, 16))
+        self.label_2.setObjectName(_fromUtf8("label_2"))
         MainWindow.setCentralWidget(self.centralwidget)
         self.statusbar = QtGui.QStatusBar(MainWindow)
         self.statusbar.setObjectName(_fromUtf8("statusbar"))
@@ -146,4 +149,5 @@ class Ui_MainWindow(object):
         self.label.setText(_translate("MainWindow", "PAN", None))
         self.mic2Label.setText(_translate("MainWindow", "<html><head/><body><p align=\"center\"><span style=\" font-size:12pt;\">MIC2</span></p></body></html>", None))
         self.wave1Label_2.setText(_translate("MainWindow", "<html><head/><body><p align=\"center\"><span style=\" font-size:12pt;\">WAVE2</span></p></body></html>", None))
+        self.label_2.setText(_translate("MainWindow", "Control Change Device:", None))
 
