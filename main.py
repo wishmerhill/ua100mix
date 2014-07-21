@@ -86,6 +86,21 @@ def valueChange(a,b,val):
     # output for debug purposes
     print hex(a),b,val
 
+@QtCore.pyqtSlot()
+def updateDeviceLabels(ui, midiDevs, indice):
+    '''
+    I should be an easy task to update label according to a combo box...
+    '''
+    ui.midiApiText.setText(str(midiDevs[indice][0]))
+    ui.deviceNameText.setText(str(midiDevs[indice][1]))
+    if (midiDevs[indice][2] == 1 and midiDevs[indice][3] == 0):
+        ui.deviceIOText.setText('INPUT')
+    elif (midiDevs[indice][2] == 0 and midiDevs[indice][3] == 1):
+        ui.deviceIOText.setText('OUTPUT')
+    else:
+        ui.deviceIOText.setText('N/A')
+    print midiDevs[indice][2], midiDevs[indice][3]
+
 def actualMidiDevices():
     '''
     This should enumerate the devices to (later on) give then the possibility to choose one or guess the right one
@@ -180,7 +195,11 @@ def setupDevicesList(ui,window,midiDevs,UA100CONTROL):
     '''
     for i in range(0,len(midiDevs)):
         ui.outputDevicesList.addItem(str(midiDevs[i]), i)
+    
+    ui.outputDevicesList.currentIndexChanged.connect(functools.partial(window.updateDeviceLabels, ui, midiDevs))
+    
     ui.outputDevicesList.setCurrentIndex(UA100CONTROL)
+    
 
 def resetMixer(ui,window):
     '''
@@ -211,6 +230,7 @@ def main():
     app = QtGui.QApplication(sys.argv)
     window = QtGui.QMainWindow()
     window.valueChange = valueChange
+    window.updateDeviceLabels = updateDeviceLabels
     ui = Ui_MainWindow()
     ui.setupUi(window)
     
