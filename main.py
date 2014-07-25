@@ -3,6 +3,7 @@ import os
 import pyportmidi as pm
 from PyQt4 import QtGui, QtCore
 from main_ui import *
+from device_sel import *
 from types import MethodType
 import functools
 
@@ -213,6 +214,9 @@ def resetMixer(ui,window):
     ui.Mic2.setProperty("value", CC_0127_DEFAULT)
     ui.Mic2Pan.setProperty("value", CC_0127_DEFAULT)
 
+def setupSelectorDialog(ui,window):
+    ui.dialogOK.clicked.connect(window.close)
+
 def main(): 
     '''
     it already needs a big clean-up. *Andiamo bene...*
@@ -230,18 +234,24 @@ def main():
     app = QtGui.QApplication(sys.argv)
     window = QtGui.QMainWindow()
     window.valueChange = valueChange
-    window.updateDeviceLabels = updateDeviceLabels
+    
     ui = Ui_MainWindow()
     ui.setupUi(window)
+    dialog= QtGui.QDialog()
+    selector = Ui_deviceSelection()
+    selector.setupUi(dialog)
     
+    setupSelectorDialog(selector,dialog)
+    dialog.updateDeviceLabels = updateDeviceLabels
     # Changing the device in the device list ACTUALLY DOES NOT WORK!
     # **************************************************************
-    setupDevicesList(ui,window,midiDevs,UA100CONTROL)
+    setupDevicesList(selector,dialog,midiDevs,UA100CONTROL)
     # **************************************************************
     setupMixer(ui,window)
     resetMixer(ui,window)
-
+    
     window.show()
+    dialog.show()
     sys.exit(app.exec_())
 
 
