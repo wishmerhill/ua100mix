@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'device_sel.ui'
 #
-# Created: Fri Jul 25 19:57:17 2014
+# Created: Sat Jul 26 23:05:43 2014
 #      by: PyQt4 UI code generator 4.10.3
 #
 # WARNING! All changes made in this file will be lost!
@@ -26,7 +26,8 @@ except AttributeError:
 class Ui_deviceSelection(object):
     def setupUi(self, deviceSelection):
         deviceSelection.setObjectName(_fromUtf8("deviceSelection"))
-        deviceSelection.resize(542, 175)
+        deviceSelection.setWindowModality(QtCore.Qt.ApplicationModal)
+        deviceSelection.resize(641, 175)
         deviceSelection.setModal(True)
         self.outputDevicesList = QtGui.QComboBox(deviceSelection)
         self.outputDevicesList.setGeometry(QtCore.QRect(170, 8, 311, 23))
@@ -52,18 +53,22 @@ class Ui_deviceSelection(object):
         self.deviceNameLabel = QtGui.QLabel(deviceSelection)
         self.deviceNameLabel.setGeometry(QtCore.QRect(20, 60, 101, 16))
         self.deviceNameLabel.setObjectName(_fromUtf8("deviceNameLabel"))
-        self.widget = QtGui.QWidget(deviceSelection)
-        self.widget.setGeometry(QtCore.QRect(320, 130, 211, 31))
-        self.widget.setObjectName(_fromUtf8("widget"))
-        self.horizontalLayout = QtGui.QHBoxLayout(self.widget)
+        self.layoutWidget = QtGui.QWidget(deviceSelection)
+        self.layoutWidget.setGeometry(QtCore.QRect(320, 130, 211, 31))
+        self.layoutWidget.setObjectName(_fromUtf8("layoutWidget"))
+        self.horizontalLayout = QtGui.QHBoxLayout(self.layoutWidget)
         self.horizontalLayout.setMargin(0)
         self.horizontalLayout.setObjectName(_fromUtf8("horizontalLayout"))
-        self.dialogQuit = QtGui.QPushButton(self.widget)
+        self.dialogQuit = QtGui.QPushButton(self.layoutWidget)
         self.dialogQuit.setObjectName(_fromUtf8("dialogQuit"))
         self.horizontalLayout.addWidget(self.dialogQuit)
-        self.dialogOK = QtGui.QPushButton(self.widget)
+        self.dialogOK = QtGui.QPushButton(self.layoutWidget)
         self.dialogOK.setObjectName(_fromUtf8("dialogOK"))
         self.horizontalLayout.addWidget(self.dialogOK)
+        self.reccomendedLabel = QtGui.QLabel(deviceSelection)
+        self.reccomendedLabel.setGeometry(QtCore.QRect(500, 10, 111, 21))
+        self.reccomendedLabel.setText(_fromUtf8(""))
+        self.reccomendedLabel.setObjectName(_fromUtf8("reccomendedLabel"))
 
         self.retranslateUi(deviceSelection)
         QtCore.QMetaObject.connectSlotsByName(deviceSelection)
