@@ -3,12 +3,12 @@ import os
 import pyportmidi as pm
 from PyQt4 import QtGui, QtCore
 from main_ui import *
-from device_sel import *
+from device_sel_ui import *
 from types import MethodType
 import functools
 
 
-# Defining costants (taken from UA-100 documentation
+# Defining costants (taken from UA-100 documentation)
 
 # Control Change Messages (for the Mixer part) - SysEx messages will be implemented later on (maybe)
 
@@ -63,7 +63,7 @@ CC_EFFECTSWITHC_PAR = 23 # 0x23
 # Effect Switch          |        23 (17H)        |      0 (OFF), 1 (ON: Apply effect)
 
 
-CC_0127_DEFAULT = 64
+CC_0127_DEFAULT = 64 # I think 'in media stat virtus'
 
 
 def pm_open(device):
@@ -117,7 +117,7 @@ def rightMidiDevice(midiDevs):
     '''
     Guess the right device for sending Control Change and SysEx messages.
     
-    I suppose is HEAVY dependant on pyPortMidi and ALSA: if they change something in the structure of the device info, we are lost!
+    I suppose it is HEAVY dependant on pyPortMidi and ALSA: if they change something in the structure of the device info, we are lost!
     '''
     for i in range(0,len(midiDevs)):
         print i
@@ -129,6 +129,8 @@ def rightMidiDevice(midiDevs):
 def setupMixer(ui,window):
     '''
     I thought it'd be better to setup the connections here, as qt4designer is not so nice with custom slots.
+    Moreover, setting up the connection in qt4designer means that every single new connection must be done outside
+    of here.
     '''
     
     # *************** MIC1 *********************
