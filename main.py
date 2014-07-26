@@ -107,7 +107,7 @@ def updateDeviceLabels(ui, midiDevs, indice, defaultDevice):
         ui.deviceIOText.setText('N/A')
     
     if (indice == defaultDevice):
-        ui.reccomendedLabel.setText('RECCOMENDED')
+        ui.reccomendedLabel.setText('RECCOMENDED!\r\nYou don\'t really want to change it!')
         ui.reccomendedLabel.setStyleSheet('color: red; font-style: bold')
     else:
         ui.reccomendedLabel.setText('')
@@ -298,8 +298,7 @@ def main():
     # inizializing the UI inside the mixerMainWindow
     ui = Ui_MainWindow()
     ui.setupUi(mixerMainWindow)
-    
-    
+
     # Changing the device in the device list
     # **************************************************************
     setupDevicesList(midiDevsDialog_ui,midiDevsDialog,midiDevs,UA100CONTROL)

@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'device_sel.ui'
 #
-# Created: Sat Jul 26 23:05:43 2014
+# Created: Sat Jul 26 23:20:27 2014
 #      by: PyQt4 UI code generator 4.10.3
 #
 # WARNING! All changes made in this file will be lost!
@@ -27,31 +27,31 @@ class Ui_deviceSelection(object):
     def setupUi(self, deviceSelection):
         deviceSelection.setObjectName(_fromUtf8("deviceSelection"))
         deviceSelection.setWindowModality(QtCore.Qt.ApplicationModal)
-        deviceSelection.resize(641, 175)
+        deviceSelection.resize(536, 175)
         deviceSelection.setModal(True)
         self.outputDevicesList = QtGui.QComboBox(deviceSelection)
-        self.outputDevicesList.setGeometry(QtCore.QRect(170, 8, 311, 23))
+        self.outputDevicesList.setGeometry(QtCore.QRect(20, 30, 271, 23))
         self.outputDevicesList.setObjectName(_fromUtf8("outputDevicesList"))
         self.deviceIOLabel = QtGui.QLabel(deviceSelection)
-        self.deviceIOLabel.setGeometry(QtCore.QRect(20, 80, 101, 16))
+        self.deviceIOLabel.setGeometry(QtCore.QRect(20, 100, 101, 16))
         self.deviceIOLabel.setObjectName(_fromUtf8("deviceIOLabel"))
         self.deviceNameText = QtGui.QLabel(deviceSelection)
-        self.deviceNameText.setGeometry(QtCore.QRect(140, 60, 101, 16))
+        self.deviceNameText.setGeometry(QtCore.QRect(140, 80, 101, 16))
         self.deviceNameText.setObjectName(_fromUtf8("deviceNameText"))
         self.deviceIOText = QtGui.QLabel(deviceSelection)
-        self.deviceIOText.setGeometry(QtCore.QRect(140, 80, 101, 16))
+        self.deviceIOText.setGeometry(QtCore.QRect(140, 100, 101, 16))
         self.deviceIOText.setObjectName(_fromUtf8("deviceIOText"))
         self.outputDevicesListLabel = QtGui.QLabel(deviceSelection)
         self.outputDevicesListLabel.setGeometry(QtCore.QRect(20, 10, 191, 16))
         self.outputDevicesListLabel.setObjectName(_fromUtf8("outputDevicesListLabel"))
         self.midiApiText = QtGui.QLabel(deviceSelection)
-        self.midiApiText.setGeometry(QtCore.QRect(140, 40, 101, 16))
+        self.midiApiText.setGeometry(QtCore.QRect(140, 60, 101, 16))
         self.midiApiText.setObjectName(_fromUtf8("midiApiText"))
         self.midiApiLabel = QtGui.QLabel(deviceSelection)
-        self.midiApiLabel.setGeometry(QtCore.QRect(20, 40, 57, 14))
+        self.midiApiLabel.setGeometry(QtCore.QRect(20, 60, 57, 14))
         self.midiApiLabel.setObjectName(_fromUtf8("midiApiLabel"))
         self.deviceNameLabel = QtGui.QLabel(deviceSelection)
-        self.deviceNameLabel.setGeometry(QtCore.QRect(20, 60, 101, 16))
+        self.deviceNameLabel.setGeometry(QtCore.QRect(20, 80, 101, 16))
         self.deviceNameLabel.setObjectName(_fromUtf8("deviceNameLabel"))
         self.layoutWidget = QtGui.QWidget(deviceSelection)
         self.layoutWidget.setGeometry(QtCore.QRect(320, 130, 211, 31))
@@ -66,7 +66,7 @@ class Ui_deviceSelection(object):
         self.dialogOK.setObjectName(_fromUtf8("dialogOK"))
         self.horizontalLayout.addWidget(self.dialogOK)
         self.reccomendedLabel = QtGui.QLabel(deviceSelection)
-        self.reccomendedLabel.setGeometry(QtCore.QRect(500, 10, 111, 21))
+        self.reccomendedLabel.setGeometry(QtCore.QRect(300, 20, 221, 31))
         self.reccomendedLabel.setText(_fromUtf8(""))
         self.reccomendedLabel.setObjectName(_fromUtf8("reccomendedLabel"))
 
