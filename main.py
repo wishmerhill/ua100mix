@@ -65,6 +65,11 @@ CC_EFFECTSWITHC_PAR = 23 # 0x23
 
 CC_0127_DEFAULT = 64 # I think 'in media stat virtus'
 
+# debug mode
+# 1: true
+# 0: false
+
+DEBUG_MODE = 1
 
 def pm_open(device):
     '''
@@ -72,8 +77,6 @@ def pm_open(device):
     '''
     global pmout
     pmout = pm.midi.Output(device)
-    #pmout.write_short(0xBF,7,60)
-    
 
 @QtCore.pyqtSlot()
 def valueChange(a,b,val):
@@ -81,11 +84,11 @@ def valueChange(a,b,val):
     I had to create a custom slot to connect to the changes in the interface. Hope it's the right way.
     '''
     global pmout
-    #pmout.write_short(0xBF,7,volume)
+    
     pmout.write_short(a,b,val)
     
-    # output for debug purposes
-    print hex(a),b,val
+    if (DEBUG_MODE == 1):
+        print hex(a),b,val
 
 @QtCore.pyqtSlot()
 def updateDeviceLabels(ui, midiDevs, indice):
@@ -100,15 +103,32 @@ def updateDeviceLabels(ui, midiDevs, indice):
         ui.deviceIOText.setText('OUTPUT')
     else:
         ui.deviceIOText.setText('N/A')
-    print midiDevs[indice][2], midiDevs[indice][3]
+    
+    if (DEBUG_MODE == 1):
+        print midiDevs[indice][2], midiDevs[indice][3]
 
 def actualMidiDevices():
     '''
     This should enumerate the devices to (later on) give then the possibility to choose one or guess the right one
+    Returns a dictionary with tuples like 
+    
+    midiDevs = { 0: (tuple), 1: (tuple), ... }
+    
+    where the tuple is in the format:
+    
+    *add example here*
+    
     '''
+    
+    # Count the MIDI devices connected
     numDevs = pm.get_count()
+    
+    # Initialize the device dictionary
+    # midiDevs = { 0: (tuple), 1: (tuple), ... }
+    #
     midiDevs = {}
     for dev in range(0,numDevs):
+        # the portmidi get_device_info() returns a tuple
         midiDevs[dev]=pm.get_device_info(dev)
     return midiDevs
 
@@ -117,12 +137,15 @@ def rightMidiDevice(midiDevs):
     '''
     Guess the right device for sending Control Change and SysEx messages.
     
-    I suppose it is HEAVY dependant on pyPortMidi and ALSA: if they change something in the structure of the device info, we are lost!
+    I suppose it is HEAVY dependant on pyPortMidi and ALSA: 
+    if *they* change something in the structure of the device info, we are lost!
+    
+    It scans the midiDevs (dictionary!) looking for something like 'UA-100 Control' with the output flag set to 1.
     '''
     for i in range(0,len(midiDevs)):
-        print i
         if (midiDevs[i][1] == 'UA-100 Control') & (midiDevs[i][3] == 1):
-            print 'Trovato! Il controller e il device ',i, ', ovvero ',midiDevs[i][1]
+            if (DEBUG_MODE == 1):
+                print 'Trovato! Il controller e il device ',i, ', ovvero ',midiDevs[i][1]
             return int(i)
 
 
@@ -206,7 +229,7 @@ def setupDevicesList(ui,window,midiDevs,UA100CONTROL):
 
 def resetMixer(ui,window):
     '''
-        Reset all mixer values to average ones.
+    Reset all mixer values to average ones.
     '''
     ui.MasterLine.setProperty("value", CC_0127_DEFAULT)
     ui.Wave1.setProperty("value", CC_0127_DEFAULT)
@@ -228,17 +251,19 @@ def main():
     # **************************** MIDI PART: could it go somewhere else? **********************************************
     pm.init()
     midiDevs=actualMidiDevices()
-    #print midiDevs
-    #print len(midiDevs)
+    if (DEBUG_MODE == 1):
+        print 'MIDI DEVICES FOUND: ',len(midiDevs),'. They are: ', midiDevs
+        
     UA100CONTROL = rightMidiDevice(midiDevs)
+    
     pm_open(UA100CONTROL)
     # *******************************************************************************************************************
     
     
     app = QtGui.QApplication(sys.argv)
     
-    # Showing the device selection dialog to select the right midi device for the UA-100 controller
-    # Actually, given the right portmidi API, the right one should be automatically guessed.
+    # Showing the device selection dialog to select the midi device to use for the UA-100 controller
+    # Actually, given the right portmidi API, the correct one should be automatically guessed.
     dialog= QtGui.QDialog()
     selector = Ui_deviceSelection()
     selector.setupUi(dialog)
@@ -254,11 +279,6 @@ def main():
     # inizializing the UI inside the mixerMainWindow
     ui = Ui_MainWindow()
     ui.setupUi(mixerMainWindow)
-    
-    
-    
-    
-    
     
     # Changing the device in the device list ACTUALLY DOES NOT WORK!
     # **************************************************************
