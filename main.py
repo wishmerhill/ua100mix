@@ -304,16 +304,22 @@ def main():
     setupDevicesList(midiDevsDialog_ui,midiDevsDialog,midiDevs,UA100CONTROL)
     # **************************************************************
 
+    
     if not midiDevsDialog.exec_():
+        # We quit if the the selection dialog quits
         if (DEBUG_MODE == 1):
             print 'Bye.'
         sys.exit()
     
+    # first, open the selected device
     pm_open(UA100CONTROL)
     
+    # then set up the mixer
     setupMixer(ui,mixerMainWindow)
+    # and reset it to "mean" values
     resetMixer(ui,mixerMainWindow)
-        
+    
+    # let the drums roll! We are now ready to show the mixer!
     mixerMainWindow.show()
     sys.exit(app.exec_())
 
