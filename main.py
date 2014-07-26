@@ -117,11 +117,11 @@ def main():
     
     # Showing the device selection dialog to select the midi device to use for the UA-100 controller
     # Actually, given the right portmidi API, the correct one should be automatically guessed.
-    dialog= QtGui.QDialog()
-    selector = Ui_deviceSelection()
-    selector.setupUi(dialog)
-    setupSelectorDialog(selector,dialog)
-    dialog.updateDeviceLabels = updateDeviceLabels
+    midiDevsDialog= QtGui.QDialog()
+    midiDevsDialog_ui = Ui_deviceSelection()
+    midiDevsDialog_ui.setupUi(midiDevsDialog)
+    setupSelectorDialog(midiDevsDialog_ui,midiDevsDialog)
+    midiDevsDialog.updateDeviceLabels = updateDeviceLabels
     
     mixerMainWindow = QtGui.QMainWindow()
     
@@ -134,14 +134,14 @@ def main():
     
     # Changing the device in the device list ACTUALLY DOES NOT WORK!
     # **************************************************************
-    setupDevicesList(selector,dialog,midiDevs,UA100CONTROL)
+    setupDevicesList(midiDevsDialog_ui,midiDevsDialog,midiDevs,UA100CONTROL)
     # **************************************************************
     
     setupMixer(ui,mixerMainWindow)
     resetMixer(ui,mixerMainWindow)
     
     mixerMainWindow.show()
-    dialog.show()
+    midiDevsDialog.show()
     
     sys.exit(app.exec_())
 
