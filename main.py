@@ -8,7 +8,6 @@ from device_sel_ui import *
 from types import MethodType
 import functools
 
-
 # Defining costants (taken from UA-100 documentation)
 
 # Control Change Messages (for the Mixer part) - SysEx messages will be implemented later on (maybe)
@@ -66,7 +65,7 @@ CC_EFFECTSWITHC_PAR = 23 # 0x23
 
 CC_0127_DEFAULT = 64 # I think 'in media stat virtus'
 
-# debug mode
+# DEBUG MODE CONTROL
 # 1: true
 # 0: false
 
@@ -120,10 +119,8 @@ def actualMidiDevices():
     *add example here*
     
     '''
-    
     # Count the MIDI devices connected
     numDevs = pm.get_count()
-    
     # Initialize the device dictionary
     # midiDevs = { 0: (tuple), 1: (tuple), ... }
     #
@@ -132,7 +129,6 @@ def actualMidiDevices():
         # the portmidi get_device_info() returns a tuple
         midiDevs[dev]=pm.get_device_info(dev)
     return midiDevs
-
 
 def rightMidiDevice(midiDevs):
     '''
@@ -159,7 +155,6 @@ def setupDevicesList(ui,window,midiDevs,UA100CONTROL):
     ui.outputDevicesList.currentIndexChanged.connect(functools.partial(window.updateDeviceLabels, ui, midiDevs))
     
     ui.outputDevicesList.setCurrentIndex(UA100CONTROL)
-    
 
 def resetMixer(ui,window):
     '''
@@ -181,7 +176,6 @@ def main():
     it already needs a big clean-up. *Andiamo bene...*
     
     '''
-    
     # **************************** MIDI PART: could it go somewhere else? **********************************************
     pm.init()
     midiDevs=actualMidiDevices()
@@ -192,8 +186,7 @@ def main():
     
     pm_open(UA100CONTROL)
     # *******************************************************************************************************************
-    
-    
+
     app = QtGui.QApplication(sys.argv)
     
     # Showing the device selection dialog to select the midi device to use for the UA-100 controller
@@ -203,7 +196,6 @@ def main():
     selector.setupUi(dialog)
     setupSelectorDialog(selector,dialog)
     dialog.updateDeviceLabels = updateDeviceLabels
-    
     
     mixerMainWindow = QtGui.QMainWindow()
     
@@ -226,8 +218,6 @@ def main():
     dialog.show()
     
     sys.exit(app.exec_())
-
-
 
 if __name__ == '__main__':
     main()
