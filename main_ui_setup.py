@@ -68,3 +68,16 @@ def setupMixer(ui,window):
     #ui.MasterLine.setProperty("value", CC_0127_DEFAULT)
     ui.MasterLine.setProperty("channel", CC_LINE_MASTER_CH)
     ui.MasterLine.setProperty("parameter", CC_MAIN_FADER_PAR)
+
+def resetMixer(ui,window):
+    '''
+    Reset all mixer values to average ones.
+    '''
+    ui.MasterLine.setProperty("value", CC_0127_DEFAULT)
+    ui.Wave1.setProperty("value", CC_0127_DEFAULT)
+    ui.Wave2.setProperty("value", CC_0127_DEFAULT)
+    ui.Mic1.setProperty("value", CC_0127_DEFAULT)
+    ui.Mic1Pan.setProperty("value", CC_0127_DEFAULT)
+    ui.Mic2.setProperty("value", CC_0127_DEFAULT)
+    ui.Mic2Pan.setProperty("value", CC_0127_DEFAULT)
+
