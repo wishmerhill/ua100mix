@@ -233,27 +233,44 @@ def main():
     UA100CONTROL = rightMidiDevice(midiDevs)
     pm_open(UA100CONTROL)
     # *******************************************************************************************************************
-    app = QtGui.QApplication(sys.argv)
-    window = QtGui.QMainWindow()
-    window.valueChange = valueChange
     
-    ui = Ui_MainWindow()
-    ui.setupUi(window)
+    
+    app = QtGui.QApplication(sys.argv)
+    
+    # Showing the device selection dialog to select the right midi device for the UA-100 controller
+    # Actually, given the right portmidi API, the right one should be automatically guessed.
     dialog= QtGui.QDialog()
     selector = Ui_deviceSelection()
     selector.setupUi(dialog)
-    
     setupSelectorDialog(selector,dialog)
     dialog.updateDeviceLabels = updateDeviceLabels
+    
+    
+    mixerMainWindow = QtGui.QMainWindow()
+    
+    # Add custom slot to the mixerMainWindow instance
+    mixerMainWindow.valueChange = valueChange
+    
+    # inizializing the UI inside the mixerMainWindow
+    ui = Ui_MainWindow()
+    ui.setupUi(mixerMainWindow)
+    
+    
+    
+    
+    
+    
     # Changing the device in the device list ACTUALLY DOES NOT WORK!
     # **************************************************************
     setupDevicesList(selector,dialog,midiDevs,UA100CONTROL)
     # **************************************************************
-    setupMixer(ui,window)
-    resetMixer(ui,window)
     
-    window.show()
+    setupMixer(ui,mixerMainWindow)
+    resetMixer(ui,mixerMainWindow)
+    
+    mixerMainWindow.show()
     dialog.show()
+    
     sys.exit(app.exec_())
 
 
