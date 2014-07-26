@@ -62,7 +62,6 @@ CC_EFFECTSWITHC_PAR = 23 # 0x23
 #                                                        5: MAIN
 # Effect Switch          |        23 (17H)        |      0 (OFF), 1 (ON: Apply effect)
 
-
 CC_0127_DEFAULT = 64 # I think 'in media stat virtus'
 
 # DEBUG MODE CONTROL
@@ -155,18 +154,6 @@ def setupDevicesList(ui,window,midiDevs,UA100CONTROL):
     ui.outputDevicesList.currentIndexChanged.connect(functools.partial(window.updateDeviceLabels, ui, midiDevs))
     
     ui.outputDevicesList.setCurrentIndex(UA100CONTROL)
-
-def resetMixer(ui,window):
-    '''
-    Reset all mixer values to average ones.
-    '''
-    ui.MasterLine.setProperty("value", CC_0127_DEFAULT)
-    ui.Wave1.setProperty("value", CC_0127_DEFAULT)
-    ui.Wave2.setProperty("value", CC_0127_DEFAULT)
-    ui.Mic1.setProperty("value", CC_0127_DEFAULT)
-    ui.Mic1Pan.setProperty("value", CC_0127_DEFAULT)
-    ui.Mic2.setProperty("value", CC_0127_DEFAULT)
-    ui.Mic2Pan.setProperty("value", CC_0127_DEFAULT)
 
 def setupSelectorDialog(ui,window):
     ui.dialogOK.clicked.connect(window.close)
