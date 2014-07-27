@@ -65,13 +65,20 @@ CC_EFFECTSWITHC_PAR = 23 # 0x23
 # Effect Switch          |        23 (17H)        |      0 (OFF), 1 (ON: Apply effect)
 
 CC_0127_DEFAULT = 64 # I think 'in media stat virtus'
+# **************** this will and should be replaced with the real values obtained with sysex messages...
 
-# DEBUG MODE CONTROL
-# 1: true
-# 0: false
+# MIDI EXCLUSIVE
+# ********** I SHALL PUT SOME CONSTANTS FOR THE SYSEXs AND PASTE THE DOCUMENTATION AS WELL **********
+
+# ********************************
+# ***** DEBUG MODE CONTROL *******
+# SET:
+#      1: true
+#      0: false
 
 DEBUG_MODE = 1
 
+# ********************************
 
 def pm_open(device):
     '''
@@ -197,6 +204,10 @@ def setupMixer(ui,window):
 def resetMixer(ui,window):
     '''
     Reset all mixer values to average ones.
+    ***************************************
+    A better idea could be to retrieve the current values (with sysex messages) and use them...
+    maybe in the future
+    ***************************************
     '''
     ui.MasterLine.setProperty("value", CC_0127_DEFAULT)
     ui.Wave1.setProperty("value", CC_0127_DEFAULT)
