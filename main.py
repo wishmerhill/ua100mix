@@ -36,6 +36,35 @@ CC_MAIN_FADER_PAR = 7 # 0x70
 CC_SELECTOR_PAR = 22 # 0x16
 CC_EFFECTSWITHC_PAR = 23 # 0x23
 
+# ***************************************************************
+# *** 1. RECEIVE DATA
+# ***************************************************************
+# *************************
+# ** Channel Voice Messages
+# *************************
+#
+#         Status         |       2nd byte         |     3rd byte
+#          9nH           |          kkH           |       vvH
+#
+#
+# n = MIDI channel number: 0H-FH (ch.1-ch.16)
+# kk = note number : 00H-7FH (0-127)
+# NOTE: Used for pitch changes when using VT effect
+# 
+# *************************
+# ** Pitch Bend Change
+# *************************
+#
+#         Status         |       2nd byte         |     3rd byte
+#          EnH           |         llH            |       mmH
+#
+#
+# n = MIDI channel number: 0H-FH (ch.1-ch.16)
+# mm, ll = Pitch Bend value: 00 00H-40 00H-7F 7FH (-8192-0- +8191)
+# NOTE: Used for pitch changes when using VT effect
+#
+
+
 # Control Change Setting range
 
 # Parameter              |           mm           |             ll (setting range)
