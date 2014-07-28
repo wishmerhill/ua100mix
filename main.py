@@ -153,34 +153,34 @@ CC_EFFECTSWITHC_PAR = 23 # 0x23
 #    Parameter      |  MIC1MIC2   | 2Ch. |  3Ch. |  4Ch. |   5Ch. |    6Ch. | 15Ch. | 16Ch.
 #                   |    1Ch.     |      |       |       |        |         |       |
 #                   |             |      |       |       |        |         |       |
-# MIC/LINE Selector |     Ο       |  -   |   -   |   -   |    -   |    -    |   -   |   -
+# MIC/LINE Selector |     O       |   -  |   -   |   -   |    -   |    -    |   -   |   -
 #    21 (15H)       |             |      |       |       |        |         |       |
 #                   |             |      |       |       |        |         |       |
-#       Pan         |     Ο       |   Ο  |   -   |   -   |    -   |    -    |   -   |   -
+#       Pan         |     O       |   O  |   -   |   -   |    -   |    -    |   -   |   -
 #    10 (0AH)       |             |      |       |       |        |         |       |
 #                   |             |      |       |       |        |         |       |
-#     Send 1        |     Ο       |   Ο  |   Ο   |   Ο   |    Ο   |    Ο    |   -   |   -
+#     Send 1        |     O       |   O  |   O   |   O   |    O   |    O    |   -   |   -
 #    16 (10H)       |             |      |       |       |        |         |       |
 #                   |             |      |       |       |        |         |       |
-#     Send 2        |     Ο       |   Ο  |   Ο   |   Ο   |    Ο   |    Ο    |   -   |   -
+#     Send 2        |     O       |   O  |   O   |   O   |    O   |    O    |   -   |   -
 #    17 (11H)       |             |      |       |       |        |         |       |
 #                   |             |      |       |       |        |         |       |
-#      Mute         |     Ο       |   Ο  |   Ο   |   Ο   |    -   |    -    |   -   |   -
+#      Mute         |     O       |   O  |   O   |   O   |    -   |    -    |   -   |   -
 #    18 (12H)       |             |      |       |       |        |         |       |
 #                   |             |      |       |       |        |         |       |
-#      Solo         |     Ο       |   Ο  |   Ο   |   Ο   |    -   |    -    |   -   |   -
+#      Solo         |     O       |   O  |   O   |   O   |    -   |    -    |   -   |   -
 #    19 (13H)       |             |      |       |       |        |         |       |
 #                   |             |      |       |       |        |         |       |
-#    Sub Fader      |     Ο       |   Ο  |   Ο   |   Ο   |    -   |    -    |   -   |   -
+#    Sub Fader      |     O       |   O  |   O   |   O   |    -   |    -    |   -   |   -
 #    20 (14H)       |             |      |       |       |        |         |       |
 #                   |             |      |       |       |        |         |       |
-#    Main Fader     |     Ο       |   Ο  |   Ο   |   Ο   |    -   |    -    |   Ο   |   Ο
+#    Main Fader     |     O       |   O  |   O   |   O   |    -   |    -    |   O   |   O
 #     7 (07H)       |             |      |       |       |        |         |       |
 #                   |             |      |       |       |        |         |       |
-#     Selector      |     -       |   -  |   -   |   -   |    -   |    -    |   Ο   |   Ο
+#     Selector      |     -       |   -  |   -   |   -   |    -   |    -    |   O   |   O
 #    22 (16H)       |             |      |       |       |        |         |       |
 #                   |             |      |       |       |        |         |       |
-#   Effect Switch   |     Ο       |   Ο  |   Ο   |   Ο   |    Ο   |    Ο    |   -   |   -
+#   Effect Switch   |     O       |   O  |   O   |   O   |    O   |    O    |   -   |   -
 #    23 (17H)       |             |      |       |       |        |         |       |
 # **********************************************************************************************
 #
@@ -276,6 +276,9 @@ def setupMixer(ui,window):
     #ui.Mic1Pan.setProperty("value", CC_0127_DEFAULT)
     ui.Mic1Pan.setProperty("channel", CC_MIC1_CH)
     ui.Mic1Pan.setProperty("parameter", CC_PAN_PAR)
+    
+    # Solo
+    
     
     # *************** MIC2 *********************
     
