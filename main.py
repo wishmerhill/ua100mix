@@ -14,16 +14,6 @@ from types import MethodType
 
 # Control Change Messages (for the Mixer part) - SysEx messages will be implemented later on (maybe)
 
-# Control Change *CHANNELS*
-CC_MIC1_CH = 0xb0
-CC_MIC2_CH = 0xb1
-CC_WAVE1_CH = 0xb2
-CC_WAVE2_CH = 0xb3
-CC_SYSRET_CH = 0xb4
-CC_SYSSUB_CH = 0xb5
-CC_WAVEREC_CH = 0xbE
-CC_LINE_MASTER_CH = 0xBF
-
 # Control Change *PARAMETERS* 
 CC_MICLINESELECTOR_PAR = 21 # 0x15
 CC_PAN_PAR = 10 # 0x0A - 0 - 64 - 127 (LEFT - CENTER - RIGHT)
@@ -35,6 +25,9 @@ CC_SUB_FADER_PAR = 20 # 0x14
 CC_MAIN_FADER_PAR = 7 # 0x70
 CC_SELECTOR_PAR = 22 # 0x16
 CC_EFFECTSWITHC_PAR = 23 # 0x23
+
+# **************** this will and should be replaced with the real values obtained with sysex messages...
+CC_0127_DEFAULT = 64 # I think 'in media stat virtus'
 
 # ***************************************************************
 # *** 1. RECEIVE DATA
@@ -50,8 +43,20 @@ CC_EFFECTSWITHC_PAR = 23 # 0x23
 # n = MIDI channel number: 0H-FH (ch.1-ch.16)
 # kk = note number : 00H-7FH (0-127)
 # NOTE: Used for pitch changes when using VT effect
-# 
-# *************************
+#
+# **********************************
+# Channel Voice Change STATUS Values
+# **********************************
+PB_MIC1_CH = 0x90
+PB_MIC2_CH = 0x91
+PB_WAVE1_CH = 0x92
+PB_WAVE2_CH = 0x93
+PB_SYSRET_CH = 0x94
+PB_SYSSUB_CH = 0x95
+PB_WAVEREC_CH = 0x9E
+PB_LINE_MASTER_CH = 0x9F
+#
+# ************************* 
 # ** Pitch Bend Change
 # *************************
 #
@@ -63,10 +68,57 @@ CC_EFFECTSWITHC_PAR = 23 # 0x23
 # mm, ll = Pitch Bend value: 00 00H-40 00H-7F 7FH (-8192-0- +8191)
 # NOTE: Used for pitch changes when using VT effect
 #
+# *******************************
+# Pitch Bend Change STATUS Values
+# *******************************
+PB_MIC1_CH = 0xE0
+PB_MIC2_CH = 0xE1
+PB_WAVE1_CH = 0xE2
+PB_WAVE2_CH = 0xE3
+PB_SYSRET_CH = 0xE4
+PB_SYSSUB_CH = 0xe5
+PB_WAVEREC_CH = 0xEE
+PB_LINE_MASTER_CH = 0xEF
+#
+# *************************
+# ** Control Change
+# *************************
+#
+#         Status         |       2nd byte         |     3rd byte
+#          BnH                       mmH                   llH
+#
+# n = MIDI channel number: 0H-FH (ch. 1 to ch. 16:Refer to the correspondence chart)
+# mm = Mixer parameter number:Refer to the correspondence chart
+# ll = Mixer parameter value: 00H - 7FH (0 - 127)
+# ****************************
+# Control Change STATUS Values
+# ****************************
+CC_MIC1_CH = 0xB0
+CC_MIC2_CH = 0xB1
+CC_WAVE1_CH = 0xB2
+CC_WAVE2_CH = 0xB3
+CC_SYSRET_CH = 0xB4
+CC_SYSSUB_CH = 0xB5
+CC_WAVEREC_CH = 0xBE
+CC_LINE_MASTER_CH = 0xBF
+#
+# *********************************************************
+# * Correspondences Between MIDI Channels and Mixer Signals
+# *********************************************************
+#
+#      MIDI channel      |           Signal
+#           1Ch.         |  LINE (Line Mode), MIC1/GUITAR (Mic Mode), MIC1+MIC2 (MIC1+MIC2 Mode)
+#           2Ch.         |  MIC2 (Mic mode only)
+#           3Ch.         |  WAVE1
+#           4Ch.         |  WAVE2
+#           5Ch.         |  SysRET(system effect return Main bus)
+#           6Ch.         |  SysSUB(system effect return Sub bus)
+#           15Ch.        |  WAVE (Rec)
+#           16Ch.        |  LINE (Master)
 
 
-# Control Change Setting range
 
+#
 # Parameter              |           mm           |             ll (setting range)
 # MIC/LINE Selector      |        21 (15H)        |     0: Mic Mode, 1: Line Mode, 2: MIC1+MIC2 Mode
 # Pan                    |        10 (0AH)        |     0 (left) - 64 (center) - 127 (right)
@@ -92,9 +144,6 @@ CC_EFFECTSWITHC_PAR = 23 # 0x23
 #                                                        4: VT_OUT,
 #                                                        5: MAIN
 # Effect Switch          |        23 (17H)        |      0 (OFF), 1 (ON: Apply effect)
-
-CC_0127_DEFAULT = 64 # I think 'in media stat virtus'
-# **************** this will and should be replaced with the real values obtained with sysex messages...
 
 # MIDI EXCLUSIVE
 # ********** I SHALL PUT SOME CONSTANTS FOR THE SYSEXs AND PASTE THE DOCUMENTATION AS WELL **********
