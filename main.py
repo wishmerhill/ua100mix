@@ -11,20 +11,7 @@ from types import MethodType
 
 
 # Defining costants (taken from UA-100 documentation)
-
-# Control Change Messages (for the Mixer part) - SysEx messages will be implemented later on (maybe)
-
-# Control Change *PARAMETERS* 
-CC_MICLINESELECTOR_PAR = 21 # 0x15
-CC_PAN_PAR = 10 # 0x0A - 0 - 64 - 127 (LEFT - CENTER - RIGHT)
-CC_SEND1_PAR = 16 # 0x10
-CC_SEND2_PAR = 17 # 0x11
-CC_MUTE_PAR = 18 # 0x12
-CC_SOLO_PAR = 19 # 0x13
-CC_SUB_FADER_PAR = 20 # 0x14
-CC_MAIN_FADER_PAR = 7 # 0x70
-CC_SELECTOR_PAR = 22 # 0x16
-CC_EFFECTSWITHC_PAR = 23 # 0x23
+# and copying some useful documentation excerts
 
 # **************** this will and should be replaced with the real values obtained with sysex messages...
 CC_0127_DEFAULT = 64 # I think 'in media stat virtus'
@@ -47,14 +34,14 @@ CC_0127_DEFAULT = 64 # I think 'in media stat virtus'
 # **********************************
 # Channel Voice Change STATUS Values
 # **********************************
-PB_MIC1_CH = 0x90
-PB_MIC2_CH = 0x91
-PB_WAVE1_CH = 0x92
-PB_WAVE2_CH = 0x93
-PB_SYSRET_CH = 0x94
-PB_SYSSUB_CH = 0x95
-PB_WAVEREC_CH = 0x9E
-PB_LINE_MASTER_CH = 0x9F
+CV_MIC1_CH = 0x90
+CV_MIC2_CH = 0x91
+CV_WAVE1_CH = 0x92
+CV_WAVE2_CH = 0x93
+CV_SYSRET_CH = 0x94
+CV_SYSSUB_CH = 0x95
+CV_WAVEREC_CH = 0x9E
+CV_LINE_MASTER_CH = 0x9F
 #
 # ************************* 
 # ** Pitch Bend Change
@@ -115,9 +102,10 @@ CC_LINE_MASTER_CH = 0xBF
 #           6Ch.         |  SysSUB(system effect return Sub bus)
 #           15Ch.        |  WAVE (Rec)
 #           16Ch.        |  LINE (Master)
-
-
-
+#
+# **********************************************************
+# * Mixer parameters and setting ranges
+# **********************************************************
 #
 # Parameter              |           mm           |             ll (setting range)
 # MIC/LINE Selector      |        21 (15H)        |     0: Mic Mode, 1: Line Mode, 2: MIC1+MIC2 Mode
@@ -145,6 +133,59 @@ CC_LINE_MASTER_CH = 0xBF
 #                                                        5: MAIN
 # Effect Switch          |        23 (17H)        |      0 (OFF), 1 (ON: Apply effect)
 
+CC_MICLINESELECTOR_PAR = 21 # 0x15
+# CC_MICLINESELECTOR_RANGE = { 'Mic Mode': 0, 'Line Mode': 1, 'MIC1+MIC2 Mode': 2}
+CC_PAN_PAR = 10 # 0x0A - 0 - 64 - 127 (LEFT - CENTER - RIGHT)
+CC_SEND1_PAR = 16 # 0x10
+CC_SEND2_PAR = 17 # 0x11
+CC_MUTE_PAR = 18 # 0x12
+CC_SOLO_PAR = 19 # 0x13
+CC_SUB_FADER_PAR = 20 # 0x14
+CC_MAIN_FADER_PAR = 7 # 0x70
+CC_SELECTOR_PAR = 22 # 0x16
+CC_EFFECTSWITHC_PAR = 23 # 0x23
+
+# ******************************************************
+# * Correspondences Between Mixer Signals and Parameters
+# ******************************************************
+#
+#                   |  MIC1/LINE/ | MIC2 | WAVE1 | WAVE2 | SysRET |  SysSUB | WAVE  | LINE 
+#    Parameter      |  MIC1MIC2   | 2Ch. |  3Ch. |  4Ch. |   5Ch. |    6Ch. | 15Ch. | 16Ch.
+#                   |    1Ch.     |      |       |       |        |         |       |
+#                   |             |      |       |       |        |         |       |
+# MIC/LINE Selector |     Ο       |  -   |   -   |   -   |    -   |    -    |   -   |   -
+#    21 (15H)       |             |      |       |       |        |         |       |
+#                   |             |      |       |       |        |         |       |
+#       Pan         |     Ο       |   Ο  |   -   |   -   |    -   |    -    |   -   |   -
+#    10 (0AH)       |             |      |       |       |        |         |       |
+#                   |             |      |       |       |        |         |       |
+#     Send 1        |     Ο       |   Ο  |   Ο   |   Ο   |    Ο   |    Ο    |   -   |   -
+#    16 (10H)       |             |      |       |       |        |         |       |
+#                   |             |      |       |       |        |         |       |
+#     Send 2        |     Ο       |   Ο  |   Ο   |   Ο   |    Ο   |    Ο    |   -   |   -
+#    17 (11H)       |             |      |       |       |        |         |       |
+#                   |             |      |       |       |        |         |       |
+#      Mute         |     Ο       |   Ο  |   Ο   |   Ο   |    -   |    -    |   -   |   -
+#    18 (12H)       |             |      |       |       |        |         |       |
+#                   |             |      |       |       |        |         |       |
+#      Solo         |     Ο       |   Ο  |   Ο   |   Ο   |    -   |    -    |   -   |   -
+#    19 (13H)       |             |      |       |       |        |         |       |
+#                   |             |      |       |       |        |         |       |
+#    Sub Fader      |     Ο       |   Ο  |   Ο   |   Ο   |    -   |    -    |   -   |   -
+#    20 (14H)       |             |      |       |       |        |         |       |
+#                   |             |      |       |       |        |         |       |
+#    Main Fader     |     Ο       |   Ο  |   Ο   |   Ο   |    -   |    -    |   Ο   |   Ο
+#     7 (07H)       |             |      |       |       |        |         |       |
+#                   |             |      |       |       |        |         |       |
+#     Selector      |     -       |   -  |   -   |   -   |    -   |    -    |   Ο   |   Ο
+#    22 (16H)       |             |      |       |       |        |         |       |
+#                   |             |      |       |       |        |         |       |
+#   Effect Switch   |     Ο       |   Ο  |   Ο   |   Ο   |    Ο   |    Ο    |   -   |   -
+#    23 (17H)       |             |      |       |       |        |         |       |
+# **********************************************************************************************
+#
+# Omitting the RPN MSB/LSB and Data Entry part. TODO in a near future, at least for documentation purposes
+# 
 # MIDI EXCLUSIVE
 # ********** I SHALL PUT SOME CONSTANTS FOR THE SYSEXs AND PASTE THE DOCUMENTATION AS WELL **********
 
