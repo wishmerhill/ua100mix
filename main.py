@@ -203,6 +203,9 @@ def pm_open(device):
     '''
     Possibly not the best solution.
     '''
+    
+    # the in and out instances must be in the global scope
+    # I'm still convinced that's not the right solution...
     global pmout
     global pmin
     
@@ -215,7 +218,7 @@ def pm_open(device):
 @QtCore.pyqtSlot()
 def valueChange(a,b,val):
     '''
-    I had to create a custom slot to connect to the changes in the interface. Hope it's the right way.
+    custom slot to connect to the changes in the interface with write_short to send the control change messages
     '''
     global pmout
     
@@ -417,14 +420,21 @@ def main():
     
     '''
     # **************************** MIDI PART: could it go somewhere else? **********************************************
+    
+    # initialize the portmidi interface
     pm.init()
+    
+    # get the list of the Midi Devices according to portmidy
     midiDevs=actualMidiDevices()
+    
     if (DEBUG_MODE == 1):
         print 'MIDI DEVICES FOUND: ',len(midiDevs),'. They are: ', midiDevs
         
+    # guess the right midi device
     UA100CONTROL = rightMidiDevice(midiDevs)
     
-    print 'UA100CONTROL = ',UA100CONTROL
+    if (DEBUG_MODE == 1):
+        print 'UA100CONTROL = ',UA100CONTROL
 
     # *******************************************************************************************************************
 
