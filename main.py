@@ -204,8 +204,14 @@ def pm_open(device):
     Possibly not the best solution.
     '''
     global pmout
+    global pmin
+    
+    # Open device for output
     pmout = pm.midi.Output(device)
-
+    
+    # Open "the next" device for input
+    pmin = pm.midi.Input(device+1)
+    
 @QtCore.pyqtSlot()
 def valueChange(a,b,val):
     '''
@@ -253,7 +259,6 @@ def setMidiDevice(index):
         print 'Index = ', index
         print 'UA100CONTROL = ',UA100CONTROL
 
-
 def setupMixer(ui,window):
     '''
     I thought it'd be better to setup the connections here, as qt4designer is not so nice with custom slots.
@@ -277,8 +282,7 @@ def setupMixer(ui,window):
     ui.Mic1Pan.setProperty("channel", CC_MIC1_CH)
     ui.Mic1Pan.setProperty("parameter", CC_PAN_PAR)
     
-    # Solo
-    
+    # Setting Up the Mic1 Solo Button ** THEY CAN BE ONLY ONE SOLO CHECKED, THUS... **
     
     # *************** MIC2 *********************
     
@@ -296,6 +300,8 @@ def setupMixer(ui,window):
     ui.Mic2Pan.setProperty("channel", CC_MIC2_CH)
     ui.Mic2Pan.setProperty("parameter", CC_PAN_PAR)
     
+    # Setting Up the Mic2 Solo Button ** THEY CAN BE ONLY ONE SOLO CHECKED, THUS... **
+    
     # *************** WAVE1 *********************
     
     # Setting up the Wave1 Fader
@@ -305,6 +311,8 @@ def setupMixer(ui,window):
     ui.Wave1.setProperty("channel", CC_WAVE1_CH)
     ui.Wave1.setProperty("parameter", CC_MAIN_FADER_PAR)
     
+    # Setting Up the Wave1 Solo Button ** THEY CAN BE ONLY ONE SOLO CHECKED, THUS... **
+    
     # *************** WAVE2 *********************
     
     # Setting up the Wave1 Fader
@@ -313,6 +321,8 @@ def setupMixer(ui,window):
     #ui.Wave2.setProperty("value", CC_0127_DEFAULT)
     ui.Wave2.setProperty("channel", CC_WAVE2_CH)
     ui.Wave2.setProperty("parameter", CC_MAIN_FADER_PAR)    
+    
+    # Setting Up the Wave2 Solo Button ** THEY CAN BE ONLY ONE SOLO CHECKED, THUS... **
     
     # *************** MASTERLINE *********************
     
@@ -386,10 +396,19 @@ def setupDevicesList(ui,window,midiDevs,defaultUA100Control):
     for i in range(0,len(midiDevs)):
         ui.outputDevicesList.addItem(str(midiDevs[i]), i)
     
+    # update the device information when selecting the devices in the combobox
     ui.outputDevicesList.currentIndexChanged.connect(functools.partial(window.updateDeviceLabels, ui, midiDevs, defaultUA100Control))
+    
+    # call the setMidiDevice custom slot to tell everyone whitch one is the selected device (output)
     ui.outputDevicesList.currentIndexChanged.connect(window.setMidiDevice)
+    
+    # send true if OK is clicked
     ui.dialogOK.clicked.connect(window.accept)
+    
+    # send false if Quit is clicked (and close application)
     ui.dialogQuit.clicked.connect(window.reject)
+    
+    # set the current index to the guessed right outpud midi device for the UA100 controller
     ui.outputDevicesList.setCurrentIndex(defaultUA100Control)
     
 def main(): 
@@ -406,9 +425,7 @@ def main():
     UA100CONTROL = rightMidiDevice(midiDevs)
     
     print 'UA100CONTROL = ',UA100CONTROL
-    
-    
-    
+
     # *******************************************************************************************************************
 
     app = QtGui.QApplication(sys.argv)
@@ -421,8 +438,7 @@ def main():
     
     midiDevsDialog.updateDeviceLabels = updateDeviceLabels
     midiDevsDialog.setMidiDevice = setMidiDevice
-    
-    
+
     mixerMainWindow = QtGui.QMainWindow()
     
     # Add custom slot to the mixerMainWindow instance
@@ -437,7 +453,6 @@ def main():
     setupDevicesList(midiDevsDialog_ui,midiDevsDialog,midiDevs,UA100CONTROL)
     # **************************************************************
 
-    
     if not midiDevsDialog.exec_():
         # We quit if the the selection dialog quits
         if (DEBUG_MODE == 1):
