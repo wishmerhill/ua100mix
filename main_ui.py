@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'main.ui'
 #
-# Created: Mon Jul 28 23:22:25 2014
+# Created: Thu Jul 31 22:49:45 2014
 #      by: PyQt4 UI code generator 4.10.3
 #
 # WARNING! All changes made in this file will be lost!
@@ -131,22 +131,26 @@ class Ui_MainWindow(object):
         self.mic1Solo.setGeometry(QtCore.QRect(120, 520, 61, 23))
         self.mic1Solo.setStyleSheet(_fromUtf8("QPushButton#mic1Solo:checked { background-color: red}"))
         self.mic1Solo.setCheckable(True)
+        self.mic1Solo.setChecked(False)
         self.mic1Solo.setAutoExclusive(False)
         self.mic1Solo.setObjectName(_fromUtf8("mic1Solo"))
         self.mic2Solo = QtGui.QPushButton(self.centralwidget)
         self.mic2Solo.setGeometry(QtCore.QRect(230, 520, 61, 23))
         self.mic2Solo.setStyleSheet(_fromUtf8("QPushButton#mic2Solo:checked { background-color: red}"))
         self.mic2Solo.setCheckable(True)
+        self.mic2Solo.setAutoExclusive(False)
         self.mic2Solo.setObjectName(_fromUtf8("mic2Solo"))
         self.wave1Solo = QtGui.QPushButton(self.centralwidget)
         self.wave1Solo.setGeometry(QtCore.QRect(340, 520, 61, 23))
         self.wave1Solo.setStyleSheet(_fromUtf8("QPushButton#wave1Solo:checked { background-color: red}"))
         self.wave1Solo.setCheckable(True)
+        self.wave1Solo.setAutoExclusive(False)
         self.wave1Solo.setObjectName(_fromUtf8("wave1Solo"))
         self.wave2Solo = QtGui.QPushButton(self.centralwidget)
         self.wave2Solo.setGeometry(QtCore.QRect(450, 520, 61, 23))
         self.wave2Solo.setStyleSheet(_fromUtf8("QPushButton#wave2Solo:checked { background-color: red}"))
         self.wave2Solo.setCheckable(True)
+        self.wave2Solo.setAutoExclusive(False)
         self.wave2Solo.setObjectName(_fromUtf8("wave2Solo"))
         MainWindow.setCentralWidget(self.centralwidget)
         self.statusbar = QtGui.QStatusBar(MainWindow)

@@ -215,6 +215,25 @@ def pm_open(device):
     # Open "the next" device for input
     pmin = pm.midi.Input(device+1)
     
+#@QtCore.pyqtSlot()
+#def uniqueSolos(ui, window, Solo, num):
+#    
+#    if (DEBUG_MODE == 1):
+#        print ui, window, Solo, num
+#        print Solo.isChecked()
+#    
+#    if (Solo.isChecked()) and (num != 2):
+#        ui.mic2Solo.setChecked(False)
+
+@QtCore.pyqtSlot()
+def uniqueSolos(a, b, c, checked):
+    print 'Checked: ',checked
+    if (checked):
+        a.setChecked(False)
+        b.setChecked(False)
+        c.setChecked(False)
+    
+
 @QtCore.pyqtSlot()
 def valueChange(a,b,val):
     '''
@@ -286,6 +305,9 @@ def setupMixer(ui,window):
     ui.Mic1Pan.setProperty("parameter", CC_PAN_PAR)
     
     # Setting Up the Mic1 Solo Button ** THEY CAN BE ONLY ONE SOLO CHECKED, THUS... **
+    # ui.mic1Solo.toggled.connect(functools.partial(window.uniqueSolos, ui, window, ui.mic1Solo, 1))
+    ui.mic1Solo.toggled.connect(functools.partial(window.uniqueSolos, ui.mic2Solo, ui.wave1Solo, ui.wave2Solo))
+    
     
     # *************** MIC2 *********************
     
@@ -304,6 +326,8 @@ def setupMixer(ui,window):
     ui.Mic2Pan.setProperty("parameter", CC_PAN_PAR)
     
     # Setting Up the Mic2 Solo Button ** THEY CAN BE ONLY ONE SOLO CHECKED, THUS... **
+    #ui.mic2Solo.toggled.connect(functools.partial(window.uniqueSolos, ui, window, ui.mic2Solo, 2))
+    ui.mic2Solo.toggled.connect(functools.partial(window.uniqueSolos, ui.mic1Solo, ui.wave1Solo, ui.wave2Solo))
     
     # *************** WAVE1 *********************
     
@@ -315,6 +339,8 @@ def setupMixer(ui,window):
     ui.Wave1.setProperty("parameter", CC_MAIN_FADER_PAR)
     
     # Setting Up the Wave1 Solo Button ** THEY CAN BE ONLY ONE SOLO CHECKED, THUS... **
+    #ui.wave1Solo.toggled.connect(functools.partial(window.uniqueSolos, ui, window, ui.wave1Solo, 3))
+    ui.wave1Solo.toggled.connect(functools.partial(window.uniqueSolos, ui.mic1Solo, ui.wave2Solo, ui.mic2Solo))
     
     # *************** WAVE2 *********************
     
@@ -326,6 +352,8 @@ def setupMixer(ui,window):
     ui.Wave2.setProperty("parameter", CC_MAIN_FADER_PAR)    
     
     # Setting Up the Wave2 Solo Button ** THEY CAN BE ONLY ONE SOLO CHECKED, THUS... **
+    #ui.wave2Solo.toggled.connect(functools.partial(window.uniqueSolos, ui, window, ui.wave1Solo, 4))
+    ui.wave2Solo.toggled.connect(functools.partial(window.uniqueSolos, ui.mic1Solo, ui.wave1Solo, ui.mic2Solo))
     
     # *************** MASTERLINE *********************
     
@@ -451,8 +479,11 @@ def main():
 
     mixerMainWindow = QtGui.QMainWindow()
     
-    # Add custom slot to the mixerMainWindow instance
+    # Add custom slots to the mixerMainWindow instance
     mixerMainWindow.valueChange = valueChange
+    mixerMainWindow.uniqueSolos = uniqueSolos
+    
+    
     
     # inizializing the UI inside the mixerMainWindow
     ui = Ui_MainWindow()
