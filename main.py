@@ -227,8 +227,16 @@ def pm_open(device):
 
 @QtCore.pyqtSlot()
 def uniqueSolos(a, b, c, checked):
-    print 'Checked: ',checked
+    '''
+    unchecks all other solo buttons if the present is checked.
+    another slot should take care of sending the right message to the UA-100 to solo the channel.
+    '''
+    if (DEBUG_MODE == 1):
+        print self.sender(), 'is checked: ',checked
+    
     if (checked):
+        if (DEBUG_MODE == 1):
+            print 'unchecking ',a,b,c
         a.setChecked(False)
         b.setChecked(False)
         c.setChecked(False)
