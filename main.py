@@ -261,6 +261,17 @@ def valueChange(a,b,val):
     '''
     global pmout
     
+    #**********************************************************
+    #**********************************************************
+    # TO DO URGENTLY:
+    # using self.sender() the a and b parameter are useless, as
+    # a = self.sender().property('channel') and
+    # b = self.sender().property('parameter')
+    # and val is automatically passed on valuechange...
+    # Thus, using functools.partial is absolutely not needed.
+    # 
+    # the only question is: does self.sender() work? I'll try.
+    
     pmout.write_short(a,b,val)
     
     if (DEBUG_MODE == 1):
