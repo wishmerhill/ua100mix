@@ -192,8 +192,8 @@ CC_EFFECTSWITHC_PAR = 23 # 0x23
 # ********************************
 # ***** DEBUG MODE CONTROL *******
 # SET:
-#      1: true
-#      0: false
+#      1: debug messages on stdout ON
+#      0: debug messages on stdout OFF
 
 DEBUG_MODE = 1
 
@@ -231,15 +231,27 @@ def uniqueSolos(a, b, c, checked):
     unchecks all other solo buttons if the present is checked.
     another slot should take care of sending the right message to the UA-100 to solo the channel.
     '''
+    
+    global pmout
+    
     if (DEBUG_MODE == 1):
         print self.sender(), 'is checked: ',checked
     
+    current = self.sender()
+    
     if (checked):
         if (DEBUG_MODE == 1):
-            print 'unchecking ',a,b,c
+            print 'unchecking and desoloing ',a,b,c
+            print 'soloing ', self.sender()
+        pmout.write_short(current.property('channel'),current.property('parameter'),1)
         a.setChecked(False)
+        pmout.write_short(a.property('channel'),a.property('parameter'),0)
         b.setChecked(False)
+        pmout.write_short(b.property('channel'),b.property('parameter'),0)
         c.setChecked(False)
+        pmout.write_short(c.property('channel'),c.property('parameter'),0)
+    elif !(checked):
+        pmout.write_short(current.property('channel'),current.property('parameter'),0)
     
 
 @QtCore.pyqtSlot()
