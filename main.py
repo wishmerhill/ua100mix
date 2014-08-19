@@ -1,7 +1,11 @@
 import sys
 import os
 import functools
-import pyportmidi as pm
+try:
+    import pyportmidi as pm
+except ImportError:
+    print('*** Warning *** pyPortmidi not found - Swithing to testing mode (REAL_UA_MODE = 0) ***')
+    REAL_UA_MODE = 0
 from PyQt4 import QtGui, QtCore
 from global_constants import *
 from main_ui import *
@@ -204,7 +208,7 @@ DEBUG_MODE = 1
 #      0: No UA-100 present, for test purposes on other machines
 #      1: UA-100 present and working
 
-REAL_UA_MODE = 1
+REAL_UA_MODE = 0
 
 # ********************************
 
@@ -554,7 +558,7 @@ def main():
     
     #mixerMainWindow.valueChange = valueChange
     #mixerMainWindow.uniqueSolos = uniqueSolos
-    #mixerMainWindow.testing_self = testing_self
+    mixerMainWindow.testing_self = testing_self
     
     # inizializing the UI inside the mixerMainWindow
     ui = Ui_MainWindow()
