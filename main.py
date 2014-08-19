@@ -208,7 +208,7 @@ DEBUG_MODE = 1
 #      0: No UA-100 present, for test purposes on other machines
 #      1: UA-100 present and working
 
-REAL_UA_MODE = 0
+REAL_UA_MODE = 1
 
 # ********************************
 
@@ -223,7 +223,7 @@ def pm_open(device):
     global pmin
     
     if (REAL_UA_MODE):
-	    # Open device for output
+        # Open device for output
         pmout = pm.midi.Output(device)
     
         # Open "the next" device for input
@@ -240,7 +240,7 @@ def pm_open(device):
 #        ui.mic2Solo.setChecked(False)
 
 @QtCore.pyqtSlot()
-def uniqueSolos(self, checked):
+def uniqueSolos(self, checked, a = '', b = '', c = ''):
     '''
     unchecks all other solo buttons if the present is checked.
     another slot should take care of sending the right message to the UA-100 to solo the channel.
@@ -258,10 +258,10 @@ def uniqueSolos(self, checked):
             print ('unchecking and desoloing ',a,b,c)
             print ('soloing ')
         if (REAL_UA_MODE):
-		    #pmout.write_short(current.property('channel'),current.property('parameter'),1)
-			#pmout.write_short(a.property('channel'),a.property('parameter'),0)
-			#pmout.write_short(b.property('channel'),b.property('parameter'),0)
-			#pmout.write_short(c.property('channel'),c.property('parameter'),0)
+            #pmout.write_short(current.property('channel'),current.property('parameter'),1)
+            #pmout.write_short(a.property('channel'),a.property('parameter'),0)
+            #pmout.write_short(b.property('channel'),b.property('parameter'),0)
+            #pmout.write_short(c.property('channel'),c.property('parameter'),0)
             pass
         #a.setChecked(False)
         #b.setChecked(False)
@@ -316,7 +316,7 @@ def updateDeviceLabels(ui, midiDevs, indice, defaultDevice):
     if (DEBUG_MODE == 1):
         print (midiDevs[indice][2], midiDevs[indice][3])
         
-		
+
 @QtCore.pyqtSlot()
 def setMidiDevice(index):
     '''
@@ -335,9 +335,9 @@ def testing_self(self, value):
     test of self
     '''
     if (DEBUG_MODE == 1):
-        print ('Self = ', self.objectName(), ' Value: ',value)
-    pass		
-		
+        print ('Self = ', self.sender().parent().objectName(), ' Value: ',value)
+    pass
+
 def setupMixer(ui,window):
     '''
     I thought it'd be better to setup the connections here, as qt4designer is not so nice with custom slots.
@@ -345,19 +345,19 @@ def setupMixer(ui,window):
     of here.
     '''
     
-    ui.Mic1.valueChanged.connect(functools.partial(testing_self, window))
-	
+    ui.Mic1Fader.valueChanged.connect(functools.partial(testing_self, window))
+
     # *************** MIC1 *********************
 
     # Setting Up the Mic1 Fader
-    ui.Mic1.valueChanged.connect(ui.Mic1Lcd.display)
-    ui.Mic1.valueChanged.connect(functools.partial(valueChange, CC_MIC1_CH, CC_MAIN_FADER_PAR))
-    #ui.Mic1.setProperty("value", CC_0127_DEFAULT)
-    ui.Mic1.setProperty("channel", CC_MIC1_CH)
-    ui.Mic1.setProperty("parameter", CC_MAIN_FADER_PAR)
+    ui.Mic1Fader.valueChanged.connect(ui.Mic1Lcd.display)
+    ui.Mic1Fader.valueChanged.connect(functools.partial(valueChange, CC_MIC1_CH, CC_MAIN_FADER_PAR))
+    #ui.Mic1Fader.setProperty("value", CC_0127_DEFAULT)
+    ui.Mic1Fader.setProperty("channel", CC_MIC1_CH)
+    ui.Mic1Fader.setProperty("parameter", CC_MAIN_FADER_PAR)
 
     
-	
+
     # Setting Up the Mic1 Pan Dial
     ui.Mic1Pan.valueChanged.connect(ui.Mic1PanLcd.display)
     ui.Mic1Pan.valueChanged.connect(functools.partial(valueChange, CC_MIC1_CH, CC_PAN_PAR))
@@ -368,16 +368,16 @@ def setupMixer(ui,window):
     # Setting Up the Mic1 Solo Button ** THEY CAN BE ONLY ONE SOLO CHECKED, THUS... **
     # ui.mic1Solo.toggled.connect(functools.partial(uniqueSolos, ui, window, ui.mic1Solo, 1))
     #ui.mic1Solo.toggled.connect(functools.partial(uniqueSolos, ui.mic2Solo, ui.wave1Solo, ui.wave2Solo))
-    ui.mic1Solo.toggled.connect(uniqueSolos)
+    ui.mic1Solo.toggled.connect(functools.partial(uniqueSolos, window))
     
     # *************** MIC2 *********************
     
     # Setting Up the Mic2 Fader
-    ui.Mic2.valueChanged.connect(ui.Mic2Lcd.display)
-    ui.Mic2.valueChanged.connect(functools.partial(valueChange, CC_MIC2_CH, CC_MAIN_FADER_PAR))
-    #ui.Mic2.setProperty("value", CC_0127_DEFAULT)
-    ui.Mic2.setProperty("channel", CC_MIC2_CH)
-    ui.Mic2.setProperty("parameter", CC_MAIN_FADER_PAR)
+    ui.Mic2Fader.valueChanged.connect(ui.Mic2Lcd.display)
+    ui.Mic2Fader.valueChanged.connect(functools.partial(valueChange, CC_MIC2_CH, CC_MAIN_FADER_PAR))
+    #ui.Mic2Fader.setProperty("value", CC_0127_DEFAULT)
+    ui.Mic2Fader.setProperty("channel", CC_MIC2_CH)
+    ui.Mic2Fader.setProperty("parameter", CC_MAIN_FADER_PAR)
     
     # Setting Up the Mic2 Pan Dial
     ui.Mic2Pan.valueChanged.connect(ui.Mic2PanLcd.display)
@@ -394,11 +394,11 @@ def setupMixer(ui,window):
     # *************** WAVE1 *********************
     
     # Setting up the Wave1 Fader
-    ui.Wave1.valueChanged.connect(ui.Wave1Lcd.display)
-    ui.Wave1.valueChanged.connect(functools.partial(valueChange, CC_WAVE1_CH, CC_MAIN_FADER_PAR))
-    #ui.Wave1.setProperty("value", CC_0127_DEFAULT)
-    ui.Wave1.setProperty("channel", CC_WAVE1_CH)
-    ui.Wave1.setProperty("parameter", CC_MAIN_FADER_PAR)
+    ui.Wave1Fader.valueChanged.connect(ui.Wave1Lcd.display)
+    ui.Wave1Fader.valueChanged.connect(functools.partial(valueChange, CC_WAVE1_CH, CC_MAIN_FADER_PAR))
+    #ui.Wave1Fader.setProperty("value", CC_0127_DEFAULT)
+    ui.Wave1Fader.setProperty("channel", CC_WAVE1_CH)
+    ui.Wave1Fader.setProperty("parameter", CC_MAIN_FADER_PAR)
     
     # Setting Up the Wave1 Solo Button ** THEY CAN BE ONLY ONE SOLO CHECKED, THUS... **
     #ui.wave1Solo.toggled.connect(functools.partial(uniqueSolos, ui, window, ui.wave1Solo, 3))
@@ -408,11 +408,11 @@ def setupMixer(ui,window):
     # *************** WAVE2 *********************
     
     # Setting up the Wave1 Fader
-    ui.Wave2.valueChanged.connect(ui.Wave2Lcd.display)
-    ui.Wave2.valueChanged.connect(functools.partial(valueChange, CC_WAVE2_CH, CC_MAIN_FADER_PAR))
-    #ui.Wave2.setProperty("value", CC_0127_DEFAULT)
-    ui.Wave2.setProperty("channel", CC_WAVE2_CH)
-    ui.Wave2.setProperty("parameter", CC_MAIN_FADER_PAR)    
+    ui.Wave2Fader.valueChanged.connect(ui.Wave2Lcd.display)
+    ui.Wave2Fader.valueChanged.connect(functools.partial(valueChange, CC_WAVE2_CH, CC_MAIN_FADER_PAR))
+    #ui.Wave2Fader.setProperty("value", CC_0127_DEFAULT)
+    ui.Wave2Fader.setProperty("channel", CC_WAVE2_CH)
+    ui.Wave2Fader.setProperty("parameter", CC_MAIN_FADER_PAR)    
     
     # Setting Up the Wave2 Solo Button ** THEY CAN BE ONLY ONE SOLO CHECKED, THUS... **
     #ui.wave2Solo.toggled.connect(functools.partial(uniqueSolos, ui, window, ui.wave1Solo, 4))
@@ -422,11 +422,11 @@ def setupMixer(ui,window):
     # *************** MASTERLINE *********************
     
     # Setting Up the MasterLine Fader
-    ui.MasterLine.valueChanged.connect(ui.MasterLineLcd.display)
-    ui.MasterLine.valueChanged.connect(functools.partial(valueChange, CC_LINE_MASTER_CH, CC_MAIN_FADER_PAR))
-    #ui.MasterLine.setProperty("value", CC_0127_DEFAULT)
-    ui.MasterLine.setProperty("channel", CC_LINE_MASTER_CH)
-    ui.MasterLine.setProperty("parameter", CC_MAIN_FADER_PAR)
+    ui.MasterLineFader.valueChanged.connect(ui.MasterLineLcd.display)
+    ui.MasterLineFader.valueChanged.connect(functools.partial(valueChange, CC_LINE_MASTER_CH, CC_MAIN_FADER_PAR))
+    #ui.MasterLineFader.setProperty("value", CC_0127_DEFAULT)
+    ui.MasterLineFader.setProperty("channel", CC_LINE_MASTER_CH)
+    ui.MasterLineFader.setProperty("parameter", CC_MAIN_FADER_PAR)
 
 def resetMixer(ui,window):
     '''
@@ -436,12 +436,12 @@ def resetMixer(ui,window):
     maybe in the future
     ***************************************
     '''
-    ui.MasterLine.setProperty("value", CC_0127_DEFAULT)
-    ui.Wave1.setProperty("value", CC_0127_DEFAULT)
-    ui.Wave2.setProperty("value", CC_0127_DEFAULT)
-    ui.Mic1.setProperty("value", CC_0127_DEFAULT)
+    ui.MasterLineFader.setProperty("value", CC_0127_DEFAULT)
+    ui.Wave1Fader.setProperty("value", CC_0127_DEFAULT)
+    ui.Wave2Fader.setProperty("value", CC_0127_DEFAULT)
+    ui.Mic1Fader.setProperty("value", CC_0127_DEFAULT)
     ui.Mic1Pan.setProperty("value", CC_0127_DEFAULT)
-    ui.Mic2.setProperty("value", CC_0127_DEFAULT)
+    ui.Mic2Fader.setProperty("value", CC_0127_DEFAULT)
     ui.Mic2Pan.setProperty("value", CC_0127_DEFAULT)
 
 def actualMidiDevices():
@@ -563,7 +563,7 @@ def main():
     # inizializing the UI inside the mixerMainWindow
     ui = Ui_MainWindow()
     ui.setupUi(mixerMainWindow)
-	
+
     # Changing the device in the device list
     # **************************************************************
     setupDevicesList(midiDevsDialog_ui,midiDevsDialog,midiDevs,UA100CONTROL)
@@ -589,4 +589,3 @@ def main():
 
 if __name__ == '__main__':
     main()
-
