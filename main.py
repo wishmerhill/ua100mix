@@ -1,7 +1,7 @@
 import sys
 import os
 import functools
-#import pyportmidi as pm
+import pyportmidi as pm
 from PyQt4 import QtGui, QtCore
 from global_constants import *
 from main_ui import *
@@ -204,7 +204,7 @@ DEBUG_MODE = 1
 #      0: No UA-100 present, for test purposes on other machines
 #      1: UA-100 present and working
 
-REAL_UA_MODE = 0
+REAL_UA_MODE = 1
 
 # ********************************
 
@@ -516,7 +516,9 @@ def main():
     # **************************** MIDI PART: could it go somewhere else? **********************************************
     
     # initialize the portmidi interface
-    #pm.init()
+    
+    if (REAL_UA_MODE):
+        pm.init()
     
     # get the list of the Midi Devices according to portmidy
     midiDevs=actualMidiDevices()
