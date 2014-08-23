@@ -12,7 +12,7 @@ from main_ui import *
 from main_ui_setup import *
 from device_sel_ui import *
 from types import MethodType
-
+import signal
 
 # Defining costants (taken from UA-100 documentation)
 # and copying some useful documentation excerts
@@ -338,6 +338,10 @@ def testing_self(self, value):
         print ('Self = ', self.sender().parent().objectName(), ' Value: ',value)
     pass
 
+def setupMenus(ui, window):
+    ui.actionReset_Mixer.triggered.connect(functools.partial(resetMixer, ui, window))
+    ui.actionQuit.triggered.connect(QtGui.qApp.quit)
+
 def setupMixer(ui,window):
     '''
     I thought it'd be better to setup the connections here, as qt4designer is not so nice with custom slots.
@@ -349,20 +353,16 @@ def setupMixer(ui,window):
 
     # *************** MIC1 *********************
 
+    ui.Mic1.setProperty("channel", CC_MIC1_CH)
+    
     # Setting Up the Mic1 Fader
     ui.Mic1Fader.valueChanged.connect(ui.Mic1Lcd.display)
     ui.Mic1Fader.valueChanged.connect(functools.partial(valueChange, CC_MIC1_CH, CC_MAIN_FADER_PAR))
-    #ui.Mic1Fader.setProperty("value", CC_0127_DEFAULT)
-    ui.Mic1Fader.setProperty("channel", CC_MIC1_CH)
     ui.Mic1Fader.setProperty("parameter", CC_MAIN_FADER_PAR)
-
-    
 
     # Setting Up the Mic1 Pan Dial
     ui.Mic1Pan.valueChanged.connect(ui.Mic1PanLcd.display)
     ui.Mic1Pan.valueChanged.connect(functools.partial(valueChange, CC_MIC1_CH, CC_PAN_PAR))
-    #ui.Mic1Pan.setProperty("value", CC_0127_DEFAULT)
-    ui.Mic1Pan.setProperty("channel", CC_MIC1_CH)
     ui.Mic1Pan.setProperty("parameter", CC_PAN_PAR)
     
     # Setting Up the Mic1 Solo Button ** THEY CAN BE ONLY ONE SOLO CHECKED, THUS... **
@@ -372,18 +372,16 @@ def setupMixer(ui,window):
     
     # *************** MIC2 *********************
     
+    ui.Mic2.setProperty("channel", CC_MIC2_CH)
+    
     # Setting Up the Mic2 Fader
     ui.Mic2Fader.valueChanged.connect(ui.Mic2Lcd.display)
     ui.Mic2Fader.valueChanged.connect(functools.partial(valueChange, CC_MIC2_CH, CC_MAIN_FADER_PAR))
-    #ui.Mic2Fader.setProperty("value", CC_0127_DEFAULT)
-    ui.Mic2Fader.setProperty("channel", CC_MIC2_CH)
     ui.Mic2Fader.setProperty("parameter", CC_MAIN_FADER_PAR)
     
     # Setting Up the Mic2 Pan Dial
     ui.Mic2Pan.valueChanged.connect(ui.Mic2PanLcd.display)
     ui.Mic2Pan.valueChanged.connect(functools.partial(valueChange, CC_MIC2_CH, CC_PAN_PAR))
-    #ui.Mic2Pan.setProperty("value", CC_0127_DEFAULT)
-    ui.Mic2Pan.setProperty("channel", CC_MIC2_CH)
     ui.Mic2Pan.setProperty("parameter", CC_PAN_PAR)
     
     # Setting Up the Mic2 Solo Button ** THEY CAN BE ONLY ONE SOLO CHECKED, THUS... **
@@ -393,11 +391,12 @@ def setupMixer(ui,window):
     
     # *************** WAVE1 *********************
     
+    ui.Wave1.setProperty("channel", CC_WAVE1_CH)
+    
     # Setting up the Wave1 Fader
     ui.Wave1Fader.valueChanged.connect(ui.Wave1Lcd.display)
     ui.Wave1Fader.valueChanged.connect(functools.partial(valueChange, CC_WAVE1_CH, CC_MAIN_FADER_PAR))
     #ui.Wave1Fader.setProperty("value", CC_0127_DEFAULT)
-    ui.Wave1Fader.setProperty("channel", CC_WAVE1_CH)
     ui.Wave1Fader.setProperty("parameter", CC_MAIN_FADER_PAR)
     
     # Setting Up the Wave1 Solo Button ** THEY CAN BE ONLY ONE SOLO CHECKED, THUS... **
@@ -407,11 +406,12 @@ def setupMixer(ui,window):
     
     # *************** WAVE2 *********************
     
+    ui.Wave2.setProperty("channel", CC_WAVE2_CH)
+    
     # Setting up the Wave1 Fader
     ui.Wave2Fader.valueChanged.connect(ui.Wave2Lcd.display)
     ui.Wave2Fader.valueChanged.connect(functools.partial(valueChange, CC_WAVE2_CH, CC_MAIN_FADER_PAR))
     #ui.Wave2Fader.setProperty("value", CC_0127_DEFAULT)
-    ui.Wave2Fader.setProperty("channel", CC_WAVE2_CH)
     ui.Wave2Fader.setProperty("parameter", CC_MAIN_FADER_PAR)    
     
     # Setting Up the Wave2 Solo Button ** THEY CAN BE ONLY ONE SOLO CHECKED, THUS... **
@@ -421,11 +421,11 @@ def setupMixer(ui,window):
     
     # *************** MASTERLINE *********************
     
+    ui.MasterLine.setProperty("channel", CC_LINE_MASTER_CH)
+    
     # Setting Up the MasterLine Fader
     ui.MasterLineFader.valueChanged.connect(ui.MasterLineLcd.display)
     ui.MasterLineFader.valueChanged.connect(functools.partial(valueChange, CC_LINE_MASTER_CH, CC_MAIN_FADER_PAR))
-    #ui.MasterLineFader.setProperty("value", CC_0127_DEFAULT)
-    ui.MasterLineFader.setProperty("channel", CC_LINE_MASTER_CH)
     ui.MasterLineFader.setProperty("parameter", CC_MAIN_FADER_PAR)
 
 def resetMixer(ui,window):
@@ -453,7 +453,7 @@ def actualMidiDevices():
     
     where the tuple is in the format:
     
-    *add example here*
+    ('ALSA', 'UA-100 MIDI 2', 0, 1, 0)
     
     '''
     # Count the MIDI devices connected
@@ -470,6 +470,7 @@ def actualMidiDevices():
         if (REAL_UA_MODE):
             midiDevs[dev]=pm.get_device_info(dev)
         else:
+            # fake entries...
             midiDevs[dev]=('pippo','pluto',1,1,1)
     return midiDevs
 
@@ -517,6 +518,7 @@ def main():
     it already needs a big clean-up. *Andiamo bene...*
     
     '''
+    
     # **************************** MIDI PART: could it go somewhere else? **********************************************
     
     # initialize the portmidi interface
@@ -580,6 +582,10 @@ def main():
     
     # then set up the mixer
     setupMixer(ui,mixerMainWindow)
+    
+    # and the menus
+    setupMenus(ui, mixerMainWindow)
+    
     # and reset it to "mean" values
     resetMixer(ui,mixerMainWindow)
     
@@ -588,4 +594,8 @@ def main():
     sys.exit(app.exec_())
 
 if __name__ == '__main__':
+    
+    # brutal way to catch the CTRL+C signal if run in the console...
+    signal.signal(signal.SIGINT, signal.SIG_DFL)
+    
     main()
