@@ -240,33 +240,57 @@ def pm_open(device):
 #        ui.mic2Solo.setChecked(False)
 
 @QtCore.pyqtSlot()
-def uniqueSolos(self, checked, a = '', b = '', c = ''):
+def mutes(window, checked):
+    '''
+    guess...
+    '''
+    global pmout
+    
+    if (DEBUG_MODE):
+        pass
+    
+    if (checked):
+        pmout.write_short(window.sender().parent().property('channel').toPyObject(), CC_MUTE_PAR ,1)
+    else:
+        pmout.write_short(window.sender().parent().property('channel').toPyObject(), CC_MUTE_PAR ,0)
+    
+    
+
+@QtCore.pyqtSlot()
+def uniqueSolos(window, ui, checked):
     '''
     unchecks all other solo buttons if the present is checked.
-    another slot should take care of sending the right message to the UA-100 to solo the channel.
+    besides, it actually soloes/unsoloes the channel
     '''
     
     global pmout
     
     if (DEBUG_MODE == 1):
-        print ('is checked: ',checked)
-        pass
+        print (window.sender().objectName(), ' checked: ',checked)
     
-    
+    soloers =['Mic1','Mic2','Wave1','Wave2']
+    soloers.remove(str(window.sender().parent().objectName()))
     if (checked):
         if (DEBUG_MODE == 1):
-            print ('unchecking and desoloing ',a,b,c)
-            print ('soloing ')
+            print (soloers)
+            print ('unchecking and desoloing ')
+            print ('soloing ',str(window.sender().parent().objectName()))
         if (REAL_UA_MODE):
-            #pmout.write_short(current.property('channel'),current.property('parameter'),1)
-            #pmout.write_short(a.property('channel'),a.property('parameter'),0)
-            #pmout.write_short(b.property('channel'),b.property('parameter'),0)
-            #pmout.write_short(c.property('channel'),c.property('parameter'),0)
-            pass
-        #a.setChecked(False)
-        #b.setChecked(False)
-        #c.setChecked(False)
-        pass
+            pmout.write_short(window.sender().parent().property('channel').toPyObject(),CC_SOLO_PAR,1)
+            for soloer in soloers:
+                soloingObj = window.findChild(QtGui.QGroupBox, soloer)
+                pmout.write_short(soloingObj.property('channel').toPyObject(),CC_SOLO_PAR,0)
+                soloingButtonStr = soloer+'Solo'
+                print soloingButtonStr
+                soloingButton = soloingObj.findChild(QtGui.QPushButton, soloingButtonStr)
+                soloingButton.setChecked(False)
+                if (DEBUG_MODE):
+                    # review those fucking debug messages. They are just fucking messed up!
+                    print('desoloing: ',soloingObj.objectName())
+                    print soloingObj.property('channel').toPyObject()
+    else:
+        if (REAL_UA_MODE):
+            pmout.write_short(window.sender().parent().property('channel').toPyObject(),CC_SOLO_PAR,0)
 
 @QtCore.pyqtSlot()
 def valueChange(a,b,val):
@@ -355,6 +379,8 @@ def setupMixer(ui,window):
 
     ui.Mic1.setProperty("channel", CC_MIC1_CH)
     
+    print ui.Mic1.property('channel')
+    
     # Setting Up the Mic1 Fader
     ui.Mic1Fader.valueChanged.connect(ui.Mic1Lcd.display)
     ui.Mic1Fader.valueChanged.connect(functools.partial(valueChange, CC_MIC1_CH, CC_MAIN_FADER_PAR))
@@ -368,7 +394,9 @@ def setupMixer(ui,window):
     # Setting Up the Mic1 Solo Button ** THEY CAN BE ONLY ONE SOLO CHECKED, THUS... **
     # ui.mic1Solo.toggled.connect(functools.partial(uniqueSolos, ui, window, ui.mic1Solo, 1))
     #ui.mic1Solo.toggled.connect(functools.partial(uniqueSolos, ui.mic2Solo, ui.wave1Solo, ui.wave2Solo))
-    ui.mic1Solo.toggled.connect(functools.partial(uniqueSolos, window))
+    ui.Mic1Solo.toggled.connect(functools.partial(uniqueSolos, window, ui))
+    
+    ui.Mic1Mute.toggled.connect(functools.partial(valueChange, CC_MIC1_CH, CC_MUTE_PAR))
     
     # *************** MIC2 *********************
     
@@ -387,7 +415,9 @@ def setupMixer(ui,window):
     # Setting Up the Mic2 Solo Button ** THEY CAN BE ONLY ONE SOLO CHECKED, THUS... **
     #ui.mic2Solo.toggled.connect(functools.partial(uniqueSolos, ui, window, ui.mic2Solo, 2))
     #ui.mic2Solo.toggled.connect(functools.partial(uniqueSolos, ui.mic1Solo, ui.wave1Solo, ui.wave2Solo))
-    ui.mic2Solo.toggled.connect(uniqueSolos)
+    ui.Mic2Solo.toggled.connect(functools.partial(uniqueSolos, window, ui))
+    
+    ui.Mic2Mute.toggled.connect(functools.partial(valueChange, CC_MIC2_CH, CC_MUTE_PAR))
     
     # *************** WAVE1 *********************
     
@@ -402,7 +432,8 @@ def setupMixer(ui,window):
     # Setting Up the Wave1 Solo Button ** THEY CAN BE ONLY ONE SOLO CHECKED, THUS... **
     #ui.wave1Solo.toggled.connect(functools.partial(uniqueSolos, ui, window, ui.wave1Solo, 3))
     #ui.wave1Solo.toggled.connect(functools.partial(uniqueSolos, ui.mic1Solo, ui.wave2Solo, ui.mic2Solo))
-    ui.wave1Solo.toggled.connect(uniqueSolos)
+    ui.Wave1Solo.toggled.connect(functools.partial(uniqueSolos, window, ui))
+    ui.Wave1Mute.toggled.connect(functools.partial(valueChange, CC_WAVE1_CH, CC_MUTE_PAR))
     
     # *************** WAVE2 *********************
     
@@ -417,7 +448,9 @@ def setupMixer(ui,window):
     # Setting Up the Wave2 Solo Button ** THEY CAN BE ONLY ONE SOLO CHECKED, THUS... **
     #ui.wave2Solo.toggled.connect(functools.partial(uniqueSolos, ui, window, ui.wave1Solo, 4))
     #ui.wave2Solo.toggled.connect(functools.partial(uniqueSolos, ui.mic1Solo, ui.wave1Solo, ui.mic2Solo))
-    ui.wave2Solo.toggled.connect(uniqueSolos)
+    ui.Wave2Solo.toggled.connect(functools.partial(uniqueSolos, window, ui))
+    
+    ui.Wave2Mute.toggled.connect(functools.partial(valueChange, CC_WAVE2_CH, CC_MUTE_PAR))
     
     # *************** MASTERLINE *********************
     
