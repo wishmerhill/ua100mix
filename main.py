@@ -1,3 +1,23 @@
+# ********************************
+# ***** DEBUG MODE CONTROL *******
+# SET:
+#      1: debug messages on stdout ON
+#      0: debug messages on stdout OFF
+
+DEBUG_MODE = 1
+
+# ********************************
+# ***** UA MODE CONTROL **********
+#
+# SET:
+#      0: No UA-100 present, for test purposes on other machines
+#      1: UA-100 present and working
+
+REAL_UA_MODE = 1
+
+# ********************************
+
+
 import sys
 import os
 import functools
@@ -13,6 +33,7 @@ from main_ui_setup import *
 from device_sel_ui import *
 from types import MethodType
 import signal
+import time
 
 # Defining costants (taken from UA-100 documentation)
 # and copying some useful documentation excerts
@@ -192,25 +213,91 @@ CC_EFFECTSWITHC_PAR = 23 # 0x23
 # 
 # MIDI EXCLUSIVE
 # ********** I SHALL PUT SOME CONSTANTS FOR THE SYSEXs AND PASTE THE DOCUMENTATION AS WELL **********
-
-# ********************************
-# ***** DEBUG MODE CONTROL *******
-# SET:
-#      1: debug messages on stdout ON
-#      0: debug messages on stdout OFF
-
-DEBUG_MODE = 1
-
-# ********************************
-# ***** UA MODE CONTROL **********
+# LET'S START
 #
-# SET:
-#      0: No UA-100 present, for test purposes on other machines
-#      1: UA-100 present and working
+# let's set the sleep time between SYSEXex (in seconds)
+SLEEP_TIME = 0.05 
 
-REAL_UA_MODE = 1
+# This should be common for all SYSEXes
+UA_SYSEX_ID= [0x41,0x10,0x00,0x11]
 
-# ********************************
+# Request data 1 RQ1 (0x11)
+RQ1_STATUS = [0xF0]
+RQ1_COMMAND = [0x11]
+
+# Data set 1 (DT1)
+DT1_STATUS = [0xF0]
+DT1_COMMAND = [0x12]
+
+# Address map (one last 0xnn is the actual parameter)
+
+# Mixer Parameters
+
+
+# UA-100 Control
+
+UA100_CONTROL = [0x00, 0x40, 0x00]
+
+# MODE
+UA100_MODE = [0x00]
+UA100_MODE_SIZE = [0x00, 0x00, 0x00, 0x01]
+#UA100_MODE_DATARANGE = range(0x01,10)
+    # 1: PC Mode(VT Effect Mode)
+    # 3: PC Mode(Compact Effect Mode)
+    # 4: PC Mode(Full Effect Mode)
+    # 5: VT Mode
+    # 6: Vocal Mode
+    # 7: Guitar Mode
+    # 8: GAME Mode
+    # 9: BYPASS Mode
+    # * Send only (sent when the Effect Type Selector is switched or when a requested by Data Request 1)
+
+# COPYRIGHT
+COPYRIGHT = [0x01]
+COPYRIGHT_SIZE = [0x00, 0x00, 0x00, 0x01]
+
+# Mixer Input Control
+MIXER_INPUT_CONTROL = [0x00, 0x40, 0x10]
+MIXER_INPUT_PAN1 = [0x01]
+MIXER_INPUT_PAN1_SIZE = [0x00, 0x00, 0x00, 0x01]
+MIXER_INPUT_PAN2 = [0x02]
+MIXER_INPUT_PAN2_SIZE = [0x00, 0x00, 0x00, 0x01]
+MIXER_INPUT_MONITOR_SW = [0x03]
+MIXER_INPUT_MONITOR_SW_SIZE = [0x00, 0x00, 0x00, 0x01]
+
+#...
+MIC1_FADER = [0x00, 0x40, 0x11, 0x05]
+MIC1_FADER_SIZE = [0x00, 0x00, 0x00, 0x01]
+MIC2_FADER = [0x00, 0x40, 0x12, 0x05]
+MIC2_FADER_SIZE = [0x00, 0x00, 0x00, 0x01]
+WAVE1_FADER = [0x00, 0x40, 0x13, 0x05]
+WAVE1_FADER_SIZE = [0x00, 0x00, 0x00, 0x01]
+# WAVE1_FADER_RANGErange(0x00, 0x80)
+WAVE2_FADER = [0x00, 0x40, 0x14, 0x05]
+WAVE2_FADER_SIZE = [0x00, 0x00, 0x00, 0x01]
+#...
+
+EFFECT_PARAMETER = [0x00, 0x40, 0x01]
+
+MIXER_EFFECT_CONTROL = [0x00, 0x40, 0x40]
+
+# Mixer Output Control
+MIXER_OUTPUT_CONTROL = [0x00, 0x40, 0x50]
+
+#...
+MIXER_OUTPUT_MASTERLEVEL = [0x03]
+MIXER_OUTPUT_MASTERLEVEL_SIZE = [0x00, 0x00, 0x00, 0x01]
+#MIXER_OUTPUT_MASTERLEVEL_RANGE = range(0x00, 0x80)
+#...
+
+
+PRESET_EFFECT_CONTROL = [0x00, 0x40, 0x60]
+
+
+
+
+# End of exclusive (EOX)
+EOX = [0xF7]
 
 def pm_open(device):
     '''
@@ -265,9 +352,6 @@ def uniqueSolos(window, ui, checked):
     
     global pmout
     
-    if (DEBUG_MODE == 1):
-        print (window.sender().objectName(), ' checked: ',checked)
-    
     soloers =['Mic1','Mic2','Wave1','Wave2']
     soloers.remove(str(window.sender().parent().objectName()))
     if (checked):
@@ -281,7 +365,7 @@ def uniqueSolos(window, ui, checked):
                 soloingObj = window.findChild(QtGui.QGroupBox, soloer)
                 pmout.write_short(soloingObj.property('channel').toPyObject(),CC_SOLO_PAR,0)
                 soloingButtonStr = soloer+'Solo'
-                print soloingButtonStr
+                #print soloingButtonStr
                 soloingButton = soloingObj.findChild(QtGui.QPushButton, soloingButtonStr)
                 soloingButton.setChecked(False)
                 if (DEBUG_MODE):
@@ -353,14 +437,14 @@ def setMidiDevice(index):
         print ('Index = ', index)
         print ('UA100CONTROL = ',UA100CONTROL)
 
-@QtCore.pyqtSlot(int)
-def testing_self(self, value):
-    '''
-    test of self
-    '''
-    if (DEBUG_MODE == 1):
-        print ('Self = ', self.sender().parent().objectName(), ' Value: ',value)
-    pass
+#@QtCore.pyqtSlot(int)
+#def testing_self(self, value):
+#    '''
+#    test of self
+#    '''
+#    if (DEBUG_MODE == 1):
+#        print ('Self = ', self.sender().parent().objectName(), ' Value: ',value)
+#    pass
 
 def setupMenus(ui, window):
     ui.actionReset_Mixer.triggered.connect(functools.partial(resetMixer, ui, window))
@@ -373,13 +457,11 @@ def setupMixer(ui,window):
     of here.
     '''
     
-    ui.Mic1Fader.valueChanged.connect(functools.partial(testing_self, window))
+    #ui.Mic1Fader.valueChanged.connect(functools.partial(testing_self, window))
 
     # *************** MIC1 *********************
 
     ui.Mic1.setProperty("channel", CC_MIC1_CH)
-    
-    print ui.Mic1.property('channel')
     
     # Setting Up the Mic1 Fader
     ui.Mic1Fader.valueChanged.connect(ui.Mic1Lcd.display)
@@ -397,6 +479,15 @@ def setupMixer(ui,window):
     ui.Mic1Solo.toggled.connect(functools.partial(uniqueSolos, window, ui))
     
     ui.Mic1Mute.toggled.connect(functools.partial(valueChange, CC_MIC1_CH, CC_MUTE_PAR))
+    
+    # Setting Up the SubFader
+    ui.Mic1SubFader.valueChanged.connect(ui.Mic1SubLcd.display)
+    ui.Mic1SubFader.valueChanged.connect(functools.partial(valueChange, CC_MIC1_CH, CC_SUB_FADER_PAR))
+    
+    # hiding the subs...
+    ui.Mic1SubFader.hide()
+    ui.Mic1SubLcd.hide()
+    
     
     # *************** MIC2 *********************
     
@@ -419,6 +510,15 @@ def setupMixer(ui,window):
     
     ui.Mic2Mute.toggled.connect(functools.partial(valueChange, CC_MIC2_CH, CC_MUTE_PAR))
     
+    # hiding the subs...
+    ui.Mic2SubFader.hide()
+    ui.Mic2SubLcd.hide()
+    
+    # Setting Up the SubFader
+    ui.Mic2SubFader.valueChanged.connect(ui.Mic2SubLcd.display)
+    ui.Mic2SubFader.valueChanged.connect(functools.partial(valueChange, CC_MIC2_CH, CC_SUB_FADER_PAR))
+    
+    
     # *************** WAVE1 *********************
     
     ui.Wave1.setProperty("channel", CC_WAVE1_CH)
@@ -434,6 +534,15 @@ def setupMixer(ui,window):
     #ui.wave1Solo.toggled.connect(functools.partial(uniqueSolos, ui.mic1Solo, ui.wave2Solo, ui.mic2Solo))
     ui.Wave1Solo.toggled.connect(functools.partial(uniqueSolos, window, ui))
     ui.Wave1Mute.toggled.connect(functools.partial(valueChange, CC_WAVE1_CH, CC_MUTE_PAR))
+    
+    # Setting Up the SubFader
+    ui.Wave1SubFader.valueChanged.connect(ui.Wave1SubLcd.display)
+    ui.Wave1SubFader.valueChanged.connect(functools.partial(valueChange,CC_WAVE1_CH, CC_SUB_FADER_PAR))
+    
+    # hiding the subs...
+    ui.Wave1SubFader.hide()
+    ui.Wave1SubLcd.hide()
+    
     
     # *************** WAVE2 *********************
     
@@ -452,14 +561,46 @@ def setupMixer(ui,window):
     
     ui.Wave2Mute.toggled.connect(functools.partial(valueChange, CC_WAVE2_CH, CC_MUTE_PAR))
     
+    # Setting Up the SubFader
+    ui.Wave2SubFader.valueChanged.connect(ui.Wave2SubLcd.display)
+    ui.Wave2SubFader.valueChanged.connect(functools.partial(valueChange, CC_WAVE2_CH, CC_SUB_FADER_PAR))
+    
+    # hiding the subs...
+    ui.Wave2SubFader.hide()
+    ui.Wave2SubLcd.hide()
+    
     # *************** MASTERLINE *********************
     
-    ui.MasterLine.setProperty("channel", CC_LINE_MASTER_CH)
+    ui.MasterLineFader.setProperty("channel", CC_LINE_MASTER_CH)
     
     # Setting Up the MasterLine Fader
     ui.MasterLineFader.valueChanged.connect(ui.MasterLineLcd.display)
     ui.MasterLineFader.valueChanged.connect(functools.partial(valueChange, CC_LINE_MASTER_CH, CC_MAIN_FADER_PAR))
     ui.MasterLineFader.setProperty("parameter", CC_MAIN_FADER_PAR)
+    
+    # SUB BUTTON
+    
+    ui.SubButton.toggled.connect(functools.partial(showHideSub, ui, window))
+
+def showHideSub(ui, window, checked):
+    if (checked):
+        ui.Mic1SubFader.show()
+        ui.Mic1SubLcd.show()
+        ui.Mic2SubFader.show()
+        ui.Mic2SubLcd.show()
+        ui.Wave1SubFader.show()
+        ui.Wave1SubLcd.show()
+        ui.Wave2SubFader.show()
+        ui.Wave2SubLcd.show()
+    else:
+        ui.Mic1SubFader.hide()
+        ui.Mic1SubLcd.hide()
+        ui.Mic2SubFader.hide()
+        ui.Mic2SubLcd.hide()
+        ui.Wave1SubFader.hide()
+        ui.Wave1SubLcd.hide()
+        ui.Wave2SubFader.hide()
+        ui.Wave2SubLcd.hide()
 
 def resetMixer(ui,window):
     '''
@@ -471,11 +612,15 @@ def resetMixer(ui,window):
     '''
     ui.MasterLineFader.setProperty("value", CC_0127_DEFAULT)
     ui.Wave1Fader.setProperty("value", CC_0127_DEFAULT)
+    #ui.Wave1SubFader.setProperty("value", CC_0127_DEFAULT)
     ui.Wave2Fader.setProperty("value", CC_0127_DEFAULT)
+    #ui.Wave2SubFader.setProperty("value", CC_0127_DEFAULT)
     ui.Mic1Fader.setProperty("value", CC_0127_DEFAULT)
     ui.Mic1Pan.setProperty("value", CC_0127_DEFAULT)
+    #ui.Mic1SubFader.setProperty("value", CC_0127_DEFAULT)
     ui.Mic2Fader.setProperty("value", CC_0127_DEFAULT)
     ui.Mic2Pan.setProperty("value", CC_0127_DEFAULT)
+    #ui.Mic2SubFader.setProperty("value", CC_0127_DEFAULT)
 
 def actualMidiDevices():
     '''
@@ -546,6 +691,67 @@ def setupDevicesList(ui,window,midiDevs,defaultUA100Control):
     # set the current index to the guessed right outpud midi device for the UA100 controller
     ui.outputDevicesList.setCurrentIndex(defaultUA100Control)
     
+def setInitMixerLevels(ui, window):
+    '''
+    It works. It send SYSEX and reads answers. But there must me a better way...
+    '''
+    
+    global pmout, pmin
+
+    
+    # sending the sysex RQ1 for the main level
+    send_RQ1(MIXER_OUTPUT_CONTROL + MIXER_OUTPUT_MASTERLEVEL + MIXER_OUTPUT_MASTERLEVEL_SIZE)
+    time.sleep(SLEEP_TIME)
+    # reading and storing the mixer level
+    answerList = pmin.read(4)
+    masterLevel= answerList[2][0][2]
+    # setting the easy way
+    ui.MasterLineFader.setProperty("value", masterLevel)
+    
+    send_RQ1(MIC1_FADER + MIC1_FADER_SIZE)
+    time.sleep(SLEEP_TIME)
+    answerList = pmin.read(4)
+    mic1Level= answerList[2][0][2]
+    ui.Mic1Fader.setProperty("value", mic1Level)
+    
+    send_RQ1(MIC2_FADER + MIC2_FADER_SIZE)
+    time.sleep(SLEEP_TIME)
+    answerList = pmin.read(4)
+    mic2Level= answerList[2][0][2]
+    ui.Mic2Fader.setProperty("value", mic2Level)
+    
+    send_RQ1(WAVE1_FADER + WAVE1_FADER_SIZE)
+    time.sleep(SLEEP_TIME)
+    answerList = pmin.read(4)
+    wave1Level= answerList[2][0][2]
+    ui.Wave1Fader.setProperty("value", wave1Level)
+    
+    send_RQ1(WAVE2_FADER + WAVE2_FADER_SIZE)
+    time.sleep(SLEEP_TIME)
+    answerList = pmin.read(4)
+    wave2Level= answerList[2][0][2]
+    ui.Wave2Fader.setProperty("value", wave2Level)
+    
+def send_RQ1(data):
+    global pmout, pmin
+    checksum_result = checksum(data)
+    message = RQ1_STATUS \
+              +UA_SYSEX_ID \
+              + RQ1_COMMAND \
+              + data \
+              + checksum_result\
+              + EOX
+    pmout.write_sys_ex(pm.time(),message)
+    
+def checksum(toChecksum):
+    '''
+    '''
+    checksum_value = (128 - (sum(toChecksum) % 128))
+    checksum_list = [checksum_value]
+    return list(checksum_list)
+    
+    pass
+
 def main(): 
     '''
     it already needs a big clean-up. *Andiamo bene...*
@@ -593,7 +799,7 @@ def main():
     
     #mixerMainWindow.valueChange = valueChange
     #mixerMainWindow.uniqueSolos = uniqueSolos
-    mixerMainWindow.testing_self = testing_self
+    #mixerMainWindow.testing_self = testing_self
     
     # inizializing the UI inside the mixerMainWindow
     ui = Ui_MainWindow()
@@ -620,7 +826,10 @@ def main():
     setupMenus(ui, mixerMainWindow)
     
     # and reset it to "mean" values
-    resetMixer(ui,mixerMainWindow)
+    # resetMixer(ui,mixerMainWindow)
+    # NO. I try to read the actual values
+    
+    setInitMixerLevels(ui, mixerMainWindow)
     
     # let the drums roll! We are now ready to show the mixer!
     mixerMainWindow.show()
