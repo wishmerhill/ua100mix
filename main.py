@@ -38,6 +38,9 @@ import time
 # Defining costants (taken from UA-100 documentation)
 # and copying some useful documentation excerts
 
+if (DEBUG_MODE):
+    print('Reading some constants...')
+
 # **************** this will and should be replaced with the real values obtained with sysex messages...
 CC_0127_DEFAULT = 64 # I think 'in media stat virtus'
 
@@ -288,16 +291,19 @@ MIXER_OUTPUT_CONTROL = [0x00, 0x40, 0x50]
 MIXER_OUTPUT_MASTERLEVEL = [0x03]
 MIXER_OUTPUT_MASTERLEVEL_SIZE = [0x00, 0x00, 0x00, 0x01]
 #MIXER_OUTPUT_MASTERLEVEL_RANGE = range(0x00, 0x80)
+MIXER_OUTPUT_WAVEREC = [0x02]
+MIXER_OUTPUT_WAVEREC_SIZE = [0x00, 0x00, 0x00, 0x01]
 #...
 
 
 PRESET_EFFECT_CONTROL = [0x00, 0x40, 0x60]
 
-
-
-
 # End of exclusive (EOX)
 EOX = [0xF7]
+
+if (DEBUG_MODE):
+    print('Done!')
+
 
 def pm_open(device):
     '''
@@ -310,26 +316,19 @@ def pm_open(device):
     global pmin
     
     if (REAL_UA_MODE):
+        if (DEBUG_MODE):
+            print('Opening device: ',device,' for ouput and device: ', device+1, 'for input')
         # Open device for output
         pmout = pm.midi.Output(device)
-    
         # Open "the next" device for input
         pmin = pm.midi.Input(device+1)
-    
-#@QtCore.pyqtSlot()
-#def uniqueSolos(ui, window, Solo, num):
-#    
-#    if (DEBUG_MODE == 1):
-#        print ui, window, Solo, num
-#        print Solo.isChecked()
-#    
-#    if (Solo.isChecked()) and (num != 2):
-#        ui.mic2Solo.setChecked(False)
+        
 
 @QtCore.pyqtSlot()
 def mutes(window, checked):
     '''
-    guess...
+    Muting channels.
+    Actually, the mute button should disappear from not soloed channels. To be done.
     '''
     global pmout
     
@@ -578,9 +577,21 @@ def setupMixer(ui,window):
     ui.MasterLineFader.valueChanged.connect(functools.partial(valueChange, CC_LINE_MASTER_CH, CC_MAIN_FADER_PAR))
     ui.MasterLineFader.setProperty("parameter", CC_MAIN_FADER_PAR)
     
+    # *************** WAVE (REC) **********************
+    
+    # Setting up the Wave (Rec) Fader
+    ui.WaveRecFader.valueChanged.connect(ui.WaveRecLcd.display)
+    ui.WaveRecFader.valueChanged.connect(functools.partial(valueChange, CC_WAVEREC_CH, CC_MAIN_FADER_PAR))
+    
+    
     # SUB BUTTON
     
     ui.SubButton.toggled.connect(functools.partial(showHideSub, ui, window))
+    
+    # hiding more...
+    ui.SysEffSub1.hide()
+    ui.SysEffSub2.hide()
+    ui.SysEffSubLabel.hide()
 
 def showHideSub(ui, window, checked):
     if (checked):
@@ -592,6 +603,9 @@ def showHideSub(ui, window, checked):
         ui.Wave1SubLcd.show()
         ui.Wave2SubFader.show()
         ui.Wave2SubLcd.show()
+        ui.SysEffSub1.show()
+        ui.SysEffSub2.show()
+        ui.SysEffSubLabel.show()
     else:
         ui.Mic1SubFader.hide()
         ui.Mic1SubLcd.hide()
@@ -601,6 +615,9 @@ def showHideSub(ui, window, checked):
         ui.Wave1SubLcd.hide()
         ui.Wave2SubFader.hide()
         ui.Wave2SubLcd.hide()
+        ui.SysEffSub1.hide()
+        ui.SysEffSub2.hide()
+        ui.SysEffSubLabel.hide()
 
 def resetMixer(ui,window):
     '''
@@ -693,20 +710,23 @@ def setupDevicesList(ui,window,midiDevs,defaultUA100Control):
     
 def setInitMixerLevels(ui, window):
     '''
-    It works. It send SYSEX and reads answers. But there must me a better way...
+    It works. It send SYSEX and reads answers. But there must me a better way to read and write.
+    Actually there is, but I'm lazy.
     '''
     
     global pmout, pmin
 
-    
-    # sending the sysex RQ1 for the main level
     send_RQ1(MIXER_OUTPUT_CONTROL + MIXER_OUTPUT_MASTERLEVEL + MIXER_OUTPUT_MASTERLEVEL_SIZE)
     time.sleep(SLEEP_TIME)
-    # reading and storing the mixer level
     answerList = pmin.read(4)
     masterLevel= answerList[2][0][2]
-    # setting the easy way
     ui.MasterLineFader.setProperty("value", masterLevel)
+    
+    send_RQ1(MIXER_OUTPUT_CONTROL + MIXER_OUTPUT_WAVEREC + MIXER_OUTPUT_WAVEREC_SIZE)
+    time.sleep(SLEEP_TIME)
+    answerList = pmin.read(4)
+    waverecLevel= answerList[2][0][2]
+    ui.WaveRecFader.setProperty("value", waverecLevel)
     
     send_RQ1(MIC1_FADER + MIC1_FADER_SIZE)
     time.sleep(SLEEP_TIME)
@@ -796,7 +816,7 @@ def main():
     mixerMainWindow = QtGui.QMainWindow()
     
     # Add custom slots to the mixerMainWindow instance
-    
+    # *** I discovered this is not needed. So they just stay as memory. ***
     #mixerMainWindow.valueChange = valueChange
     #mixerMainWindow.uniqueSolos = uniqueSolos
     #mixerMainWindow.testing_self = testing_self
