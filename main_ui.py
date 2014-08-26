@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'main.ui'
 #
-# Created: Sun Aug 24 23:38:32 2014
+# Created: Tue Aug 26 23:23:54 2014
 #      by: PyQt4 UI code generator 4.11.1
 #
 # WARNING! All changes made in this file will be lost!
@@ -646,9 +646,9 @@ class Ui_MainWindow(object):
         self.label_15 = QtGui.QLabel(self.outputBox)
         self.label_15.setObjectName(_fromUtf8("label_15"))
         self.gridLayout_8.addWidget(self.label_15, 3, 4, 1, 1, QtCore.Qt.AlignHCenter)
-        self.OutputWaveRecSourceSelector = QtGui.QComboBox(self.outputBox)
-        self.OutputWaveRecSourceSelector.setObjectName(_fromUtf8("OutputWaveRecSourceSelector"))
-        self.gridLayout_8.addWidget(self.OutputWaveRecSourceSelector, 4, 4, 1, 1, QtCore.Qt.AlignHCenter)
+        self.OutputWaveRecSourceSelect = QtGui.QComboBox(self.outputBox)
+        self.OutputWaveRecSourceSelect.setObjectName(_fromUtf8("OutputWaveRecSourceSelect"))
+        self.gridLayout_8.addWidget(self.OutputWaveRecSourceSelect, 4, 4, 1, 1, QtCore.Qt.AlignHCenter)
         self.MasterLineFader = QtGui.QSlider(self.outputBox)
         self.MasterLineFader.setMinimumSize(QtCore.QSize(0, 100))
         self.MasterLineFader.setMaximumSize(QtCore.QSize(16777215, 400))
@@ -678,9 +678,9 @@ class Ui_MainWindow(object):
         self.label_16.setFont(font)
         self.label_16.setObjectName(_fromUtf8("label_16"))
         self.gridLayout_8.addWidget(self.label_16, 7, 3, 1, 1, QtCore.Qt.AlignHCenter)
-        self.outputMasterSourceSelect = QtGui.QComboBox(self.outputBox)
-        self.outputMasterSourceSelect.setObjectName(_fromUtf8("outputMasterSourceSelect"))
-        self.gridLayout_8.addWidget(self.outputMasterSourceSelect, 4, 3, 1, 1, QtCore.Qt.AlignHCenter)
+        self.OutputMasterSourceSelect = QtGui.QComboBox(self.outputBox)
+        self.OutputMasterSourceSelect.setObjectName(_fromUtf8("OutputMasterSourceSelect"))
+        self.gridLayout_8.addWidget(self.OutputMasterSourceSelect, 4, 3, 1, 1, QtCore.Qt.AlignHCenter)
         self.label_14 = QtGui.QLabel(self.outputBox)
         self.label_14.setObjectName(_fromUtf8("label_14"))
         self.gridLayout_8.addWidget(self.label_14, 3, 3, 1, 1, QtCore.Qt.AlignHCenter)

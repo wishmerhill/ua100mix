@@ -286,6 +286,46 @@ MIXER_EFFECT_CONTROL = [0x00, 0x40, 0x40]
 
 # Mixer Output Control
 MIXER_OUTPUT_CONTROL = [0x00, 0x40, 0x50]
+#
+MASTER_SELECT_MIXERMODE = {0x00: 'LINE/MIC1/MIC1+MIC2',\
+                           0x01: 'MIC2',\
+                           0x02: 'WAVE1',\
+                           0x03: 'WAVE2',\
+                           0x04: 'CH1',\
+                           0x05: 'CH2',\
+                           0x06: 'CH3',\
+                           0x07: 'CH4',\
+                           0x08: 'SUB',\
+                           0x09: 'MAIN',\
+                           0x0A: 'WAVE(REC)OUT'}
+MASTER_SELECT_VTMIXERMODE = {0x00: 'LINE/MIC1',\
+                             0x01: 'MIC2',\
+                             0x02: 'WAVE1',\
+                             0x03: 'WAVE2',\
+                             0x04: 'VT_OUT',\
+                             0x05: 'MAIN',\
+                             0x06: 'WAVE(REC)OUT'}
+WAVE_SELECT_MIXERMODE = {0x00: 'LINE/MIC1/MIC1+MIC2',\
+                           0x01: 'MIC2',\
+                           0x02: 'WAVE1',\
+                           0x03: 'WAVE2',\
+                           0x04: 'CH1',\
+                           0x05: 'CH2',\
+                           0x06: 'CH3',\
+                           0x07: 'CH4',\
+                           0x08: 'SUB',\
+                           0x09: 'MAIN'}
+WAVE_SELECT_VTMIXERMODE = {0x00: 'LINE/MIC1',\
+                             0x01: 'MIC2',\
+                             0x02: 'WAVE1',\
+                             0x03: 'WAVE2',\
+                             0x04: 'VT_OUT',\
+                             0x05: 'MAIN'}
+
+# Mixer Output Mode:
+# 0: VT MIXER MODE
+# 1: MIXER MODE
+MIXER_OUTPUT_MODE = 1
 
 #...
 MIXER_OUTPUT_MASTERLEVEL = [0x03]
@@ -359,31 +399,27 @@ def uniqueSolos(window, ui, checked):
     soloers.remove(str(window.sender().parent().objectName()))
     if (checked):
         if (DEBUG_MODE == 1):
-            print (soloers)
-            print ('unchecking and desoloing ')
-            print ('soloing ',str(window.sender().parent().objectName()))
+            print(soloers)
+            print('unchecking and desoloing ')
+            print('soloing ',str(window.sender().parent().objectName()))
         if (REAL_UA_MODE):
             pmout.write_short(window.sender().parent().property('channel').toPyObject(),CC_SOLO_PAR,1)
-            # *************************************************************
-            # ***************** check this part. Is wrongly indented ******
-            # *************************************************************
-            for soloer in soloers:
-                soloingObj = window.findChild(QtGui.QGroupBox, soloer)
-                pmout.write_short(soloingObj.property('channel').toPyObject(),CC_SOLO_PAR,0)
-                soloingButtonStr = soloer+'Solo'
-                #print soloingButtonStr
-                soloingButton = soloingObj.findChild(QtGui.QPushButton, soloingButtonStr)
-                soloingButton.setChecked(False)
-                if (DEBUG_MODE):
-                    # review those fucking debug messages. They are just fucking messed up!
-                    print('desoloing: ',soloingObj.objectName())
-                    print soloingObj.property('channel').toPyObject()
-            # *************************************************************
-            # *************************************************************
-            # *************************************************************
+        for soloer in soloers:
+            soloingObj = window.findChild(QtGui.QGroupBox, soloer)
+            pmout.write_short(soloingObj.property('channel').toPyObject(),CC_SOLO_PAR,0)
+            soloingButtonStr = soloer+'Solo'
+            #print soloingButtonStr
+            soloingButton = soloingObj.findChild(QtGui.QPushButton, soloingButtonStr)
+            soloingButton.setChecked(False)
+            if (DEBUG_MODE):
+                # review those fucking debug messages. They are just fucking messed up!
+                print('desoloing: ',soloingObj.objectName())
+                print soloingObj.property('channel').toPyObject()
     else:
         if (REAL_UA_MODE):
             pmout.write_short(window.sender().parent().property('channel').toPyObject(),CC_SOLO_PAR,0)
+        else:
+            print('pmout.write_short(',window.sender().parent().property('channel').toPyObject(),',',CC_SOLO_PAR,'0)')
 
 @QtCore.pyqtSlot()
 def valueChange(a,b,val):
@@ -392,23 +428,11 @@ def valueChange(a,b,val):
     '''
     global pmout
     
-    #**********************************************************
-    #**********************************************************
-    # TO DO URGENTLY:
-    # using self.sender() the a and b parameter are useless, as
-    # a = self.sender().property('channel') and
-    # b = self.sender().property('parameter')
-    # and val is automatically passed on valuechange...
-    # Thus, using functools.partial is absolutely not needed.
-    # 
-    # the only question is: does self.sender() work? I'll try.
-    # **** ANSWER: No it does not work...
-    
     if (REAL_UA_MODE):
         pmout.write_short(a,b,val)
     
     if (DEBUG_MODE == 1):
-        print (hex(a),b,val)
+        print(hex(a),b,val)
 
 @QtCore.pyqtSlot()
 def updateDeviceLabels(ui, midiDevs, indice, defaultDevice):
@@ -431,7 +455,7 @@ def updateDeviceLabels(ui, midiDevs, indice, defaultDevice):
         ui.reccomendedLabel.setText('')
     
     if (DEBUG_MODE == 1):
-        print (midiDevs[indice][2], midiDevs[indice][3])
+        print(midiDevs[indice][2], midiDevs[indice][3])
         
 
 @QtCore.pyqtSlot()
@@ -443,8 +467,8 @@ def setMidiDevice(index):
     
     UA100CONTROL=index
     if (DEBUG_MODE ==1):
-        print ('Index = ', index)
-        print ('UA100CONTROL = ',UA100CONTROL)
+        print('Index = ', index)
+        print('UA100CONTROL = ',UA100CONTROL)
 
 #@QtCore.pyqtSlot(int)
 #def testing_self(self, value):
@@ -452,11 +476,11 @@ def setMidiDevice(index):
 #    test of self
 #    '''
 #    if (DEBUG_MODE == 1):
-#        print ('Self = ', self.sender().parent().objectName(), ' Value: ',value)
+#        print('Self = ', self.sender().parent().objectName(), ' Value: ',value)
 #    pass
 
 def setupMenus(ui, window):
-    ui.actionReset_Mixer.triggered.connect(functools.partial(resetMixer, ui, window))
+    ui.actionReset_Mixer.triggered.connect(functools.partial(resetMixer, ui))
     ui.actionQuit.triggered.connect(QtGui.qApp.quit)
 
 def setupMixer(ui,window):
@@ -602,6 +626,21 @@ def setupMixer(ui,window):
     ui.SysEffSub1.hide()
     ui.SysEffSub2.hide()
     ui.SysEffSubLabel.hide()
+    
+    # Setting Up Mixer Output Sources for Master
+    ui.OutputMasterSourceSelect.currentIndexChanged.connect(functools.partial(valueChange, CC_LINE_MASTER_CH, CC_SELECTOR_PAR))
+    if (MIXER_OUTPUT_MODE):
+        for key in MASTER_SELECT_MIXERMODE.keys():
+            ui.OutputMasterSourceSelect.addItem(MASTER_SELECT_MIXERMODE[key])
+        ui.OutputMasterSourceSelect.setCurrentIndex(0x09)
+        
+    # Setting Up Mixer Output Sources for Wave(Rec)
+    ui.OutputWaveRecSourceSelect.currentIndexChanged.connect(functools.partial(valueChange, CC_WAVEREC_CH, CC_SELECTOR_PAR))
+    if (MIXER_OUTPUT_MODE):
+        for key in WAVE_SELECT_MIXERMODE.keys():
+            ui.OutputWaveRecSourceSelect.addItem(WAVE_SELECT_MIXERMODE[key])
+        ui.OutputWaveRecSourceSelect.setCurrentIndex(0x09)
+        
 
 def showHideSub(ui, window, checked):
     if (checked):
@@ -629,7 +668,7 @@ def showHideSub(ui, window, checked):
         ui.SysEffSub2.hide()
         ui.SysEffSubLabel.hide()
 
-def resetMixer(ui,window):
+def resetMixer(ui):
     '''
     Reset all mixer values to average ones.
     ***************************************
@@ -691,7 +730,7 @@ def rightMidiDevice(midiDevs):
     for i in range(0,len(midiDevs)):
         if (midiDevs[i][1] == 'UA-100 Control') & (midiDevs[i][3] == 1):
             if (DEBUG_MODE == 1):
-                print ('Trovato! Il controller e il device ',i, ', ovvero ',midiDevs[i][1])
+                print('Trovato! Il controller e il device ',i, ', ovvero ',midiDevs[i][1])
             return int(i)
 
 def setupDevicesList(ui,window,midiDevs,defaultUA100Control):
@@ -763,6 +802,14 @@ def setInitMixerLevels(ui, window):
     ui.Wave2Fader.setProperty("value", wave2Level)
     
 def send_RQ1(data):
+    '''
+    Here we are about to send a Request Data 1.
+    Never forget to checksum!
+    
+    ** Note
+    The first part of the message is fixed. What can change is the data (of course, it's function agument!)
+    AND the checksum, which on his side, depends on the data.
+    '''
     global pmout, pmin
     checksum_result = checksum(data)
     message = RQ1_STATUS \
@@ -775,6 +822,8 @@ def send_RQ1(data):
     
 def checksum(toChecksum):
     '''
+    That's how the UA-100 does the checksum:
+    Take the data part of SYSEXES and do the maths.
     '''
     checksum_value = (128 - (sum(toChecksum) % 128))
     checksum_list = [checksum_value]
@@ -799,7 +848,7 @@ def main():
     midiDevs=actualMidiDevices()
     
     if (DEBUG_MODE == 1):
-        print ('MIDI DEVICES FOUND: ',len(midiDevs),'. They are: ', midiDevs)
+        print('MIDI DEVICES FOUND: ',len(midiDevs),'. They are: ', midiDevs)
         
     # guess the right midi device
     if (REAL_UA_MODE):
@@ -808,7 +857,7 @@ def main():
         UA100CONTROL = 1
     
     if (DEBUG_MODE == 1):
-        print ('UA100CONTROL = ',UA100CONTROL)
+        print('UA100CONTROL = ',UA100CONTROL)
 
     # *******************************************************************************************************************
 
@@ -843,7 +892,7 @@ def main():
     if not midiDevsDialog.exec_():
         # We quit if the the selection dialog quits
         if (DEBUG_MODE == 1):
-            print ('Bye.')
+            print('Bye.')
         sys.exit()
     
     # first, open the selected device
