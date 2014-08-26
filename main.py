@@ -336,11 +336,15 @@ def mutes(window, checked):
         pass
     
     if (checked):
-        pmout.write_short(window.sender().parent().property('channel').toPyObject(), CC_MUTE_PAR ,1)
+        if (REAL_UA_MODE):
+            pmout.write_short(window.sender().parent().property('channel').toPyObject(), CC_MUTE_PAR ,1)
+        else:
+            print('write_short to pmout on channel: ',window.sender().parent().property('channel').toPyObject(), ', parameter: ', CC_MUTE_PAR , 'value: 1')
     else:
-        pmout.write_short(window.sender().parent().property('channel').toPyObject(), CC_MUTE_PAR ,0)
-    
-    
+        if (REAL_UA_MODE):
+            pmout.write_short(window.sender().parent().property('channel').toPyObject(), CC_MUTE_PAR ,0)
+        else:
+            print('write_short to pmout on channel: ',window.sender().parent().property('channel').toPyObject(), ', parameter: ', CC_MUTE_PAR , 'value: 0')
 
 @QtCore.pyqtSlot()
 def uniqueSolos(window, ui, checked):
@@ -360,6 +364,9 @@ def uniqueSolos(window, ui, checked):
             print ('soloing ',str(window.sender().parent().objectName()))
         if (REAL_UA_MODE):
             pmout.write_short(window.sender().parent().property('channel').toPyObject(),CC_SOLO_PAR,1)
+            # *************************************************************
+            # ***************** check this part. Is wrongly indented ******
+            # *************************************************************
             for soloer in soloers:
                 soloingObj = window.findChild(QtGui.QGroupBox, soloer)
                 pmout.write_short(soloingObj.property('channel').toPyObject(),CC_SOLO_PAR,0)
@@ -371,6 +378,9 @@ def uniqueSolos(window, ui, checked):
                     # review those fucking debug messages. They are just fucking messed up!
                     print('desoloing: ',soloingObj.objectName())
                     print soloingObj.property('channel').toPyObject()
+            # *************************************************************
+            # *************************************************************
+            # *************************************************************
     else:
         if (REAL_UA_MODE):
             pmout.write_short(window.sender().parent().property('channel').toPyObject(),CC_SOLO_PAR,0)
