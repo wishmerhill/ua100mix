@@ -12,6 +12,10 @@ DEBUG_MODE = 1
 # SET:
 #      0: No UA-100 present, for test purposes on other machines
 #      1: UA-100 present and working
+# NOTE: Could (and will) be automatically set to 0 if no UA-100 is found.
+#       The UA-100 discovery routine is based on ALSA - **** 
+#       ******* TO DO *******
+#       Let the discovery be usb id based.
 
 REAL_UA_MODE = 1
 
@@ -506,9 +510,7 @@ def setupMixer(ui,window):
     ui.Mic1Pan.valueChanged.connect(functools.partial(valueChange, CC_MIC1_CH, CC_PAN_PAR))
     ui.Mic1Pan.setProperty("parameter", CC_PAN_PAR)
     
-    # Setting Up the Mic1 Solo Button ** THEY CAN BE ONLY ONE SOLO CHECKED, THUS... **
-    # ui.mic1Solo.toggled.connect(functools.partial(uniqueSolos, ui, window, ui.mic1Solo, 1))
-    #ui.mic1Solo.toggled.connect(functools.partial(uniqueSolos, ui.mic2Solo, ui.wave1Solo, ui.wave2Solo))
+    # Setting Up the Mic1 Solo Button ** THERE CAN ONLY BE ONE "SOLO" CHECKED, THUS... **
     ui.Mic1Solo.toggled.connect(functools.partial(uniqueSolos, window, ui))
     
     ui.Mic1Mute.toggled.connect(functools.partial(valueChange, CC_MIC1_CH, CC_MUTE_PAR))
