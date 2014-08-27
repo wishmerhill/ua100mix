@@ -414,7 +414,7 @@ def uniqueSolos(window, ui, checked):
             if (DEBUG_MODE):
                 # review those fucking debug messages. They are just fucking messed up!
                 print('desoloing: ',soloingObj.objectName())
-                print soloingObj.property('channel').toPyObject()
+                print(soloingObj.property('channel').toPyObject())
     else:
         if (REAL_UA_MODE):
             pmout.write_short(window.sender().parent().property('channel').toPyObject(),CC_SOLO_PAR,0)
@@ -767,39 +767,50 @@ def setInitMixerLevels(ui, window):
 
     send_RQ1(MIXER_OUTPUT_CONTROL + MIXER_OUTPUT_MASTERLEVEL + MIXER_OUTPUT_MASTERLEVEL_SIZE)
     time.sleep(SLEEP_TIME)
-    answerList = pmin.read(4)
+    answerList = sysexRead(4)
     masterLevel= answerList[2][0][2]
     ui.MasterLineFader.setProperty("value", masterLevel)
     
     send_RQ1(MIXER_OUTPUT_CONTROL + MIXER_OUTPUT_WAVEREC + MIXER_OUTPUT_WAVEREC_SIZE)
     time.sleep(SLEEP_TIME)
-    answerList = pmin.read(4)
+    answerList = sysexRead(4)
     waverecLevel= answerList[2][0][2]
     ui.WaveRecFader.setProperty("value", waverecLevel)
     
     send_RQ1(MIC1_FADER + MIC1_FADER_SIZE)
     time.sleep(SLEEP_TIME)
-    answerList = pmin.read(4)
+    answerList = sysexRead(4)
     mic1Level= answerList[2][0][2]
     ui.Mic1Fader.setProperty("value", mic1Level)
     
     send_RQ1(MIC2_FADER + MIC2_FADER_SIZE)
     time.sleep(SLEEP_TIME)
-    answerList = pmin.read(4)
+    answerList = sysexRead(4)
     mic2Level= answerList[2][0][2]
     ui.Mic2Fader.setProperty("value", mic2Level)
     
     send_RQ1(WAVE1_FADER + WAVE1_FADER_SIZE)
     time.sleep(SLEEP_TIME)
-    answerList = pmin.read(4)
+    answerList = sysexRead(4)
     wave1Level= answerList[2][0][2]
     ui.Wave1Fader.setProperty("value", wave1Level)
     
     send_RQ1(WAVE2_FADER + WAVE2_FADER_SIZE)
     time.sleep(SLEEP_TIME)
-    answerList = pmin.read(4)
+    answerList = sysexRead(4)
     wave2Level= answerList[2][0][2]
     ui.Wave2Fader.setProperty("value", wave2Level)
+
+def sysexRead(buffer_size):
+    global pmin
+    
+    if (REAL_UA_MODE):
+        answer = pmin.read(buffer_size)
+    else:
+        answer = CC_0127_DEFAULT
+    
+    return answer
+    
     
 def send_RQ1(data):
     '''
@@ -818,7 +829,8 @@ def send_RQ1(data):
               + data \
               + checksum_result\
               + EOX
-    pmout.write_sys_ex(pm.time(),message)
+    if (REAL_UA_MODE):
+        pmout.write_sys_ex(pm.time(),message)
     
 def checksum(toChecksum):
     '''
@@ -908,15 +920,15 @@ def main():
     # resetMixer(ui,mixerMainWindow)
     # NO. I try to read the actual values
     
-    setInitMixerLevels(ui, mixerMainWindow)
+    if (REAL_UA_MODE):
+        setInitMixerLevels(ui, mixerMainWindow)
     
     # let the drums roll! We are now ready to show the mixer!
     mixerMainWindow.show()
     sys.exit(app.exec_())
 
 if __name__ == '__main__':
-    
     # brutal way to catch the CTRL+C signal if run in the console...
     signal.signal(signal.SIGINT, signal.SIG_DFL)
-    
+    #starting the program
     main()
