@@ -321,129 +321,7 @@
              <string/>
             </property>
             <layout class="QGridLayout" name="gridLayout">
-             <item row="0" column="0">
-              <spacer name="verticalSpacer_12">
-               <property name="orientation">
-                <enum>Qt::Vertical</enum>
-               </property>
-               <property name="sizeType">
-                <enum>QSizePolicy::Fixed</enum>
-               </property>
-               <property name="sizeHint" stdset="0">
-                <size>
-                 <width>20</width>
-                 <height>20</height>
-                </size>
-               </property>
-              </spacer>
-             </item>
-             <item row="1" column="0" alignment="Qt::AlignHCenter">
-              <widget class="QDial" name="Mic1Pan">
-               <property name="minimumSize">
-                <size>
-                 <width>40</width>
-                 <height>40</height>
-                </size>
-               </property>
-               <property name="maximumSize">
-                <size>
-                 <width>40</width>
-                 <height>40</height>
-                </size>
-               </property>
-               <property name="maximum">
-                <number>127</number>
-               </property>
-               <property name="value">
-                <number>0</number>
-               </property>
-               <property name="sliderPosition">
-                <number>0</number>
-               </property>
-               <property name="wrapping">
-                <bool>false</bool>
-               </property>
-              </widget>
-             </item>
-             <item row="2" column="0" alignment="Qt::AlignHCenter">
-              <widget class="QLCDNumber" name="Mic1PanLcd">
-               <property name="font">
-                <font>
-                 <pointsize>6</pointsize>
-                </font>
-               </property>
-               <property name="numDigits">
-                <number>3</number>
-               </property>
-              </widget>
-             </item>
-             <item row="3" column="0" alignment="Qt::AlignHCenter">
-              <widget class="QRadioButton" name="radioButton">
-               <property name="enabled">
-                <bool>false</bool>
-               </property>
-               <property name="minimumSize">
-                <size>
-                 <width>20</width>
-                 <height>20</height>
-                </size>
-               </property>
-               <property name="maximumSize">
-                <size>
-                 <width>20</width>
-                 <height>20</height>
-                </size>
-               </property>
-               <property name="text">
-                <string/>
-               </property>
-              </widget>
-             </item>
-             <item row="4" column="0" alignment="Qt::AlignHCenter">
-              <widget class="QDial" name="Mic1Ins1">
-               <property name="minimumSize">
-                <size>
-                 <width>40</width>
-                 <height>40</height>
-                </size>
-               </property>
-               <property name="maximumSize">
-                <size>
-                 <width>40</width>
-                 <height>40</height>
-                </size>
-               </property>
-               <property name="maximum">
-                <number>127</number>
-               </property>
-               <property name="value">
-                <number>0</number>
-               </property>
-               <property name="sliderPosition">
-                <number>0</number>
-               </property>
-              </widget>
-             </item>
-             <item row="5" column="0" alignment="Qt::AlignHCenter">
-              <widget class="QDial" name="Mic1Ins2">
-               <property name="minimumSize">
-                <size>
-                 <width>40</width>
-                 <height>40</height>
-                </size>
-               </property>
-               <property name="maximumSize">
-                <size>
-                 <width>40</width>
-                 <height>40</height>
-                </size>
-               </property>
-               <property name="maximum">
-                <number>127</number>
-               </property>
-              </widget>
-             </item>
-             <item row="6" column="0">
+             <item row="5" column="0">
               <widget class="QFrame" name="Mic1SubContainer">
                <property name="minimumSize">
                 <size>
@@ -496,7 +374,113 @@
                </layout>
               </widget>
              </item>
-             <item row="7" column="0" alignment="Qt::AlignHCenter">
+             <item row="0" column="0" alignment="Qt::AlignHCenter">
+              <widget class="QDial" name="Mic1Pan">
+               <property name="minimumSize">
+                <size>
+                 <width>40</width>
+                 <height>40</height>
+                </size>
+               </property>
+               <property name="maximumSize">
+                <size>
+                 <width>40</width>
+                 <height>40</height>
+                </size>
+               </property>
+               <property name="maximum">
+                <number>127</number>
+               </property>
+               <property name="value">
+                <number>0</number>
+               </property>
+               <property name="sliderPosition">
+                <number>0</number>
+               </property>
+               <property name="wrapping">
+                <bool>false</bool>
+               </property>
+              </widget>
+             </item>
+             <item row="1" column="0" alignment="Qt::AlignHCenter">
+              <widget class="QLCDNumber" name="Mic1PanLcd">
+               <property name="font">
+                <font>
+                 <pointsize>6</pointsize>
+                </font>
+               </property>
+               <property name="numDigits">
+                <number>3</number>
+               </property>
+              </widget>
+             </item>
+             <item row="2" column="0" alignment="Qt::AlignHCenter">
+              <widget class="QRadioButton" name="radioButton">
+               <property name="enabled">
+                <bool>false</bool>
+               </property>
+               <property name="minimumSize">
+                <size>
+                 <width>20</width>
+                 <height>20</height>
+                </size>
+               </property>
+               <property name="maximumSize">
+                <size>
+                 <width>20</width>
+                 <height>20</height>
+                </size>
+               </property>
+               <property name="text">
+                <string/>
+               </property>
+              </widget>
+             </item>
+             <item row="3" column="0" alignment="Qt::AlignHCenter">
+              <widget class="QDial" name="Mic1Ins1">
+               <property name="minimumSize">
+                <size>
+                 <width>40</width>
+                 <height>40</height>
+                </size>
+               </property>
+               <property name="maximumSize">
+                <size>
+                 <width>40</width>
+                 <height>40</height>
+                </size>
+               </property>
+               <property name="maximum">
+                <number>127</number>
+               </property>
+               <property name="value">
+                <number>0</number>
+               </property>
+               <property name="sliderPosition">
+                <number>0</number>
+               </property>
+              </widget>
+             </item>
+             <item row="4" column="0" alignment="Qt::AlignHCenter">
+              <widget class="QDial" name="Mic1Ins2">
+               <property name="minimumSize">
+                <size>
+                 <width>40</width>
+                 <height>40</height>
+                </size>
+               </property>
+               <property name="maximumSize">
+                <size>
+                 <width>40</width>
+                 <height>40</height>
+                </size>
+               </property>
+               <property name="maximum">
+                <number>127</number>
+               </property>
+              </widget>
+             </item>
+             <item row="6" column="0" alignment="Qt::AlignHCenter">
               <widget class="QPushButton" name="Mic1Mute">
                <property name="styleSheet">
                 <string notr="true">QPushButton#Mic1Mute:checked { background-color: red}</string>
@@ -509,7 +493,7 @@
                </property>
               </widget>
              </item>
-             <item row="8" column="0" alignment="Qt::AlignHCenter">
+             <item row="7" column="0" alignment="Qt::AlignHCenter">
               <widget class="QPushButton" name="Mic1Solo">
                <property name="styleSheet">
                 <string notr="true">QPushButton#Mic1Solo:checked { background-color: red}</string>
@@ -522,12 +506,12 @@
                </property>
               </widget>
              </item>
-             <item row="9" column="0" alignment="Qt::AlignHCenter">
+             <item row="8" column="0" alignment="Qt::AlignHCenter">
               <widget class="QSlider" name="Mic1Fader">
                <property name="minimumSize">
                 <size>
                  <width>0</width>
-                 <height>150</height>
+                 <height>100</height>
                 </size>
                </property>
                <property name="maximumSize">
@@ -544,10 +528,10 @@
                </property>
               </widget>
              </item>
-             <item row="10" column="0" alignment="Qt::AlignHCenter">
+             <item row="9" column="0" alignment="Qt::AlignHCenter">
               <widget class="QLCDNumber" name="Mic1Lcd"/>
              </item>
-             <item row="11" column="0">
+             <item row="10" column="0">
               <widget class="QLabel" name="label_2">
                <property name="font">
                 <font>
@@ -592,189 +576,7 @@
              <bool>false</bool>
             </property>
             <layout class="QGridLayout" name="gridLayout_2">
-             <item row="4" column="0" alignment="Qt::AlignHCenter">
-              <widget class="QDial" name="Mic2Ins1">
-               <property name="minimumSize">
-                <size>
-                 <width>40</width>
-                 <height>40</height>
-                </size>
-               </property>
-               <property name="maximumSize">
-                <size>
-                 <width>40</width>
-                 <height>40</height>
-                </size>
-               </property>
-               <property name="maximum">
-                <number>127</number>
-               </property>
-              </widget>
-             </item>
-             <item row="1" column="0" alignment="Qt::AlignHCenter">
-              <widget class="QDial" name="Mic2Pan">
-               <property name="minimumSize">
-                <size>
-                 <width>40</width>
-                 <height>40</height>
-                </size>
-               </property>
-               <property name="maximumSize">
-                <size>
-                 <width>40</width>
-                 <height>40</height>
-                </size>
-               </property>
-               <property name="maximum">
-                <number>127</number>
-               </property>
-               <property name="value">
-                <number>0</number>
-               </property>
-               <property name="sliderPosition">
-                <number>0</number>
-               </property>
-               <property name="wrapping">
-                <bool>false</bool>
-               </property>
-              </widget>
-             </item>
-             <item row="11" column="0" alignment="Qt::AlignHCenter">
-              <widget class="QLCDNumber" name="Mic2Lcd"/>
-             </item>
-             <item row="14" column="0">
-              <widget class="QLabel" name="label_3">
-               <property name="font">
-                <font>
-                 <pointsize>13</pointsize>
-                </font>
-               </property>
-               <property name="text">
-                <string>2</string>
-               </property>
-               <property name="alignment">
-                <set>Qt::AlignCenter</set>
-               </property>
-              </widget>
-             </item>
-             <item row="2" column="0" alignment="Qt::AlignHCenter">
-              <widget class="QLCDNumber" name="Mic2PanLcd">
-               <property name="font">
-                <font>
-                 <pointsize>6</pointsize>
-                </font>
-               </property>
-               <property name="numDigits">
-                <number>3</number>
-               </property>
-              </widget>
-             </item>
-             <item row="10" column="0" alignment="Qt::AlignHCenter">
-              <widget class="QSlider" name="Mic2Fader">
-               <property name="minimumSize">
-                <size>
-                 <width>0</width>
-                 <height>100</height>
-                </size>
-               </property>
-               <property name="maximumSize">
-                <size>
-                 <width>16777215</width>
-                 <height>400</height>
-                </size>
-               </property>
-               <property name="maximum">
-                <number>127</number>
-               </property>
-               <property name="orientation">
-                <enum>Qt::Vertical</enum>
-               </property>
-              </widget>
-             </item>
-             <item row="7" column="0" alignment="Qt::AlignHCenter">
-              <widget class="QPushButton" name="Mic2Mute">
-               <property name="styleSheet">
-                <string notr="true">QPushButton#Mic2Mute:checked { background-color: red}</string>
-               </property>
-               <property name="text">
-                <string>Mute</string>
-               </property>
-               <property name="checkable">
-                <bool>true</bool>
-               </property>
-              </widget>
-             </item>
-             <item row="0" column="0">
-              <spacer name="verticalSpacer_11">
-               <property name="orientation">
-                <enum>Qt::Vertical</enum>
-               </property>
-               <property name="sizeType">
-                <enum>QSizePolicy::Fixed</enum>
-               </property>
-               <property name="sizeHint" stdset="0">
-                <size>
-                 <width>20</width>
-                 <height>20</height>
-                </size>
-               </property>
-              </spacer>
-             </item>
-             <item row="3" column="0" alignment="Qt::AlignHCenter">
-              <widget class="QRadioButton" name="radioButton_2">
-               <property name="enabled">
-                <bool>false</bool>
-               </property>
-               <property name="minimumSize">
-                <size>
-                 <width>20</width>
-                 <height>20</height>
-                </size>
-               </property>
-               <property name="maximumSize">
-                <size>
-                 <width>20</width>
-                 <height>20</height>
-                </size>
-               </property>
-               <property name="text">
-                <string/>
-               </property>
-              </widget>
-             </item>
-             <item row="8" column="0" alignment="Qt::AlignHCenter">
-              <widget class="QPushButton" name="Mic2Solo">
-               <property name="styleSheet">
-                <string notr="true">QPushButton#Mic2Solo:checked { background-color: red}</string>
-               </property>
-               <property name="text">
-                <string>Solo</string>
-               </property>
-               <property name="checkable">
-                <bool>true</bool>
-               </property>
-              </widget>
-             </item>
-             <item row="5" column="0" alignment="Qt::AlignHCenter">
-              <widget class="QDial" name="Mic2Ins2">
-               <property name="minimumSize">
-                <size>
-                 <width>40</width>
-                 <height>40</height>
-                </size>
-               </property>
-               <property name="maximumSize">
-                <size>
-                 <width>40</width>
-                 <height>40</height>
-                </size>
-               </property>
-               <property name="maximum">
-                <number>127</number>
-               </property>
-              </widget>
-             </item>
-             <item row="6" column="0">
+             <item row="5" column="0">
               <widget class="QFrame" name="Mic2SubContainer">
                <property name="minimumSize">
                 <size>
@@ -825,6 +627,172 @@
                  </widget>
                 </item>
                </layout>
+              </widget>
+             </item>
+             <item row="3" column="0" alignment="Qt::AlignHCenter">
+              <widget class="QDial" name="Mic2Ins1">
+               <property name="minimumSize">
+                <size>
+                 <width>40</width>
+                 <height>40</height>
+                </size>
+               </property>
+               <property name="maximumSize">
+                <size>
+                 <width>40</width>
+                 <height>40</height>
+                </size>
+               </property>
+               <property name="maximum">
+                <number>127</number>
+               </property>
+              </widget>
+             </item>
+             <item row="0" column="0" alignment="Qt::AlignHCenter">
+              <widget class="QDial" name="Mic2Pan">
+               <property name="minimumSize">
+                <size>
+                 <width>40</width>
+                 <height>40</height>
+                </size>
+               </property>
+               <property name="maximumSize">
+                <size>
+                 <width>40</width>
+                 <height>40</height>
+                </size>
+               </property>
+               <property name="maximum">
+                <number>127</number>
+               </property>
+               <property name="value">
+                <number>0</number>
+               </property>
+               <property name="sliderPosition">
+                <number>0</number>
+               </property>
+               <property name="wrapping">
+                <bool>false</bool>
+               </property>
+              </widget>
+             </item>
+             <item row="10" column="0" alignment="Qt::AlignHCenter">
+              <widget class="QLCDNumber" name="Mic2Lcd"/>
+             </item>
+             <item row="13" column="0">
+              <widget class="QLabel" name="label_3">
+               <property name="font">
+                <font>
+                 <pointsize>13</pointsize>
+                </font>
+               </property>
+               <property name="text">
+                <string>2</string>
+               </property>
+               <property name="alignment">
+                <set>Qt::AlignCenter</set>
+               </property>
+              </widget>
+             </item>
+             <item row="1" column="0" alignment="Qt::AlignHCenter">
+              <widget class="QLCDNumber" name="Mic2PanLcd">
+               <property name="font">
+                <font>
+                 <pointsize>6</pointsize>
+                </font>
+               </property>
+               <property name="numDigits">
+                <number>3</number>
+               </property>
+              </widget>
+             </item>
+             <item row="9" column="0" alignment="Qt::AlignHCenter">
+              <widget class="QSlider" name="Mic2Fader">
+               <property name="minimumSize">
+                <size>
+                 <width>0</width>
+                 <height>100</height>
+                </size>
+               </property>
+               <property name="maximumSize">
+                <size>
+                 <width>16777215</width>
+                 <height>400</height>
+                </size>
+               </property>
+               <property name="maximum">
+                <number>127</number>
+               </property>
+               <property name="orientation">
+                <enum>Qt::Vertical</enum>
+               </property>
+              </widget>
+             </item>
+             <item row="6" column="0" alignment="Qt::AlignHCenter">
+              <widget class="QPushButton" name="Mic2Mute">
+               <property name="styleSheet">
+                <string notr="true">QPushButton#Mic2Mute:checked { background-color: red}</string>
+               </property>
+               <property name="text">
+                <string>Mute</string>
+               </property>
+               <property name="checkable">
+                <bool>true</bool>
+               </property>
+              </widget>
+             </item>
+             <item row="2" column="0" alignment="Qt::AlignHCenter">
+              <widget class="QRadioButton" name="radioButton_2">
+               <property name="enabled">
+                <bool>false</bool>
+               </property>
+               <property name="minimumSize">
+                <size>
+                 <width>20</width>
+                 <height>20</height>
+                </size>
+               </property>
+               <property name="maximumSize">
+                <size>
+                 <width>20</width>
+                 <height>20</height>
+                </size>
+               </property>
+               <property name="text">
+                <string/>
+               </property>
+              </widget>
+             </item>
+             <item row="7" column="0" alignment="Qt::AlignHCenter">
+              <widget class="QPushButton" name="Mic2Solo">
+               <property name="styleSheet">
+                <string notr="true">QPushButton#Mic2Solo:checked { background-color: red}</string>
+               </property>
+               <property name="text">
+                <string>Solo</string>
+               </property>
+               <property name="checkable">
+                <bool>true</bool>
+               </property>
+              </widget>
+             </item>
+             <item row="4" column="0" alignment="Qt::AlignHCenter">
+              <widget class="QDial" name="Mic2Ins2">
+               <property name="minimumSize">
+                <size>
+                 <width>40</width>
+                 <height>40</height>
+                </size>
+               </property>
+               <property name="maximumSize">
+                <size>
+                 <width>40</width>
+                 <height>40</height>
+                </size>
+               </property>
+               <property name="maximum">
+                <number>127</number>
+               </property>
               </widget>
              </item>
             </layout>
@@ -930,7 +898,7 @@
            <property name="sizeHint" stdset="0">
             <size>
              <width>20</width>
-             <height>92</height>
+             <height>103</height>
             </size>
            </property>
           </spacer>
@@ -1183,7 +1151,7 @@
            <property name="sizeHint" stdset="0">
             <size>
              <width>20</width>
-             <height>92</height>
+             <height>103</height>
             </size>
            </property>
           </spacer>
@@ -1954,7 +1922,7 @@
      <x>0</x>
      <y>0</y>
      <width>870</width>
-     <height>20</height>
+     <height>21</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile">
