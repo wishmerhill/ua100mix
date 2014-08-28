@@ -2,8 +2,8 @@
 
 # Form implementation generated from reading ui file 'device_sel.ui'
 #
-# Created: Sat Jul 26 23:20:27 2014
-#      by: PyQt4 UI code generator 4.10.3
+# Created: Thu Aug 28 09:04:53 2014
+#      by: PyQt4 UI code generator 4.11.1
 #
 # WARNING! All changes made in this file will be lost!
 
@@ -28,6 +28,9 @@ class Ui_deviceSelection(object):
         deviceSelection.setObjectName(_fromUtf8("deviceSelection"))
         deviceSelection.setWindowModality(QtCore.Qt.ApplicationModal)
         deviceSelection.resize(536, 175)
+        icon = QtGui.QIcon()
+        icon.addPixmap(QtGui.QPixmap(_fromUtf8("icons/Sound-Mixer-icon.png")), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        deviceSelection.setWindowIcon(icon)
         deviceSelection.setModal(True)
         self.outputDevicesList = QtGui.QComboBox(deviceSelection)
         self.outputDevicesList.setGeometry(QtCore.QRect(20, 30, 271, 23))
@@ -74,7 +77,7 @@ class Ui_deviceSelection(object):
         QtCore.QMetaObject.connectSlotsByName(deviceSelection)
 
     def retranslateUi(self, deviceSelection):
-        deviceSelection.setWindowTitle(_translate("deviceSelection", "Dialog", None))
+        deviceSelection.setWindowTitle(_translate("deviceSelection", "Select device", None))
         self.deviceIOLabel.setText(_translate("deviceSelection", "Device I/O", None))
         self.deviceNameText.setText(_translate("deviceSelection", "NO DEVICE", None))
         self.deviceIOText.setText(_translate("deviceSelection", "N/A", None))

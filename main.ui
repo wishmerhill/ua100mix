@@ -29,7 +29,11 @@
    </size>
   </property>
   <property name="windowTitle">
-   <string>MainWindow</string>
+   <string>UA-100 Mixer</string>
+  </property>
+  <property name="windowIcon">
+   <iconset>
+    <normaloff>icons/Sound-Mixer-icon.png</normaloff>icons/Sound-Mixer-icon.png</iconset>
   </property>
   <property name="autoFillBackground">
    <bool>false</bool>

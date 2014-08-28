@@ -14,7 +14,11 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Dialog</string>
+   <string>Select device</string>
+  </property>
+  <property name="windowIcon">
+   <iconset>
+    <normaloff>icons/Sound-Mixer-icon.png</normaloff>icons/Sound-Mixer-icon.png</iconset>
   </property>
   <property name="modal">
    <bool>true</bool>
