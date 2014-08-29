@@ -86,7 +86,7 @@ pm.quit()
 # *************************************************************
 # *****************  CHECKSUM *********************************
 
-# SI SOMMANO I SINGOLI VALORI DI INDIRIZZO, CANALE O DATI, SI DIVIDE PER 128 (DECIMALE), SI PRENDE IL RESTO E SE NE FA IL COMPLEMENTO A 128
+# SI SOMMANO I SINGOLI VALORI DI (INDIRIZZO + CANALE) O (INDIRIZZO + DATI), SI DIVIDE PER 128 (DECIMALE), SI PRENDE IL RESTO E SE NE FA IL COMPLEMENTO A 128
 # SI CONVERTE IN HEX IL RISULTATO ET VOILA'!
 
 # fosse: aa bb cc dd ee ff gg hh canale+dimensione farei [128 - (aa+bb+cc+dd+ee+ff+gg mod 128)] con tutti i valori in decimale.

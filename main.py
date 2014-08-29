@@ -510,6 +510,10 @@ def setupMixer(ui,window):
     ui.Mic1Pan.valueChanged.connect(functools.partial(valueChange, CC_MIC1_CH, CC_PAN_PAR))
     ui.Mic1Pan.setProperty("parameter", CC_PAN_PAR)
     
+    # Setting up Ins1&2
+    ui.Mic1Ins1.valueChanged.connect(functools.partial(valueChange, CC_MIC1_CH, CC_SEND1_PAR))
+    ui.Mic1Ins2.valueChanged.connect(functools.partial(valueChange, CC_MIC1_CH, CC_SEND2_PAR))
+    
     # Setting Up the Mic1 Solo Button ** THERE CAN ONLY BE ONE "SOLO" CHECKED, THUS... **
     ui.Mic1Solo.toggled.connect(functools.partial(uniqueSolos, window, ui))
     
@@ -538,6 +542,10 @@ def setupMixer(ui,window):
     ui.Mic2Pan.valueChanged.connect(functools.partial(valueChange, CC_MIC2_CH, CC_PAN_PAR))
     ui.Mic2Pan.setProperty("parameter", CC_PAN_PAR)
     
+    # Setting up Ins1&2
+    ui.Mic2Ins1.valueChanged.connect(functools.partial(valueChange, CC_MIC2_CH, CC_SEND1_PAR))
+    ui.Mic2Ins2.valueChanged.connect(functools.partial(valueChange, CC_MIC2_CH, CC_SEND2_PAR))
+    
     # Setting Up the Mic2 Solo Button ** THEY CAN BE ONLY ONE SOLO CHECKED, THUS... **
     #ui.mic2Solo.toggled.connect(functools.partial(uniqueSolos, ui, window, ui.mic2Solo, 2))
     #ui.mic2Solo.toggled.connect(functools.partial(uniqueSolos, ui.mic1Solo, ui.wave1Solo, ui.wave2Solo))
@@ -564,6 +572,10 @@ def setupMixer(ui,window):
     #ui.Wave1Fader.setProperty("value", CC_0127_DEFAULT)
     ui.Wave1Fader.setProperty("parameter", CC_MAIN_FADER_PAR)
     
+    # Setting up Ins1&2
+    ui.Wave1Ins1.valueChanged.connect(functools.partial(valueChange, CC_WAVE1_CH, CC_SEND1_PAR))
+    ui.Wave1Ins2.valueChanged.connect(functools.partial(valueChange, CC_WAVE1_CH, CC_SEND2_PAR))
+    
     # Setting Up the Wave1 Solo Button ** THEY CAN BE ONLY ONE SOLO CHECKED, THUS... **
     #ui.wave1Solo.toggled.connect(functools.partial(uniqueSolos, ui, window, ui.wave1Solo, 3))
     #ui.wave1Solo.toggled.connect(functools.partial(uniqueSolos, ui.mic1Solo, ui.wave2Solo, ui.mic2Solo))
@@ -589,6 +601,10 @@ def setupMixer(ui,window):
     #ui.Wave2Fader.setProperty("value", CC_0127_DEFAULT)
     ui.Wave2Fader.setProperty("parameter", CC_MAIN_FADER_PAR)    
     
+    # Setting up Ins1&2
+    ui.Wave2Ins1.valueChanged.connect(functools.partial(valueChange, CC_WAVE2_CH, CC_SEND1_PAR))
+    ui.Wave2Ins2.valueChanged.connect(functools.partial(valueChange, CC_WAVE2_CH, CC_SEND2_PAR))
+    
     # Setting Up the Wave2 Solo Button ** THEY CAN BE ONLY ONE SOLO CHECKED, THUS... **
     #ui.wave2Solo.toggled.connect(functools.partial(uniqueSolos, ui, window, ui.wave1Solo, 4))
     #ui.wave2Solo.toggled.connect(functools.partial(uniqueSolos, ui.mic1Solo, ui.wave1Solo, ui.mic2Solo))
@@ -604,6 +620,7 @@ def setupMixer(ui,window):
     ui.Wave2SubFader.hide()
     ui.Wave2SubLcd.hide()
     
+    
     # *************** MASTERLINE *********************
     
     ui.MasterLineFader.setProperty("channel", CC_LINE_MASTER_CH)
@@ -618,6 +635,17 @@ def setupMixer(ui,window):
     # Setting up the Wave (Rec) Fader
     ui.WaveRecFader.valueChanged.connect(ui.WaveRecLcd.display)
     ui.WaveRecFader.valueChanged.connect(functools.partial(valueChange, CC_WAVEREC_CH, CC_MAIN_FADER_PAR))
+    
+    
+    # *************** SYSEFF **************************
+    
+    # Return
+    ui.SysEffRet1.valueChanged.connect(functools.partial(valueChange, CC_SYSRET_CH, CC_SEND1_PAR))
+    ui.SysEffRet2.valueChanged.connect(functools.partial(valueChange, CC_SYSRET_CH, CC_SEND2_PAR))
+    # Sub
+    ui.SysEffSub1.valueChanged.connect(functools.partial(valueChange, CC_SYSSUB_CH, CC_SEND1_PAR))
+    ui.SysEffSub2.valueChanged.connect(functools.partial(valueChange, CC_SYSSUB_CH, CC_SEND2_PAR))
+    
     
     
     # SUB BUTTON

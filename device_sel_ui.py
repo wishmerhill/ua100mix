@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'device_sel.ui'
 #
-# Created: Thu Aug 28 09:04:53 2014
+# Created: Thu Aug 28 18:00:48 2014
 #      by: PyQt4 UI code generator 4.11.1
 #
 # WARNING! All changes made in this file will be lost!

@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'main.ui'
 #
-# Created: Thu Aug 28 09:48:27 2014
+# Created: Thu Aug 28 19:48:10 2014
 #      by: PyQt4 UI code generator 4.11.1
 #
 # WARNING! All changes made in this file will be lost!
@@ -53,7 +53,7 @@ class Ui_MainWindow(object):
         self.label_22 = QtGui.QLabel(self.CaptionBox)
         self.label_22.setObjectName(_fromUtf8("label_22"))
         self.verticalLayout_3.addWidget(self.label_22)
-        spacerItem = QtGui.QSpacerItem(20, 52, QtGui.QSizePolicy.Minimum, QtGui.QSizePolicy.Fixed)
+        spacerItem = QtGui.QSpacerItem(20, 27, QtGui.QSizePolicy.Minimum, QtGui.QSizePolicy.Fixed)
         self.verticalLayout_3.addItem(spacerItem)
         self.label = QtGui.QLabel(self.CaptionBox)
         self.label.setMinimumSize(QtCore.QSize(0, 40))
@@ -107,6 +107,7 @@ class Ui_MainWindow(object):
         self.MicModeButton = QtGui.QPushButton(self.centralwidget)
         self.MicModeButton.setMinimumSize(QtCore.QSize(60, 0))
         self.MicModeButton.setMaximumSize(QtCore.QSize(60, 16777215))
+        self.MicModeButton.setProperty("inputMode", 0)
         self.MicModeButton.setObjectName(_fromUtf8("MicModeButton"))
         self.horizontalLayout_2.addWidget(self.MicModeButton)
         self.verticalLayout_4.addLayout(self.horizontalLayout_2)
@@ -330,7 +331,7 @@ class Ui_MainWindow(object):
         self.Wave1Solo.setCheckable(True)
         self.Wave1Solo.setObjectName(_fromUtf8("Wave1Solo"))
         self.gridLayout_3.addWidget(self.Wave1Solo, 6, 0, 1, 1, QtCore.Qt.AlignHCenter)
-        spacerItem5 = QtGui.QSpacerItem(20, 103, QtGui.QSizePolicy.Minimum, QtGui.QSizePolicy.Fixed)
+        spacerItem5 = QtGui.QSpacerItem(20, 100, QtGui.QSizePolicy.Minimum, QtGui.QSizePolicy.Fixed)
         self.gridLayout_3.addItem(spacerItem5, 0, 0, 1, 1)
         self.Wave1Ins2 = QtGui.QDial(self.Wave1)
         self.Wave1Ins2.setMinimumSize(QtCore.QSize(40, 40))
@@ -418,7 +419,7 @@ class Ui_MainWindow(object):
         self.Wave2Ins2.setMaximum(127)
         self.Wave2Ins2.setObjectName(_fromUtf8("Wave2Ins2"))
         self.gridLayout_4.addWidget(self.Wave2Ins2, 3, 0, 1, 1, QtCore.Qt.AlignHCenter)
-        spacerItem6 = QtGui.QSpacerItem(20, 103, QtGui.QSizePolicy.Minimum, QtGui.QSizePolicy.Fixed)
+        spacerItem6 = QtGui.QSpacerItem(20, 100, QtGui.QSizePolicy.Minimum, QtGui.QSizePolicy.Fixed)
         self.gridLayout_4.addItem(spacerItem6, 0, 0, 1, 1)
         self.Wave2Ins1 = QtGui.QDial(self.Wave2)
         self.Wave2Ins1.setMinimumSize(QtCore.QSize(40, 40))
@@ -461,7 +462,7 @@ class Ui_MainWindow(object):
         self.verticalLayout = QtGui.QVBoxLayout()
         self.verticalLayout.setObjectName(_fromUtf8("verticalLayout"))
         self.groupBox_2 = QtGui.QGroupBox(self.centralwidget)
-        self.groupBox_2.setMinimumSize(QtCore.QSize(150, 260))
+        self.groupBox_2.setMinimumSize(QtCore.QSize(150, 240))
         self.groupBox_2.setMaximumSize(QtCore.QSize(150, 260))
         self.groupBox_2.setObjectName(_fromUtf8("groupBox_2"))
         self.gridLayout_5 = QtGui.QGridLayout(self.groupBox_2)
@@ -516,12 +517,12 @@ class Ui_MainWindow(object):
         self.SysEffSub2.setMaximum(127)
         self.SysEffSub2.setObjectName(_fromUtf8("SysEffSub2"))
         self.gridLayout_5.addWidget(self.SysEffSub2, 3, 2, 1, 1, QtCore.Qt.AlignHCenter)
-        spacerItem8 = QtGui.QSpacerItem(20, 40, QtGui.QSizePolicy.Minimum, QtGui.QSizePolicy.Expanding)
+        spacerItem8 = QtGui.QSpacerItem(20, 28, QtGui.QSizePolicy.Minimum, QtGui.QSizePolicy.Expanding)
         self.gridLayout_5.addItem(spacerItem8, 0, 1, 1, 1)
         self.verticalLayout.addWidget(self.groupBox_2)
         self.groupBox_3 = QtGui.QGroupBox(self.centralwidget)
-        self.groupBox_3.setMinimumSize(QtCore.QSize(150, 430))
-        self.groupBox_3.setMaximumSize(QtCore.QSize(150, 430))
+        self.groupBox_3.setMinimumSize(QtCore.QSize(150, 445))
+        self.groupBox_3.setMaximumSize(QtCore.QSize(150, 450))
         self.groupBox_3.setObjectName(_fromUtf8("groupBox_3"))
         self.gridLayout_7 = QtGui.QGridLayout(self.groupBox_3)
         self.gridLayout_7.setObjectName(_fromUtf8("gridLayout_7"))
@@ -697,7 +698,7 @@ class Ui_MainWindow(object):
         self.statusbar.setObjectName(_fromUtf8("statusbar"))
         MainWindow.setStatusBar(self.statusbar)
         self.menuBar = QtGui.QMenuBar(MainWindow)
-        self.menuBar.setGeometry(QtCore.QRect(0, 0, 870, 21))
+        self.menuBar.setGeometry(QtCore.QRect(0, 0, 870, 20))
         self.menuBar.setObjectName(_fromUtf8("menuBar"))
         self.menuFile = QtGui.QMenu(self.menuBar)
         self.menuFile.setObjectName(_fromUtf8("menuFile"))
