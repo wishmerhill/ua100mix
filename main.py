@@ -269,6 +269,11 @@ if (True):
     
     # Mixer Input Control
     MIXER_INPUT_CONTROL = [0x00, 0x40, 0x10]
+    
+    MIXER_INPUT_MODE = [0x00]
+    MIXER_INPUT_MODE_SIZE = [0x00, 0x00, 0x00, 0x01]
+    MIXER_INPUT_MODE_VALUES = {0x00: 'Mic Mode', 0x01: 'Line Mode', 0x02: 'MIC1 + MIC2 Mode'}
+    
     MIXER_INPUT_PAN1 = [0x01]
     MIXER_INPUT_PAN1_SIZE = [0x00, 0x00, 0x00, 0x01]
     MIXER_INPUT_PAN2 = [0x02]
@@ -288,7 +293,7 @@ if (True):
     WAVE2_FADER_SIZE = [0x00, 0x00, 0x00, 0x01]
     #...
     
-    EFFECT_PARAMETER = [0x00, 0x40, 0x01]
+    EFFECT_PARAMETERS = [0x00, 0x40, 0x01]
     
     MIXER_EFFECT_CONTROL = [0x00, 0x40, 0x40]
     
@@ -356,38 +361,48 @@ if (True):
     
     
     # FULL EFFECT MODE
-    EFX_TYPE = {1: ('High Quality Reverb',[0x00,0x11]),\
-        2: ('Mic Simulator',[0x00,0x12]),\
-        3: ('Vocoder',[0x00,0x13]),\
-        4: ('Vocal Multi',[0x00,0x14]),\
-        5: ('Game',[0x00,0x16]),\
-        6: ('Rotary Multi',[0x03,0x00]),\
-        7: ('GTR Multi',[0x04,0x00])\
-        }
+    EFX_TYPE = {}
+    EFX_TYPE[1] = ('High Quality Reverb',[0x00,0x11])
+    
+    EFX_PARAMETERS={}
+    EFX_PARAMETERS[1] = ( ('Type','Room1/2/Plate1/2/Hall1/2',range(0x00,0x06), [0x03]),\
+        ('Pre Dly','0ms - 80ms - 635ms', range(0x00,0x80), [0x04]),\
+        ('Reverb Time','0.1s - 2s - 38s',range(0x00,0x80), [0x05]),\
+        ('HF Damp','-10 - -4 -0', range(0x00,0x0B), [0x06]),\
+        ('ER Pre Dly', '0 - 40ms - 635 ms', range(0x00,0x80), [0x07]),\
+        ('ER Mix','0 - 15 - 127', range(0x00,0x80), [0x08]),\
+        ('Diffusion','0 - 9 - 10',range(0x00,0x0B),[0x09]),\
+        ('Tone Low','-12dB - 0dB - +12dB',range(0x34,0x4D),[0x0A]),\
+        ('Tone High','-12dB - 0dB - +12dB',range(0x34,0x4D),[0x0B]),\
+        ('Balance','D > 0E - D0 < E', range(0x00,0x80), [0x0C])
+    )
+
+    
+    EFX_TYPE[2] = ('Mic Simulator',[0x00,0x12])
+    EFX_PARAMETERS[2] = ()
+    EFX_TYPE[3] = ('Vocoder',[0x00,0x13])
+    EFX_TYPE[4] = ('Vocal Multi',[0x00,0x14])
+    EFX_TYPE[5] = ('Game',[0x00,0x16])
+    EFX_TYPE[6] = ('Rotary Multi',[0x03,0x00])
+    EFX_TYPE[7] = ('GTR Multi',[0x04,0x00])
+    
     
     # End of exclusive (EOX)
     EOX = [0xF7]
+    
+    
+    # PARAMETER CONVERSION TABLES
+    # PRE DELAY TIME [ms] (1)
+    # uncomment to use...
+    #PREDELAYTIME = {}
+    #predelaytime=0.0
+    #for index in range(0x00,0x80):
+    #    PREDELAYTIME[index]=predelaytime
+    #    predelaytime=(float)(predelaytime+0.1)
 
 if (DEBUG_MODE):
     print('Done!')
 
-#def pm_open(device):
-#    '''
-#    Possibly not the best solution.
-#    '''
-#    
-#    # the in and out instances must be in the global scope
-#    # I'm still convinced that's not the right solution...
-#    global pmout
-#    global pmin
-#    
-#    if (REAL_UA_MODE):
-#        if (DEBUG_MODE):
-#            print('Opening device: ',device,' for ouput and device: ', device+1, 'for input')
-#        # Open device for output
-#        pmout = pm.midi.Output(device)
-#        # Open "the next" device for input
-#        pmin = pm.midi.Input(device+1)
 
 
 class MidiDevsDialog(QtGui.QDialog):
@@ -416,7 +431,8 @@ class MidiDevsDialog(QtGui.QDialog):
         self.dialogQuit.clicked.connect(self.reject)
         
         # set the current index to the guessed right outpud midi device for the UA100 controller
-        self.outputDevicesList.setCurrentIndex(DEFAULT_UA100CONTROL)
+        if (REAL_UA_MODE):
+            self.outputDevicesList.setCurrentIndex(DEFAULT_UA100CONTROL)
     
     def updateDeviceLabels(self, index):
         '''
@@ -450,6 +466,8 @@ class MidiDevsDialog(QtGui.QDialog):
         if (DEBUG_MODE ==1):
             print('Index = ', index)
             print('UA100CONTROL = ',UA100CONTROL)
+
+
 
 class MainWindow(QtGui.QMainWindow):
     def __init__(self, parent = None):
@@ -643,19 +661,60 @@ class MainWindow(QtGui.QMainWindow):
                 self.EffectModeSelector.addItem(MIXER_EFFECT_MODE_PAR[key], key)
             self.EffectModeSelector.setCurrentIndex(-1)
         self.EffectModeSelector.currentIndexChanged.connect(self.setEffectMode)
-    
-        self.EffWave1Button.clicked.connect(self.effectSelection)
-        self.EffWave2Button.clicked.connect(self.effectSelection)
+        
+
+        self.EffMic1Button.setProperty('HEX', [0x01])
         self.EffMic1Button.clicked.connect(self.effectSelection)
+        self.EffMic2Button.setProperty('HEX', [0x02])
         self.EffMic2Button.clicked.connect(self.effectSelection)
+        self.EffWave1Button.setProperty('HEX', [0x03])
+        self.EffWave1Button.clicked.connect(self.effectSelection)
+        self.EffWave2Button.setProperty('HEX', [0x04])
+        self.EffWave2Button.clicked.connect(self.effectSelection)
+        self.EffSys1Button.setProperty('HEX', [0x05])
         self.EffSys1Button.clicked.connect(self.effectSelection)
+        self.EffSys2Button.setProperty('HEX', [0x06])
         self.EffSys2Button.clicked.connect(self.effectSelection)
         
         
         #self.EffWave2Button.clicked.connect(setEff2)
         #self.EffMic2Button.clicked.connect(effOn)
         
-        self.__setInitMixerLevels__()
+        if (REAL_UA_MODE):
+            self.__setInitMixerLevels__()
+        
+        self.uiInputModeButton.setProperty('state',0x00)
+        self.uiInputModeButton.clicked.connect(self.setInputMode)
+    
+    def setInputMode(self):
+        '''
+        
+        The MIC1-GUITAR/LINE/MIC1+MIC2 toggler
+        
+        need a tree way button...
+        
+        '''
+        
+        if self.sender().property('state') == 0x00:
+            self.sender().setProperty('state',0x01)
+            self.Mic1.setTitle('Line')
+            self.uiInputModeLabel.setText('Line')
+            self.Mic2.hide()
+        elif self.sender().property('state') == 0x01:
+            self.sender().setProperty('state',0x02)
+            self.Mic1.setTitle('Mic1/Guitar+Mic2')
+            self.uiInputModeLabel.setText('Mic1\n+Mic2')
+            self.Mic2.hide()
+        elif self.sender().property('state') == 0x02:
+            self.sender().setProperty('state',0x00)
+            self.Mic1.setTitle('Mic1/Guitar')
+            self.uiInputModeLabel.setText('Mic/\nGuitar')
+            self.Mic2.show()
+        if (REAL_UA_MODE):
+            pmout.write_short(CC_MIC1_CH,CC_MICLINESELECTOR_PAR, self.sender().property('state').toPyObject() )
+            
+        if (DEBUG_MODE):
+            print(CC_MIC1_CH,' ',CC_MICLINESELECTOR_PAR,' ',self.sender().property('state').toPyObject() )  
     
     def setEffectMode(salf, value):
         valueToList=[sorted(MIXER_EFFECT_MODE_PAR.keys())[value]]
@@ -673,6 +732,9 @@ class MainWindow(QtGui.QMainWindow):
         print(self.fullEffects[self.sender()].parent())
             
     def showHideSub(self, checked):
+        '''
+        Hide/Show Sub fader control when button clicked.
+        '''
         if (checked):
             self.Mic1SubFader.show()
             self.Mic1SubLcd.show()
@@ -812,16 +874,131 @@ class MainWindow(QtGui.QMainWindow):
         answerList = sysexRead(4)
         wave2Level= answerList[2][0][2]
         self.Wave2Fader.setProperty("value", wave2Level)
+        
+        
+        # This should read the INPUT MODE and set the starting value accordingly. But I must think a way to do setInputMode better.
+        #send_RQ1(MIXER_INPUT_CONTROL + MIXER_INPUT_MODE + MIXER_INPUT_MODE_SIZE)
+        #time.sleep(SLEEP_TIME)
+        #answerList = sysexRead(4)
+        #mixerMode = answerList[2][0][2]
+        #self.uiInputModeButton.setProperty('state',mixerMode)
+        
+
+        print(answerList)
 
 class FullEffectsDialog(QtGui.QDialog):
+    '''
+    The full effect dialog.
+    For every single effect selected, I should check if there are already instances for the effect. If not, generate it, if yes, use the old ones.
+    BUT after I clead the QTreeWidget the instances of the QTreeWidgetItems get deleted. There should be a better way.
+    To achieve this, sadly, we need to classify the items...
+    '''
+    
     def __init__(self,parent = None):
         super(FullEffectsDialog,self).__init__(parent)
         
+        # here is where I store the channel choosen fo the effect (mic1, mic2, wave1, wave2, sys1, sys2)
+        self.SenderHex = parent.sender().property('HEX').toPyObject()
+        
+        # load the ui...
         self.ui = PyQt4.uic.loadUi('ui/fulleffectsdialog.ui', self)
 
+        # look for tge EFX_TYPEs and populate the combo box (drop down menu)
         for key in EFX_TYPE.keys():
             self.EffectTypeList.addItem(EFX_TYPE[key][0])
         
+        # connect the combobox with the slot which populates the QTreeWidget
+        self.EffectTypeList.currentIndexChanged.connect(self.populateEffect)
+        
+        
+        
+        self.populateEffect(0)
+        
+        self.uiToggleEffect.toggled.connect(self.setEffect)
+    
+    def setEffect(self, checked):
+        '''
+        A small but invaluable function:
+        
+        IT SWITCHES THE WHOLE THIG ON!
+        '''
+        
+        if (DEBUG_MODE):
+            print(self.SenderHex)
+        if (checked):
+            checkedList= [0x01]
+        else:
+            checkedList= [0x00]
+        if (REAL_UA_MODE):
+            send_DT1([0x00, 0x40, 0x40] + self.SenderHex + checkedList)
+    
+    def populateEffect(self, index):
+        
+        # first af all, sent the effect type to the UA-100
+        # This is the LSB/MSB of the effect type (i.e. High Quality Reverb, Mic Simulator) aka the EFX_TYPE[n][1] (hex value)
+        if (DEBUG_MODE):
+            print([0x00, 0x40] + self.SenderHex + [0x00] + EFX_TYPE[index+1][1])
+        if (REAL_UA_MODE):
+            send_DT1([0x00, 0x40] + self.SenderHex + [0x00] + EFX_TYPE[index+1][1])
+        
+        
+        self.uiEffectParameters.clear()
+        # check if the list isn't yet there... but, as said, the instances are deleted... so what? and How?
+        #if not (index in self.effectList):
+        #    self.effectList[index]={}
+        #    for par in EFX_PARAMETERS[index+1]:
+        #        self.effectList[index][par[0]] = CustomTreeItem(self.uiEffectParameters, par)
+        #else:
+        #    print self.effectList[index]
+        #    for item in self.effectList[index]:
+        #        self.uiEffectParameters.addTopLevelItem(self.effectList[index][item])
+        
+        # "anonimously" polulate the QTreeWidget ...
+        for par in EFX_PARAMETERS[index+1]:
+            item = CustomTreeItem(self.uiEffectParameters, par, index)
+    
+    def sendEffect(self, value):
+        '''
+        We send the values set to the UA-100. The effects are only active when also the switch is checked.
+        '''
+        
+        # first of all convert the passed value to list in order to send the SYSEX message
+        valueToList = [value]
+        if (DEBUG_MODE):
+            print 'LSB/MSB for parameter:', self.sender().property('HEX').toPyObject()
+        
+        if (REAL_UA_MODE):
+            # actually send the message
+            send_DT1([0x00, 0x40] + self.SenderHex + self.sender().property('HEX').toPyObject() + valueToList)
+        
+
+class CustomTreeItem(QtGui.QTreeWidgetItem):
+    '''
+    Just a dirty way to populate the QTreeWidget with custom items containing each a QSpinBox.
+    
+    ******************************************************************************************
+    ************************************** TODO **********************************************
+    set limits, mean value, default value and possibly also a better way to show the values...
+    ******************************************************************************************
+    
+    '''
+    def __init__( self, parent, par, index ):
+        '''
+        parent (QTreeWidget) : Item's QTreeWidget parent.
+        name   (str)         : Item's name. just an example.
+        '''
+ 
+        ## Init super class ( QtGui.QTreeWidgetItem )
+        super( CustomTreeItem, self ).__init__( parent )
+        self.setText(0,par[0])
+        self.spinBox = QtGui.QSpinBox(parent)
+        self.spinBox.setProperty('HEX', par[3])
+        #self.spinBox.setValue(5)
+        self.spinBox.setRange(min(par[2]), max(par[2]))
+        self.spinBox.setWrapping(1)
+        parent.setItemWidget(self,1, self.spinBox)
+        self.setText(2,par[1])
+        self.spinBox.valueChanged.connect(parent.parent().sendEffect)
 
 def actualMidiDevices():
     '''
@@ -966,11 +1143,11 @@ if ( __name__ == '__main__' ):
             print('Bye.')
         sys.exit()
     
-    if (DEBUG_MODE):
-        print('UA100CONTROL = ',UA100CONTROL)
+    if (DEBUG_MODE) and (REAL_UA_MODE):
+        print('DEFAULT_UA100CONTROL = ',DEFAULT_UA100CONTROL)
     
     if (DEBUG_MODE):
-        print('Opening device: ',UA100CONTROL,' for ouput and device: ', UA100CONTROL+1, 'for input')
+        print('Opening device: ',DEFAULT_UA100CONTROL,' for ouput and device: ', DEFAULT_UA100CONTROL+1, 'for input')
     
     if (REAL_UA_MODE):
         # Open device for output

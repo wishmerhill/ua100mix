@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>331</width>
-    <height>382</height>
+    <width>461</width>
+    <height>357</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -29,9 +29,18 @@
     <widget class="QComboBox" name="EffectTypeList"/>
    </item>
    <item>
-    <widget class="QTreeWidget" name="EffectParameters">
+    <widget class="QTreeWidget" name="uiEffectParameters">
+     <property name="rootIsDecorated">
+      <bool>false</bool>
+     </property>
+     <property name="itemsExpandable">
+      <bool>false</bool>
+     </property>
+     <property name="expandsOnDoubleClick">
+      <bool>false</bool>
+     </property>
      <property name="columnCount">
-      <number>2</number>
+      <number>3</number>
      </property>
      <column>
       <property name="text">
@@ -41,6 +50,11 @@
      <column>
       <property name="text">
        <string>Value</string>
+      </property>
+     </column>
+     <column>
+      <property name="text">
+       <string>Setting Values</string>
       </property>
      </column>
     </widget>
@@ -53,7 +67,7 @@
     </widget>
    </item>
    <item>
-    <widget class="QPushButton" name="ToggleEffect">
+    <widget class="QPushButton" name="uiToggleEffect">
      <property name="text">
       <string>Set Effect</string>
      </property>
