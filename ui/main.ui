@@ -1870,11 +1870,11 @@
          <string>Effect</string>
         </property>
         <layout class="QGridLayout" name="gridLayout_9">
-         <item row="0" column="0" colspan="3">
-          <widget class="QComboBox" name="EffectModeSelector"/>
+         <item row="0" column="0" colspan="2">
+          <widget class="QComboBox" name="uiEffectModeSelector"/>
          </item>
-         <item row="1" column="0" colspan="3">
-          <widget class="QLabel" name="label_12">
+         <item row="1" column="0" colspan="2">
+          <widget class="QLabel" name="uiInsertionEffectLabel">
            <property name="text">
             <string>Insertion Effect</string>
            </property>
@@ -1887,10 +1887,30 @@
            </property>
           </widget>
          </item>
+         <item row="2" column="1">
+          <widget class="QLineEdit" name="uiEffectNameMic1">
+           <property name="maximumSize">
+            <size>
+             <width>100</width>
+             <height>16777215</height>
+            </size>
+           </property>
+          </widget>
+         </item>
          <item row="3" column="0">
           <widget class="QPushButton" name="EffMic2Button">
            <property name="text">
             <string>Mic2</string>
+           </property>
+          </widget>
+         </item>
+         <item row="3" column="1">
+          <widget class="QLineEdit" name="uiEffectNameMic2">
+           <property name="maximumSize">
+            <size>
+             <width>100</width>
+             <height>16777215</height>
+            </size>
            </property>
           </widget>
          </item>
@@ -1901,8 +1921,15 @@
            </property>
           </widget>
          </item>
-         <item row="4" column="2" rowspan="2" alignment="Qt::AlignRight">
-          <widget class="QLineEdit" name="EffectName"/>
+         <item row="4" column="1">
+          <widget class="QLineEdit" name="uiEffectNameWave1">
+           <property name="maximumSize">
+            <size>
+             <width>100</width>
+             <height>16777215</height>
+            </size>
+           </property>
+          </widget>
          </item>
          <item row="5" column="0">
           <widget class="QPushButton" name="EffWave2Button">
@@ -1911,39 +1938,56 @@
            </property>
           </widget>
          </item>
-         <item row="6" column="0" colspan="3">
-          <widget class="QLabel" name="label_13">
+         <item row="5" column="1">
+          <widget class="QLineEdit" name="uiEffectNameWave2">
+           <property name="maximumSize">
+            <size>
+             <width>100</width>
+             <height>16777215</height>
+            </size>
+           </property>
+          </widget>
+         </item>
+         <item row="6" column="0" colspan="2">
+          <widget class="QLabel" name="uiSysEffectLabel">
            <property name="text">
             <string>System Effect</string>
            </property>
           </widget>
          </item>
-         <item row="7" column="0">
+         <item row="7" column="0" rowspan="2">
           <widget class="QPushButton" name="EffSys1Button">
            <property name="text">
             <string>Sys1</string>
            </property>
           </widget>
          </item>
-         <item row="8" column="0">
+         <item row="7" column="1">
+          <widget class="QLineEdit" name="uiEffectNameSys1">
+           <property name="maximumSize">
+            <size>
+             <width>100</width>
+             <height>16777215</height>
+            </size>
+           </property>
+          </widget>
+         </item>
+         <item row="8" column="1" rowspan="2">
+          <widget class="QLineEdit" name="uiEffectNameSys2">
+           <property name="maximumSize">
+            <size>
+             <width>100</width>
+             <height>16777215</height>
+            </size>
+           </property>
+          </widget>
+         </item>
+         <item row="9" column="0">
           <widget class="QPushButton" name="EffSys2Button">
            <property name="text">
             <string>Sys2</string>
            </property>
           </widget>
-         </item>
-         <item row="3" column="1">
-          <spacer name="horizontalSpacer_3">
-           <property name="orientation">
-            <enum>Qt::Horizontal</enum>
-           </property>
-           <property name="sizeHint" stdset="0">
-            <size>
-             <width>40</width>
-             <height>20</height>
-            </size>
-           </property>
-          </spacer>
          </item>
         </layout>
        </widget>

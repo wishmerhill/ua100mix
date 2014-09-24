@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>FullEffectsDialog</class>
- <widget class="QDialog" name="FullEffectsDialog">
+ <class>uiCompactEffectsSysDialog</class>
+ <widget class="QDialog" name="uiCompactEffectsSysDialog">
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -11,7 +11,7 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Full Effects</string>
+   <string>Compact Effects</string>
   </property>
   <property name="windowIcon">
    <iconset>
@@ -19,14 +19,14 @@
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <item>
-    <widget class="QLabel" name="EffTypeLabel">
+    <widget class="QLabel" name="uiEffTypeLabel">
      <property name="text">
       <string>Effect Type</string>
      </property>
     </widget>
    </item>
    <item>
-    <widget class="QComboBox" name="EffectTypeList"/>
+    <widget class="QComboBox" name="uiEffectTypeList"/>
    </item>
    <item>
     <widget class="QTreeWidget" name="uiEffectParameters">

@@ -35,6 +35,7 @@ from PyQt4 import QtGui, QtCore
 from types import MethodType
 import signal
 import time
+import res.tools as tools
 
 if (DEBUG_MODE):
     np.set_printoptions(formatter={'int':hex})
@@ -299,7 +300,7 @@ if (True):
     
     MIXER_EFFECT_MODE = [0x00]
     MIXER_EFFECT_MODE_SIZE = [0x00, 0x00, 0x00, 0x01]
-    MIXER_EFFECT_MODE_PAR={0x01: 'VT Effect Mode',\
+    MIXER_EFFECT_MODE_PAR={#0x01: 'VT Effect Mode',\
                            0x03: 'Compact Effect Mode',\
                            0x04: 'Full Effect Mode'}
     
@@ -360,50 +361,257 @@ if (True):
     PRESET_EFFECT_CONTROL = [0x00, 0x40, 0x60]
     
     
-    # FULL EFFECT MODE
-    EFX_TYPE = {}
-    EFX_TYPE[1] = ('High Quality Reverb',[0x00,0x11])
+    # PARAMETER CONVERSION TABLES
+    # PRE DELAY TIME [ms] (1)
+    # It is not a regular parameters as it has different steps. Must be built in steps...
+    #PARAM_CONV_1 = tools.mergeRanges(range(0x00,0x33),tools.ulist(0,5,0.1,'ms'))
+    #PARAM_CONV_1_B = tools.mergeRanges(range(0x33,0x3D),tools.ulist(5.5,10,0.5))
+    #PARAM_CONV_1_C = tools.mergeRanges(range(0x3D,0x65),tools.ulist(11,50,1))
+    #PARAM_CONV_1_D = tools.mergeRanges(range(0x65,0x7E),tools.ulist(52,100,2))
+    #PARAM_CONV_1_E = {0x7E: '100', 0x7F: '100'}
+    #PARAM_CONV_1.update(PARAM_CONV_1_B)
+    #PARAM_CONV_1.update(PARAM_CONV_1_C)
+    #PARAM_CONV_1.update(PARAM_CONV_1_D)
+    #PARAM_CONV_1.update(PARAM_CONV_1_E)
+    # to save CPU and time, I put THEM ALL already build...
+    PARAM_TYPE_1 = ({0: '0ms', 1: '0.1ms', 2: '0.2ms', 3: '0.3ms', 4: '0.4ms', 5: '0.5ms',
+                     6: '0.6ms', 7: '0.7ms', 8: '0.8ms', 9: '0.9ms', 10: '1.0ms', 11: '1.1ms',
+                     12: '1.2ms', 13: '1.3ms', 14: '1.4ms', 15: '1.5ms', 16: '1.6ms', 17: '1.7ms',
+                     18: '1.8ms', 19: '1.9ms', 20: '2.0ms', 21: '2.1ms', 22: '2.2ms', 23: '2.3ms',
+                     24: '2.4ms', 25: '2.5ms', 26: '2.6ms', 27: '2.7ms', 28: '2.8ms', 29: '2.9ms',
+                     30: '3.0ms', 31: '3.1ms', 32: '3.2ms', 33: '3.3ms', 34: '3.4ms', 35: '3.5ms',
+                     36: '3.6ms', 37: '3.7ms', 38: '3.8ms', 39: '3.9ms', 40: '4.0ms', 41: '4.1ms',
+                     42: '4.2ms', 43: '4.3ms', 44: '4.4ms', 45: '4.5ms', 46: '4.6ms', 47: '4.7ms',
+                     48: '4.8ms', 49: '4.9ms', 50: '5.0ms', 51: '5.5', 52: '6.0', 53: '6.5', 54: '7.0',
+                     55: '7.5', 56: '8.0', 57: '8.5', 58: '9.0', 59: '9.5', 60: '10.0', 61: '11', 62: '12',
+                     63: '13', 64: '14', 65: '15', 66: '16', 67: '17', 68: '18', 69: '19', 70: '20', 71: '21',
+                     72: '22', 73: '23', 74: '24', 75: '25', 76: '26', 77: '27', 78: '28', 79: '29', 80: '30',
+                     81: '31', 82: '32', 83: '33', 84: '34', 85: '35', 86: '36', 87: '37', 88: '38', 89: '39',
+                     90: '40', 91: '41', 92: '42', 93: '43', 94: '44', 95: '45', 96: '46', 97: '47', 98: '48',
+                     99: '49', 100: '50', 101: '52', 102: '54', 103: '56', 104: '58', 105: '60', 106: '62',
+                     107: '64', 108: '66', 109: '68', 110: '70', 111: '72', 112: '74', 113: '76', 114: '78',
+                     115: '80', 116: '82', 117: '84', 118: '86', 119: '88', 120: '90', 121: '92', 122: '94',
+                     123: '96', 124: '98', 125: '100', 126: '100', 127: '100'})
     
-    EFX_PARAMETERS={}
-    EFX_PARAMETERS[1] = ( ('Type','Room1/2/Plate1/2/Hall1/2',range(0x00,0x06), [0x03]),\
-        ('Pre Dly','0ms - 80ms - 635ms', range(0x00,0x80), [0x04]),\
-        ('Reverb Time','0.1s - 2s - 38s',range(0x00,0x80), [0x05]),\
-        ('HF Damp','-10 - -4 -0', range(0x00,0x0B), [0x06]),\
-        ('ER Pre Dly', '0 - 40ms - 635 ms', range(0x00,0x80), [0x07]),\
-        ('ER Mix','0 - 15 - 127', range(0x00,0x80), [0x08]),\
-        ('Diffusion','0 - 9 - 10',range(0x00,0x0B),[0x09]),\
-        ('Tone Low','-12dB - 0dB - +12dB',range(0x34,0x4D),[0x0A]),\
-        ('Tone High','-12dB - 0dB - +12dB',range(0x34,0x4D),[0x0B]),\
-        ('Balance','D > 0E - D0 < E', range(0x00,0x80), [0x0C])
-    )
+    #PARAM_TYPE_5 = tools.mergeRanges(range(0x00,0x80),tools.ulist(0,635,5,'ms'))
+    PARAM_TYPE_5 = ({0: '0ms', 1: '5ms', 2: '10ms', 3: '15ms', 4: '20ms', 5: '25ms', 6: '30ms', 7: '35ms',
+                    8: '40ms', 9: '45ms', 10: '50ms', 11: '55ms', 12: '60ms', 13: '65ms', 14: '70ms',
+                    15: '75ms', 16: '80ms', 17: '85ms', 18: '90ms', 19: '95ms', 20: '100ms', 21: '105ms',
+                    22: '110ms', 23: '115ms', 24: '120ms', 25: '125ms', 26: '130ms', 27: '135ms', 28: '140ms',
+                    29: '145ms', 30: '150ms', 31: '155ms', 32: '160ms', 33: '165ms', 34: '170ms', 35: '175ms',
+                    36: '180ms', 37: '185ms', 38: '190ms', 39: '195ms', 40: '200ms', 41: '205ms', 42: '210ms',
+                    43: '215ms', 44: '220ms', 45: '225ms', 46: '230ms', 47: '235ms', 48: '240ms', 49: '245ms',
+                    50: '250ms', 51: '255ms', 52: '260ms', 53: '265ms', 54: '270ms', 55: '275ms', 56: '280ms',
+                    57: '285ms', 58: '290ms', 59: '295ms', 60: '300ms', 61: '305ms', 62: '310ms', 63: '315ms',
+                    64: '320ms', 65: '325ms', 66: '330ms', 67: '335ms', 68: '340ms', 69: '345ms', 70: '350ms',
+                    71: '355ms', 72: '360ms', 73: '365ms', 74: '370ms', 75: '375ms', 76: '380ms', 77: '385ms',
+                    78: '390ms', 79: '395ms', 80: '400ms', 81: '405ms', 82: '410ms', 83: '415ms', 84: '420ms',
+                    85: '425ms', 86: '430ms', 87: '435ms', 88: '440ms', 89: '445ms', 90: '450ms', 91: '455ms',
+                    92: '460ms', 93: '465ms', 94: '470ms', 95: '475ms', 96: '480ms', 97: '485ms', 98: '490ms',
+                    99: '495ms', 100: '500ms', 101: '505ms', 102: '510ms', 103: '515ms', 104: '520ms', 105: '525ms',
+                    106: '530ms', 107: '535ms', 108: '540ms', 109: '545ms', 110: '550ms', 111: '555ms', 112: '560ms',
+                    113: '565ms', 114: '570ms', 115: '575ms', 116: '580ms', 117: '585ms', 118: '590ms', 119: '595ms',
+                    120: '600ms', 121: '605ms', 122: '610ms', 123: '615ms', 124: '620ms', 125: '625ms', 126: '630ms', 127: '635ms'})
+
+    # PARAM_TYPE_16 - the table in manual reports 7 (page 76-77)
+    #PARAM_TYPE_16 = tools.mergeRanges(range(0x00,0x64),tools.ulist(0.1,10,0.1,'s'))
+    #PARAM_TYPE_16_B = tools.mergeRanges(range(0x64,0x80),tools.ulist(11,38,1,'s'))
+    #PARAM_TYPE_16.update(PARAM_TYPE_16_B)
+    PARAM_TYPE_16 = ({0: '0.1s', 1: '0.2s', 2: '0.3s', 3: '0.4s', 4: '0.5s', 5: '0.6s', 6: '0.7s', 7: '0.8s',
+                      8: '0.9s', 9: '1.0s', 10: '1.1s', 11: '1.2s', 12: '1.3s', 13: '1.4s', 14: '1.5s',
+                      15: '1.6s', 16: '1.7s', 17: '1.8s', 18: '1.9s', 19: '2.0s', 20: '2.1s', 21: '2.2s',
+                      22: '2.3s', 23: '2.4s', 24: '2.5s', 25: '2.6s', 26: '2.7s', 27: '2.8s', 28: '2.9s',
+                      29: '3.0s', 30: '3.1s', 31: '3.2s', 32: '3.3s', 33: '3.4s', 34: '3.5s', 35: '3.6s',
+                      36: '3.7s', 37: '3.8s', 38: '3.9s', 39: '4.0s', 40: '4.1s', 41: '4.2s', 42: '4.3s',
+                      43: '4.4s', 44: '4.5s', 45: '4.6s', 46: '4.7s', 47: '4.8s', 48: '4.9s', 49: '5.0s',
+                      50: '5.1s', 51: '5.2s', 52: '5.3s', 53: '5.4s', 54: '5.5s', 55: '5.6s', 56: '5.7s',
+                      57: '5.8s', 58: '5.9s', 59: '6.0s', 60: '6.1s', 61: '6.2s', 62: '6.3s', 63: '6.4s',
+                      64: '6.5s', 65: '6.6s', 66: '6.7s', 67: '6.8s', 68: '6.9s', 69: '7.0s', 70: '7.1s',
+                      71: '7.2s', 72: '7.3s', 73: '7.4s', 74: '7.5s', 75: '7.6s', 76: '7.7s', 77: '7.8s',
+                      78: '7.9s', 79: '8.0s', 80: '8.1s', 81: '8.2s', 82: '8.3s', 83: '8.4s', 84: '8.5s',
+                      85: '8.6s', 86: '8.7s', 87: '8.8s', 88: '8.9s', 89: '9.0s', 90: '9.1s', 91: '9.2s',
+                      92: '9.3s', 93: '9.4s', 94: '9.5s', 95: '9.6s', 96: '9.7s', 97: '9.8s', 98: '9.9s',
+                      99: '10.0s', 100: '11s', 101: '12s', 102: '13s', 103: '14s', 104: '15s', 105: '16s',
+                      106: '17s', 107: '18s', 108: '19s', 109: '20s', 110: '21s', 111: '22s', 112: '23s',
+                      113: '24s', 114: '25s', 115: '26s', 116: '27s', 117: '28s', 118: '29s', 119: '30s',
+                      120: '31s', 121: '32s', 122: '33s', 123: '34s', 124: '35s', 125: '36s', 126: '37s', 127: '38s'})
+    
+    
+    # Those are funny. Non capire O~O
+    #BALANCE_VALUES=(['D0<E','D1<E','D3<E','D4<E','D6<E','D7<E','D9<E','D11<E','D12<E','D14<E','D<E',
+    #                 'D15<E','D17<E','D19<E','D20<E','D22<E','D23<E','D25<E','D26<E','D28<E','D30<E',
+    #                 'D31<E','D33<E','D34<E','D36<E','D38<E','D39<E','D41<E','D42<E','D44<E','D46<E',
+    #                 'D47<E','D49<E','D50<E','D52<E','D53<E','D55<E','D57<E','D58<E','D60<E','D61<E',
+    #                 'D63<E','D65<E','D66<E','D68<E','D69<E','D71<E','D73<E','D74<E','D76<E','D77<E',
+    #                 'D79<E','D80<E','D82<E','D84<E','D85<E','D87<E','D88<E','D90<E','D92<E','D93<E',
+    #                 'D<E','D95<E','D96<E','D98<E','D=E','D>98E','D>96E','D>95E','D>93E','D>92E',
+    #                 'D>90E','D>88E','D>87E','D>85E','D>84E','D>82E','D>80E','D>79E','D>77E','D>76E',
+    #                 'D>74E','D>73E','D>71E','D>69E','D>68E','D>66E','D>65E','D>63E','D>61E','D>60E',
+    #                 'D>58E','D>57E','D>55E','D>53E','D>52E','D>50E','D>49E','D>47E','D>46E','D>44E',
+    #                 'D>42E','D>41E','D>39E','D>38E','D>36E','D>34E','D>33E','D>31E','D>30E','D>28E',
+    #                 'D>26E','D>25E','D>23E','D>22E','D>20E','D>19E','D>17E','D>15E','D>14E','D>12E',
+    #                 'D>11E','D>9E','D>7E','D>6E','D>4E','D>3E','D>1E','D>0E'])
+    BALANCE_VALUES = ({0: 'D>0E', 1: 'D>0E', 2: 'D>1E', 3: 'D>3E', 4: 'D>4E', 5: 'D>6E', 6: 'D>7E',
+                       7: 'D>9E', 8: 'D>11E', 9: 'D>12E', 10: 'D>14E', 11: 'D>15E', 12: 'D>17E',
+                       13: 'D>19E', 14: 'D>20E', 15: 'D>22E', 16: 'D>23E', 17: 'D>25E', 18: 'D>26E',
+                       19: 'D>28E', 20: 'D>30E', 21: 'D>31E', 22: 'D>33E', 23: 'D>34E', 24: 'D>36E',
+                       25: 'D>38E', 26: 'D>39E', 27: 'D>41E', 28: 'D>42E', 29: 'D>44E', 30: 'D>46E',
+                       31: 'D>47E', 32: 'D>49E', 33: 'D>50E', 34: 'D>52E', 35: 'D>53E', 36: 'D>55E',
+                       37: 'D>57E', 38: 'D>58E', 39: 'D>60E', 40: 'D>61E', 41: 'D>63E', 42: 'D>65E',
+                       43: 'D>66E', 44: 'D>68E', 45: 'D>69E', 46: 'D>71E', 47: 'D>73E', 48: 'D>74E',
+                       49: 'D>76E', 50: 'D>77E', 51: 'D>79E', 52: 'D>80E', 53: 'D>82E', 54: 'D>84E',
+                       55: 'D>85E', 56: 'D>87E', 57: 'D>88E', 58: 'D>90E', 59: 'D>92E', 60: 'D>93E',
+                       61: 'D>95E', 62: 'D>96E', 63: 'D>98E', 64: 'D=E', 65: 'D98<E', 66: 'D96<E',
+                       67: 'D95<E', 68: 'D93<E', 69: 'D92<E', 70: 'D90<E', 71: 'D88<E', 72: 'D87<E',
+                       73: 'D85<E', 74: 'D84<E', 75: 'D82<E', 76: 'D80<E', 77: 'D79<E', 78: 'D77<E',
+                       79: 'D76<E', 80: 'D74<E', 81: 'D73<E', 82: 'D71<E', 83: 'D69<E', 84: 'D68<E',
+                       85: 'D66<E', 86: 'D65<E', 87: 'D63<E', 88: 'D61<E', 89: 'D60<E', 90: 'D58<E',
+                       91: 'D57<E', 92: 'D55<E', 93: 'D53<E', 94: 'D52<E', 95: 'D50<E', 96: 'D49<E',
+                       97: 'D47<E', 98: 'D46<E', 99: 'D44<E', 100: 'D42<E', 101: 'D41<E', 102: 'D39<E',
+                       103: 'D38<E', 104: 'D36<E', 105: 'D34<E', 106: 'D33<E', 107: 'D31<E',
+                       108: 'D30<E', 109: 'D28<E', 110: 'D26<E', 111: 'D25<E', 112: 'D23<E',
+                       113: 'D22<E', 114: 'D20<E', 115: 'D19<E', 116: 'D17<E', 117: 'D15<E',
+                       118: 'D14<E', 119: 'D12<E', 120: 'D11<E', 121: 'D9<E', 122: 'D7<E',
+                       123: 'D6<E', 124: 'D4<E', 125: 'D3<E', 126: 'D1<E', 127: 'D0<E'})
+
 
     
-    EFX_TYPE[2] = ('Mic Simulator',[0x00,0x12])
-    EFX_PARAMETERS[2] = ()
-    EFX_TYPE[3] = ('Vocoder',[0x00,0x13])
-    EFX_TYPE[4] = ('Vocal Multi',[0x00,0x14])
-    EFX_TYPE[5] = ('Game',[0x00,0x16])
-    EFX_TYPE[6] = ('Rotary Multi',[0x03,0x00])
-    EFX_TYPE[7] = ('GTR Multi',[0x04,0x00])
+    # Let's initialise the dictionaries with the parameters.
+    FULL_EFX_TYPE = {}
+    FULL_EFX_PARAMETERS={}
     
+    
+    # FULL EFFECT MODE
+    FULL_EFX_TYPE[1] = ('High Quality Reverb',[0x00,0x11])
+    # FULL_EFX_PARAMETERS[]: How to build them (brainstorming) [in ITALIAN, sorry]
+    # Mi servono anche i range in forma umana oltre a quelli esadecimali per il SYSEX, in modo che lo spinbox mostri il valore umano e passi
+    # il valore esadecimale.
+    # al momento, se FULL_EFX_PARAMETERS[x] = par, abbiamo:
+    # par[0]: nome del parametro (es. 'Reverb Time');
+    # par[1]: range indicativo in forma 'umana' - lo metto in colonna 3 del QtreeWidgetItem
+    # par[2]: range esadecimale completo dei valori che puo' assumere il parametro -> quello che passo al SYSEX
+    # **** ora ho fatto diventare par[2] a sua volta un dizionario in cui la chiave e' il valoroa esadecimale da passare mentre l'argomento e' il valore 'umano'
+    # **** **** ad esempio: {0: '0ms', 1: '1ms'}
+    # par[3]: LSB/MSB del parametro -> da passare al SYSEX
+    # par[4]: metto il valore di default
+    #
+    # posso
+    # 1. aggiungere quindi una colonna in cui inserisco una tupla dei valori 'umani'.
+    # 2. modificare par[2] facendolo diventare un dizionario nella forma {valore_hex: valore umano}
+    
+    # BACKUP del parametro "vecchio"
+    #FULL_EFX_PARAMETERS[1] = ( ('Type','Room1/2/Plate1/2/Hall1/2',range(0x00,0x06), [0x03]),\
+    #    ('Pre Dly','0ms - 80ms - 635ms', range(0x00,0x80), [0x04]),\
+    #    ('Reverb Time','0.1s - 2s - 38s',range(0x00,0x80), [0x05]),\
+    #    ('HF Damp','-10 - -4 -0', range(0x00,0x0B), [0x06]),\
+    #    ('ER Pre Dly', '0 - 40ms - 635 ms', range(0x00,0x80), [0x07]),\
+    #    ('ER Mix','0 - 15 - 127', range(0x00,0x80), [0x08]),\
+    #    ('Diffusion','0 - 9 - 10',range(0x00,0x0B),[0x09]),\
+    #    ('Tone Low','-12dB - 0dB - +12dB',range(0x34,0x4D),[0x0A]),\
+    #    ('Tone High','-12dB - 0dB - +12dB',range(0x34,0x4D),[0x0B]),\
+    #    ('Balance','D > 0E - D0 < E', range(0x00,0x80), [0x0C])
+    #)
+    
+    # parametro di lavoro
+    # l'implementazione attuale ha in par[2] un dizionario con associati i valori hex a quelli umani...
+    FULL_EFX_PARAMETERS[1] = ( ('Type','Room1/2/Plate1/2/Hall1/2',tools.mergeRanges(range(0x00,0x06),['Room1','Room2','Plate1','Plate2','Hall1','Hall2']), [0x03],0x03),\
+        ('Pre Dly','0ms - 80ms - 635ms', PARAM_TYPE_5, [0x04], 0x10),\
+        ('Reverb Time','0.1s - 2s - 38s',PARAM_TYPE_16, [0x05],0x13),\
+        ('HF Damp','-10 - -4 -0', tools.mergeRanges(range(0x00,0x0B),tools.ulist(-10,0,1)), [0x06], 0x06),\
+        ('ER Pre Dly', '0 - 40ms - 635 ms', PARAM_TYPE_5, [0x07], 0x08),\
+        ('ER Mix','0 - 15 - 127', tools.mergeRanges(range(0x00,0x80),tools.ulist(0,127,1)), [0x08],0x0f),\
+        ('Diffusion','0 - 9 - 10', tools.mergeRanges(range(0x00,0x0B),tools.ulist(0,10,1)),[0x09],0x09),\
+        ('Tone Low','-12dB - 0dB - +12dB',tools.mergeRanges(range(0x34,0x4D), tools.ulist(-12,+12,1,'dB')),[0x0A], 0x40),\
+        ('Tone High','-12dB - 0dB - +12dB',tools.mergeRanges(range(0x34,0x4D), tools.ulist(-12,+12,1,'dB')),[0x0B],0x40),\
+        ('Balance','D > 0E - D0 < E', BALANCE_VALUES, [0x0C],0x7f)
+    )
+
+    #FULL_EFX_TYPE[2] = ('Mic Simulator',[0x00,0x12])
+    #FULL_EFX_PARAMETERS[2] = ()
+    #FULL_EFX_TYPE[3] = ('Vocoder',[0x00,0x13])
+    #FULL_EFX_TYPE[4] = ('Vocal Multi',[0x00,0x14])
+    #FULL_EFX_TYPE[5] = ('Game',[0x00,0x16])
+    #FULL_EFX_TYPE[6] = ('Rotary Multi',[0x03,0x00])
+    #FULL_EFX_TYPE[7] = ('GTR Multi',[0x04,0x00])
+    
+    
+    # COMPACT EFFECTS MODE
+    # Let's define the SYS first. They are actually a bit easier.
+    
+    # REMEMBER: SYS1 only has DELAY and CHORUS
+    #           SYS2 only has DELAY and REVERB
+    # THIS MEANS: we must differentiate the two of them somehow. Fuck.
+    
+    COMPACT_SYS1_EFX_TYPE = ({1: ('Delay',[0x00, 0x21]),
+                             2: ('Chorus', [0x00, 0x22])})
+    COMPACT_SYS2_EFX_TYPE = ({1: ('Delay', [0x00, 0x31]),
+                              2: ('Reverb', [0x00, 0x32])})
+    
+    
+    
+    COMPACT_SYS1_EFX_PARAMETERS={}
+    
+    COMPACT_SYS1_EFX_PARAMETERS[1] = (
+        #('Dly Tm LtoL'),
+        #('Dly Tm LtoR'),
+        #('Dly Tm RtoR'),
+        #('Dly Tm RtoL'),
+        ('Feedback Level', '-48% - -34% - +48%', tools.mergeRanges(range(0x28,0x59),tools.ulist(-48,+48,2,'%')), [0x07],0x36),
+        ('Cross Fd Level', '-48% - -34% - +48%', tools.mergeRanges(range(0x28,0x59),tools.ulist(-48,+48,2,'%')), [0x08],0x4A),
+        #('HF Damp'),
+        #('Cross HF Damp'),
+        ('Cross Balance','0-98-127',tools.mergeRanges(range(0x00,0x80),tools.ulist(0,127,1)), [0x0B], 0x62),
+        ('Balance','D > 0E - D0 < E',BALANCE_VALUES,[0x0C],0x7F)
+    )
+    
+    COMPACT_SYS1_EFX_PARAMETERS[2] = (
+        ('Type','Mode1 -2 -4',tools.mergeRanges(range(0x00,0x04),['Mode1','Mode2','Mode3','Mode4']),[0x03], 0x01),
+        ('Pre Filter','Off/LPF/HPF', tools.mergeRanges(range(0x00,0x03),['Off','LPF','HPF']),[0x04], 0x02),
+        #('Cutoff'),
+        #('Pre Dly'),
+        #('Rate'),
+        ('Depth', '0-116-127',tools.mergeRanges(range(0x00,0x80),tools.ulist(0,127,1)),[0x08], 0x74),
+        ('Balance','D > 0E - D0 < E',BALANCE_VALUES,[0x09],0x7F)
+    )
+    COMPACT_SYS2_EFX_PARAMETERS={}
+    
+    COMPACT_SYS2_EFX_PARAMETERS[1] = (
+        #('Dly Tm LtoL'),
+        #('Dly Tm LtoR'),
+        #('Dly Tm RtoR'),
+        #('Dly Tm RtoL'),
+        ('Feedback Level', '-48% - -34% - +48%', tools.mergeRanges(range(0x28,0x59),tools.ulist(-48,+48,2,'%')), [0x07],0x36),
+        ('Cross Fd Level', '-48% - -34% - +48%', tools.mergeRanges(range(0x28,0x59),tools.ulist(-48,+48,2,'%')), [0x08],0x4A),
+        #('HF Damp'),
+        #('Cross HF Damp'),
+        ('Cross Balance','0-98-127',tools.mergeRanges(range(0x00,0x80),tools.ulist(0,127,1)), [0x0B], 0x62),
+        ('Balance','D > 0E - D0 < E',BALANCE_VALUES,[0x0C],0x7F)
+    )
+    
+    COMPACT_SYS2_EFX_PARAMETERS[2] = (
+        ('Type','Room1/2/Plate1/2/Hall1/2',tools.mergeRanges(range(0x00,0x06),['Room1','Room2','Plate1','Plate2','Hall1','Hall2']), [0x03],0x05),
+        #('Pre Dly','0ms - 100ms', PARAM_TYPE_1, [0x04], 0x??),
+        ('Reverb Time','0 - 23 - 127',tools.mergeRanges(range(0x00,0x80),tools.ulist(0,127,1)), [0x05],0x17),
+        #('HF Damp'),
+        #('Low Gain'),
+        #('High Gain'),
+        ('Balance','D > 0E - D0 < E',BALANCE_VALUES,[0x09],0x7F)
+    )
+    
+    # Now we must define the COMPACT INSERTION EFFECT.
+    # Remember: they are grouped, as in the documentation
+    
+    COMPACT_INS_EFX_TYPE={}
+    COMPACT_INS_EFX_PARAMETERS={}
     
     # End of exclusive (EOX)
     EOX = [0xF7]
     
     
-    # PARAMETER CONVERSION TABLES
-    # PRE DELAY TIME [ms] (1)
-    # uncomment to use...
-    #PREDELAYTIME = {}
-    #predelaytime=0.0
-    #for index in range(0x00,0x80):
-    #    PREDELAYTIME[index]=predelaytime
-    #    predelaytime=(float)(predelaytime+0.1)
+    
 
 if (DEBUG_MODE):
     print('Done!')
-
-
 
 class MidiDevsDialog(QtGui.QDialog):
     
@@ -477,6 +685,7 @@ class MainWindow(QtGui.QMainWindow):
         self.ui = PyQt4.uic.loadUi('ui/main.ui', self)
         
         self.fullEffects = {}
+        self.compactEffectsSys = {}
         
         # setup menus
         self.actionReset_Mixer.triggered.connect(self.resetMixer)
@@ -658,9 +867,9 @@ class MainWindow(QtGui.QMainWindow):
         
         if (MIXER_OUTPUT_MODE):
             for key in MIXER_EFFECT_MODE_PAR.keys():
-                self.EffectModeSelector.addItem(MIXER_EFFECT_MODE_PAR[key], key)
-            self.EffectModeSelector.setCurrentIndex(-1)
-        self.EffectModeSelector.currentIndexChanged.connect(self.setEffectMode)
+                self.uiEffectModeSelector.addItem(MIXER_EFFECT_MODE_PAR[key], key)
+            self.uiEffectModeSelector.setCurrentIndex(-1)
+        self.uiEffectModeSelector.currentIndexChanged.connect(self.setEffectMode)
         
 
         self.EffMic1Button.setProperty('HEX', [0x01])
@@ -716,20 +925,40 @@ class MainWindow(QtGui.QMainWindow):
         if (DEBUG_MODE):
             print(CC_MIC1_CH,' ',CC_MICLINESELECTOR_PAR,' ',self.sender().property('state').toPyObject() )  
     
-    def setEffectMode(salf, value):
+    def setEffectMode(self, value):
+        global MixerEffectMode
         valueToList=[sorted(MIXER_EFFECT_MODE_PAR.keys())[value]]
-        if (DEBUG_MODE):
-            print(valueToList)
+        #if (DEBUG_MODE):
+        #    print(valueToList)
         send_DT1(MIXER_EFFECT_CONTROL + MIXER_EFFECT_MODE + valueToList)
+        MixerEffectMode=sorted(MIXER_EFFECT_MODE_PAR.keys())[value]
+        
     
     def effectSelection(self):
-        if (DEBUG_MODE):
-            print(self.sender().objectName())
-        
-        if not (self.sender() in self.fullEffects):
-            self.fullEffects[self.sender()] = FullEffectsDialog(self)
-        self.fullEffects[self.sender()].show()
-        print(self.fullEffects[self.sender()].parent())
+        global MixerEffectMode
+        #if (DEBUG_MODE):
+        #    print(self.sender().objectName())
+        if (MixerEffectMode == 0x04):
+            #if not (self.sender() in self.fullEffects):
+            #    self.fullEffects[self.sender()] = FullEffectsDialog(self)
+            #self.fullEffects[self.sender()].show()
+            if (self.fullEffects):
+                self.fullEffects.uiToggleEffect.setChecked(0)
+                self.fullEffects.close()
+                self.fullEffects = FullEffectsDialog(self)
+                self.fullEffects.uiToggleEffect.setChecked(1)
+            else:
+                self.fullEffects = FullEffectsDialog(self)
+            self.fullEffects.show()
+        if (MixerEffectMode == 0x03):
+            # We can have only one effect for the mic1, mic2, wave1 and wave2
+            # and both of sys1 and sys2
+            if (self.sender().property('HEX') in ([0x05], [0x06])):
+                if not (self.sender() in self.compactEffectsSys):
+                    self.compactEffectsSys[self.sender()] = CompactEffectsSysDialog(self)
+                self.compactEffectsSys[self.sender()].show()
+            else:
+                pass
             
     def showHideSub(self, checked):
         '''
@@ -883,9 +1112,80 @@ class MainWindow(QtGui.QMainWindow):
         #mixerMode = answerList[2][0][2]
         #self.uiInputModeButton.setProperty('state',mixerMode)
         
+        #if (DEBUG_MODE):
+        #    print(answerList)
 
-        print(answerList)
-
+class CompactEffectsSysDialog(QtGui.QDialog):
+    def __init__(self,parent = None):
+        super(CompactEffectsSysDialog,self).__init__(parent)
+        # here is where I store the channel choosen fo the effect (mic1, mic2, wave1, wave2, sys1, sys2)
+        self.SenderHex = parent.sender().property('HEX').toPyObject()
+        # load the ui...
+        self.ui = PyQt4.uic.loadUi('ui/compacteffectssysdialog.ui', self)
+        if self.SenderHex == [0x05]:
+            self.setWindowTitle('System 1 - '+self.windowTitle())
+            self.uiEffectTypeList.addItem(COMPACT_SYS1_EFX_TYPE[1][0])
+            self.uiEffectTypeList.addItem(COMPACT_SYS1_EFX_TYPE[2][0])
+        elif self.SenderHex == [0x06]:
+            self.setWindowTitle('System 2 - '+self.windowTitle())
+            self.uiEffectTypeList.addItem(COMPACT_SYS2_EFX_TYPE[1][0])
+            self.uiEffectTypeList.addItem(COMPACT_SYS2_EFX_TYPE[2][0])
+        
+        # connect the combobox with the slot which populates the QTreeWidget
+        self.uiEffectTypeList.currentIndexChanged.connect(self.populateEffect)
+        
+        self.populateEffect(0)
+        
+        self.uiToggleEffect.toggled.connect(self.setEffect)
+    
+    def populateEffect(self, index):
+        
+        # first af all, sent the effect type to the UA-100
+        # This is the LSB/MSB of the effect type (i.e. High Quality Reverb, Mic Simulator) aka the FULL_EFX_TYPE[n][1] (hex value)
+        self.uiEffectParameters.clear()
+        if (self.SenderHex == [0x05]):
+            if (DEBUG_MODE):
+                print([0x00, 0x40] + self.SenderHex + [0x00] + COMPACT_SYS1_EFX_TYPE[index+1][1])
+            send_DT1([0x00, 0x40] + self.SenderHex + [0x00] + COMPACT_SYS1_EFX_TYPE[index+1][1])
+            for par in COMPACT_SYS1_EFX_PARAMETERS[index+1]:
+                item = CustomTreeItem(self.uiEffectParameters, par, index)
+        elif (self.SenderHex == [0x06]):
+            if (DEBUG_MODE):
+                print([0x00, 0x40] + self.SenderHex + [0x00] + COMPACT_SYS2_EFX_TYPE[index+1][1])
+            send_DT1([0x00, 0x40] + self.SenderHex + [0x00] + COMPACT_SYS2_EFX_TYPE[index+1][1])
+            for par in COMPACT_SYS2_EFX_PARAMETERS[index+1]:
+                item = CustomTreeItem(self.uiEffectParameters, par, index)
+        
+        
+    def setEffect(self, checked):
+        '''
+        A small but invaluable function:
+        
+        IT SWITCHES THE WHOLE THIG ON!
+        '''
+        
+        if (DEBUG_MODE):
+            print(self.SenderHex)
+        if (checked):
+            checkedList= [0x01]
+        else:
+            checkedList= [0x00]
+        send_DT1([0x00, 0x40, 0x40] + self.SenderHex + checkedList)
+    
+    def sendEffect(self, value):
+        '''
+        We send the values set to the UA-100. The effects are only active when also the switch is checked.
+        '''
+        
+        # first of all convert the passed value to list in order to send the SYSEX message
+        valueToList = [value]
+        if (DEBUG_MODE):
+            print 'LSB/MSB for parameter:', self.sender().property('HEX').toPyObject()
+        
+        
+        # if in real mode, actually send the message
+        send_DT1([0x00, 0x40] + self.SenderHex + self.sender().property('HEX').toPyObject() + valueToList)
+        
 class FullEffectsDialog(QtGui.QDialog):
     '''
     The full effect dialog.
@@ -903,9 +1203,9 @@ class FullEffectsDialog(QtGui.QDialog):
         # load the ui...
         self.ui = PyQt4.uic.loadUi('ui/fulleffectsdialog.ui', self)
 
-        # look for tge EFX_TYPEs and populate the combo box (drop down menu)
-        for key in EFX_TYPE.keys():
-            self.EffectTypeList.addItem(EFX_TYPE[key][0])
+        # look for the FULL_EFX_TYPEs and populate the combo box (drop down menu)
+        for key in FULL_EFX_TYPE.keys():
+            self.EffectTypeList.addItem(FULL_EFX_TYPE[key][0])
         
         # connect the combobox with the slot which populates the QTreeWidget
         self.EffectTypeList.currentIndexChanged.connect(self.populateEffect)
@@ -929,24 +1229,22 @@ class FullEffectsDialog(QtGui.QDialog):
             checkedList= [0x01]
         else:
             checkedList= [0x00]
-        if (REAL_UA_MODE):
-            send_DT1([0x00, 0x40, 0x40] + self.SenderHex + checkedList)
+        send_DT1([0x00, 0x40, 0x40] + self.SenderHex + checkedList)
     
     def populateEffect(self, index):
         
         # first af all, sent the effect type to the UA-100
-        # This is the LSB/MSB of the effect type (i.e. High Quality Reverb, Mic Simulator) aka the EFX_TYPE[n][1] (hex value)
+        # This is the LSB/MSB of the effect type (i.e. High Quality Reverb, Mic Simulator) aka the FULL_EFX_TYPE[n][1] (hex value)
         if (DEBUG_MODE):
-            print([0x00, 0x40] + self.SenderHex + [0x00] + EFX_TYPE[index+1][1])
-        if (REAL_UA_MODE):
-            send_DT1([0x00, 0x40] + self.SenderHex + [0x00] + EFX_TYPE[index+1][1])
+            print([0x00, 0x40] + self.SenderHex + [0x00] + FULL_EFX_TYPE[index+1][1])
+        send_DT1([0x00, 0x40] + self.SenderHex + [0x00] + FULL_EFX_TYPE[index+1][1])
         
         
         self.uiEffectParameters.clear()
         # check if the list isn't yet there... but, as said, the instances are deleted... so what? and How?
         #if not (index in self.effectList):
         #    self.effectList[index]={}
-        #    for par in EFX_PARAMETERS[index+1]:
+        #    for par in FULL_EFX_PARAMETERS[index+1]:
         #        self.effectList[index][par[0]] = CustomTreeItem(self.uiEffectParameters, par)
         #else:
         #    print self.effectList[index]
@@ -954,7 +1252,7 @@ class FullEffectsDialog(QtGui.QDialog):
         #        self.uiEffectParameters.addTopLevelItem(self.effectList[index][item])
         
         # "anonimously" polulate the QTreeWidget ...
-        for par in EFX_PARAMETERS[index+1]:
+        for par in FULL_EFX_PARAMETERS[index+1]:
             item = CustomTreeItem(self.uiEffectParameters, par, index)
     
     def sendEffect(self, value):
@@ -967,9 +1265,9 @@ class FullEffectsDialog(QtGui.QDialog):
         if (DEBUG_MODE):
             print 'LSB/MSB for parameter:', self.sender().property('HEX').toPyObject()
         
-        if (REAL_UA_MODE):
-            # actually send the message
-            send_DT1([0x00, 0x40] + self.SenderHex + self.sender().property('HEX').toPyObject() + valueToList)
+        
+        # if in real mode, actually send the message
+        send_DT1([0x00, 0x40] + self.SenderHex + self.sender().property('HEX').toPyObject() + valueToList)
         
 
 class CustomTreeItem(QtGui.QTreeWidgetItem):
@@ -990,15 +1288,27 @@ class CustomTreeItem(QtGui.QTreeWidgetItem):
  
         ## Init super class ( QtGui.QTreeWidgetItem )
         super( CustomTreeItem, self ).__init__( parent )
+        self.par= par
         self.setText(0,par[0])
         self.spinBox = QtGui.QSpinBox(parent)
         self.spinBox.setProperty('HEX', par[3])
         #self.spinBox.setValue(5)
-        self.spinBox.setRange(min(par[2]), max(par[2]))
+        
+        # nell'implementazione con par[2] dizionario questa riga non va bene...
+        #self.spinBox.setRange(min(par[2]), max(par[2]))
+        # devo usare par[2].keys()
+        self.spinBox.setRange(min(par[2].keys()),max(par[2].keys()))
+        
+        
         self.spinBox.setWrapping(1)
         parent.setItemWidget(self,1, self.spinBox)
-        self.setText(2,par[1])
+        self.setText(3,par[1])
         self.spinBox.valueChanged.connect(parent.parent().sendEffect)
+        self.spinBox.valueChanged.connect(self.setActualValue)
+        self.spinBox.setValue(par[4])
+    
+    def setActualValue(self, value):
+        self.setText(2,self.par[2][value])
 
 def actualMidiDevices():
     '''
@@ -1157,6 +1467,6 @@ if ( __name__ == '__main__' ):
     
     window = MainWindow()
     window.show()
-    
+
     if ( app ):
         app.exec_()
