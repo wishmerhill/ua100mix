@@ -49,11 +49,38 @@ import res.tools as tools
 #BALANCE_DICT=tools.mergeRanges(range(0x00,0x80),BALANCE_VALUES)
 #print BALANCE_DICT
 
-a = tools.mergeRanges(range(0x28,0x59),tools.ulist(-48,+48,2,'%'))
+#a = tools.mergeRanges(range(0x28,0x59),tools.ulist(-48,+48,2,'%'))
 #b=range(0x28,0x59)
 #c= tools.ulist(-48,+48,2,'%')
 #print len(b),len(c)
-print a
+#print a
+
+#PARAM4_CONV_A = tools.mergeRanges(range(0x00,0x33),tools.ulist(0,5,0.1,'ms'))
+#PARAM4_CONV_B = tools.mergeRanges(range(0x33,0x3D),tools.ulist(5.5,10,0.5,'ms'))
+#PARAM4_CONV_C = tools.mergeRanges(range(0x3D,0x5B),tools.ulist(11,40,1,'ms'))
+#PARAM4_CONV_D = tools.mergeRanges(range(0x5B,0x75),tools.ulist(50,300,10,'ms'))
+#PARAM4_CONV_E = tools.mergeRanges(range(0x75,0x7F),tools.ulist(320,500,20,'ms'))
+#PARAM4_CONV_F = { 0x7F : '500ms' }
+#
+#PARAM4_CONV_A.update(PARAM4_CONV_B)
+#PARAM4_CONV_A.update(PARAM4_CONV_C)
+#PARAM4_CONV_A.update(PARAM4_CONV_D)
+#PARAM4_CONV_A.update(PARAM4_CONV_E)
+#PARAM4_CONV_A.update(PARAM4_CONV_F)
+
+#print(PARAM4_CONV_A)
+SEMIPARAM_8=[]
+#PARAM_8
+for hz in [315,400,500,630,800,1000,1250,1600,2000,2500,3150,4000,5000,6300,8000,'Bypass']:
+   for pippo in range(1,9):
+      if not (hz == 'Bypass'):
+         SEMIPARAM_8.append(str(hz) + 'Hz')
+      else:
+         SEMIPARAM_8.append(str(hz))
+print(SEMIPARAM_8)
+
+PARAM_8 = tools.mergeRanges(range(0x00,0x80),SEMIPARAM_8)
+print(PARAM_8)
 
 #pm.init()
 #
