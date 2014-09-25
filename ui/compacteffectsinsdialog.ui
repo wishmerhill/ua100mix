@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>uiCompactEffectsDialog</class>
- <widget class="QDialog" name="uiCompactEffectsDialog">
+ <class>uiCompactEffectsSysDialog</class>
+ <widget class="QDialog" name="uiCompactEffectsSysDialog">
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -11,7 +11,7 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Insertion Compact Effects</string>
+   <string>Compact Effects</string>
   </property>
   <property name="windowIcon">
    <iconset>
@@ -24,9 +24,6 @@
       <string>Effect Type</string>
      </property>
     </widget>
-   </item>
-   <item>
-    <widget class="QComboBox" name="uiEffectGroupsList"/>
    </item>
    <item>
     <widget class="QComboBox" name="uiEffectTypeList"/>

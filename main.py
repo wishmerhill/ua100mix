@@ -382,16 +382,16 @@ if (True):
                      30: '3.0ms', 31: '3.1ms', 32: '3.2ms', 33: '3.3ms', 34: '3.4ms', 35: '3.5ms',
                      36: '3.6ms', 37: '3.7ms', 38: '3.8ms', 39: '3.9ms', 40: '4.0ms', 41: '4.1ms',
                      42: '4.2ms', 43: '4.3ms', 44: '4.4ms', 45: '4.5ms', 46: '4.6ms', 47: '4.7ms',
-                     48: '4.8ms', 49: '4.9ms', 50: '5.0ms', 51: '5.5', 52: '6.0', 53: '6.5', 54: '7.0',
-                     55: '7.5', 56: '8.0', 57: '8.5', 58: '9.0', 59: '9.5', 60: '10.0', 61: '11', 62: '12',
-                     63: '13', 64: '14', 65: '15', 66: '16', 67: '17', 68: '18', 69: '19', 70: '20', 71: '21',
-                     72: '22', 73: '23', 74: '24', 75: '25', 76: '26', 77: '27', 78: '28', 79: '29', 80: '30',
-                     81: '31', 82: '32', 83: '33', 84: '34', 85: '35', 86: '36', 87: '37', 88: '38', 89: '39',
-                     90: '40', 91: '41', 92: '42', 93: '43', 94: '44', 95: '45', 96: '46', 97: '47', 98: '48',
-                     99: '49', 100: '50', 101: '52', 102: '54', 103: '56', 104: '58', 105: '60', 106: '62',
-                     107: '64', 108: '66', 109: '68', 110: '70', 111: '72', 112: '74', 113: '76', 114: '78',
-                     115: '80', 116: '82', 117: '84', 118: '86', 119: '88', 120: '90', 121: '92', 122: '94',
-                     123: '96', 124: '98', 125: '100', 126: '100', 127: '100'})
+                     48: '4.8ms', 49: '4.9ms', 50: '5.0ms', 51: '5.5ms', 52: '6.0ms', 53: '6.5ms', 54: '7.0ms',
+                     55: '7.5ms', 56: '8.0ms', 57: '8.5ms', 58: '9.0ms', 59: '9.5ms', 60: '10.0ms', 61: '11msms', 62: '12msms',
+                     63: '13msms', 64: '14ms', 65: '15ms', 66: '16ms', 67: '17ms', 68: '18ms', 69: '19ms', 70: '20ms', 71: '21ms',
+                     72: '22ms', 73: '23ms', 74: '24ms', 75: '25ms', 76: '26ms', 77: '27ms', 78: '28ms', 79: '29ms', 80: '30ms',
+                     81: '31ms', 82: '32ms', 83: '33ms', 84: '34ms', 85: '35ms', 86: '36ms', 87: '37ms', 88: '38ms', 89: '39ms',
+                     90: '40ms', 91: '41ms', 92: '42ms', 93: '43ms', 94: '44ms', 95: '45ms', 96: '46ms', 97: '47ms', 98: '48ms',
+                     99: '49ms', 100: '50ms', 101: '52ms', 102: '54ms', 103: '56ms', 104: '58ms', 105: '60ms', 106: '62ms',
+                     107: '64ms', 108: '66ms', 109: '68ms', 110: '70ms', 111: '72ms', 112: '74ms', 113: '76ms', 114: '78ms',
+                     115: '80ms', 116: '82ms', 117: '84ms', 118: '86ms', 119: '88ms', 120: '90ms', 121: '92ms', 122: '94ms',
+                     123: '96ms', 124: '98ms', 125: '100ms', 126: '100ms', 127: '100ms'})
     PARAM_TYPE_4 = ({0: '0ms', 1: '0.1ms', 2: '0.2ms', 3: '0.3ms', 4: '0.4ms', 5: '0.5ms', 6: '0.6ms',
                      7: '0.7ms', 8: '0.8ms', 9: '0.9ms', 10: '1.0ms', 11: '1.1ms', 12: '1.2ms',
                      13: '1.3ms', 14: '1.4ms', 15: '1.5ms', 16: '1.6ms', 17: '1.7ms', 18: '1.8ms',
@@ -475,7 +475,53 @@ if (True):
                      116: '8000Hz', 117: '8000Hz', 118: '8000Hz', 119: '8000Hz', 120: 'Bypass', 121: 'Bypass',
                      122: 'Bypass', 123: 'Bypass', 124: 'Bypass', 125: 'Bypass', 126: 'Bypass', 127: 'Bypass'}
         )
-
+    #SEMIPAR_10=[]
+    #for hz in [100,250,315,400,500,630,800,1000,1250,1600,2000,2500,3150,4000,5000,6300]:
+    #   for pippo in range(1,9):
+    #      SEMIPAR_10.append(str(hz)+'Hz')
+    #print(SEMIPAR_10)
+    #
+    #PAR_10= tools.mergeRanges(range(0x00,0x80),SEMIPAR_10)
+    #print(PAR_10)
+    PARAM_TYPE_10 = ( {0: '100Hz', 1: '100Hz', 2: '100Hz', 3: '100Hz', 4: '100Hz', 5: '100Hz', 6: '100Hz', 7: '100Hz',
+                       8: '250Hz', 9: '250Hz', 10: '250Hz', 11: '250Hz', 12: '250Hz', 13: '250Hz', 14: '250Hz', 15: '250Hz',
+                       16: '315Hz', 17: '315Hz', 18: '315Hz', 19: '315Hz', 20: '315Hz', 21: '315Hz', 22: '315Hz', 23: '315Hz',
+                       24: '400Hz', 25: '400Hz', 26: '400Hz', 27: '400Hz', 28: '400Hz', 29: '400Hz', 30: '400Hz', 31: '400Hz',
+                       32: '500Hz', 33: '500Hz', 34: '500Hz', 35: '500Hz', 36: '500Hz', 37: '500Hz', 38: '500Hz', 39: '500Hz',
+                       40: '630Hz', 41: '630Hz', 42: '630Hz', 43: '630Hz', 44: '630Hz', 45: '630Hz', 46: '630Hz', 47: '630Hz',
+                       48: '800Hz', 49: '800Hz', 50: '800Hz', 51: '800Hz', 52: '800Hz', 53: '800Hz', 54: '800Hz', 55: '800Hz',
+                       56: '1000Hz', 57: '1000Hz', 58: '1000Hz', 59: '1000Hz', 60: '1000Hz', 61: '1000Hz', 62: '1000Hz',
+                       63: '1000Hz', 64: '1250Hz', 65: '1250Hz', 66: '1250Hz', 67: '1250Hz', 68: '1250Hz', 69: '1250Hz',
+                       70: '1250Hz', 71: '1250Hz', 72: '1600Hz', 73: '1600Hz', 74: '1600Hz', 75: '1600Hz', 76: '1600Hz',
+                       77: '1600Hz', 78: '1600Hz', 79: '1600Hz', 80: '2000Hz', 81: '2000Hz', 82: '2000Hz', 83: '2000Hz',
+                       84: '2000Hz', 85: '2000Hz', 86: '2000Hz', 87: '2000Hz', 88: '2500Hz', 89: '2500Hz', 90: '2500Hz',
+                       91: '2500Hz', 92: '2500Hz', 93: '2500Hz', 94: '2500Hz', 95: '2500Hz', 96: '3150Hz', 97: '3150Hz',
+                       98: '3150Hz', 99: '3150Hz', 100: '3150Hz', 101: '3150Hz', 102: '3150Hz', 103: '3150Hz', 104: '4000Hz',
+                       105: '4000Hz', 106: '4000Hz', 107: '4000Hz', 108: '4000Hz', 109: '4000Hz', 110: '4000Hz', 111: '4000Hz',
+                       112: '5000Hz', 113: '5000Hz', 114: '5000Hz', 115: '5000Hz', 116: '5000Hz', 117: '5000Hz', 118: '5000Hz',
+                       119: '5000Hz', 120: '6300Hz', 121: '6300Hz', 122: '6300Hz', 123: '6300Hz', 124: '6300Hz', 125: '6300Hz',
+                       126: '6300Hz', 127: '6300Hz'}
+        )
+    
+    PARAM_TYPE_15 = (
+        {0: '20', 1: '20', 2: '20', 3: '20', 4: '20', 5: '20', 6: '20', 7: '20', 8: '25', 9: '25',
+         10: '25', 11: '25', 12: '25', 13: '25', 14: '25', 15: '25', 16: '35', 17: '35', 18: '35',
+         19: '35', 20: '35', 21: '35', 22: '35', 23: '35', 24: '50', 25: '50', 26: '50', 27: '50',
+         28: '50', 29: '50', 30: '50', 31: '50', 32: '85', 33: '85', 34: '85', 35: '85', 36: '85',
+         37: '85', 38: '85', 39: '85', 40: '115', 41: '115', 42: '115', 43: '115', 44: '115', 45: '115',
+         46: '115', 47: '115', 48: '150', 49: '150', 50: '150', 51: '150', 52: '150', 53: '150',
+         54: '150', 55: '150', 56: '200', 57: '200', 58: '200', 59: '200', 60: '200', 61: '200',
+         62: '200', 63: '200', 64: '250', 65: '250', 66: '250', 67: '250', 68: '250', 69: '250',
+         70: '250', 71: '250', 72: '350', 73: '350', 74: '350', 75: '350', 76: '350', 77: '350',
+         78: '350', 79: '350', 80: '500', 81: '500', 82: '500', 83: '500', 84: '500', 85: '500',
+         86: '500', 87: '500', 88: '650', 89: '650', 90: '650', 91: '650', 92: '650', 93: '650',
+         94: '650', 95: '650', 96: '850', 97: '850', 98: '850', 99: '850', 100: '850', 101: '850',
+         102: '850', 103: '850', 104: '1000', 105: '1000', 106: '1000', 107: '1000', 108: '1000',
+         109: '1000', 110: '1000', 111: '1000', 112: '1500', 113: '1500', 114: '1500', 115: '1500',
+         116: '1500', 117: '1500', 118: '1500', 119: '1500', 120: '2000', 121: '2000', 122: '2000',
+         123: '2000', 124: '2000', 125: '2000', 126: '2000', 127: '2000'}
+    )
+    
     # PARAM_TYPE_16 - the table in manual reports 7 (page 76-77)
     #PARAM_TYPE_16 = tools.mergeRanges(range(0x00,0x64),tools.ulist(0.1,10,0.1,'s'))
     #PARAM_TYPE_16_B = tools.mergeRanges(range(0x64,0x80),tools.ulist(11,38,1,'s'))
@@ -497,7 +543,8 @@ if (True):
                       99: '10.0s', 100: '11s', 101: '12s', 102: '13s', 103: '14s', 104: '15s', 105: '16s',
                       106: '17s', 107: '18s', 108: '19s', 109: '20s', 110: '21s', 111: '22s', 112: '23s',
                       113: '24s', 114: '25s', 115: '26s', 116: '27s', 117: '28s', 118: '29s', 119: '30s',
-                      120: '31s', 121: '32s', 122: '33s', 123: '34s', 124: '35s', 125: '36s', 126: '37s', 127: '38s'})
+                      120: '31s', 121: '32s', 122: '33s', 123: '34s', 124: '35s', 125: '36s', 126: '37s', 127: '38s'}
+        )
     
     
     # Those are funny. Non capire O~O
@@ -536,7 +583,7 @@ if (True):
                        113: 'D22<E', 114: 'D20<E', 115: 'D19<E', 116: 'D17<E', 117: 'D15<E',
                        118: 'D14<E', 119: 'D12<E', 120: 'D11<E', 121: 'D9<E', 122: 'D7<E',
                        123: 'D6<E', 124: 'D4<E', 125: 'D3<E', 126: 'D1<E', 127: 'D0<E'})
-
+    PARAM_ON_OFF = {0: 'Off', 1: 'On'}
 
     
     # Let's initialise the dictionaries with the parameters.
@@ -577,20 +624,48 @@ if (True):
     
     # parametro di lavoro
     # l'implementazione attuale ha in par[2] un dizionario con associati i valori hex a quelli umani...
-    FULL_EFX_PARAMETERS[1] = ( ('Type','Room1/2/Plate1/2/Hall1/2',tools.mergeRanges(range(0x00,0x06),['Room1','Room2','Plate1','Plate2','Hall1','Hall2']), [0x03],0x03),\
-        ('Pre Dly','0ms - 80ms - 635ms', PARAM_TYPE_5, [0x04], 0x10),\
-        ('Reverb Time','0.1s - 2s - 38s',PARAM_TYPE_16, [0x05],0x13),\
-        ('HF Damp','-10 - -4 -0', tools.mergeRanges(range(0x00,0x0B),tools.ulist(-10,0,1)), [0x06], 0x06),\
-        ('ER Pre Dly', '0 - 40ms - 635 ms', PARAM_TYPE_5, [0x07], 0x08),\
-        ('ER Mix','0 - 15 - 127', tools.mergeRanges(range(0x00,0x80),tools.ulist(0,127,1)), [0x08],0x0f),\
-        ('Diffusion','0 - 9 - 10', tools.mergeRanges(range(0x00,0x0B),tools.ulist(0,10,1)),[0x09],0x09),\
-        ('Tone Low','-12dB - 0dB - +12dB',tools.mergeRanges(range(0x34,0x4D), tools.ulist(-12,+12,1,'dB')),[0x0A], 0x40),\
-        ('Tone High','-12dB - 0dB - +12dB',tools.mergeRanges(range(0x34,0x4D), tools.ulist(-12,+12,1,'dB')),[0x0B],0x40),\
-        ('Balance','D > 0E - D0 < E', BALANCE_VALUES, [0x0C],0x7f)
+    FULL_EFX_PARAMETERS[1] = ( ('Type','Room1/2/Plate1/2/Hall1/2',tools.mergeRanges(range(0x00,0x06),['Room1','Room2','Plate1','Plate2','Hall1','Hall2']), [0x03],0x03),
+        ('Pre Dly','0ms - 80ms - 635ms', PARAM_TYPE_5, [0x04], 0x10),
+        ('Reverb Time','0.1s - 2s - 38s',PARAM_TYPE_16, [0x05],0x13),
+        ('HF Damp','-10 - -4 -0', tools.mergeRanges(range(0x00,0x0B),tools.ulist(-10,0,1)), [0x06], 0x06),
+        ('ER Pre Dly', '0 - 40ms - 635 ms', PARAM_TYPE_5, [0x07], 0x08),
+        ('ER Mix','0 - 15 - 127', tools.mergeRanges(range(0x00,0x80),tools.ulist(0,127,1)), [0x08],0x0f),
+        ('Diffusion','0 - 9 - 10', tools.mergeRanges(range(0x00,0x0B),tools.ulist(0,10,1)),[0x09],0x09),
+        ('Tone Low','-12dB - 0dB - +12dB',tools.mergeRanges(range(0x34,0x4D), tools.ulist(-12,+12,1,'dB')),[0x0A], 0x40),
+        ('Tone High','-12dB - 0dB - +12dB',tools.mergeRanges(range(0x34,0x4D), tools.ulist(-12,+12,1,'dB')),[0x0B],0x40),
+        ('Balance','D > 0E - D0 < E', BALANCE_VALUES, [0x0C],0x7f),
+        ('EQ Low Freq','200/400Hz', {0: '200Hz', 1: '400Hz'}, [0x0D], 0x00),
+        ('EQ Low Gain','-12dB - 0dB - +12dB',tools.mergeRanges(range(0x34,0x4D), tools.ulist(-12,+12,1,'dB')),[0x0E], 0x40),
+        ('EQ Mid1 Freq','200Hz - 315Hz - 6300 Hz', PARAM_TYPE_10, [0x0F], 16),
+        ('EQ Mid1 Q', '0.5/1.0/2.0/4.0/9.0', { 0: '0.5', 1: '1.0', 2: '2.0', 3: '4.0', 4: '9.0'} , [0x10],0),
+        ('EQ Mid1 Gain','-12dB - 0dB - +12dB',tools.mergeRanges(range(0x34,0x4D), tools.ulist(-12,+12,1,'dB')),[0x11], 0x40),
+        ('EQ Mid2 Freq','200Hz - 800Hz - 6300 Hz', PARAM_TYPE_10, [0X12],48),
+        ('EQ Mid2 Q', '0.5/1.0/2.0/4.0/9.0', { 0: '0.5', 1: '1.0', 2: '2.0', 3: '4.0', 4: '9.0'} , [0x13],1),
+        ('EQ Mid2 Gain','-12dB - 0dB - +12dB',tools.mergeRanges(range(0x34,0x4D), tools.ulist(-12,+12,1,'dB')),[0x14], 0x40),
+        ('EQ High Freq','4k/8kHz', {0: '4kHz', 1: '8kHz'}, [0x15],0),
+        ('EQ High Gain','-12dB - 0dB - +12dB',tools.mergeRanges(range(0x34,0x4D), tools.ulist(-12,+12,1,'dB')),[0x16], 0x40)
     )
-
-    #FULL_EFX_TYPE[2] = ('Mic Simulator',[0x00,0x12])
-    #FULL_EFX_PARAMETERS[2] = ()
+    #
+    FULL_EFX_TYPE[2] = ('Mic Simulator',[0x00,0x12])
+    FULL_EFX_PARAMETERS[2] = (
+        ('Mic Conv','Off/On', PARAM_ON_OFF, [0x03],1),
+        ('Input', 'DR-20/Sml.Dy/Hed.Dy/Flat', {0: 'DR-20', 1: 'Sml.Dy', 2: 'Hed.Dy', 3: 'Flat'}, [0x04],3),
+        ('Output', 'Sml.Dy/Voc.Dy/Lrg.Dy/Sml.Cn/Lrg.Cn/Vnt.C/Flat', { 0: 'Sml.Dy', 1: 'Voc.Dy', 2: 'Lrg.Dy', 3: 'Sml.Cn', 4: 'Lrg.Cn', 5: 'Vnt.C', 6: 'Flat'}, [0x05], 4),
+        ('Phase', '+/-', {0: '-', 1: '+'}, [0x06], 1),
+        ('Bass Cut Switch', 'Off/On', PARAM_ON_OFF, [0x07], 0),
+        ('Bass Cut Freq', '20Hz-2000Hz', PARAM_TYPE_15, [0x08], 0),
+        ('Distance Switch', 'Off/On', PARAM_ON_OFF, [0x09], 0),
+        ('Prox. Fx','-12dB - 0dB - +12dB',tools.mergeRanges(range(0x34,0x4D), tools.ulist(-12,+12,1,'dB')),[0x0A], 0x40),
+        ('Distance', '0-127', tools.mergeRanges(range(0x00,0x80),tools.ulist(0,127,1)), [0x0B], 0),
+        ('Limiter Switch', 'Off/On', PARAM_ON_OFF, [0x0C], 0),
+        ('Lm Freq', '20Hz - 115Hz - 2000Hz', PARAM_TYPE_15, [0x0D], 40),
+        #('Lm Gain', '', {}, [0x], ),
+        #('Lm Threshold', '', {}, [0x], ),
+        #('Lm Attack', '', {}, [0x], ),
+        #('Lm Release', '', {}, [0x], )
+    )
+    
+    
     #FULL_EFX_TYPE[3] = ('Vocoder',[0x00,0x13])
     #FULL_EFX_TYPE[4] = ('Vocal Multi',[0x00,0x14])
     #FULL_EFX_TYPE[5] = ('Game',[0x00,0x16])
@@ -1298,8 +1373,8 @@ class FullEffectsDialog(QtGui.QDialog):
         
         # first af all, sent the effect type to the UA-100
         # This is the LSB/MSB of the effect type (i.e. High Quality Reverb, Mic Simulator) aka the FULL_EFX_TYPE[n][1] (hex value)
-        if (DEBUG_MODE):
-            print([0x00, 0x40] + self.SenderHex + [0x00] + FULL_EFX_TYPE[index+1][1])
+        #if (DEBUG_MODE):
+        #    print([0x00, 0x40] + self.SenderHex + [0x00] + FULL_EFX_TYPE[index+1][1])
         send_DT1([0x00, 0x40] + self.SenderHex + [0x00] + FULL_EFX_TYPE[index+1][1])
         
         
@@ -1360,16 +1435,23 @@ class CustomTreeItem(QtGui.QTreeWidgetItem):
         # nell'implementazione con par[2] dizionario questa riga non va bene...
         #self.spinBox.setRange(min(par[2]), max(par[2]))
         # devo usare par[2].keys()
+        self.spinBox.setValue(-1)
         self.spinBox.setRange(min(par[2].keys()),max(par[2].keys()))
         
         
         self.spinBox.setWrapping(1)
         parent.setItemWidget(self,1, self.spinBox)
         self.setText(3,par[1])
-        self.spinBox.valueChanged.connect(parent.parent().sendEffect)
+        
+        #set the spinBox to some value, in order to let the next setValue trigger the signals
+        
+        
         self.spinBox.valueChanged.connect(self.setActualValue)
+        #set the spinBox to some value, in order to let the next setValue trigger the signals
+        self.spinBox.setValue(-1)
+        self.spinBox.valueChanged.connect(parent.parent().sendEffect)
         self.spinBox.setValue(par[4])
-    
+
     def setActualValue(self, value):
         self.setText(2,self.par[2][value])
 
