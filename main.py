@@ -373,7 +373,7 @@ if (True):
     #PARAM_CONV_1.update(PARAM_CONV_1_C)
     #PARAM_CONV_1.update(PARAM_CONV_1_D)
     #PARAM_CONV_1.update(PARAM_CONV_1_E)
-    # to save CPU and time, I put THEM ALL already build...
+    # to save CPU and time, I put THEM ALL already built...
     PARAM_TYPE_1 = ({0: '0ms', 1: '0.1ms', 2: '0.2ms', 3: '0.3ms', 4: '0.4ms', 5: '0.5ms',
                      6: '0.6ms', 7: '0.7ms', 8: '0.8ms', 9: '0.9ms', 10: '1.0ms', 11: '1.1ms',
                      12: '1.2ms', 13: '1.3ms', 14: '1.4ms', 15: '1.5ms', 16: '1.6ms', 17: '1.7ms',
@@ -475,6 +475,32 @@ if (True):
                      116: '8000Hz', 117: '8000Hz', 118: '8000Hz', 119: '8000Hz', 120: 'Bypass', 121: 'Bypass',
                      122: 'Bypass', 123: 'Bypass', 124: 'Bypass', 125: 'Bypass', 126: 'Bypass', 127: 'Bypass'}
         )
+    
+    PARAM_TYPE_9 = (
+        {0: '250Hz', 1: '250Hz', 2: '250Hz', 3: '250Hz', 4: '250Hz', 5: '250Hz', 6: '250Hz',
+         7: '250Hz', 8: '315Hz', 9: '315Hz', 10: '315Hz', 11: '315Hz', 12: '315Hz', 13: '315Hz',
+         14: '315Hz', 15: '315Hz', 16: '400Hz', 17: '400Hz', 18: '400Hz', 19: '400Hz', 20: '400Hz',
+         21: '400Hz', 22: '400Hz', 23: '400Hz', 24: '500Hz', 25: '500Hz', 26: '500Hz', 27: '500Hz',
+         28: '500Hz', 29: '500Hz', 30: '500Hz', 31: '500Hz', 32: '630Hz', 33: '630Hz', 34: '630Hz',
+         35: '630Hz', 36: '630Hz', 37: '630Hz', 38: '630Hz', 39: '630Hz', 40: '800Hz', 41: '800Hz',
+         42: '800Hz', 43: '800Hz', 44: '800Hz', 45: '800Hz', 46: '800Hz', 47: '800Hz', 48: '1000Hz',
+         49: '1000Hz', 50: '1000Hz', 51: '1000Hz', 52: '1000Hz', 53: '1000Hz', 54: '1000Hz',
+         55: '1000Hz', 56: '1250Hz', 57: '1250Hz', 58: '1250Hz', 59: '1250Hz', 60: '1250Hz',
+         61: '1250Hz', 62: '1250Hz', 63: '1250Hz', 64: '1600Hz', 65: '1600Hz', 66: '1600Hz',
+         67: '1600Hz', 68: '1600Hz', 69: '1600Hz', 70: '1600Hz', 71: '1600Hz', 72: '2000Hz',
+         73: '2000Hz', 74: '2000Hz', 75: '2000Hz', 76: '2000Hz', 77: '2000Hz', 78: '2000Hz',
+         79: '2000Hz', 80: '2500Hz', 81: '2500Hz', 82: '2500Hz', 83: '2500Hz', 84: '2500Hz',
+         85: '2500Hz', 86: '2500Hz', 87: '2500Hz', 88: '3150Hz', 89: '3150Hz', 90: '3150Hz',
+         91: '3150Hz', 92: '3150Hz', 93: '3150Hz', 94: '3150Hz', 95: '3150Hz', 96: '4000Hz',
+         97: '4000Hz', 98: '4000Hz', 99: '4000Hz', 100: '4000Hz', 101: '4000Hz', 102: '4000Hz',
+         103: '4000Hz', 104: '5000Hz', 105: '5000Hz', 106: '5000Hz', 107: '5000Hz', 108: '5000Hz',
+         109: '5000Hz', 110: '5000Hz', 111: '5000Hz', 112: '6300Hz', 113: '6300Hz', 114: '6300Hz',
+         115: '6300Hz', 116: '6300Hz', 117: '6300Hz', 118: '6300Hz', 119: '6300Hz', 120: '8000Hz',
+         121: '8000Hz', 122: '8000Hz', 123: '8000Hz', 124: '8000Hz', 125: '8000Hz', 126: '8000Hz',
+         127: '8000Hz'}
+        )
+
+    
     #SEMIPAR_10=[]
     #for hz in [100,250,315,400,500,630,800,1000,1250,1600,2000,2500,3150,4000,5000,6300]:
     #   for pippo in range(1,9):
@@ -483,24 +509,25 @@ if (True):
     #
     #PAR_10= tools.mergeRanges(range(0x00,0x80),SEMIPAR_10)
     #print(PAR_10)
-    PARAM_TYPE_10 = ( {0: '100Hz', 1: '100Hz', 2: '100Hz', 3: '100Hz', 4: '100Hz', 5: '100Hz', 6: '100Hz', 7: '100Hz',
-                       8: '250Hz', 9: '250Hz', 10: '250Hz', 11: '250Hz', 12: '250Hz', 13: '250Hz', 14: '250Hz', 15: '250Hz',
-                       16: '315Hz', 17: '315Hz', 18: '315Hz', 19: '315Hz', 20: '315Hz', 21: '315Hz', 22: '315Hz', 23: '315Hz',
-                       24: '400Hz', 25: '400Hz', 26: '400Hz', 27: '400Hz', 28: '400Hz', 29: '400Hz', 30: '400Hz', 31: '400Hz',
-                       32: '500Hz', 33: '500Hz', 34: '500Hz', 35: '500Hz', 36: '500Hz', 37: '500Hz', 38: '500Hz', 39: '500Hz',
-                       40: '630Hz', 41: '630Hz', 42: '630Hz', 43: '630Hz', 44: '630Hz', 45: '630Hz', 46: '630Hz', 47: '630Hz',
-                       48: '800Hz', 49: '800Hz', 50: '800Hz', 51: '800Hz', 52: '800Hz', 53: '800Hz', 54: '800Hz', 55: '800Hz',
-                       56: '1000Hz', 57: '1000Hz', 58: '1000Hz', 59: '1000Hz', 60: '1000Hz', 61: '1000Hz', 62: '1000Hz',
-                       63: '1000Hz', 64: '1250Hz', 65: '1250Hz', 66: '1250Hz', 67: '1250Hz', 68: '1250Hz', 69: '1250Hz',
-                       70: '1250Hz', 71: '1250Hz', 72: '1600Hz', 73: '1600Hz', 74: '1600Hz', 75: '1600Hz', 76: '1600Hz',
-                       77: '1600Hz', 78: '1600Hz', 79: '1600Hz', 80: '2000Hz', 81: '2000Hz', 82: '2000Hz', 83: '2000Hz',
-                       84: '2000Hz', 85: '2000Hz', 86: '2000Hz', 87: '2000Hz', 88: '2500Hz', 89: '2500Hz', 90: '2500Hz',
-                       91: '2500Hz', 92: '2500Hz', 93: '2500Hz', 94: '2500Hz', 95: '2500Hz', 96: '3150Hz', 97: '3150Hz',
-                       98: '3150Hz', 99: '3150Hz', 100: '3150Hz', 101: '3150Hz', 102: '3150Hz', 103: '3150Hz', 104: '4000Hz',
-                       105: '4000Hz', 106: '4000Hz', 107: '4000Hz', 108: '4000Hz', 109: '4000Hz', 110: '4000Hz', 111: '4000Hz',
-                       112: '5000Hz', 113: '5000Hz', 114: '5000Hz', 115: '5000Hz', 116: '5000Hz', 117: '5000Hz', 118: '5000Hz',
-                       119: '5000Hz', 120: '6300Hz', 121: '6300Hz', 122: '6300Hz', 123: '6300Hz', 124: '6300Hz', 125: '6300Hz',
-                       126: '6300Hz', 127: '6300Hz'}
+    PARAM_TYPE_10 = (
+        {0: '100Hz', 1: '100Hz', 2: '100Hz', 3: '100Hz', 4: '100Hz', 5: '100Hz', 6: '100Hz', 7: '100Hz',
+        8: '250Hz', 9: '250Hz', 10: '250Hz', 11: '250Hz', 12: '250Hz', 13: '250Hz', 14: '250Hz', 15: '250Hz',
+        16: '315Hz', 17: '315Hz', 18: '315Hz', 19: '315Hz', 20: '315Hz', 21: '315Hz', 22: '315Hz', 23: '315Hz',
+        24: '400Hz', 25: '400Hz', 26: '400Hz', 27: '400Hz', 28: '400Hz', 29: '400Hz', 30: '400Hz', 31: '400Hz',
+        32: '500Hz', 33: '500Hz', 34: '500Hz', 35: '500Hz', 36: '500Hz', 37: '500Hz', 38: '500Hz', 39: '500Hz',
+        40: '630Hz', 41: '630Hz', 42: '630Hz', 43: '630Hz', 44: '630Hz', 45: '630Hz', 46: '630Hz', 47: '630Hz',
+        48: '800Hz', 49: '800Hz', 50: '800Hz', 51: '800Hz', 52: '800Hz', 53: '800Hz', 54: '800Hz', 55: '800Hz',
+        56: '1000Hz', 57: '1000Hz', 58: '1000Hz', 59: '1000Hz', 60: '1000Hz', 61: '1000Hz', 62: '1000Hz',
+        63: '1000Hz', 64: '1250Hz', 65: '1250Hz', 66: '1250Hz', 67: '1250Hz', 68: '1250Hz', 69: '1250Hz',
+        70: '1250Hz', 71: '1250Hz', 72: '1600Hz', 73: '1600Hz', 74: '1600Hz', 75: '1600Hz', 76: '1600Hz',
+        77: '1600Hz', 78: '1600Hz', 79: '1600Hz', 80: '2000Hz', 81: '2000Hz', 82: '2000Hz', 83: '2000Hz',
+        84: '2000Hz', 85: '2000Hz', 86: '2000Hz', 87: '2000Hz', 88: '2500Hz', 89: '2500Hz', 90: '2500Hz',
+        91: '2500Hz', 92: '2500Hz', 93: '2500Hz', 94: '2500Hz', 95: '2500Hz', 96: '3150Hz', 97: '3150Hz',
+        98: '3150Hz', 99: '3150Hz', 100: '3150Hz', 101: '3150Hz', 102: '3150Hz', 103: '3150Hz', 104: '4000Hz',
+        105: '4000Hz', 106: '4000Hz', 107: '4000Hz', 108: '4000Hz', 109: '4000Hz', 110: '4000Hz', 111: '4000Hz',
+        112: '5000Hz', 113: '5000Hz', 114: '5000Hz', 115: '5000Hz', 116: '5000Hz', 117: '5000Hz', 118: '5000Hz',
+        119: '5000Hz', 120: '6300Hz', 121: '6300Hz', 122: '6300Hz', 123: '6300Hz', 124: '6300Hz', 125: '6300Hz',
+        126: '6300Hz', 127: '6300Hz'}
         )
     
     PARAM_TYPE_15 = (
@@ -586,9 +613,17 @@ if (True):
     PARAM_ON_OFF = {0: 'Off', 1: 'On'}
 
     
+    # -12dB - +12dB
+    PARAM_12DB = tools.mergeRanges(range(0x34,0x4D), tools.ulist(-12,+12,1,'dB'))
+    
+    # 0-127
+    PARAM_0127 = tools.mergeRanges(range(0x00,0x80),tools.ulist(0,127,1))
+    
     # Let's initialise the dictionaries with the parameters.
     FULL_EFX_TYPE = {}
     FULL_EFX_PARAMETERS={}
+    
+    
     
     
     # FULL EFFECT MODE
@@ -609,41 +644,29 @@ if (True):
     # 1. aggiungere quindi una colonna in cui inserisco una tupla dei valori 'umani'.
     # 2. modificare par[2] facendolo diventare un dizionario nella forma {valore_hex: valore umano}
     
-    # BACKUP del parametro "vecchio"
-    #FULL_EFX_PARAMETERS[1] = ( ('Type','Room1/2/Plate1/2/Hall1/2',range(0x00,0x06), [0x03]),\
-    #    ('Pre Dly','0ms - 80ms - 635ms', range(0x00,0x80), [0x04]),\
-    #    ('Reverb Time','0.1s - 2s - 38s',range(0x00,0x80), [0x05]),\
-    #    ('HF Damp','-10 - -4 -0', range(0x00,0x0B), [0x06]),\
-    #    ('ER Pre Dly', '0 - 40ms - 635 ms', range(0x00,0x80), [0x07]),\
-    #    ('ER Mix','0 - 15 - 127', range(0x00,0x80), [0x08]),\
-    #    ('Diffusion','0 - 9 - 10',range(0x00,0x0B),[0x09]),\
-    #    ('Tone Low','-12dB - 0dB - +12dB',range(0x34,0x4D),[0x0A]),\
-    #    ('Tone High','-12dB - 0dB - +12dB',range(0x34,0x4D),[0x0B]),\
-    #    ('Balance','D > 0E - D0 < E', range(0x00,0x80), [0x0C])
-    #)
     
-    # parametro di lavoro
     # l'implementazione attuale ha in par[2] un dizionario con associati i valori hex a quelli umani...
+    
     FULL_EFX_PARAMETERS[1] = ( ('Type','Room1/2/Plate1/2/Hall1/2',tools.mergeRanges(range(0x00,0x06),['Room1','Room2','Plate1','Plate2','Hall1','Hall2']), [0x03],0x03),
         ('Pre Dly','0ms - 80ms - 635ms', PARAM_TYPE_5, [0x04], 0x10),
         ('Reverb Time','0.1s - 2s - 38s',PARAM_TYPE_16, [0x05],0x13),
         ('HF Damp','-10 - -4 -0', tools.mergeRanges(range(0x00,0x0B),tools.ulist(-10,0,1)), [0x06], 0x06),
         ('ER Pre Dly', '0 - 40ms - 635 ms', PARAM_TYPE_5, [0x07], 0x08),
-        ('ER Mix','0 - 15 - 127', tools.mergeRanges(range(0x00,0x80),tools.ulist(0,127,1)), [0x08],0x0f),
+        ('ER Mix','0 - 15 - 127', PARAM_0127, [0x08],0x0f),
         ('Diffusion','0 - 9 - 10', tools.mergeRanges(range(0x00,0x0B),tools.ulist(0,10,1)),[0x09],0x09),
-        ('Tone Low','-12dB - 0dB - +12dB',tools.mergeRanges(range(0x34,0x4D), tools.ulist(-12,+12,1,'dB')),[0x0A], 0x40),
-        ('Tone High','-12dB - 0dB - +12dB',tools.mergeRanges(range(0x34,0x4D), tools.ulist(-12,+12,1,'dB')),[0x0B],0x40),
+        ('Tone Low','-12dB - 0dB - +12dB', PARAM_12DB,[0x0A], 0x40),
+        ('Tone High','-12dB - 0dB - +12dB', PARAM_12DB,[0x0B],0x40),
         ('Balance','D > 0E - D0 < E', BALANCE_VALUES, [0x0C],0x7f),
         ('EQ Low Freq','200/400Hz', {0: '200Hz', 1: '400Hz'}, [0x0D], 0x00),
-        ('EQ Low Gain','-12dB - 0dB - +12dB',tools.mergeRanges(range(0x34,0x4D), tools.ulist(-12,+12,1,'dB')),[0x0E], 0x40),
+        ('EQ Low Gain','-12dB - 0dB - +12dB', PARAM_12DB,[0x0E], 0x40),
         ('EQ Mid1 Freq','200Hz - 315Hz - 6300 Hz', PARAM_TYPE_10, [0x0F], 16),
         ('EQ Mid1 Q', '0.5/1.0/2.0/4.0/9.0', { 0: '0.5', 1: '1.0', 2: '2.0', 3: '4.0', 4: '9.0'} , [0x10],0),
-        ('EQ Mid1 Gain','-12dB - 0dB - +12dB',tools.mergeRanges(range(0x34,0x4D), tools.ulist(-12,+12,1,'dB')),[0x11], 0x40),
+        ('EQ Mid1 Gain','-12dB - 0dB - +12dB', PARAM_12DB,[0x11], 0x40),
         ('EQ Mid2 Freq','200Hz - 800Hz - 6300 Hz', PARAM_TYPE_10, [0X12],48),
         ('EQ Mid2 Q', '0.5/1.0/2.0/4.0/9.0', { 0: '0.5', 1: '1.0', 2: '2.0', 3: '4.0', 4: '9.0'} , [0x13],1),
-        ('EQ Mid2 Gain','-12dB - 0dB - +12dB',tools.mergeRanges(range(0x34,0x4D), tools.ulist(-12,+12,1,'dB')),[0x14], 0x40),
+        ('EQ Mid2 Gain','-12dB - 0dB - +12dB', PARAM_12DB,[0x14], 0x40),
         ('EQ High Freq','4k/8kHz', {0: '4kHz', 1: '8kHz'}, [0x15],0),
-        ('EQ High Gain','-12dB - 0dB - +12dB',tools.mergeRanges(range(0x34,0x4D), tools.ulist(-12,+12,1,'dB')),[0x16], 0x40)
+        ('EQ High Gain','-12dB - 0dB - +12dB', PARAM_12DB,[0x16], 0x40)
     )
     #
     FULL_EFX_TYPE[2] = ('Mic Simulator',[0x00,0x12])
@@ -655,19 +678,42 @@ if (True):
         ('Bass Cut Switch', 'Off/On', PARAM_ON_OFF, [0x07], 0),
         ('Bass Cut Freq', '20Hz-2000Hz', PARAM_TYPE_15, [0x08], 0),
         ('Distance Switch', 'Off/On', PARAM_ON_OFF, [0x09], 0),
-        ('Prox. Fx','-12dB - 0dB - +12dB',tools.mergeRanges(range(0x34,0x4D), tools.ulist(-12,+12,1,'dB')),[0x0A], 0x40),
-        ('Distance', '0-127', tools.mergeRanges(range(0x00,0x80),tools.ulist(0,127,1)), [0x0B], 0),
+        ('Prox. Fx','-12dB - 0dB - +12dB', PARAM_12DB,[0x0A], 0x40),
+        ('Distance', '0-127', PARAM_0127, [0x0B], 0),
         ('Limiter Switch', 'Off/On', PARAM_ON_OFF, [0x0C], 0),
         ('Lm Freq', '20Hz - 115Hz - 2000Hz', PARAM_TYPE_15, [0x0D], 40),
-        #('Lm Gain', '', {}, [0x], ),
-        #('Lm Threshold', '', {}, [0x], ),
-        #('Lm Attack', '', {}, [0x], ),
-        #('Lm Release', '', {}, [0x], )
+        ('Lm Gain', '-60dB - +2dB - +24dB', tools.mergeRanges(range(0x04,0x59), tools.ulist(-60,+24,1,'dB')) , [0x0E], 66),
+        ('Lm Threshold', '-60db - 0dB', tools.mergeRanges(range(0x04,0x041), tools.ulist(-60,0,1,'dB')), [0x0F], 0x40),
+        ('Lm Attack', '0 - 20 - 127', PARAM_0127, [0x10], 20),
+        ('Lm Release', '0 - 30 - 127', PARAM_0127, [0x11], 30)
     )
     
     
-    #FULL_EFX_TYPE[3] = ('Vocoder',[0x00,0x13])
-    #FULL_EFX_TYPE[4] = ('Vocal Multi',[0x00,0x14])
+    FULL_EFX_TYPE[3] = ('Vocoder',[0x00,0x13])
+    FULL_EFX_PARAMETERS[3] = (
+        ('Speech Input', 'Mic1/2/Wave1/2', {0: 'Mic1', 1: 'Mic2', 2: 'Wave1', 3: 'Wave2'}, [0x03], 0x00),
+        ('Mode Select', '1 - 3 - 6', tools.mergeRanges(range(0x00,0x06), tools.ulist(1,6,1)), [0x04], 0x02),
+        ('Speech Gain', '0 - 100 - 127', PARAM_0127, [0x05], 100),
+        ('Speech Cutoff', '250Hz - 630Hz - 800Hz', PARAM_TYPE_9, [0x06], 32),
+        ('Speech Mix Level', '0 - 25 -127', PARAM_0127, [0x07], 25),
+        ('Response Time', 'Slow/Normal/Fast', {0: 'Slow', 1: 'Normal', 3: 'Fast'}, [0x08], 0x01),
+        ('Level', '0 - 127', PARAM_0127, [0x09], 0x7F)
+    )
+    
+    FULL_EFX_TYPE[4] = ('Vocal Multi',[0x00,0x14])
+    FULL_EFX_PARAMETERS[4] = (
+        ('Ns Threshold', '0 - 127', PARAM_0127, [0x03], 0x00),
+        ('Lm Threshol', '0 - 127', PARAM_0127, [0x04], 0x7F),
+        ('De-esser Level', '0 - 127', PARAM_0127, [0x05], 0x08),
+        ('Enhancer Level', '-64 - +5 - +63', tools.mergeRanges(range(0x00,0x80), tools.ulist(-64,63,1)), [0x06], 69),
+        ('EQ Low Gain','-12dB - 0dB - +12dB', PARAM_12DB,[0x07], 0x41),
+        ('EQ Mid Freq','200Hz - 800Hz - 6300 Hz', PARAM_TYPE_10, [0x08], 48),
+        ('EQ Mid Q', '0.5/1.0/2.0/4.0/9.0', { 0: '0.5', 1: '1.0', 2: '2.0', 3: '4.0', 4: '9.0'} , [0x09],1),
+        ('EQ Mid Gain','-12dB - +2dB - +12dB', PARAM_12DB,[0x0A], 0x42),
+        ('EQ High Gain','-12dB - -4dB - +12dB', PARAM_12DB,[0x0B], 0x3C),
+        
+    )
+    
     #FULL_EFX_TYPE[5] = ('Game',[0x00,0x16])
     #FULL_EFX_TYPE[6] = ('Rotary Multi',[0x03,0x00])
     #FULL_EFX_TYPE[7] = ('GTR Multi',[0x04,0x00])
@@ -698,7 +744,7 @@ if (True):
         ('Cross Fd Level', '-48% - -34% - +48%', tools.mergeRanges(range(0x28,0x59),tools.ulist(-48,+48,2,'%')), [0x08],0x4A),
         ('HF Damp','315Hz - 8kHz/Bypass',PARAM_TYPE_8,[0x09],120),
         ('Cross HF Damp','315Hz - 6.3kHz - 8kHz/Bypass',PARAM_TYPE_8,[0x0A],104),
-        ('Cross Balance','0-98-127',tools.mergeRanges(range(0x00,0x80),tools.ulist(0,127,1)), [0x0B], 0x62),
+        ('Cross Balance','0-98-127',PARAM_0127, [0x0B], 0x62),
         ('Balance','D > 0E - D0 < E',BALANCE_VALUES,[0x0C],0x7F)
     )
     
@@ -708,7 +754,7 @@ if (True):
         #('Cutoff'),
         ('Pre Dly','0ms - 100ms', PARAM_TYPE_1, [0x06], 80),
         #('Rate'),
-        ('Depth', '0-116-127',tools.mergeRanges(range(0x00,0x80),tools.ulist(0,127,1)),[0x08], 0x74),
+        ('Depth', '0-116-127',PARAM_0127,[0x08], 0x74),
         ('Balance','D > 0E - D0 < E',BALANCE_VALUES,[0x09],0x7F)
     )
     COMPACT_SYS2_EFX_PARAMETERS={}
@@ -722,14 +768,14 @@ if (True):
         ('Cross Fd Level', '-48% - -34% - +48%', tools.mergeRanges(range(0x28,0x59),tools.ulist(-48,+48,2,'%')), [0x08],0x4A),
         ('HF Damp','315Hz - 8kHz/Bypass',PARAM_TYPE_8,[0x09],120),
         ('Cross HF Damp','315Hz - 6.3kHz - 8kHz/Bypass',PARAM_TYPE_8,[0x0A],104),
-        ('Cross Balance','0-98-127',tools.mergeRanges(range(0x00,0x80),tools.ulist(0,127,1)), [0x0B], 0x62),
+        ('Cross Balance','0-98-127',PARAM_0127, [0x0B], 0x62),
         ('Balance','D > 0E - D0 < E',BALANCE_VALUES,[0x0C],0x7F)
     )
     
     COMPACT_SYS2_EFX_PARAMETERS[2] = (
         ('Type','Room1/2/Plate1/2/Hall1/2',tools.mergeRanges(range(0x00,0x06),['Room1','Room2','Plate1','Plate2','Hall1','Hall2']), [0x03],0x05),
         ('Pre Dly','0ms - 100ms', PARAM_TYPE_1, [0x04], 0x7F),
-        ('Reverb Time','0 - 23 - 127',tools.mergeRanges(range(0x00,0x80),tools.ulist(0,127,1)), [0x05],0x17),
+        ('Reverb Time','0 - 23 - 127',PARAM_0127, [0x05],0x17),
         #('HF Damp'),
         #('Low Gain'),
         #('High Gain'),
@@ -739,14 +785,109 @@ if (True):
     # Now we must define the COMPACT INSERTION EFFECT.
     # Remember: they are grouped, as in the documentation
     
-    COMPACT_INS_EFX_TYPE={}
+    COMPACT_INS_EFX_GROUP=({
+        0: ('Filter',range(0,5)),
+        1: ('Distorsion', range(5,7)),
+        2: ('Modulation', range(7,14)),
+        3: ('Compressor', range(14,16)),
+        4: ('Chorus', range(16,21)),
+        5: ('Delay/Reverb', range(21,29)),
+        6: ('Pitch', range(29,31)),
+        7: ('Other', range(31,35)),
+        8: ('Connect 2 effects (series)', range(35,47)),
+        9: ('Connect 3 or more effects (series)', range(47,56)),
+        10: ('Connect 2 effects (parallel)', range(56,65))}
+        )
+    COMPACT_INS_EFX_TYPE=({
+        0: ('Noise Suppressor',[0x00, 0x00]),
+        1: ('Stereo Eq',[0x01, 0x00]),
+        2: ('Spectrum',[0x01, 0x01]),
+        3: ('Enhancer',[0x01, 0x02]),
+        4: ('Humanizer',[0x01, 0x03]),
+        5: ('Overdrive',[0x01, 0x10]),
+        6: ('Distorsion',[0x01, 0x11]),
+        7: ('Phaser',[0x01, 0x20]),
+        8: ('Auto Wah',[0x01, 0x21]),
+        9: ('Rotary',[0x01, 0x22]),
+        10: ('Stereo Flanger',[0x01, 0x23]),
+        11: ('Step Flanger',[0x01, 0x24]),
+        12: ('Tremolo',[0x01, 0x25]),
+        13: ('Phaser',[0x01, 0x26]),
+        #14: ('__Name__', [0xXX, 0xYY]),
+        #15: ('__Name__', [0xXX, 0xYY]),
+        #16: ('__Name__', [0xXX, 0xYY]),
+        #17: ('__Name__', [0xXX, 0xYY]),
+        #18: ('__Name__', [0xXX, 0xYY]),
+        #19: ('__Name__', [0xXX, 0xYY]),
+        #20: ('__Name__', [0xXX, 0xYY]),
+        #21: ('__Name__', [0xXX, 0xYY]),
+        #22: ('__Name__', [0xXX, 0xYY]),
+        #23: ('__Name__', [0xXX, 0xYY]),
+        #24: ('__Name__', [0xXX, 0xYY]),
+        #25: ('__Name__', [0xXX, 0xYY]),
+        #26: ('__Name__', [0xXX, 0xYY]),
+        #27: ('__Name__', [0xXX, 0xYY]),
+        #28: ('__Name__', [0xXX, 0xYY]),
+        #29: ('__Name__', [0xXX, 0xYY]),
+        #30: ('__Name__', [0xXX, 0xYY]),
+        #31: ('__Name__', [0xXX, 0xYY]),
+        #33: ('__Name__', [0xXX, 0xYY]),
+        #33: ('__Name__', [0xXX, 0xYY]),
+        #34: ('__Name__', [0xXX, 0xYY]),
+        #35: ('__Name__', [0xXX, 0xYY]),
+        #36: ('__Name__', [0xXX, 0xYY]),
+        #37: ('__Name__', [0xXX, 0xYY]),
+        #38: ('__Name__', [0xXX, 0xYY]),
+        #39: ('__Name__', [0xXX, 0xYY]),
+        #40: ('__Name__', [0xXX, 0xYY]),
+        #41: ('__Name__', [0xXX, 0xYY]),
+        #44: ('__Name__', [0xXX, 0xYY]),
+        #43: ('__Name__', [0xXX, 0xYY]),
+        #44: ('__Name__', [0xXX, 0xYY]),
+        #45: ('__Name__', [0xXX, 0xYY]),
+        #46: ('__Name__', [0xXX, 0xYY]),
+        #47: ('__Name__', [0xXX, 0xYY]),
+        #48: ('__Name__', [0xXX, 0xYY]),
+        #49: ('__Name__', [0xXX, 0xYY]),
+        #50: ('__Name__', [0xXX, 0xYY]),
+        #51: ('__Name__', [0xXX, 0xYY]),
+        #55: ('__Name__', [0xXX, 0xYY]),
+        #53: ('__Name__', [0xXX, 0xYY]),
+        #54: ('__Name__', [0xXX, 0xYY]),
+        #55: ('__Name__', [0xXX, 0xYY]),
+        #56: ('__Name__', [0xXX, 0xYY]),
+        #57: ('__Name__', [0xXX, 0xYY]),
+        #58: ('__Name__', [0xXX, 0xYY]),
+        #59: ('__Name__', [0xXX, 0xYY]),
+        #60: ('__Name__', [0xXX, 0xYY]),
+        #61: ('__Name__', [0xXX, 0xYY]),
+        #66: ('__Name__', [0xXX, 0xYY]),
+        #63: ('__Name__', [0xXX, 0xYY]),
+        })
     COMPACT_INS_EFX_PARAMETERS={}
     
+    COMPACT_INS_EFX_PARAMETERS[0] = ( 
+        ('Noise Suppressor', '0 - 10 - 127', PARAM_0127, [0x25], 10),
+    )
+    
+    COMPACT_INS_EFX_PARAMETERS[1] = (
+        ('Low Freq', '200/400Hz', {0: '200Hz', 1: '400Hz'}, [0x03], 0x00),
+        ('Low Gain','-12dB - +6dB - +12dB', PARAM_12DB,[0x04], 0x46),
+        #('Name', 'description', mergedRange, [0xXX], _default_),
+        #('Name', 'description', mergedRange, [0xXX], _default_),
+        #('Name', 'description', mergedRange, [0xXX], _default_),
+        #('Name', 'description', mergedRange, [0xXX], _default_),
+        #('Name', 'description', mergedRange, [0xXX], _default_),
+        #('Name', 'description', mergedRange, [0xXX], _default_),
+        #('Name', 'description', mergedRange, [0xXX], _default_),
+        #('Name', 'description', mergedRange, [0xXX], _default_),
+        #('Name', 'description', mergedRange, [0xXX], _default_),
+        #('Name', 'description', mergedRange, [0xXX], _default_),
+    )
+    
+
     # End of exclusive (EOX)
     EOX = [0xF7]
-    
-    
-    
 
 if (DEBUG_MODE):
     print('Done!')
@@ -813,8 +954,6 @@ class MidiDevsDialog(QtGui.QDialog):
             print('Index = ', index)
             print('UA100CONTROL = ',UA100CONTROL)
 
-
-
 class MainWindow(QtGui.QMainWindow):
     def __init__(self, parent = None):
         super(MainWindow, self).__init__(parent)
@@ -822,8 +961,10 @@ class MainWindow(QtGui.QMainWindow):
         # load the ui
         self.ui = PyQt4.uic.loadUi('ui/main.ui', self)
         
+        # inizialize the dicts containing the definitions for the 3 effect dialog types
         self.fullEffects = {}
         self.compactEffectsSys = {}
+        self.compactEffectsIns = {}
         
         # setup menus
         self.actionReset_Mixer.triggered.connect(self.resetMixer)
@@ -1095,8 +1236,11 @@ class MainWindow(QtGui.QMainWindow):
                 if not (self.sender() in self.compactEffectsSys):
                     self.compactEffectsSys[self.sender()] = CompactEffectsSysDialog(self)
                 self.compactEffectsSys[self.sender()].show()
-            else:
-                pass
+            elif (self.sender().property('HEX') in ([0x01], [0x02],[0x03], [0x04])):
+                #print('hey, you are an insertion')
+                if not (self.sender() in self.compactEffectsIns):
+                    self.compactEffectsIns[self.sender()] = CompactEffectsInsDialog(self)
+                self.compactEffectsIns[self.sender()].show()
             
     def showHideSub(self, checked):
         '''
@@ -1241,17 +1385,68 @@ class MainWindow(QtGui.QMainWindow):
         answerList = sysexRead(4)
         wave2Level= answerList[2][0][2]
         self.Wave2Fader.setProperty("value", wave2Level)
+
+class CompactEffectsInsDialog(QtGui.QDialog):
+    def __init__(self,parent = None):
+        super(CompactEffectsInsDialog,self).__init__(parent)
+        # here is where I store the channel choosen fo the effect (mic1, mic2, wave1, wave2, sys1, sys2)
+        self.SenderHex = parent.sender().property('HEX').toPyObject()
+        # load the ui...
+        self.ui = PyQt4.uic.loadUi('ui/compacteffectsinsdialog.ui', self)
+        
+        for key in COMPACT_INS_EFX_GROUP.keys():
+            self.uiEffectGroupsList.addItem(COMPACT_INS_EFX_GROUP[key][0])
+        
+        self.uiEffectGroupsList.currentIndexChanged.connect(self.populateEffectType)
+        
+        self.populateEffectType(0)
+        
+        self.uiToggleEffect.toggled.connect(self.setEffect)
+        
+    def populateEffectType(self, index):
+        self.uiEffectTypeList.clear()
+        for effectType in COMPACT_INS_EFX_GROUP[index][1]:
+            self.uiEffectTypeList.addItem(COMPACT_INS_EFX_TYPE[effectType][0])
+        self.uiEffectTypeList.currentIndexChanged.connect(self.populateEffect)
+        self.populateEffect(0)
+    
+    def populateEffect(self, index):
+        self.uiEffectParameters.clear()
+        send_DT1([0x00, 0x40] + self.SenderHex + [0x00] + COMPACT_INS_EFX_TYPE[index][1])
+        for param in COMPACT_INS_EFX_PARAMETERS[index]:
+            if (DEBUG_MODE):
+                print('dentro: ',param)
+            item = CustomTreeItem(self.uiEffectParameters, param)
         
         
-        # This should read the INPUT MODE and set the starting value accordingly. But I must think a way to do setInputMode better.
-        #send_RQ1(MIXER_INPUT_CONTROL + MIXER_INPUT_MODE + MIXER_INPUT_MODE_SIZE)
-        #time.sleep(SLEEP_TIME)
-        #answerList = sysexRead(4)
-        #mixerMode = answerList[2][0][2]
-        #self.uiInputModeButton.setProperty('state',mixerMode)
+    def sendEffect(self, value):
+        '''
+        We send the values set to the UA-100. The effects are only active when also the switch is checked.
+        '''
         
-        #if (DEBUG_MODE):
-        #    print(answerList)
+        # first of all convert the passed value to list in order to send the SYSEX message
+        valueToList = [value]
+        if (DEBUG_MODE):
+            print 'LSB/MSB for parameter:', self.sender().property('HEX').toPyObject()
+        
+        
+        # if in real mode, actually send the message
+        send_DT1([0x00, 0x40] + self.SenderHex + self.sender().property('HEX').toPyObject() + valueToList)
+    
+    def setEffect(self, checked):
+        '''
+        A small but invaluable function:
+        
+        IT SWITCHES THE WHOLE THIG ON!
+        '''
+        
+        if (DEBUG_MODE):
+            print(self.SenderHex)
+        if (checked):
+            checkedList= [0x01]
+        else:
+            checkedList= [0x00]
+        send_DT1([0x00, 0x40, 0x40] + self.SenderHex + checkedList)
 
 class CompactEffectsSysDialog(QtGui.QDialog):
     def __init__(self,parent = None):
@@ -1286,13 +1481,13 @@ class CompactEffectsSysDialog(QtGui.QDialog):
                 print([0x00, 0x40] + self.SenderHex + [0x00] + COMPACT_SYS1_EFX_TYPE[index+1][1])
             send_DT1([0x00, 0x40] + self.SenderHex + [0x00] + COMPACT_SYS1_EFX_TYPE[index+1][1])
             for par in COMPACT_SYS1_EFX_PARAMETERS[index+1]:
-                item = CustomTreeItem(self.uiEffectParameters, par, index)
+                item = CustomTreeItem(self.uiEffectParameters, par)
         elif (self.SenderHex == [0x06]):
             if (DEBUG_MODE):
                 print([0x00, 0x40] + self.SenderHex + [0x00] + COMPACT_SYS2_EFX_TYPE[index+1][1])
             send_DT1([0x00, 0x40] + self.SenderHex + [0x00] + COMPACT_SYS2_EFX_TYPE[index+1][1])
             for par in COMPACT_SYS2_EFX_PARAMETERS[index+1]:
-                item = CustomTreeItem(self.uiEffectParameters, par, index)
+                item = CustomTreeItem(self.uiEffectParameters, par)
         
         
     def setEffect(self, checked):
@@ -1391,7 +1586,7 @@ class FullEffectsDialog(QtGui.QDialog):
         
         # "anonimously" polulate the QTreeWidget ...
         for par in FULL_EFX_PARAMETERS[index+1]:
-            item = CustomTreeItem(self.uiEffectParameters, par, index)
+            item = CustomTreeItem(self.uiEffectParameters, par)
     
     def sendEffect(self, value):
         '''
@@ -1418,7 +1613,7 @@ class CustomTreeItem(QtGui.QTreeWidgetItem):
     ******************************************************************************************
     
     '''
-    def __init__( self, parent, par, index ):
+    def __init__( self, parent, par):
         '''
         parent (QTreeWidget) : Item's QTreeWidget parent.
         name   (str)         : Item's name. just an example.

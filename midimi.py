@@ -91,15 +91,23 @@ import res.tools as tools
 #PAR_10= tools.mergeRanges(range(0x00,0x80),SEMIPAR_10)
 #print(PAR_10)
 
-SEMIPAR_15=[]
-for hz in [20,25,35,50,85,115,150,200,250,350,500,650,850,1000,1500,2000]:
+#SEMIPAR_15=[]
+#for hz in [20,25,35,50,85,115,150,200,250,350,500,650,850,1000,1500,2000]:
+#   for pippo in range(1,9):
+#      SEMIPAR_15.append(str(hz)+'Hz')
+#print(SEMIPAR_15)
+#
+#PAR_15= tools.mergeRanges(range(0x00,0x80),SEMIPAR_15)
+#print(PAR_15)
+
+SEMIPAR_9=[]
+for hz in [250, 315, 400, 500, 630, 800, 1000, 1250, 1600, 2000, 2500, 3150, 4000, 5000, 6300, 8000]:
    for pippo in range(1,9):
-      SEMIPAR_15.append(str(hz)+'Hz')
-print(SEMIPAR_15)
+      SEMIPAR_9.append(str(hz)+'Hz')
+print(SEMIPAR_9)
 
-PAR_15= tools.mergeRanges(range(0x00,0x80),SEMIPAR_15)
-print(PAR_15)
-
+PAR_9= tools.mergeRanges(range(0x00,0x80),SEMIPAR_9)
+print(PAR_9)
 
 
 #pm.init()
