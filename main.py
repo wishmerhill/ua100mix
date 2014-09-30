@@ -500,7 +500,6 @@ if (True):
          127: '8000Hz'}
         )
 
-    
     #SEMIPAR_10=[]
     #for hz in [100,250,315,400,500,630,800,1000,1250,1600,2000,2500,3150,4000,5000,6300]:
     #   for pippo in range(1,9):
@@ -573,21 +572,7 @@ if (True):
                       120: '31s', 121: '32s', 122: '33s', 123: '34s', 124: '35s', 125: '36s', 126: '37s', 127: '38s'}
         )
     
-    
     # Those are funny. Non capire O~O
-    #BALANCE_VALUES=(['D0<E','D1<E','D3<E','D4<E','D6<E','D7<E','D9<E','D11<E','D12<E','D14<E','D<E',
-    #                 'D15<E','D17<E','D19<E','D20<E','D22<E','D23<E','D25<E','D26<E','D28<E','D30<E',
-    #                 'D31<E','D33<E','D34<E','D36<E','D38<E','D39<E','D41<E','D42<E','D44<E','D46<E',
-    #                 'D47<E','D49<E','D50<E','D52<E','D53<E','D55<E','D57<E','D58<E','D60<E','D61<E',
-    #                 'D63<E','D65<E','D66<E','D68<E','D69<E','D71<E','D73<E','D74<E','D76<E','D77<E',
-    #                 'D79<E','D80<E','D82<E','D84<E','D85<E','D87<E','D88<E','D90<E','D92<E','D93<E',
-    #                 'D<E','D95<E','D96<E','D98<E','D=E','D>98E','D>96E','D>95E','D>93E','D>92E',
-    #                 'D>90E','D>88E','D>87E','D>85E','D>84E','D>82E','D>80E','D>79E','D>77E','D>76E',
-    #                 'D>74E','D>73E','D>71E','D>69E','D>68E','D>66E','D>65E','D>63E','D>61E','D>60E',
-    #                 'D>58E','D>57E','D>55E','D>53E','D>52E','D>50E','D>49E','D>47E','D>46E','D>44E',
-    #                 'D>42E','D>41E','D>39E','D>38E','D>36E','D>34E','D>33E','D>31E','D>30E','D>28E',
-    #                 'D>26E','D>25E','D>23E','D>22E','D>20E','D>19E','D>17E','D>15E','D>14E','D>12E',
-    #                 'D>11E','D>9E','D>7E','D>6E','D>4E','D>3E','D>1E','D>0E'])
     BALANCE_VALUES = ({0: 'D>0E', 1: 'D>0E', 2: 'D>1E', 3: 'D>3E', 4: 'D>4E', 5: 'D>6E', 6: 'D>7E',
                        7: 'D>9E', 8: 'D>11E', 9: 'D>12E', 10: 'D>14E', 11: 'D>15E', 12: 'D>17E',
                        13: 'D>19E', 14: 'D>20E', 15: 'D>22E', 16: 'D>23E', 17: 'D>25E', 18: 'D>26E',
@@ -624,10 +609,6 @@ if (True):
     FULL_EFX_PARAMETERS={}
     
     
-    
-    
-    # FULL EFFECT MODE
-    FULL_EFX_TYPE[1] = ('High Quality Reverb',[0x00,0x11])
     # FULL_EFX_PARAMETERS[]: How to build them (brainstorming) [in ITALIAN, sorry]
     # Mi servono anche i range in forma umana oltre a quelli esadecimali per il SYSEX, in modo che lo spinbox mostri il valore umano e passi
     # il valore esadecimale.
@@ -647,6 +628,8 @@ if (True):
     
     # l'implementazione attuale ha in par[2] un dizionario con associati i valori hex a quelli umani...
     
+    # FULL EFFECT MODE
+    FULL_EFX_TYPE[1] = ('High Quality Reverb',[0x00,0x11])
     FULL_EFX_PARAMETERS[1] = ( ('Type','Room1/2/Plate1/2/Hall1/2',tools.mergeRanges(range(0x00,0x06),['Room1','Room2','Plate1','Plate2','Hall1','Hall2']), [0x03],0x03),
         ('Pre Dly','0ms - 80ms - 635ms', PARAM_TYPE_5, [0x04], 0x10),
         ('Reverb Time','0.1s - 2s - 38s',PARAM_TYPE_16, [0x05],0x13),
@@ -668,7 +651,7 @@ if (True):
         ('EQ High Freq','4k/8kHz', {0: '4kHz', 1: '8kHz'}, [0x15],0),
         ('EQ High Gain','-12dB - 0dB - +12dB', PARAM_12DB,[0x16], 0x40)
     )
-    #
+    
     FULL_EFX_TYPE[2] = ('Mic Simulator',[0x00,0x12])
     FULL_EFX_PARAMETERS[2] = (
         ('Mic Conv','Off/On', PARAM_ON_OFF, [0x03],1),
@@ -711,10 +694,42 @@ if (True):
         ('EQ Mid Q', '0.5/1.0/2.0/4.0/9.0', { 0: '0.5', 1: '1.0', 2: '2.0', 3: '4.0', 4: '9.0'} , [0x09],1),
         ('EQ Mid Gain','-12dB - +2dB - +12dB', PARAM_12DB,[0x0A], 0x42),
         ('EQ High Gain','-12dB - -4dB - +12dB', PARAM_12DB,[0x0B], 0x3C),
-        
+        #('Ps P.Coarse,'', {}, [], ),
+        #('Ps P.Fine,'', {}, [], ),
+        #('Ps Balance,'', {}, [], ),
+        #('Dly Time,'', {}, [], ),
+        #('Dly Feedback,'', {}, [], ),
+        #('Dly Balance,'', {}, [], ),
+        #('Cho Rate,'', {}, [], ),
+        #('Cho Depth,'', {}, [], ),
+        #('Cho Balance,'', {}, [], )
+    )
+
+    FULL_EFX_TYPE[5] = ('Game',[0x00,0x16])
+    FULL_EFX_PARAMETERS[5] = (
+        ('Enhancer Level','-64 - +35 - +63', tools.mergeRanges(range(0x00,0x80), tools.ulist(-64,63,1)), [0x03], 69),
+        #('Low Boost Level','', {}, [], ),
+        #('Low Boost Freq','', {}, [], ),
+        #('Lm Mix Level','', {}, [], ),
+        #('GtRv Mix Level','', {}, [], ),
+        #('Rv Mix Level','', {}, [], ),
+        #('3D Switch','', {}, [], ),
+        #('3D Range','', {}, [], ),
+        #('Out','', {}, [], ),
+        #('Lm Threshold','', {}, [], ),
+        #('GtRv Pre Dly','', {}, [], ),
+        #('GtRv Time','', {}, [], ),
+        #('Rv Type','', {}, [], ),
+        #('Rv Pre Delay','', {}, [], ),
+        #('Rv Time','', {}, [], ),
+        #('Rv HF Damp','', {}, [], ),
+        #('Rv Low Gain','', {}, [], ),
+        #('Rv High Gain','', {}, [], ),
+        #('Low Gain','', {}, [], ),
+        #('High Gain','', {}, [], ),
+        #('Level','', {}, [], )
     )
     
-    #FULL_EFX_TYPE[5] = ('Game',[0x00,0x16])
     #FULL_EFX_TYPE[6] = ('Rotary Multi',[0x03,0x00])
     #FULL_EFX_TYPE[7] = ('GTR Multi',[0x04,0x00])
     
@@ -798,6 +813,7 @@ if (True):
         9: ('Connect 3 or more effects (series)', range(47,56)),
         10: ('Connect 2 effects (parallel)', range(56,65))}
         )
+    
     COMPACT_INS_EFX_TYPE=({
         0: ('Noise Suppressor',[0x00, 0x00]),
         1: ('Stereo Eq',[0x01, 0x00]),
@@ -812,22 +828,22 @@ if (True):
         10: ('Stereo Flanger',[0x01, 0x23]),
         11: ('Step Flanger',[0x01, 0x24]),
         12: ('Tremolo',[0x01, 0x25]),
-        13: ('Phaser',[0x01, 0x26]),
-        #14: ('__Name__', [0xXX, 0xYY]),
-        #15: ('__Name__', [0xXX, 0xYY]),
-        #16: ('__Name__', [0xXX, 0xYY]),
-        #17: ('__Name__', [0xXX, 0xYY]),
-        #18: ('__Name__', [0xXX, 0xYY]),
-        #19: ('__Name__', [0xXX, 0xYY]),
-        #20: ('__Name__', [0xXX, 0xYY]),
-        #21: ('__Name__', [0xXX, 0xYY]),
-        #22: ('__Name__', [0xXX, 0xYY]),
-        #23: ('__Name__', [0xXX, 0xYY]),
-        #24: ('__Name__', [0xXX, 0xYY]),
-        #25: ('__Name__', [0xXX, 0xYY]),
-        #26: ('__Name__', [0xXX, 0xYY]),
-        #27: ('__Name__', [0xXX, 0xYY]),
-        #28: ('__Name__', [0xXX, 0xYY]),
+        13: ('Auto Pan',[0x01, 0x26]),
+        14: ('Compressor', [0x01, 0x30]),
+        15: ('Limiter', [0x01, 0x31]),
+        16: ('Hexa Chorus', [0x01, 0x40]),
+        17: ('Tremolo Chorus', [0x01, 0x41]),
+        18: ('Stereo Chorus', [0x01, 0x42]),
+        19: ('Space D', [0x01, 0x43]),
+        20: ('3D Chorus', [0x01, 0x44]),
+        21: ('Stereo Delay', [0x01, 0x50]),
+        22: ('Mod Delay', [0x01, 0x51]),
+        23: ('3 Tap Delay', [0x01, 0x52]),
+        24: ('4 Tap Delay', [0x01, 0x53]),
+        25: ('Tm Ctrl Delay', [0x01, 0x54]),
+        26: ('Reverb', [0x01, 0x55]),
+        27: ('Gate Reverb', [0x01, 0x56]),
+        28: ('3D Delay', [0x01, 0x57]),
         #29: ('__Name__', [0xXX, 0xYY]),
         #30: ('__Name__', [0xXX, 0xYY]),
         #31: ('__Name__', [0xXX, 0xYY]),
@@ -864,6 +880,7 @@ if (True):
         #66: ('__Name__', [0xXX, 0xYY]),
         #63: ('__Name__', [0xXX, 0xYY]),
         })
+    
     COMPACT_INS_EFX_PARAMETERS={}
     
     COMPACT_INS_EFX_PARAMETERS[0] = ( 
@@ -893,7 +910,9 @@ if (DEBUG_MODE):
     print('Done!')
 
 class MidiDevsDialog(QtGui.QDialog):
-    
+    '''
+    First of all, we ask for the right device to use. In fact, we know which one... and thus, we guess.
+    '''
     def __init__(self, parent = None):
         super(MidiDevsDialog,self).__init__(parent)
         
@@ -1022,8 +1041,6 @@ class MainWindow(QtGui.QMainWindow):
         self.Mic2Ins2.valueChanged.connect(functools.partial(self.valueChange, CC_MIC2_CH, CC_SEND2_PAR))
         
         # Setting Up the Mic2 Solo Button ** THEY CAN BE ONLY ONE SOLO CHECKED, THUS... **
-        #self.mic2Solo.toggled.connect(functools.partial(self.uniqueSolos, self, window, self.mic2Solo, 2))
-        #self.mic2Solo.toggled.connect(functools.partial(self.uniqueSolos, self.mic1Solo, self.wave1Solo, self.wave2Solo))
         self.Mic2Solo.toggled.connect(self.uniqueSolos)
         
         self.Mic2Mute.toggled.connect(functools.partial(self.valueChange, CC_MIC2_CH, CC_MUTE_PAR))
@@ -1043,7 +1060,6 @@ class MainWindow(QtGui.QMainWindow):
         # Setting up the Wave1 Fader
         self.Wave1Fader.valueChanged.connect(self.Wave1Lcd.display)
         self.Wave1Fader.valueChanged.connect(functools.partial(self.valueChange, CC_WAVE1_CH, CC_MAIN_FADER_PAR))
-        #self.Wave1Fader.setProperty("value", CC_0127_DEFAULT)
         self.Wave1Fader.setProperty("parameter", CC_MAIN_FADER_PAR)
         
         # Setting up Ins1&2
@@ -1051,8 +1067,6 @@ class MainWindow(QtGui.QMainWindow):
         self.Wave1Ins2.valueChanged.connect(functools.partial(self.valueChange, CC_WAVE1_CH, CC_SEND2_PAR))
         
         # Setting Up the Wave1 Solo Button ** THEY CAN BE ONLY ONE SOLO CHECKED, THUS... **
-        #self.wave1Solo.toggled.connect(functools.partial(self.uniqueSolos, self, window, self.wave1Solo, 3))
-        #self.wave1Solo.toggled.connect(functools.partial(self.uniqueSolos, self.mic1Solo, self.wave2Solo, self.mic2Solo))
         self.Wave1Solo.toggled.connect(self.uniqueSolos)
         self.Wave1Mute.toggled.connect(functools.partial(self.valueChange, CC_WAVE1_CH, CC_MUTE_PAR))
         
@@ -1071,7 +1085,6 @@ class MainWindow(QtGui.QMainWindow):
         # Setting up the Wave1 Fader
         self.Wave2Fader.valueChanged.connect(self.Wave2Lcd.display)
         self.Wave2Fader.valueChanged.connect(functools.partial(self.valueChange, CC_WAVE2_CH, CC_MAIN_FADER_PAR))
-        #self.Wave2Fader.setProperty("value", CC_0127_DEFAULT)
         self.Wave2Fader.setProperty("parameter", CC_MAIN_FADER_PAR)    
         
         # Setting up Ins1&2
@@ -1079,8 +1092,6 @@ class MainWindow(QtGui.QMainWindow):
         self.Wave2Ins2.valueChanged.connect(functools.partial(self.valueChange, CC_WAVE2_CH, CC_SEND2_PAR))
         
         # Setting Up the Wave2 Solo Button ** THEY CAN BE ONLY ONE SOLO CHECKED, THUS... **
-        #self.wave2Solo.toggled.connect(functools.partial(uniqueSolos, self, window, self.wave1Solo, 4))
-        #self.wave2Solo.toggled.connect(functools.partial(uniqueSolos, self.mic1Solo, self.wave1Solo, self.mic2Solo))
         self.Wave2Solo.toggled.connect(self.uniqueSolos)
         
         self.Wave2Mute.toggled.connect(functools.partial(self.valueChange, CC_WAVE2_CH, CC_MUTE_PAR))
@@ -1108,7 +1119,6 @@ class MainWindow(QtGui.QMainWindow):
         self.WaveRecFader.valueChanged.connect(self.WaveRecLcd.display)
         self.WaveRecFader.valueChanged.connect(functools.partial(self.valueChange, CC_WAVEREC_CH, CC_MAIN_FADER_PAR))
         
-        
         # *************** SYSEFF **************************
         
         # Return
@@ -1117,8 +1127,6 @@ class MainWindow(QtGui.QMainWindow):
         # Sub
         self.SysEffSub1.valueChanged.connect(functools.partial(self.valueChange, CC_SYSSUB_CH, CC_SEND1_PAR))
         self.SysEffSub2.valueChanged.connect(functools.partial(self.valueChange, CC_SYSSUB_CH, CC_SEND2_PAR))
-        
-        
         
         # SUB BUTTON
         
@@ -1143,14 +1151,11 @@ class MainWindow(QtGui.QMainWindow):
                 self.OutputWaveRecSourceSelect.addItem(WAVE_SELECT_MIXERMODE[key])
             self.OutputWaveRecSourceSelect.setCurrentIndex(0x09)
         
-        
         if (MIXER_OUTPUT_MODE):
             for key in MIXER_EFFECT_MODE_PAR.keys():
                 self.uiEffectModeSelector.addItem(MIXER_EFFECT_MODE_PAR[key], key)
             self.uiEffectModeSelector.setCurrentIndex(-1)
         self.uiEffectModeSelector.currentIndexChanged.connect(self.setEffectMode)
-        
-
         self.EffMic1Button.setProperty('HEX', [0x01])
         self.EffMic1Button.clicked.connect(self.effectSelection)
         self.EffMic2Button.setProperty('HEX', [0x02])
@@ -1163,10 +1168,6 @@ class MainWindow(QtGui.QMainWindow):
         self.EffSys1Button.clicked.connect(self.effectSelection)
         self.EffSys2Button.setProperty('HEX', [0x06])
         self.EffSys2Button.clicked.connect(self.effectSelection)
-        
-        
-        #self.EffWave2Button.clicked.connect(setEff2)
-        #self.EffMic2Button.clicked.connect(effOn)
         
         if (REAL_UA_MODE):
             self.__setInitMixerLevels__()
@@ -1205,14 +1206,15 @@ class MainWindow(QtGui.QMainWindow):
             print(CC_MIC1_CH,' ',CC_MICLINESELECTOR_PAR,' ',self.sender().property('state').toPyObject() )  
     
     def setEffectMode(self, value):
+        '''
+        ???
+        '''
+        
         global MixerEffectMode
         valueToList=[sorted(MIXER_EFFECT_MODE_PAR.keys())[value]]
-        #if (DEBUG_MODE):
-        #    print(valueToList)
         send_DT1(MIXER_EFFECT_CONTROL + MIXER_EFFECT_MODE + valueToList)
         MixerEffectMode=sorted(MIXER_EFFECT_MODE_PAR.keys())[value]
         
-    
     def effectSelection(self):
         global MixerEffectMode
         #if (DEBUG_MODE):
@@ -1542,8 +1544,6 @@ class FullEffectsDialog(QtGui.QDialog):
         
         # connect the combobox with the slot which populates the QTreeWidget
         self.EffectTypeList.currentIndexChanged.connect(self.populateEffect)
-        
-        
         
         self.populateEffect(0)
         
