@@ -100,14 +100,22 @@ import res.tools as tools
 #PAR_15= tools.mergeRanges(range(0x00,0x80),SEMIPAR_15)
 #print(PAR_15)
 
-SEMIPAR_9=[]
-for hz in [250, 315, 400, 500, 630, 800, 1000, 1250, 1600, 2000, 2500, 3150, 4000, 5000, 6300, 8000]:
-   for pippo in range(1,9):
-      SEMIPAR_9.append(str(hz)+'Hz')
-print(SEMIPAR_9)
+#SEMIPAR_9=[]
+#for hz in [250, 315, 400, 500, 630, 800, 1000, 1250, 1600, 2000, 2500, 3150, 4000, 5000, 6300, 8000]:
+#   for pippo in range(1,9):
+#      SEMIPAR_9.append(str(hz)+'Hz')
+#print(SEMIPAR_9)
+#
+#PAR_9= tools.mergeRanges(range(0x00,0x80),SEMIPAR_9)
+#print(PAR_9)
 
-PAR_9= tools.mergeRanges(range(0x00,0x80),SEMIPAR_9)
-print(PAR_9)
+#import sys
+#import usb.core as u
+#dev = u.find(idVendor=0x0582, idProduct=0x0000)
+#if dev is None:
+#    print('sorry, no UA-100 found!')
+#else:
+#   print('Well done! UA-100 is there to rock!')
 
 
 #pm.init()

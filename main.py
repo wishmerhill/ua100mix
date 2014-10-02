@@ -15,11 +15,26 @@ DEBUG_MODE = 1
 # NOTE: Could (and will) be automatically set to 0 if no UA-100 is found.
 #       The UA-100 discovery routine is based on ALSA - **** 
 #       ******* TO DO *******
-#       Let the discovery be usb id based.
+#       Let the discovery be usb id based?
+#       Well: actually, ALSA discovery could be better, as we have more information about the device.
+#       On the other hand, USB discovery will still need ALSA to get the device id to be used by portmidi.
+#       So: we stick on ALSA discovery.
 
 REAL_UA_MODE = 1
 
 # ********************************
+
+#       Just for the records:
+#
+#       install pyusb (first of all!)
+#       
+#       import sys
+#       import usb.core as u
+#       dev = u.find(idVendor=0x0582, idProduct=0x0000)
+#       if dev is None:
+#           print('sorry, no UA-100 found!')
+#       else:
+#       print('Well done! UA-100 is there to rock!')
 
 import numpy as np
 import sys
@@ -51,8 +66,12 @@ if (DEBUG_MODE):
 if (True):
     
     # **************** this will and should be replaced with the real values obtained with sysex messages...
-    CC_0127_DEFAULT = 64 # I think 'in media stat virtus'
+    CC_0127_DEFAULT = 64
+    # I think 'in media stat virtus'
     
+    
+    #
+    # The following comes from the UA-100 manual
     # ***************************************************************
     # *** 1. RECEIVE DATA
     # ***************************************************************
@@ -844,41 +863,42 @@ if (True):
         26: ('Reverb', [0x01, 0x55]),
         27: ('Gate Reverb', [0x01, 0x56]),
         28: ('3D Delay', [0x01, 0x57]),
-        #29: ('__Name__', [0xXX, 0xYY]),
-        #30: ('__Name__', [0xXX, 0xYY]),
-        #31: ('__Name__', [0xXX, 0xYY]),
-        #33: ('__Name__', [0xXX, 0xYY]),
-        #33: ('__Name__', [0xXX, 0xYY]),
-        #34: ('__Name__', [0xXX, 0xYY]),
-        #35: ('__Name__', [0xXX, 0xYY]),
-        #36: ('__Name__', [0xXX, 0xYY]),
-        #37: ('__Name__', [0xXX, 0xYY]),
-        #38: ('__Name__', [0xXX, 0xYY]),
-        #39: ('__Name__', [0xXX, 0xYY]),
-        #40: ('__Name__', [0xXX, 0xYY]),
-        #41: ('__Name__', [0xXX, 0xYY]),
-        #44: ('__Name__', [0xXX, 0xYY]),
-        #43: ('__Name__', [0xXX, 0xYY]),
-        #44: ('__Name__', [0xXX, 0xYY]),
-        #45: ('__Name__', [0xXX, 0xYY]),
-        #46: ('__Name__', [0xXX, 0xYY]),
-        #47: ('__Name__', [0xXX, 0xYY]),
-        #48: ('__Name__', [0xXX, 0xYY]),
-        #49: ('__Name__', [0xXX, 0xYY]),
-        #50: ('__Name__', [0xXX, 0xYY]),
-        #51: ('__Name__', [0xXX, 0xYY]),
-        #55: ('__Name__', [0xXX, 0xYY]),
-        #53: ('__Name__', [0xXX, 0xYY]),
-        #54: ('__Name__', [0xXX, 0xYY]),
-        #55: ('__Name__', [0xXX, 0xYY]),
-        #56: ('__Name__', [0xXX, 0xYY]),
-        #57: ('__Name__', [0xXX, 0xYY]),
-        #58: ('__Name__', [0xXX, 0xYY]),
-        #59: ('__Name__', [0xXX, 0xYY]),
-        #60: ('__Name__', [0xXX, 0xYY]),
-        #61: ('__Name__', [0xXX, 0xYY]),
-        #66: ('__Name__', [0xXX, 0xYY]),
-        #63: ('__Name__', [0xXX, 0xYY]),
+        29: ('Pitch Shifter', [0x01, 0x60]),
+        30: ('Fb P, Shifter', [0x01, 0x61]),
+        31: ('3D Auto', [0x01, 0x70]),
+        33: ('3D Manual', [0x01, 0x71]),
+        33: ('Lo-Fi 1', [0x01, 0x72]),
+        34: ('Lo-Fi 2', [0x01, 0x73]),
+        35: ('OD -> Chorus', [0x02, 0x00]),
+        36: ('OD -> Flanger', [0x02, 0x01]),
+        37: ('OD -> Delay', [0x02, 0x02]),
+        38: ('DS -> Chorus', [0x02, 0x03]),
+        39: ('DS -> Flanger', [0x02, 0x04]),
+        40: ('DS -> Delay', [0x02, 0x05]),
+        41: ('EH -> Choru', [0x02, 0x06]),
+        44: ('EH -> Flanger', [0x02, 0x07]),
+        43: ('EH -> Delay', [0x02, 0x08]),
+        44: ('Cho -> Delay', [0x02, 0x09]),
+        45: ('FL -> Delay', [0x02, 0x0A]),
+        46: ('Cho -> Flanger', [0x02, 0x0B]),
+        47: ('Rotary Multi', [0x03, 0x00]),
+        48: ('GTR Multi 1', [0x04, 0x00]),
+        49: ('GTR Multi 2', [0x04, 0x01]),
+        50: ('GTR Multi 3', [0x04, 0x02]),
+        51: ('Clean Gt Multi 1', [0x04, 0x03]),
+        55: ('Clean Gt Multi 2', [0x04, 0x04]),
+        53: ('Bass Multi', [0x04, 0x05]),
+        54: ('E. Piano Multi', [0x04, 0x06]),
+        55: ('Keyboard Multi', [0x05, 0x00]),
+        56: ('Cho / Delay', [0x11, 0x00]),
+        57: ('FL / Delay', [0x11, 0x01]),
+        58: ('Cho / Flanger', [0x11, 0x02]),
+        59: ('OD1 / OD2', [0x11, 0x03]),
+        60: ('OD / Rotary', [0x11, 0x04]),
+        61: ('OD / Phaser', [0x11, 0x05]),
+        66: ('OD / AutoWah', [0x11, 0x06),
+        63: ('PH / Rotary', [0x11, 0x07]),
+        64: ('PH / AutoWah', [0x11, 0x08])
         })
     
     COMPACT_INS_EFX_PARAMETERS={}
@@ -902,6 +922,14 @@ if (True):
         #('Name', 'description', mergedRange, [0xXX], _default_),
     )
     
+
+    # The VT Effect Mode
+    
+    VT_EFFECT = ('VT Effect', [0x00,0x01])
+    
+    VT_EFFECT_PARAMETERS = (
+        ('Direct Level','0 - 127',PARAM_0127, [0x03],0x00),
+    )
 
     # End of exclusive (EOX)
     EOX = [0xF7]
