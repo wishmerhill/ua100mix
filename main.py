@@ -319,49 +319,51 @@ if (True):
     
     MIXER_EFFECT_MODE = [0x00]
     MIXER_EFFECT_MODE_SIZE = [0x00, 0x00, 0x00, 0x01]
-    MIXER_EFFECT_MODE_PAR={#0x01: 'VT Effect Mode',\
-                           0x03: 'Compact Effect Mode',\
-                           0x04: 'Full Effect Mode'}
+    MIXER_EFFECT_MODE_PAR=({
+        #0x01: 'VT Effect Mode',
+        0x03: 'Compact Effect Mode',
+        0x04: 'Full Effect Mode'}
+        )
     
     
     
     # Mixer Output Control
     MIXER_OUTPUT_CONTROL = [0x00, 0x40, 0x50]
     #
-    MASTER_SELECT_MIXERMODE = {0x00: 'LINE/MIC1/MIC1+MIC2',\
-                               0x01: 'MIC2',\
-                               0x02: 'WAVE1',\
-                               0x03: 'WAVE2',\
-                               0x04: 'CH1',\
-                               0x05: 'CH2',\
-                               0x06: 'CH3',\
-                               0x07: 'CH4',\
-                               0x08: 'SUB',\
-                               0x09: 'MAIN',\
-                               0x0A: 'WAVE(REC)OUT'}
-    MASTER_SELECT_VTMIXERMODE = {0x00: 'LINE/MIC1',\
-                                 0x01: 'MIC2',\
-                                 0x02: 'WAVE1',\
-                                 0x03: 'WAVE2',\
-                                 0x04: 'VT_OUT',\
-                                 0x05: 'MAIN',\
-                                 0x06: 'WAVE(REC)OUT'}
-    WAVE_SELECT_MIXERMODE = {0x00: 'LINE/MIC1/MIC1+MIC2',\
-                               0x01: 'MIC2',\
-                               0x02: 'WAVE1',\
-                               0x03: 'WAVE2',\
-                               0x04: 'CH1',\
-                               0x05: 'CH2',\
-                               0x06: 'CH3',\
-                               0x07: 'CH4',\
-                               0x08: 'SUB',\
-                               0x09: 'MAIN'}
-    WAVE_SELECT_VTMIXERMODE = {0x00: 'LINE/MIC1',\
-                                 0x01: 'MIC2',\
-                                 0x02: 'WAVE1',\
-                                 0x03: 'WAVE2',\
-                                 0x04: 'VT_OUT',\
-                                 0x05: 'MAIN'}
+    MASTER_SELECT_MIXERMODE = ({0x00: 'LINE/MIC1/MIC1+MIC2',
+                               0x01: 'MIC2',
+                               0x02: 'WAVE1',
+                               0x03: 'WAVE2',
+                               0x04: 'CH1',
+                               0x05: 'CH2',
+                               0x06: 'CH3',
+                               0x07: 'CH4',
+                               0x08: 'SUB',
+                               0x09: 'MAIN',
+                               0x0A: 'WAVE(REC)OUT'})
+    MASTER_SELECT_VTMIXERMODE = ({0x00: 'LINE/MIC1',
+                                 0x01: 'MIC2',
+                                 0x02: 'WAVE1',
+                                 0x03: 'WAVE2',
+                                 0x04: 'VT_OUT',
+                                 0x05: 'MAIN',
+                                 0x06: 'WAVE(REC)OUT'})
+    WAVE_SELECT_MIXERMODE = ({0x00: 'LINE/MIC1/MIC1+MIC2',
+                               0x01: 'MIC2',
+                               0x02: 'WAVE1',
+                               0x03: 'WAVE2',
+                               0x04: 'CH1',
+                               0x05: 'CH2',
+                               0x06: 'CH3',
+                               0x07: 'CH4',
+                               0x08: 'SUB',
+                               0x09: 'MAIN'})
+    WAVE_SELECT_VTMIXERMODE = ({0x00: 'LINE/MIC1',
+                                 0x01: 'MIC2',
+                                 0x02: 'WAVE1',
+                                 0x03: 'WAVE2',
+                                 0x04: 'VT_OUT',
+                                 0x05: 'MAIN'})
     
     # Mixer Output Mode:
     # 0: VT MIXER MODE
@@ -620,8 +622,17 @@ if (True):
     # -12dB - +12dB
     PARAM_12DB = tools.mergeRanges(range(0x34,0x4D), tools.ulist(-12,+12,1,'dB'))
     
+    # -24 - +12 
+    PARAM_2412 = tools.mergeRanges(range(0x28,0x4D), tools.ulist(-24,+12,1))
+    
     # 0-127
     PARAM_0127 = tools.mergeRanges(range(0x00,0x80),tools.ulist(0,127,1))
+    
+    # -98% - +98%
+    PARAM_9898 = tools.mergeRanges(range(0x0F,0x72),tools.ulist(-98,+98,2,'%'))
+    
+    # -100 - +100
+    PARAM_100100 = tools.mergeRanges(range(0x0E,0x73),tools.ulist(-100,+100,2))
     
     # Let's initialise the dictionaries with the parameters.
     FULL_EFX_TYPE = {}
@@ -713,15 +724,15 @@ if (True):
         ('EQ Mid Q', '0.5/1.0/2.0/4.0/9.0', { 0: '0.5', 1: '1.0', 2: '2.0', 3: '4.0', 4: '9.0'} , [0x09],1),
         ('EQ Mid Gain','-12dB - +2dB - +12dB', PARAM_12DB,[0x0A], 0x42),
         ('EQ High Gain','-12dB - -4dB - +12dB', PARAM_12DB,[0x0B], 0x3C),
-        #('Ps P.Coarse,'', {}, [], ),
-        #('Ps P.Fine,'', {}, [], ),
-        #('Ps Balance,'', {}, [], ),
-        #('Dly Time,'', {}, [], ),
-        #('Dly Feedback,'', {}, [], ),
-        #('Dly Balance,'', {}, [], ),
-        #('Cho Rate,'', {}, [], ),
-        #('Cho Depth,'', {}, [], ),
-        #('Cho Balance,'', {}, [], )
+        ('Ps P.Coarse','-24  -0 - +12', PARAM_2412, [0x0C], 0x40),
+        ('Ps P.Fine','-100 -48 - +100', PARAM_100100, [0x0D], 40),
+        ('Ps Balance','D > 0E - D > 42E - D0 <E', BALANCE_VALUES, [0x0E], 28),
+        ('Dly Time','0ms - 260ms - 500ms', PARAM_TYPE_4, [0x0F], 112),
+        ('Dly Feedback','-98% - -10% - +98%', PARAM_9898, [0x10], 59),
+        #('Dly Balance','', {}, [], ),
+        #('Cho Rate','', {}, [], ),
+        #('Cho Depth','', {}, [], ),
+        #('Cho Balance','', {}, [], )
     )
 
     FULL_EFX_TYPE[5] = ('Game',[0x00,0x16])
@@ -896,7 +907,7 @@ if (True):
         59: ('OD1 / OD2', [0x11, 0x03]),
         60: ('OD / Rotary', [0x11, 0x04]),
         61: ('OD / Phaser', [0x11, 0x05]),
-        66: ('OD / AutoWah', [0x11, 0x06),
+        66: ('OD / AutoWah', [0x11, 0x06]),
         63: ('PH / Rotary', [0x11, 0x07]),
         64: ('PH / AutoWah', [0x11, 0x08])
         })
@@ -1199,6 +1210,7 @@ class MainWindow(QtGui.QMainWindow):
         
         if (REAL_UA_MODE):
             self.__setInitMixerLevels__()
+            pass
         
         self.uiInputModeButton.setProperty('state',0x00)
         self.uiInputModeButton.clicked.connect(self.setInputMode)
@@ -1252,10 +1264,10 @@ class MainWindow(QtGui.QMainWindow):
             #    self.fullEffects[self.sender()] = FullEffectsDialog(self)
             #self.fullEffects[self.sender()].show()
             if (self.fullEffects):
-                self.fullEffects.uiToggleEffect.setChecked(0)
+                #self.fullEffects.uiToggleEffect.setChecked(0)
                 self.fullEffects.close()
                 self.fullEffects = FullEffectsDialog(self)
-                self.fullEffects.uiToggleEffect.setChecked(1)
+                #self.fullEffects.uiToggleEffect.setChecked(1)
             else:
                 self.fullEffects = FullEffectsDialog(self)
             self.fullEffects.show()
@@ -1267,10 +1279,17 @@ class MainWindow(QtGui.QMainWindow):
                     self.compactEffectsSys[self.sender()] = CompactEffectsSysDialog(self)
                 self.compactEffectsSys[self.sender()].show()
             elif (self.sender().property('HEX') in ([0x01], [0x02],[0x03], [0x04])):
-                #print('hey, you are an insertion')
-                if not (self.sender() in self.compactEffectsIns):
-                    self.compactEffectsIns[self.sender()] = CompactEffectsInsDialog(self)
-                self.compactEffectsIns[self.sender()].show()
+                #if not (self.sender() in self.compactEffectsIns):
+                #    self.compactEffectsIns[self.sender()] = CompactEffectsInsDialog(self)
+                #self.compactEffectsIns[self.sender()].show()
+                if (self.compactEffectsIns):
+                    self.compactEffectsIns.uiToggleEffect.setChecked(0)
+                    self.compactEffectsIns.close()
+                    self.compactEffectsIns = CompactEffectsInsDialog(self)
+                    #self.compactEffectsInsert.uiToggleEffect.setChecked(1)
+                else:
+                    self.compactEffectsIns = CompactEffectsInsDialog(self)
+                self.compactEffectsIns.show()
             
     def showHideSub(self, checked):
         '''
@@ -1383,6 +1402,8 @@ class MainWindow(QtGui.QMainWindow):
         send_RQ1(MIXER_OUTPUT_CONTROL + MIXER_OUTPUT_MASTERLEVEL + MIXER_OUTPUT_MASTERLEVEL_SIZE)
         time.sleep(SLEEP_TIME)
         answerList = sysexRead(4)
+        if (DEBUG_MODE):
+            print(answerList)
         masterLevel= answerList[2][0][2]
         self.MasterLineFader.setProperty("value", masterLevel)
         
@@ -1562,7 +1583,8 @@ class FullEffectsDialog(QtGui.QDialog):
         
         # here is where I store the channel choosen fo the effect (mic1, mic2, wave1, wave2, sys1, sys2)
         self.SenderHex = parent.sender().property('HEX').toPyObject()
-        
+        #QLineEditStr = 'uiEffectName' + self.sender().text()
+        #self.EffectNameTextBox = self.parent().findChild(QtGui.QLineEdit, QLineEditStr)
         # load the ui...
         self.ui = PyQt4.uic.loadUi('ui/fulleffectsdialog.ui', self)
 
@@ -1588,9 +1610,12 @@ class FullEffectsDialog(QtGui.QDialog):
             print(self.SenderHex)
         if (checked):
             checkedList= [0x01]
+            #self.EffectNameTextBox.setText(FULL_EFX_TYPE[self.actualEffectIndex][0])
         else:
             checkedList= [0x00]
+            #self.EffectNameTextBox.clear()
         send_DT1([0x00, 0x40, 0x40] + self.SenderHex + checkedList)
+        
     
     def populateEffect(self, index):
         
@@ -1599,7 +1624,7 @@ class FullEffectsDialog(QtGui.QDialog):
         #if (DEBUG_MODE):
         #    print([0x00, 0x40] + self.SenderHex + [0x00] + FULL_EFX_TYPE[index+1][1])
         send_DT1([0x00, 0x40] + self.SenderHex + [0x00] + FULL_EFX_TYPE[index+1][1])
-        
+        self.actualEffectIndex = index + 1
         
         self.uiEffectParameters.clear()
         # check if the list isn't yet there... but, as said, the instances are deleted... so what? and How?
@@ -1615,6 +1640,8 @@ class FullEffectsDialog(QtGui.QDialog):
         # "anonimously" polulate the QTreeWidget ...
         for par in FULL_EFX_PARAMETERS[index+1]:
             item = CustomTreeItem(self.uiEffectParameters, par)
+
+    
     
     def sendEffect(self, value):
         '''
@@ -1754,6 +1781,9 @@ def send_RQ1(data):
               + EOX
     if (REAL_UA_MODE):
         pmout.write_sys_ex(pm.time(),message)
+    
+    if (DEBUG_MODE):
+        print("Message: ", message)
 
 def send_DT1(data):
     global pmout, pmin

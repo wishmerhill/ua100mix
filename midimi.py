@@ -118,6 +118,8 @@ import res.tools as tools
 #   print('Well done! UA-100 is there to rock!')
 
 
+pippo = tools.mergeRanges(range(0x0f,0x72),tools.ulist(-98,+98,2))
+print(pippo)
 #pm.init()
 #
 ##numDevs = pm.get_count()
