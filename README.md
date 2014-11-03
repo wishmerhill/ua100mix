@@ -15,4 +15,7 @@ I pretty like Qt (much better than gtk, my first love in the late '90s) so I'm t
 If anyone is interested in helping, *YOU ARE WELCOME*! I'd appreciate even corrections or comments on my 
 awful coding!
 
+![Just a sample screenshot...](/screenshots/ua-100_mix.png?raw=true "UA-100 Mixer at work")
+
+
 Wishmerhill
