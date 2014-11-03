@@ -877,7 +877,7 @@ if (True):
         29: ('Pitch Shifter', [0x01, 0x60]),
         30: ('Fb P, Shifter', [0x01, 0x61]),
         31: ('3D Auto', [0x01, 0x70]),
-        33: ('3D Manual', [0x01, 0x71]),
+        32: ('3D Manual', [0x01, 0x71]),
         33: ('Lo-Fi 1', [0x01, 0x72]),
         34: ('Lo-Fi 2', [0x01, 0x73]),
         35: ('OD -> Chorus', [0x02, 0x00]),
@@ -887,7 +887,7 @@ if (True):
         39: ('DS -> Flanger', [0x02, 0x04]),
         40: ('DS -> Delay', [0x02, 0x05]),
         41: ('EH -> Choru', [0x02, 0x06]),
-        44: ('EH -> Flanger', [0x02, 0x07]),
+        42: ('EH -> Flanger', [0x02, 0x07]),
         43: ('EH -> Delay', [0x02, 0x08]),
         44: ('Cho -> Delay', [0x02, 0x09]),
         45: ('FL -> Delay', [0x02, 0x0A]),
@@ -897,7 +897,7 @@ if (True):
         49: ('GTR Multi 2', [0x04, 0x01]),
         50: ('GTR Multi 3', [0x04, 0x02]),
         51: ('Clean Gt Multi 1', [0x04, 0x03]),
-        55: ('Clean Gt Multi 2', [0x04, 0x04]),
+        52: ('Clean Gt Multi 2', [0x04, 0x04]),
         53: ('Bass Multi', [0x04, 0x05]),
         54: ('E. Piano Multi', [0x04, 0x06]),
         55: ('Keyboard Multi', [0x05, 0x00]),
@@ -907,7 +907,7 @@ if (True):
         59: ('OD1 / OD2', [0x11, 0x03]),
         60: ('OD / Rotary', [0x11, 0x04]),
         61: ('OD / Phaser', [0x11, 0x05]),
-        66: ('OD / AutoWah', [0x11, 0x06]),
+        62: ('OD / AutoWah', [0x11, 0x06]),
         63: ('PH / Rotary', [0x11, 0x07]),
         64: ('PH / AutoWah', [0x11, 0x08])
         })
@@ -931,8 +931,49 @@ if (True):
         #('Name', 'description', mergedRange, [0xXX], _default_),
         #('Name', 'description', mergedRange, [0xXX], _default_),
         #('Name', 'description', mergedRange, [0xXX], _default_),
+        ('Noise Suppressor', '0 - 10 - 127', PARAM_0127, [0x25], 10)
     )
     
+    COMPACT_INS_EFX_PARAMETERS[2] = ( 
+        ('Band 1', '-12dB - +5dB - +12dB', PARAM_12DB, [0x03], 0x45),
+        ('Band 2', '-12dB - +2dB - +12dB', PARAM_12DB, [0x04], 0x42),
+        ('Band 3', '-12dB - -2dB - +12dB', PARAM_12DB, [0x05], 0x3E),
+        ('Band 4', '-12dB - -1dB - +12dB', PARAM_12DB, [0x06], 0x3F),
+        ('Band 5', '-12dB - +3dB - +12dB', PARAM_12DB, [0x07], 0x43),
+        ('Band 6', '-12dB - +5dB - +12dB', PARAM_12DB, [0x08], 0x45),
+        ('Band 7', '-12dB - +6dB - +12dB', PARAM_12DB, [0x09], 0x46),
+        ('Band 8', '-12dB - -6dB - +12dB', PARAM_12DB, [0x0A], 0x3A),
+        ('Width', '0.5/1.0/*2.0*/4.0/9.0', { 0: '0.5', 1: '1.0', 2: '2.0', 3: '4.0', 4: '9.0'} , [0x0B],2),
+        #('Pan', 'L63 - 0 - R63', PARAM_PAN, [0x15], _default_),
+        ('Level', '0 - *127*', PARAM_0127, [0x16], 0x7f),
+        ('Noise Suppressor', '0 - 10 - 127', PARAM_0127, [0x25], 10)
+        
+    )
+    
+    #
+    # .... many definition after ....
+    #
+    
+    COMPACT_INS_EFX_PARAMETERS[64] = (
+        #('PH Man', 'description', mergedRange, [0xXX], _default_),
+        #('PH Rate', 'description', mergedRange, [0xXX], _default_),
+        ('PH Depth', '0 - 70 - 127', PARAM_0127, [0x05], 70),
+        ('PH Reso', '0 - *127*', PARAM_0127, [0x06], 127),
+        ('PH Mix', '0 - *127*', PARAM_0127, [0x07], 127),
+        #('PH Pan', 'description', mergedRange, [0xXX], _default_),
+        ('PH Level', '0 - 90 - 127', PARAM_0127, [0x13], 90),
+        #('AW Filter', 'description', mergedRange, [0xXX], _default_),
+        ('AW Sens', '0 - 40 - 127', PARAM_0127, [0x09], 40),
+        ('AW Man', '0 - 10 - 127', PARAM_0127, [0x0A], 10),
+        ('AW Peak', '0 - 20 - 127', PARAM_0127, [0x0B], 20),
+        #('Name', 'description', mergedRange, [0xXX], _default_),
+        #('Name', 'description', mergedRange, [0xXX], _default_),
+        #('Name', 'description', mergedRange, [0xXX], _default_),
+        #('Name', 'description', mergedRange, [0xXX], _default_),
+        ('AW Level', '0 - *127*', PARAM_0127, [0x15], 0x7f),
+        ('Level', '0 - *127*', PARAM_0127, [0x16], 0x7f),
+        ('Noise Suppressor', '0 - 10 - 127', PARAM_0127, [0x25], 10)
+    )
 
     # The VT Effect Mode
     
@@ -1328,8 +1369,8 @@ class MainWindow(QtGui.QMainWindow):
         if (REAL_UA_MODE):
             pmout.write_short(a,b,val)
             
-        if (DEBUG_MODE == 1):
-            print(hex(a),b,val)   
+        #if (DEBUG_MODE == 1):
+        #    print(hex(a),b,val)   
     
     def uniqueSolos(self, checked):
         '''
@@ -1402,8 +1443,6 @@ class MainWindow(QtGui.QMainWindow):
         send_RQ1(MIXER_OUTPUT_CONTROL + MIXER_OUTPUT_MASTERLEVEL + MIXER_OUTPUT_MASTERLEVEL_SIZE)
         time.sleep(SLEEP_TIME)
         answerList = sysexRead(4)
-        if (DEBUG_MODE):
-            print(answerList)
         masterLevel= answerList[2][0][2]
         self.MasterLineFader.setProperty("value", masterLevel)
         
@@ -1456,6 +1495,7 @@ class CompactEffectsInsDialog(QtGui.QDialog):
         
     def populateEffectType(self, index):
         self.uiEffectTypeList.clear()
+        self.InsEffectGroup = index
         for effectType in COMPACT_INS_EFX_GROUP[index][1]:
             self.uiEffectTypeList.addItem(COMPACT_INS_EFX_TYPE[effectType][0])
         self.uiEffectTypeList.currentIndexChanged.connect(self.populateEffect)
@@ -1464,7 +1504,12 @@ class CompactEffectsInsDialog(QtGui.QDialog):
     def populateEffect(self, index):
         self.uiEffectParameters.clear()
         send_DT1([0x00, 0x40] + self.SenderHex + [0x00] + COMPACT_INS_EFX_TYPE[index][1])
-        for param in COMPACT_INS_EFX_PARAMETERS[index]:
+        # I need to add an offset because of the grouping thing.
+        # The offset is actually the first value of the range list in the EFX GROUP definition
+        offset = COMPACT_INS_EFX_GROUP[self.InsEffectGroup][1][0]
+        if (DEBUG_MODE):
+            print('Indice: ', index, ' Offset: ', offset)
+        for param in COMPACT_INS_EFX_PARAMETERS[index + offset]:
             if (DEBUG_MODE):
                 print('dentro: ',param)
             item = CustomTreeItem(self.uiEffectParameters, param)
