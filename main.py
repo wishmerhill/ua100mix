@@ -621,7 +621,9 @@ if (True):
     #    ('Tone High','-12dB - 0dB - +12dB',range(0x34,0x4D),[0x0B]),\
     #    ('Balance','D > 0E - D0 < E', range(0x00,0x80), [0x0C])
     #)
-    
+
+    # just a test for committing with pycharm
+
     # parametro di lavoro
     # l'implementazione attuale ha in par[2] un dizionario con associati i valori hex a quelli umani...
     FULL_EFX_PARAMETERS[1] = ( ('Type','Room1/2/Plate1/2/Hall1/2',tools.mergeRanges(range(0x00,0x06),['Room1','Room2','Plate1','Plate2','Hall1','Hall2']), [0x03],0x03),
