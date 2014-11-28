@@ -1,3 +1,22 @@
+#!/usr/bin/python ~devel/ua100mix/main.py
+
+"""
+ua100mix is just a try for creating a tool to control the Roland/Edirol UA-100,
+an USB Audio & MIDI processing Unit.
+"""
+
+# define authorship information
+__authors__     = ['Alberto "wishmehill" Azzalini']
+__author__      = ','.join(__authors__)
+__credits__     = []
+__copyright__   = 'Copyright (c) 2014'
+__license__     = 'GPL'
+
+# maintanence information
+__maintainer__  = 'Alberto Azzalini'
+__email__       = 'alberto.azzalini@gmail.com'
+
+
 # ********************************
 # ***** DEBUG MODE CONTROL *******
 # SET:
@@ -43,11 +62,12 @@ import functools
 try:
     import pyportmidi as pm
 except ImportError:
-    print('*** Warning *** pyPortmidi not found - Swithing to testing mode (REAL_UA_MODE = 0) ***')
+    print('*** Warning *** pyPortmidi not found - Switch to testing mode (REAL_UA_MODE = 0) ***')
     REAL_UA_MODE = 0
 import PyQt4.uic
-from PyQt4 import QtGui, QtCore
-from types import MethodType
+from PyQt4 import QtGui
+#from PyQt4 import QtCore
+#from types import MethodType
 import signal
 import time
 import res.tools as tools
@@ -55,7 +75,7 @@ import res.tools as tools
 if (DEBUG_MODE):
     np.set_printoptions(formatter={'int':hex})
 
-# Defining costants (taken from UA-100 documentation)
+# Defining constants (taken from UA-100 documentation)
 # and copying some useful documentation excerts
 
 if (DEBUG_MODE):
@@ -529,6 +549,7 @@ if (True):
     #
     #PAR_10= tools.mergeRanges(range(0x00,0x80),SEMIPAR_10)
     #print(PAR_10)
+
     PARAM_TYPE_10 = (
         {0: '100Hz', 1: '100Hz', 2: '100Hz', 3: '100Hz', 4: '100Hz', 5: '100Hz', 6: '100Hz', 7: '100Hz',
         8: '250Hz', 9: '250Hz', 10: '250Hz', 11: '250Hz', 12: '250Hz', 13: '250Hz', 14: '250Hz', 15: '250Hz',
@@ -573,6 +594,7 @@ if (True):
     #PARAM_TYPE_16 = tools.mergeRanges(range(0x00,0x64),tools.ulist(0.1,10,0.1,'s'))
     #PARAM_TYPE_16_B = tools.mergeRanges(range(0x64,0x80),tools.ulist(11,38,1,'s'))
     #PARAM_TYPE_16.update(PARAM_TYPE_16_B)
+
     PARAM_TYPE_16 = ({0: '0.1s', 1: '0.2s', 2: '0.3s', 3: '0.4s', 4: '0.5s', 5: '0.6s', 6: '0.7s', 7: '0.8s',
                       8: '0.9s', 9: '1.0s', 10: '1.1s', 11: '1.2s', 12: '1.3s', 13: '1.4s', 14: '1.5s',
                       15: '1.6s', 16: '1.7s', 17: '1.8s', 18: '1.9s', 19: '2.0s', 20: '2.1s', 21: '2.2s',

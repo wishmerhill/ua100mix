@@ -8,7 +8,7 @@ Please, don't waste yout time reading this file
 import sys
 import os
 import pyportmidi as pm
-import res.tools as tools
+import tools as tools
 
 
 #PARAM_CONV_1 = tools.mergeRanges(range(0x00,0x33),tools.ulist(0,5,0.1,'ms'))
