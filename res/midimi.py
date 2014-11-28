@@ -9,8 +9,9 @@ import sys
 import os
 import pyportmidi as pm
 import tools as tools
+import numpy as np
 
-
+np.set_printoptions(formatter={'int':hex})
 #PARAM_CONV_1 = tools.mergeRanges(range(0x00,0x33),tools.ulist(0,5,0.1,'ms'))
 #PARAM_CONV_1_B = tools.mergeRanges(range(0x33,0x3D),tools.ulist(5.5,10,0.5))
 #PARAM_CONV_1_C = tools.mergeRanges(range(0x3D,0x65),tools.ulist(11,50,1))
@@ -69,6 +70,23 @@ import tools as tools
 #PARAM4_CONV_A.update(PARAM4_CONV_F)
 
 #print(PARAM4_CONV_A)
+
+# PARAM6_CONV_A = tools.mergeRanges(range(0x00,0x64),tools.ulist(0.05,5,0.05,'Hz'))
+# PARAM6_CONV_B = tools.mergeRanges(range(0x64,0x78),tools.ulist(5.1,7,0.1,'Hz'))
+# PARAM6_CONV_C = tools.mergeRanges(range(0x78,0x7E),tools.ulist(7.5,10,0.5,'Hz'))
+# PARAM6_CONV_F = { 0x7E : '10Hz', 0x7F : '10Hz' }
+#
+# PARAM6_CONV_A.update(PARAM6_CONV_B)
+# PARAM6_CONV_A.update(PARAM6_CONV_C)
+# PARAM6_CONV_A.update(PARAM6_CONV_F)
+#
+# print(PARAM6_CONV_A)
+
+PARAM_12DB = tools.mergeRanges(range(0x34,0x4D), tools.ulist(-12,+12,1,'dB'))
+print(PARAM_12DB)
+
+print(np.array(PARAM_12DB))
+
 #SEMIPARAM_8=[]
 #PARAM_8
 #for hz in [315,400,500,630,800,1000,1250,1600,2000,2500,3150,4000,5000,6300,8000,'Bypass']:
@@ -118,8 +136,8 @@ import tools as tools
 #   print('Well done! UA-100 is there to rock!')
 
 
-pippo = tools.mergeRanges(range(0x0f,0x72),tools.ulist(-98,+98,2))
-print(pippo)
+#pippo = tools.mergeRanges(range(0x0f,0x72),tools.ulist(-98,+98,2))
+#print(pippo)
 #pm.init()
 #
 ##numDevs = pm.get_count()

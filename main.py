@@ -59,6 +59,7 @@ import numpy as np
 import sys
 import os
 import functools
+
 try:
     import pyportmidi as pm
 except ImportError:
@@ -496,7 +497,29 @@ if (True):
                     106: '530ms', 107: '535ms', 108: '540ms', 109: '545ms', 110: '550ms', 111: '555ms', 112: '560ms',
                     113: '565ms', 114: '570ms', 115: '575ms', 116: '580ms', 117: '585ms', 118: '590ms', 119: '595ms',
                     120: '600ms', 121: '605ms', 122: '610ms', 123: '615ms', 124: '620ms', 125: '625ms', 126: '630ms', 127: '635ms'})
-    
+
+    PARAM_TYPE_6 = ({0: '0.05Hz', 1: '0.1Hz', 2: '0.15Hz', 3: '0.2Hz', 4: '0.25Hz', 5: '0.3Hz', 6: '0.35Hz',
+                     7: '0.4Hz', 8: '0.45Hz', 9: '0.5Hz', 10: '0.55Hz', 11: '0.6Hz', 12: '0.65Hz', 13: '0.7Hz',
+                     14: '0.75Hz', 15: '0.8Hz', 16: '0.85Hz', 17: '0.9Hz', 18: '0.95Hz', 19: '1.0Hz', 20: '1.05Hz',
+                     21: '1.1Hz', 22: '1.15Hz', 23: '1.2Hz', 24: '1.25Hz', 25: '1.3Hz', 26: '1.35Hz', 27: '1.4Hz',
+                     28: '1.45Hz', 29: '1.5Hz', 30: '1.55Hz', 31: '1.6Hz', 32: '1.65Hz', 33: '1.7Hz', 34: '1.75Hz',
+                     35: '1.8Hz', 36: '1.85Hz', 37: '1.9Hz', 38: '1.95Hz', 39: '2.0Hz', 40: '2.05Hz', 41: '2.1Hz',
+                     42: '2.15Hz', 43: '2.2Hz', 44: '2.25Hz', 45: '2.3Hz', 46: '2.35Hz', 47: '2.4Hz', 48: '2.45Hz',
+                     49: '2.5Hz', 50: '2.55Hz', 51: '2.6Hz', 52: '2.65Hz', 53: '2.7Hz', 54: '2.75Hz', 55: '2.8Hz',
+                     56: '2.85Hz', 57: '2.9Hz', 58: '2.95Hz', 59: '3.0Hz', 60: '3.05Hz', 61: '3.1Hz', 62: '3.15Hz',
+                     63: '3.2Hz', 64: '3.25Hz', 65: '3.3Hz', 66: '3.35Hz', 67: '3.4Hz', 68: '3.45Hz', 69: '3.5Hz',
+                     70: '3.55Hz', 71: '3.6Hz', 72: '3.65Hz', 73: '3.7Hz', 74: '3.75Hz', 75: '3.8Hz', 76: '3.85Hz',
+                     77: '3.9Hz', 78: '3.95Hz', 79: '4.0Hz', 80: '4.05Hz', 81: '4.1Hz', 82: '4.15Hz', 83: '4.2Hz',
+                     84: '4.25Hz', 85: '4.3Hz', 86: '4.35Hz', 87: '4.4Hz', 88: '4.45Hz', 89: '4.5Hz', 90: '4.55Hz',
+                     91: '4.6Hz', 92: '4.65Hz', 93: '4.7Hz', 94: '4.75Hz', 95: '4.8Hz', 96: '4.85Hz', 97: '4.9Hz',
+                     98: '4.95Hz', 99: '5.0Hz', 100: '5.1Hz', 101: '5.2Hz', 102: '5.3Hz', 103: '5.4Hz', 104: '5.5Hz',
+                     105: '5.6Hz', 106: '5.7Hz', 107: '5.8Hz', 108: '5.9Hz', 109: '6.0Hz', 110: '6.1Hz',
+                     111: '6.2Hz', 112: '6.3Hz', 113: '6.4Hz', 114: '6.5Hz', 115: '6.6Hz', 116: '6.7Hz',
+                     117: '6.8Hz', 118: '6.9Hz', 119: '7.0Hz', 120: '7.5Hz', 121: '8.0Hz', 122: '8.5Hz',
+                     123: '9.0Hz', 124: '9.5Hz', 125: '10.0Hz', 126: '10Hz', 127: '10Hz'}
+        )
+
+
     PARAM_TYPE_8 = ({0: '315Hz', 1: '315Hz', 2: '315Hz', 3: '315Hz', 4: '315Hz', 5: '315Hz', 6: '315Hz', 7: '315Hz', 8: '400Hz',
                      9: '400Hz', 10: '400Hz', 11: '400Hz', 12: '400Hz', 13: '400Hz', 14: '400Hz', 15: '400Hz', 16: '500Hz',
                      17: '500Hz', 18: '500Hz', 19: '500Hz', 20: '500Hz', 21: '500Hz', 22: '500Hz', 23: '500Hz', 24: '630Hz',
@@ -642,8 +665,13 @@ if (True):
 
     
     # -12dB - +12dB
-    PARAM_12DB = tools.mergeRanges(range(0x34,0x4D), tools.ulist(-12,+12,1,'dB'))
-    
+    #PARAM_12DB = tools.mergeRanges(range(0x34,0x4D), tools.ulist(-12,+12,1,'dB'))
+    PARAM_12DB = ({52: '-12dB', 53: '-11dB', 54: '-10dB', 55: '-9dB', 56: '-8dB', 57: '-7dB', 58: '-6dB',
+                   59: '-5dB', 60: '-4dB', 61: '-3dB', 62: '-2dB', 63: '-1dB', 64: '0dB', 65: '1dB',
+                   66: '2dB', 67: '3dB', 68: '4dB', 69: '5dB', 70: '6dB', 71: '7dB', 72: '8dB', 73: '9dB',
+                   74: '10dB', 75: '11dB', 76: '12dB'}
+        )
+
     # -24 - +12 
     PARAM_2412 = tools.mergeRanges(range(0x28,0x4D), tools.ulist(-24,+12,1))
     
@@ -722,8 +750,7 @@ if (True):
         ('Lm Attack', '0 - 20 - 127', PARAM_0127, [0x10], 20),
         ('Lm Release', '0 - 30 - 127', PARAM_0127, [0x11], 30)
     )
-    
-    
+
     FULL_EFX_TYPE[3] = ('Vocoder',[0x00,0x13])
     FULL_EFX_PARAMETERS[3] = (
         ('Speech Input', 'Mic1/2/Wave1/2', {0: 'Mic1', 1: 'Mic2', 2: 'Wave1', 3: 'Wave2'}, [0x03], 0x00),
@@ -818,9 +845,9 @@ if (True):
     COMPACT_SYS1_EFX_PARAMETERS[2] = (
         ('Type','Mode1 -2 -4',tools.mergeRanges(range(0x00,0x04),['Mode1','Mode2','Mode3','Mode4']),[0x03], 0x01),
         ('Pre Filter','Off/LPF/HPF', tools.mergeRanges(range(0x00,0x03),['Off','LPF','HPF']),[0x04], 0x02),
-        #('Cutoff'),
+        ('Cutoff', '250Hz - 630Hz - 8000Hz', PARAM_TYPE_9, [0x05], 32),
         ('Pre Dly','0ms - 100ms', PARAM_TYPE_1, [0x06], 80),
-        #('Rate'),
+        ('Rate', '0.05 - 0.35 - 10.0', PARAM_TYPE_6, [0x07], 6),
         ('Depth', '0-116-127',PARAM_0127,[0x08], 0x74),
         ('Balance','D > 0E - D0 < E',BALANCE_VALUES,[0x09],0x7F)
     )
@@ -842,10 +869,10 @@ if (True):
     COMPACT_SYS2_EFX_PARAMETERS[2] = (
         ('Type','Room1/2/Plate1/2/Hall1/2',tools.mergeRanges(range(0x00,0x06),['Room1','Room2','Plate1','Plate2','Hall1','Hall2']), [0x03],0x05),
         ('Pre Dly','0ms - 100ms', PARAM_TYPE_1, [0x04], 0x7F),
-        ('Reverb Time','0 - 23 - 127',PARAM_0127, [0x05],0x17),
+        ('Reverb Time','0 - 23 - 127', PARAM_0127, [0x05],0x17),
         #('HF Damp'),
-        #('Low Gain'),
-        #('High Gain'),
+        ('Low Gain', '-12dB - +2dB - +12dB', PARAM_12DB, 66),
+        ('High Gain', '-12dB - -6dB - +12dB', PARAM_12DB, 58),
         ('Balance','D > 0E - D0 < E',BALANCE_VALUES,[0x09],0x7F)
     )
     
