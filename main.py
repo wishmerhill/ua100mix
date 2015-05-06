@@ -778,10 +778,10 @@ if (True):
         ('Ps Balance','D > 0E - D > 42E - D0 <E', BALANCE_VALUES, [0x0E], 28),
         ('Dly Time','0ms - 260ms - 500ms', PARAM_TYPE_4, [0x0F], 112),
         ('Dly Feedback','-98% - -10% - +98%', PARAM_9898, [0x10], 59),
-        #('Dly Balance','', {}, [], ),
-        #('Cho Rate','', {}, [], ),
-        #('Cho Depth','', {}, [], ),
-        #('Cho Balance','', {}, [], )
+        ('Dly Balance','D > 0E - D > 22E - D0 < E', BALANCE_VALUES, [0x11], 15 ),
+        ('Cho Rate','0.05 - 0.65 - 10.0', PARAM_TYPE_6 , [0x12], 12),
+        ('Cho Depth','0 - 30 - 127', PARAM_0127, [0x13], 30),
+        ('Cho Balance','D > 0 E - D=E - D0 < E', BALANCE_VALUES, [0x14], 0)
     )
 
     FULL_EFX_TYPE[5] = ('Game',[0x00,0x16])
@@ -1000,7 +1000,7 @@ if (True):
     )
     
     #
-    # .... many definition after ....
+    # .... many definitions after ....
     #
     
     COMPACT_INS_EFX_PARAMETERS[64] = (
