@@ -833,8 +833,8 @@ if (True):
     FULL_EFX_TYPE[6] = ('Rotary Multi',[0x03,0x00])
     FULL_EFX_PARAMETERS[6] = (
         ('OD Drive', '0 - 40 - 127', PARAM_0127, [0x03], 40),
-        #('Name', 'description', mergedRange, [0xXX], _default_),
-        #('Name', 'description', mergedRange, [0xXX], _default_),
+        ('OD Sw', 'Off/*On', PARAM_ON_OFF, [0x04], 1),
+        ('EQ L Gain', '-12dB - 0dB - +12dB', PARAM_12DB, [0x05], 0x41),
         #('Name', 'description', mergedRange, [0xXX], _default_),
         #('Name', 'description', mergedRange, [0xXX], _default_),
         #('Name', 'description', mergedRange, [0xXX], _default_),
