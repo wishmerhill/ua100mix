@@ -82,10 +82,16 @@ np.set_printoptions(formatter={'int':hex})
 #
 # print(PARAM6_CONV_A)
 
-PARAM_12DB = tools.mergeRanges(range(0x34,0x4D), tools.ulist(-12,+12,1,'dB'))
-print(PARAM_12DB)
+print(range(0x40, 0x57))
+print(tools.ulist(0, +22, 1,'dB'))
+PARAM_0_18DB = tools.mergeRanges(range(0x40, 0x57), tools.ulist(0, +22, 1,'dB'))
 
-print(np.array(PARAM_12DB))
+print(PARAM_0_18DB)
+
+#PARAM_12DB = tools.mergeRanges(range(0x34,0x4D), tools.ulist(-12,+12,1,'dB'))
+#print(PARAM_12DB)
+
+#print(np.array(PARAM_12DB))
 
 #SEMIPARAM_8=[]
 #PARAM_8
