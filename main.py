@@ -670,6 +670,7 @@ if (True):
                        118: 'D14<E', 119: 'D12<E', 120: 'D11<E', 121: 'D9<E', 122: 'D7<E',
                        123: 'D6<E', 124: 'D4<E', 125: 'D3<E', 126: 'D1<E', 127: 'D0<E'})
     PARAM_ON_OFF = {0: 'Off', 1: 'On'}
+    PARAM_UP_DOWN = {0: 'Down', 1: 'Up'}
 
 
     # -12dB - +12dB
@@ -852,9 +853,31 @@ if (True):
         #('Name', 'description', mergedRange, [0xXX], _default_),
         #('Name', 'description', mergedRange, [0xXX], _default_)
     )
-
-    #FULL_EFX_TYPE[7] = ('GTR Multi',[0x04,0x00])
-
+    # this is the same as COMPACT_INS_EFX_PARAMETERS[48] defines later (the other way round as described in the documentation)
+    FULL_EFX_TYPE[7] = ('GTR Multi',[0x04,0x00])
+    FULL_EFX_PARAMETERS[7] = (
+        ('Cmp Atk', '0 - 8 - 127', PARAM_0127, [0x03], 80),
+        #('Name', 'description', mergedRange, [0xXX], _default_),
+        #('Name', 'description', mergedRange, [0xXX], _default_),
+        #('Name', 'description', mergedRange, [0xXX], _default_),
+        #('Name', 'description', mergedRange, [0xXX], _default_),
+        #('Name', 'description', mergedRange, [0xXX], _default_),
+        #('Name', 'description', mergedRange, [0xXX], _default_),
+        #('Name', 'description', mergedRange, [0xXX], _default_),
+        #('Name', 'description', mergedRange, [0xXX], _default_),
+        #('Name', 'description', mergedRange, [0xXX], _default_),
+        #('Name', 'description', mergedRange, [0xXX], _default_),
+        #('Name', 'description', mergedRange, [0xXX], _default_),
+        #('Name', 'description', mergedRange, [0xXX], _default_),
+        #('Name', 'description', mergedRange, [0xXX], _default_),
+        #('Name', 'description', mergedRange, [0xXX], _default_),
+        #('Name', 'description', mergedRange, [0xXX], _default_),
+        #('Name', 'description', mergedRange, [0xXX], _default_),
+        #('Name', 'description', mergedRange, [0xXX], _default_),
+        #('Name', 'description', mergedRange, [0xXX], _default_),
+        #('Name', 'description', mergedRange, [0xXX], _default_),
+        #('Name', 'description', mergedRange, [0xXX], _default_)
+    )
 
     # COMPACT EFFECTS MODE
     # Let's define the SYS first. They are actually a bit easier.
@@ -1068,10 +1091,10 @@ if (True):
         ('AW Sens', '0 - 40 - 127', PARAM_0127, [0x09], 40),
         ('AW Man', '0 - 10 - 127', PARAM_0127, [0x0A], 10),
         ('AW Peak', '0 - 20 - 127', PARAM_0127, [0x0B], 20),
-        #('Name', 'description', mergedRange, [0xXX], _default_),
-        #('Name', 'description', mergedRange, [0xXX], _default_),
-        #('Name', 'description', mergedRange, [0xXX], _default_),
-        #('Name', 'description', mergedRange, [0xXX], _default_),
+        ('AW Rate', '0.05Hz - 2.00Hz - 10.0Hz', PARAM_TYPE_6, [0x0C], 39),
+        ('AW Depth', '0 - 90 - 127', PARAM_0127, [0x0D], 90),
+        ('AW Pol', 'Down/*Up*', PARAM_UP_DOWN , [0x0E], 1),
+        #('AW Pan', 'L63 - 0 - R63', PARAM_PAN, [0x14], 0),
         ('AW Level', '0 - *127*', PARAM_0127, [0x15], 0x7f),
         ('Level', '0 - *127*', PARAM_0127, [0x16], 0x7f),
         ('Noise Suppressor', '0 - 10 - 127', PARAM_0127, [0x25], 10)
