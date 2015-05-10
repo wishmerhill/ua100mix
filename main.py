@@ -21,7 +21,7 @@ __email__ = 'alberto.azzalini@gmail.com'
 # ***** DEBUG MODE CONTROL *******
 # SET:
 # 1: debug messages on stdout ON
-#      0: debug messages on stdout OFF
+# 0: debug messages on stdout OFF
 
 DEBUG_MODE = 1
 
@@ -55,10 +55,11 @@ REAL_UA_MODE = 1
 #       else:
 #       print('Well done! UA-100 is there to rock!')
 
-import numpy as np
 import sys
-import os
 import functools
+
+import numpy as np
+
 
 try:
     import pyportmidi as pm
@@ -672,7 +673,6 @@ if (True):
     PARAM_ON_OFF = {0: 'Off', 1: 'On'}
     PARAM_UP_DOWN = {0: 'Down', 1: 'Up'}
 
-
     # -12dB - +12dB
     #PARAM_12DB = tools.mergeRanges(range(0x34,0x4D), tools.ulist(-12,+12,1,'dB'))
     PARAM_12DB = ({52: '-12dB', 53: '-11dB', 54: '-10dB', 55: '-9dB', 56: '-8dB', 57: '-7dB', 58: '-6dB',
@@ -689,7 +689,6 @@ if (True):
                      80: '16dB', 81: '17dB', 82: '18dB', 83: '19dB', 84: '20dB', 85: '21dB', 86: '22dB'}
                     )
 
-
     # -24 - +12 
     PARAM_2412 = tools.mergeRanges(range(0x28, 0x4D), tools.ulist(-24, +12, 1))
 
@@ -702,10 +701,11 @@ if (True):
     # -100 - +100
     PARAM_100100 = tools.mergeRanges(range(0x0E, 0x73), tools.ulist(-100, +100, 2))
 
+    # TODO: Finish to add all necessary PARAM constants to complete the effects...
+
     # Let's initialise the dictionaries with the parameters.
     FULL_EFX_TYPE = {}
     FULL_EFX_PARAMETERS = {}
-
 
     # FULL_EFX_PARAMETERS[]: How to build them (brainstorming) [in ITALIAN, sorry]
     # Mi servono anche i range in forma umana oltre a quelli esadecimali per il SYSEX, in modo che lo spinbox mostri il valore umano e passi
@@ -723,33 +723,33 @@ if (True):
     # 1. aggiungere quindi una colonna in cui inserisco una tupla dei valori 'umani'.
     # 2. modificare par[2] facendolo diventare un dizionario nella forma {valore_hex: valore umano}
 
-
     # l'implementazione attuale ha in par[2] un dizionario con associati i valori hex a quelli umani...
 
     # FULL EFFECT MODE
     FULL_EFX_TYPE[1] = ('High Quality Reverb', [0x00, 0x11])
     FULL_EFX_PARAMETERS[1] = (
-        ('Type', 'Room1/2/Plate1/2/Hall1/2', tools.mergeRanges(range(0x00, 0x06),['Room1', 'Room2', 'Plate1','Plate2', 'Hall1', 'Hall2']),[0x03], 0x03),
+        ('Type', 'Room1/2/Plate1/2/Hall1/2', tools.mergeRanges(range(0x00, 0x06), ['Room1', 'Room2', 'Plate1', 'Plate2', 'Hall1', 'Hall2']), [0x03],
+         0x03),
         ('Pre Dly', '0ms - 80ms - 635ms', PARAM_TYPE_5, [0x04], 0x10),
         ('Reverb Time', '0.1s - 2s - 38s', PARAM_TYPE_16, [0x05], 0x13),
-        ('HF Damp', '-10 - -4 -0', tools.mergeRanges(range(0x00, 0x0B), tools.ulist(-10, 0, 1)),[0x06], 0x06),
+        ('HF Damp', '-10 - -4 -0', tools.mergeRanges(range(0x00, 0x0B), tools.ulist(-10, 0, 1)), [0x06], 0x06),
         ('ER Pre Dly', '0 - 40ms - 635 ms', PARAM_TYPE_5, [0x07], 0x08),
         ('ER Mix', '0 - 15 - 127', PARAM_0127, [0x08], 0x0f),
-        ('Diffusion', '0 - 9 - 10', tools.mergeRanges(range(0x00, 0x0B), tools.ulist(0, 10, 1)),[0x09], 0x09),
+        ('Diffusion', '0 - 9 - 10', tools.mergeRanges(range(0x00, 0x0B), tools.ulist(0, 10, 1)), [0x09], 0x09),
         ('Tone Low', '-12dB - 0dB - +12dB', PARAM_12DB, [0x0A], 0x40),
         ('Tone High', '-12dB - 0dB - +12dB', PARAM_12DB, [0x0B], 0x40),
         ('Balance', 'D > 0E - D0 < E', BALANCE_VALUES, [0x0C], 0x7f),
         ('EQ Low Freq', '200/400Hz', {0: '200Hz', 1: '400Hz'}, [0x0D], 0x00),
         ('EQ Low Gain', '-12dB - 0dB - +12dB', PARAM_12DB, [0x0E], 0x40),
         ('EQ Mid1 Freq', '200Hz - 315Hz - 6300 Hz', PARAM_TYPE_10, [0x0F], 16),
-        ('EQ Mid1 Q', '0.5/1.0/2.0/4.0/9.0', {0: '0.5', 1: '1.0', 2: '2.0', 3: '4.0', 4: '9.0'},[0x10], 0),
+        ('EQ Mid1 Q', '0.5/1.0/2.0/4.0/9.0', {0: '0.5', 1: '1.0', 2: '2.0', 3: '4.0', 4: '9.0'}, [0x10], 0),
         ('EQ Mid1 Gain', '-12dB - 0dB - +12dB', PARAM_12DB, [0x11], 0x40),
         ('EQ Mid2 Freq', '200Hz - 800Hz - 6300 Hz', PARAM_TYPE_10, [0X12], 48),
-        ('EQ Mid2 Q', '0.5/1.0/2.0/4.0/9.0', {0: '0.5', 1: '1.0', 2: '2.0', 3: '4.0', 4: '9.0'},[0x13], 1),
+        ('EQ Mid2 Q', '0.5/1.0/2.0/4.0/9.0', {0: '0.5', 1: '1.0', 2: '2.0', 3: '4.0', 4: '9.0'}, [0x13], 1),
         ('EQ Mid2 Gain', '-12dB - 0dB - +12dB', PARAM_12DB, [0x14], 0x40),
         ('EQ High Freq', '4k/8kHz', {0: '4kHz', 1: '8kHz'}, [0x15], 0),
         ('EQ High Gain', '-12dB - 0dB - +12dB', PARAM_12DB, [0x16], 0x40)
-        )
+    )
 
     FULL_EFX_TYPE[2] = ('Mic Simulator', [0x00, 0x12])
     FULL_EFX_PARAMETERS[2] = (
@@ -808,7 +808,7 @@ if (True):
     FULL_EFX_TYPE[5] = ('Game', [0x00, 0x16])
     FULL_EFX_PARAMETERS[5] = (
         ('Enhancer Level', '-64 - +35 - +63', tools.mergeRanges(range(0x00, 0x80), tools.ulist(-64, 63, 1)), [0x03], 69),
-        ('Low Boost Level','0dB - +8dB - 18dB', PARAM_0_18DB , [0x04], 72),
+        ('Low Boost Level', '0dB - +8dB - 18dB', PARAM_0_18DB, [0x04], 72),
         #('Low Boost Freq','', {}, [], ),
         #('Lm Mix Level','', {}, [], ),
         #('GtRv Mix Level','', {}, [], ),
@@ -831,7 +831,7 @@ if (True):
     )
 
     # this is the same as COMPACT_INS_EFX_PARAMETERS[47] defines later (the other way round as described in the documentation)
-    FULL_EFX_TYPE[6] = ('Rotary Multi',[0x03,0x00])
+    FULL_EFX_TYPE[6] = ('Rotary Multi', [0x03, 0x00])
     FULL_EFX_PARAMETERS[6] = (
         ('OD Drive', '0 - 40 - 127', PARAM_0127, [0x03], 40),
         ('OD Sw', 'Off/*On', PARAM_ON_OFF, [0x04], 1),
@@ -854,7 +854,7 @@ if (True):
         #('Name', 'description', mergedRange, [0xXX], _default_)
     )
     # this is the same as COMPACT_INS_EFX_PARAMETERS[48] defines later (the other way round as described in the documentation)
-    FULL_EFX_TYPE[7] = ('GTR Multi',[0x04,0x00])
+    FULL_EFX_TYPE[7] = ('GTR Multi', [0x04, 0x00])
     FULL_EFX_PARAMETERS[7] = (
         ('Cmp Atk', '0 - 8 - 127', PARAM_0127, [0x03], 80),
         #('Name', 'description', mergedRange, [0xXX], _default_),
@@ -1093,7 +1093,7 @@ if (True):
         ('AW Peak', '0 - 20 - 127', PARAM_0127, [0x0B], 20),
         ('AW Rate', '0.05Hz - 2.00Hz - 10.0Hz', PARAM_TYPE_6, [0x0C], 39),
         ('AW Depth', '0 - 90 - 127', PARAM_0127, [0x0D], 90),
-        ('AW Pol', 'Down/*Up*', PARAM_UP_DOWN , [0x0E], 1),
+        ('AW Pol', 'Down/*Up*', PARAM_UP_DOWN, [0x0E], 1),
         #('AW Pan', 'L63 - 0 - R63', PARAM_PAN, [0x14], 0),
         ('AW Level', '0 - *127*', PARAM_0127, [0x15], 0x7f),
         ('Level', '0 - *127*', PARAM_0127, [0x16], 0x7f),
