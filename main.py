@@ -88,6 +88,7 @@ if (DEBUG_MODE):
 if (True):
     # **************** this will and should be replaced with the real values obtained with sysex messages...
     CC_0127_DEFAULT = 64
+    CC_PAN_MIDDLE = 64
     # I think 'in media stat virtus'
 
 
@@ -1499,6 +1500,14 @@ class MainWindow(QtGui.QMainWindow):
         self.Mic1Pan.valueChanged.connect(self.Mic1PanLcd.display)
         self.Mic1Pan.valueChanged.connect(functools.partial(self.valueChange, CC_MIC1_CH, CC_PAN_PAR))
         self.Mic1Pan.setProperty("parameter", CC_PAN_PAR)
+        # center...
+        self.Mic1Pan.setProperty("value", CC_PAN_MIDDLE)
+
+        # I also need Mic1Pan2, a "copy" of Mic2 for the Mic1+Mic2 mode:
+        self.Mic1Pan2.valueChanged.connect(self.Mic1PanLcd2.display)
+        self.Mic1Pan2.valueChanged.connect(functools.partial(self.valueChange, CC_MIC2_CH, CC_PAN_PAR))
+        self.Mic1Pan2.setProperty("parameter", CC_PAN_PAR)
+        self.Mic1Pan2.setProperty("value", CC_PAN_MIDDLE)
 
         # Setting up Ins1&2
         self.Mic1Ins1.valueChanged.connect(functools.partial(self.valueChange, CC_MIC1_CH, CC_SEND1_PAR))
@@ -1531,6 +1540,14 @@ class MainWindow(QtGui.QMainWindow):
         self.Mic2Pan.valueChanged.connect(self.Mic2PanLcd.display)
         self.Mic2Pan.valueChanged.connect(functools.partial(self.valueChange, CC_MIC2_CH, CC_PAN_PAR))
         self.Mic2Pan.setProperty("parameter", CC_PAN_PAR)
+        # center...
+        self.Mic2Pan.setProperty("value", CC_PAN_MIDDLE)
+
+        # I also need Mic1Pan2, a "copy" of Mic2 for the Mic1+Mic2 mode:
+        self.Mic1Pan2.valueChanged.connect(self.Mic1PanLcd2.display)
+        self.Mic1Pan2.valueChanged.connect(functools.partial(self.valueChange, CC_MIC2_CH, CC_PAN_PAR))
+        self.Mic1Pan2.setProperty("parameter", CC_PAN_PAR)
+
 
         # Setting up Ins1&2
         self.Mic2Ins1.valueChanged.connect(functools.partial(self.valueChange, CC_MIC2_CH, CC_SEND1_PAR))
@@ -1673,6 +1690,8 @@ class MainWindow(QtGui.QMainWindow):
             pass
 
         self.uiInputModeButton.setProperty('state', 0x00)
+        self.Mic1Pan2.hide()
+        self.Mic1PanLcd2.hide()
         self.uiInputModeButton.clicked.connect(self.setInputMode)
 
     def setInputMode(self):
@@ -1681,23 +1700,37 @@ class MainWindow(QtGui.QMainWindow):
         The MIC1-GUITAR/LINE/MIC1+MIC2 toggler
         
         need a tree way button...
+        MIC/LINE 21 (15H)       0: Mic Mode, 1: Line Mode, 2: MIC1+MIC2 Mod
         
         '''
 
         if self.sender().property('state') == 0x00:
+            # Going to line mode...
             self.sender().setProperty('state', 0x01)
             self.Mic1.setTitle('Line')
             self.uiInputModeLabel.setText('Line')
             self.Mic2.hide()
+            self.Mic1Pan2.hide()
+            self.Mic1PanLcd2.hide()
         elif self.sender().property('state') == 0x01:
+            # going to Mic1 + Mic 2 Mode
             self.sender().setProperty('state', 0x02)
-            self.Mic1.setTitle('Mic1/Guitar+Mic2')
+            self.Mic1.setTitle('Mic1/GTR+Mic2')
             self.uiInputModeLabel.setText('Mic1\n+Mic2')
+            self.Mic2.setEnabled(False)
             self.Mic2.hide()
+            self.Mic1Pan2.show()
+            self.Mic1PanLcd2.show()
+            # let's expand a bit...
+            self.Mic1.setProperty
         elif self.sender().property('state') == 0x02:
+            # Back to
             self.sender().setProperty('state', 0x00)
             self.Mic1.setTitle('Mic1/Guitar')
-            self.uiInputModeLabel.setText('Mic/\nGuitar')
+            self.uiInputModeLabel.setText('Mic/GTR')
+            self.Mic2.setEnabled(True)
+            self.Mic1Pan2.hide()
+            self.Mic1PanLcd2.hide()
             self.Mic2.show()
         if (REAL_UA_MODE):
             pmout.write_short(CC_MIC1_CH, CC_MICLINESELECTOR_PAR, self.sender().property('state').toPyObject())
@@ -1848,12 +1881,14 @@ class MainWindow(QtGui.QMainWindow):
         self.Wave2Fader.setProperty("value", CC_0127_DEFAULT)
         #self.Wave2SubFader.setProperty("value", CC_0127_DEFAULT)
         self.Mic1Fader.setProperty("value", CC_0127_DEFAULT)
-        self.Mic1Pan.setProperty("value", CC_0127_DEFAULT)
+        self.Mic1Pan.setProperty("value", CC_PAN_MIDDLE)
         #self.Mic1SubFader.setProperty("value", CC_0127_DEFAULT)
         self.Mic2Fader.setProperty("value", CC_0127_DEFAULT)
-        self.Mic2Pan.setProperty("value", CC_0127_DEFAULT)
+        self.Mic2Pan.setProperty("value", CC_PAN_MIDDLE)
         #self.Mic2SubFader.setProperty("value", CC_0127_DEFAULT)
         self.WaveRecFader.setProperty("value", CC_0127_DEFAULT)
+
+        self.Mic1Pan2.setProperty("value", CC_PAN_MIDDLE)
 
     def __setInitMixerLevels__(self):
         '''
