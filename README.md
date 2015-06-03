@@ -1,7 +1,7 @@
 ua100mix
 ========
 
-A try for a pyqt4 mixer for Roland/Edimax UA-100
+A try for a pyqt4 mixer for Roland/Edirol UA-100
 ================================================
 
 Being neither a good programmer, nor a good musician (actually, not even an average one on both of them), 
@@ -19,3 +19,5 @@ awful coding!
 
 
 Wishmerhill
+
+Tags: Roland, Edirol, UA-100, UA 100, mixer, effects, pyhon, pyqt
