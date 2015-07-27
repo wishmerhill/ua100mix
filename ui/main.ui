@@ -1649,8 +1649,8 @@
          <string>Easy Setting</string>
         </property>
         <layout class="QGridLayout" name="gridLayout_7">
-         <item row="1" column="0">
-          <widget class="QPushButton" name="pushButton_2">
+         <item row="0" column="0">
+          <widget class="QPushButton" name="SaxModeButton">
            <property name="minimumSize">
             <size>
              <width>50</width>
@@ -1668,7 +1668,7 @@
            </property>
            <property name="icon">
             <iconset>
-             <normaloff>icons/microphone-icon.png</normaloff>icons/microphone-icon.png</iconset>
+             <normaloff>icons/sax-icon.png</normaloff>icons/sax-icon.png</iconset>
            </property>
            <property name="iconSize">
             <size>
@@ -1678,8 +1678,8 @@
            </property>
           </widget>
          </item>
-         <item row="1" column="1">
-          <widget class="QLabel" name="label_8">
+         <item row="0" column="1">
+          <widget class="QLabel" name="SaxModeLabel">
            <property name="maximumSize">
             <size>
              <width>80</width>
@@ -1687,11 +1687,11 @@
             </size>
            </property>
            <property name="text">
-            <string>Use Mic 1</string>
+            <string>Sax Mode</string>
            </property>
           </widget>
          </item>
-         <item row="0" column="0">
+         <item row="1" column="0">
           <widget class="QPushButton" name="pushButton">
            <property name="minimumSize">
             <size>
@@ -1720,8 +1720,21 @@
            </property>
           </widget>
          </item>
-         <item row="3" column="0">
-          <widget class="QPushButton" name="pushButton_3">
+         <item row="1" column="1">
+          <widget class="QLabel" name="label_7">
+           <property name="maximumSize">
+            <size>
+             <width>80</width>
+             <height>25</height>
+            </size>
+           </property>
+           <property name="text">
+            <string>Listen</string>
+           </property>
+          </widget>
+         </item>
+         <item row="2" column="0">
+          <widget class="QPushButton" name="pushButton_2">
            <property name="minimumSize">
             <size>
              <width>50</width>
@@ -1739,7 +1752,7 @@
            </property>
            <property name="icon">
             <iconset>
-             <normaloff>icons/piano-keyboard-icon.png</normaloff>icons/piano-keyboard-icon.png</iconset>
+             <normaloff>icons/microphone-icon.png</normaloff>icons/microphone-icon.png</iconset>
            </property>
            <property name="iconSize">
             <size>
@@ -1749,21 +1762,8 @@
            </property>
           </widget>
          </item>
-         <item row="0" column="1">
-          <widget class="QLabel" name="label_7">
-           <property name="maximumSize">
-            <size>
-             <width>80</width>
-             <height>25</height>
-            </size>
-           </property>
-           <property name="text">
-            <string>Listen</string>
-           </property>
-          </widget>
-         </item>
          <item row="2" column="1">
-          <widget class="QLabel" name="label_9">
+          <widget class="QLabel" name="label_8">
            <property name="maximumSize">
             <size>
              <width>80</width>
@@ -1771,24 +1771,11 @@
             </size>
            </property>
            <property name="text">
-            <string>Use Line</string>
+            <string>Use Mic 1</string>
            </property>
           </widget>
          </item>
-         <item row="3" column="1">
-          <widget class="QLabel" name="label_10">
-           <property name="maximumSize">
-            <size>
-             <width>80</width>
-             <height>25</height>
-            </size>
-           </property>
-           <property name="text">
-            <string>Eff Loop</string>
-           </property>
-          </widget>
-         </item>
-         <item row="2" column="0">
+         <item row="3" column="0">
           <widget class="QPushButton" name="pushButton_5">
            <property name="minimumSize">
             <size>
@@ -1817,7 +1804,62 @@
            </property>
           </widget>
          </item>
+         <item row="3" column="1">
+          <widget class="QLabel" name="label_9">
+           <property name="maximumSize">
+            <size>
+             <width>80</width>
+             <height>25</height>
+            </size>
+           </property>
+           <property name="text">
+            <string>Use Line</string>
+           </property>
+          </widget>
+         </item>
          <item row="4" column="0">
+          <widget class="QPushButton" name="pushButton_3">
+           <property name="minimumSize">
+            <size>
+             <width>50</width>
+             <height>50</height>
+            </size>
+           </property>
+           <property name="maximumSize">
+            <size>
+             <width>50</width>
+             <height>50</height>
+            </size>
+           </property>
+           <property name="text">
+            <string/>
+           </property>
+           <property name="icon">
+            <iconset>
+             <normaloff>icons/piano-keyboard-icon.png</normaloff>icons/piano-keyboard-icon.png</iconset>
+           </property>
+           <property name="iconSize">
+            <size>
+             <width>40</width>
+             <height>40</height>
+            </size>
+           </property>
+          </widget>
+         </item>
+         <item row="4" column="1">
+          <widget class="QLabel" name="label_10">
+           <property name="maximumSize">
+            <size>
+             <width>80</width>
+             <height>25</height>
+            </size>
+           </property>
+           <property name="text">
+            <string>Eff Loop</string>
+           </property>
+          </widget>
+         </item>
+         <item row="5" column="0">
           <widget class="QPushButton" name="pushButton_4">
            <property name="minimumSize">
             <size>
@@ -1846,7 +1888,7 @@
            </property>
           </widget>
          </item>
-         <item row="4" column="1">
+         <item row="5" column="1">
           <widget class="QLabel" name="label_11">
            <property name="maximumSize">
             <size>
