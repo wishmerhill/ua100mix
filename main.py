@@ -1694,6 +1694,26 @@ class MainWindow(QtGui.QMainWindow):
         self.Mic1PanLcd2.hide()
         self.uiInputModeButton.clicked.connect(self.setInputMode)
 
+        # Setting up the"Easy Settings" Box.
+        #
+        # by now, just my "Sax Mode" button will work.
+
+        # Setting up "Sax Mode"
+        #
+        # Actually, as I use Audacity to listen and record my "performances" on the Saxophone, this button will
+        # just switch MAIN output source to "Wave1" (the audacity output) and the Wave (REC) output to "Mic1/..."
+
+        self.SaxModeButton.clicked.connect(self.saxMode)
+
+    def saxMode(self):
+        '''
+        This should just switch MAIN output source to "Wave1" (the audacity output) and the Wave (REC) output to "Mic1/..."
+        '''
+        self.OutputMasterSourceSelect.setCurrentIndex(0x02)
+        self.OutputWaveRecSourceSelect.setCurrentIndex(0x00)
+        pass
+
+
     def setInputMode(self):
         '''
         
