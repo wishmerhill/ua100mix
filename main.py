@@ -62,7 +62,7 @@ import numpy as np
 
 
 try:
-    import pyportmidi as pm
+    import pypm as pm
 except ImportError:
     print('*** Warning *** pyPortmidi not found - Switch to testing mode (REAL_UA_MODE = 0) ***')
     REAL_UA_MODE = 0
@@ -1753,7 +1753,7 @@ class MainWindow(QtGui.QMainWindow):
             self.Mic1PanLcd2.hide()
             self.Mic2.show()
         if (REAL_UA_MODE):
-            pmout.write_short(CC_MIC1_CH, CC_MICLINESELECTOR_PAR, self.sender().property('state').toPyObject())
+            pmout.WriteShort(CC_MIC1_CH, CC_MICLINESELECTOR_PAR, self.sender().property('state').toPyObject())
 
         if (DEBUG_MODE):
             print(CC_MIC1_CH, ' ', CC_MICLINESELECTOR_PAR, ' ', self.sender().property('state').toPyObject() )
@@ -1835,11 +1835,11 @@ class MainWindow(QtGui.QMainWindow):
 
     def valueChange(self, a, b, val):
         '''
-        custom slot to connect to the changes in the interface with write_short to send the control change messages
+        custom slot to connect to the changes in the interface with WriteShort to send the control change messages
         '''
 
         if (REAL_UA_MODE):
-            pmout.write_short(a, b, val)
+            pmout.WriteShort(a, b, val)
 
             #if (DEBUG_MODE == 1):
             #    print(hex(a),b,val)
@@ -1858,11 +1858,11 @@ class MainWindow(QtGui.QMainWindow):
                 print('unchecking and desoloing ')
                 print('soloing ', str(self.sender().parent().objectName()))
             if (REAL_UA_MODE):
-                pmout.write_short(self.sender().parent().property('channel').toPyObject(), CC_SOLO_PAR, 1)
+                pmout.WriteShort(self.sender().parent().property('channel').toPyObject(), CC_SOLO_PAR, 1)
             for soloer in soloers:
                 soloingObj = self.findChild(QtGui.QGroupBox, soloer)
                 if (REAL_UA_MODE):
-                    pmout.write_short(soloingObj.property('channel').toPyObject(), CC_SOLO_PAR, 0)
+                    pmout.WriteShort(soloingObj.property('channel').toPyObject(), CC_SOLO_PAR, 0)
                 soloingButtonStr = soloer + 'Solo'
                 nomuteButtonStr = soloer + 'Mute'
                 #print soloingButtonStr
@@ -1881,10 +1881,10 @@ class MainWindow(QtGui.QMainWindow):
                 remuteButton = soloingObj.findChild(QtGui.QPushButton, remuteButtonStr)
                 remuteButton.show()
             if (REAL_UA_MODE):
-                pmout.write_short(self.sender().parent().property('channel').toPyObject(), CC_SOLO_PAR, 0)
+                pmout.WriteShort(self.sender().parent().property('channel').toPyObject(), CC_SOLO_PAR, 0)
             else:
                 print(
-                    'pmout.write_short(', self.sender().parent().property('channel').toPyObject(), ',', CC_SOLO_PAR,
+                    'pmout.WriteShort(', self.sender().parent().property('channel').toPyObject(), ',', CC_SOLO_PAR,
                     '0)')
 
     def resetMixer(self):
@@ -2243,7 +2243,8 @@ def actualMidiDevices():
     '''
     # Count the MIDI devices connected
     if (REAL_UA_MODE):
-        numDevs = pm.get_count()
+    #   numDevs = pm.get_count()
+        numDevs = pm.CountDevices()
     else:
         numDevs = 5
         # Initialize the device dictionary
@@ -2253,7 +2254,8 @@ def actualMidiDevices():
     for dev in range(0, numDevs):
         # the portmidi get_device_info() returns a tuple
         if (REAL_UA_MODE):
-            midiDevs[dev] = pm.get_device_info(dev)
+        #    midiDevs[dev] = pm.get_device_info(dev)
+            midiDevs[dev] = pm.GetDeviceInfo(dev)
         else:
             # fake entries...
             midiDevs[dev] = ('pippo', 'pluto', 1, 1, 1)
@@ -2280,7 +2282,7 @@ def sysexRead(buffer_size):
     global pmin
 
     if (REAL_UA_MODE):
-        answer = pmin.read(buffer_size)
+        answer = pmin.Read(buffer_size)
     else:
         answer = CC_0127_DEFAULT
 
@@ -2305,7 +2307,7 @@ def send_RQ1(data):
               + checksum_result \
               + EOX
     if (REAL_UA_MODE):
-        pmout.write_sys_ex(pm.time(), message)
+        pmout.WriteSysEx(pm.Time(), message)
 
     if (DEBUG_MODE):
         print("Message: ", message)
@@ -2324,7 +2326,7 @@ def send_DT1(data):
         #print(message)
         print(np.array(message))
     if (REAL_UA_MODE):
-        pmout.write_sys_ex(pm.time(), message)
+        pmout.WriteSysEx(pm.Time(), message)
 
 
 def checksum(toChecksum):
@@ -2346,8 +2348,8 @@ if ( __name__ == '__main__' ):
     # initialize the portmidi interface
 
     if (REAL_UA_MODE):
-        pm.init()
-
+    #    pm.init()
+         pm.Initialize()
 
     # get the list of the Midi Devices according to portmidy
     midiDevs = actualMidiDevices()
@@ -2388,9 +2390,9 @@ if ( __name__ == '__main__' ):
 
     if (REAL_UA_MODE):
         # Open device for output
-        pmout = pm.midi.Output(UA100CONTROL)
+        pmout = pm.Output(UA100CONTROL)
         # Open "the next" device for input
-        pmin = pm.midi.Input(UA100CONTROL + 1)
+        pmin = pm.Input(UA100CONTROL + 1)
 
     window = MainWindow()
     window.show()
