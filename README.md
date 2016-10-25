@@ -14,6 +14,10 @@ I pretty like Qt (much better than gtk, even if it was my first love back in the
 If anyone is interested in helping me, *YOU ARE WELCOME*! I'd appreciate even corrections or comments on my 
 awful coding!
 
+A word about the "SaxMode" icon
+===============================
+I use this mixer mainly to record my excercizes with the saxophone, so I need a quick way to set the input and output levels as well as the recording and playback sources.
+
 ![Just a sample screenshot...](/screenshots/ua-100_mix.png?raw=true "UA-100 Mixer at work")
 
 Cheers,
