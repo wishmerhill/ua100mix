@@ -1,8 +1,6 @@
-ua100mix
-========
+# ua100mix
+### A try for a pyqt4 mixer for Roland/Edirol UA-100
 
-A try for a pyqt4 mixer for Roland/Edirol UA-100
-================================================
 
 Being neither a good programmer, nor a good musician (actually, not even an average one on either of those tasks), 
 I anyway decided to try writing a pyQt4 mixer to control the old Roland UA-100.
@@ -14,9 +12,8 @@ I pretty like Qt (much better than gtk, even if it was my first love back in the
 If anyone is interested in helping me, *YOU ARE WELCOME*! I'd appreciate even corrections or comments on my 
 awful coding!
 
-A word about the "SaxMode" icon
-===============================
-I use this mixer mainly to record my excercizes with the saxophone, so I need a quick way to set the input and output levels as well as the recording and playback sources.
+#### A word about the "SaxMode" icon
+I use this mixer mainly to record my exercises with the saxophone, so I need a quick way to set the input and output levels as well as the recording and playback sources.
 
 ![Just a sample screenshot...](/screenshots/ua-100_mix.png?raw=true "UA-100 Mixer at work")
 
