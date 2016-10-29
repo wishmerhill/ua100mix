@@ -2302,7 +2302,7 @@ def rightMidiDevice(midiDevs):
     for i in range(0, len(midiDevs)):
         if (midiDevs[i][1] == 'UA-100 Control') & (midiDevs[i][3] == 1):
             if (DEBUG_MODE == 1):
-                print('Trovato! Il controller e il device ', i, ', ovvero ', midiDevs[i][1])
+                print('Found something! The controller is device ', i, ', aka ', midiDevs[i][1])
             return int(i)
 
 
