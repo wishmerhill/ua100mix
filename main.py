@@ -2388,8 +2388,12 @@ if ( __name__ == '__main__' ):
          #pm.init()
          try:
              pm.Initialize()
+             if (DEBUG_MODE):
+                print('pm.Initialize works')
          except AttributeError:
              pm.init()
+             if (DEBUG_MODE):
+                print('must use init()')
 
 
     # get the list of the Midi Devices according to portmidy
@@ -2431,9 +2435,39 @@ if ( __name__ == '__main__' ):
 
     if (REAL_UA_MODE):
         # Open device for output
-        pmout = pm.Output(UA100CONTROL)
+        
+        if (DEBUG_MODE):
+            print('Trying the Output...')
+        
+        try:
+            pmout = pm.midi.Output(UA100CONTROL)
+            if (DEBUG_MODE):
+                print('pm.midi.Output works')
+        except:
+            if (DEBUG_MODE):
+                print('pm.Output is our way...')
+            pmout = pm.Output(UA100CONTROL)
+            
+        
+        if (DEBUG_MODE):
+            print('...Done! Just opened ',UA100CONTROL, ' for output')
+        
         # Open "the next" device for input
-        pmin = pm.Input(UA100CONTROL + 1)
+        
+        if (DEBUG_MODE):
+            print('Trying the Input...')
+        
+        try:
+            pmin = pm.midi.Input(UA100CONTROL + 1)
+            if (DEBUG_MODE):
+                print('pm.midi.Input works')
+        except:
+            if (DEBUG_MODE):
+                print('pm.Input is our way...')
+            pmout = pm.Input(UA100CONTROL + 1)
+        
+        if (DEBUG_MODE):
+            print('...Done! Just opened ',UA100CONTROL + 1, ' for input')
 
     window = MainWindow()
     window.show()
