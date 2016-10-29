@@ -64,15 +64,19 @@ import numpy as np
 try:
     import pyportmidi as pm
 except ImportError:
-    print('*** Warning *** pypm not found - still trying with pyPortMidi  ***')
+    if (DEBUG_MODE):
+        print('*** Warning *** pypm not found - still trying with pyPortMidi  ***')
     try:
         import pypm as pm
+        
     except ImportError:
-        print('*** Warning *** pyPortmidi not found - Switch to testing mode (REAL_UA_MODE = 0) ***')
+        if (DEBUG_MODE):
+            print('*** Warning *** neither pypm nor pyPortmidi found - Switching to testing mode (REAL_UA_MODE = 0) ***')
         REAL_UA_MODE = 0
-    print('Ok - We have a portmidi implementation. It is known as pm')
 if not (REAL_UA_MODE) and (DEBUG_MODE):
     print('No portmidi implementation available! Running just in test mode')
+elif (REAL_UA_MODE) and (DEBUG_MODE):
+    print('Ok - We have a portmidi implementation. It is known as pm')
 import PyQt4.uic
 from PyQt4 import QtGui
 #from PyQt4 import QtCore
@@ -88,7 +92,7 @@ if (DEBUG_MODE):
 # and copying some useful documentation excerts
 
 if (DEBUG_MODE):
-    print('Reading some constants...')
+    print('Reading some MANY constants...')
 
 # just for convenience in code writing and editing
 # in DEFINING CONSTANTS
@@ -1413,7 +1417,7 @@ if (DEBUG_MODE):
 
 class MidiDevsDialog(QtGui.QDialog):
     '''
-    First of all, we ask for the right device to use. In fact, we know which one... and thus, we guess.
+    First of all, we ask for the right device to use. In fact, we know which one... and thus, we can easily guess.
     '''
 
     def __init__(self, parent=None):
