@@ -2468,7 +2468,7 @@ if ( __name__ == '__main__' ):
         except:
             if (DEBUG_MODE):
                 print('pm.Input is our way...')
-            pmout = pm.Input(UA100CONTROL + 1)
+            pmin = pm.Input(UA100CONTROL + 1)
         
         if (DEBUG_MODE):
             print('...Done! Just opened ',UA100CONTROL + 1, ' for input')
