@@ -61,22 +61,46 @@ import functools
 import numpy as np
 
 
+#
+# **************************************************************************************
+# **************************************************************************************
+# **************************************************************************************
+# **************************************************************************************
+# NEW IN BRANCH: trying to implement something better than pyPortMidi,
+#                which revealed itself to be broken and not maintained anymore.
+#
+#                From now on, we will rely on MIDO (https://github.com/olemb/mido)
+#
+#                MIDO itself CAN work with portmidi (which is default), but we move
+#                to rtmidi, which looks better.
+#
+#                Time to rewrite A LOT of the code. I hope to manage it.
+#                
+#
+# try:
+#     import pyportmidi as pm
+# except ImportError:
+#     if (DEBUG_MODE):
+#         print('*** Warning *** pypm not found - still trying with pyPortMidi  ***')
+#     try:
+#         import pypm as pm
+#         
+#     except ImportError:
+#         if (DEBUG_MODE):
+#             print('*** Warning *** neither pypm nor pyPortmidi found - Switching to testing mode (REAL_UA_MODE = 0) ***')
+#         REAL_UA_MODE = 0
+# if not (REAL_UA_MODE) and (DEBUG_MODE):
+#     print('No portmidi implementation available! Running just in test mode')
+# elif (REAL_UA_MODE) and (DEBUG_MODE):
+#     print('Ok - We have a portmidi implementation. It is known as pm')
+
 try:
-    import pyportmidi as pm
+    import mido
+    import rtmidi
 except ImportError:
     if (DEBUG_MODE):
-        print('*** Warning *** pypm not found - still trying with pyPortMidi  ***')
-    try:
-        import pypm as pm
-        
-    except ImportError:
-        if (DEBUG_MODE):
-            print('*** Warning *** neither pypm nor pyPortmidi found - Switching to testing mode (REAL_UA_MODE = 0) ***')
+        print('*** Warning *** mido and/or rtmidi not found - Switching to testing mode (REAL_UA_MODE = 0) ***')
         REAL_UA_MODE = 0
-if not (REAL_UA_MODE) and (DEBUG_MODE):
-    print('No portmidi implementation available! Running just in test mode')
-elif (REAL_UA_MODE) and (DEBUG_MODE):
-    print('Ok - We have a portmidi implementation. It is known as pm')
 import PyQt4.uic
 from PyQt4 import QtGui
 #from PyQt4 import QtCore
@@ -1426,17 +1450,18 @@ class MidiDevsDialog(QtGui.QDialog):
         self.ui = PyQt4.uic.loadUi('ui/device_sel.ui', self)
 
         if (DEBUG_MODE):
-            print('DEFAULT_UA100CONTROL= ', DEFAULT_UA100CONTROL)
+            #print('DEFAULT_UA100CONTROL= ', DEFAULT_UA100CONTROL)
             print('midiDevs=', midiDevs)
         for i in range(0, len(midiDevs)):
             self.outputDevicesList.addItem(str(midiDevs[i]), i)
-
+        
+        
         # update the device information when selecting the devices in the combobox
         self.outputDevicesList.currentIndexChanged.connect(self.updateDeviceLabels)
 
-        # call the setMidiDevice custom slot to tell everyone whitch one is the selected device (output)
+        # call the setMidiDevice custom slot to tell everyone which one is the selected device (output)
         self.outputDevicesList.currentIndexChanged.connect(self.setMidiDevice)
-
+        self.outputDevicesList.setCurrentIndex(-1)
         # send true if OK is clicked
         self.dialogOK.clicked.connect(self.accept)
 
@@ -1446,28 +1471,30 @@ class MidiDevsDialog(QtGui.QDialog):
         # set the current index to the guessed right outpud midi device for the UA100 controller
         if (REAL_UA_MODE):
             self.outputDevicesList.setCurrentIndex(DEFAULT_UA100CONTROL)
+            pass
 
     def updateDeviceLabels(self, index):
         '''
         I should be an easy task to update label according to a combo box...
         '''
-        self.midiApiText.setText(str(midiDevs[index][0]))
-        self.deviceNameText.setText(str(midiDevs[index][1]))
-        if (midiDevs[index][2] == 1 and midiDevs[index][3] == 0):
-            self.deviceIOText.setText('INPUT')
-        elif (midiDevs[index][2] == 0 and midiDevs[index][3] == 1):
-            self.deviceIOText.setText('OUTPUT')
-        else:
-            self.deviceIOText.setText('N/A')
-
+        # self.midiApiText.setText(str(midiDevs[index][0]))
+        # self.deviceNameText.setText(str(midiDevs[index][1]))
+        # if (midiDevs[index][2] == 1 and midiDevs[index][3] == 0):
+        #     self.deviceIOText.setText('INPUT')
+        # elif (midiDevs[index][2] == 0 and midiDevs[index][3] == 1):
+        #     self.deviceIOText.setText('OUTPUT')
+        # else:
+        #     self.deviceIOText.setText('N/A')
+        # 
         if (index == DEFAULT_UA100CONTROL):
-            self.reccomendedLabel.setText('RECCOMENDED!\r\nYou don\'t really want to change it!')
-            self.reccomendedLabel.setStyleSheet('color: red; font-style: bold')
+             self.reccomendedLabel.setText('RECCOMENDED!\r\nYou don\'t really want to change it!')
+             self.reccomendedLabel.setStyleSheet('color: red; font-style: bold')
         else:
-            self.reccomendedLabel.setText('')
-
-        if (DEBUG_MODE == 1):
-            print(midiDevs[index][2], midiDevs[index][3])
+             self.reccomendedLabel.setText('')
+        # 
+        # if (DEBUG_MODE == 1):
+        #     print(midiDevs[index][2], midiDevs[index][3])
+        
 
     def setMidiDevice(self, index):
         '''
@@ -1478,7 +1505,10 @@ class MidiDevsDialog(QtGui.QDialog):
         UA100CONTROL = index
         if (DEBUG_MODE == 1):
             print('Index = ', index)
-            print('UA100CONTROL = ', UA100CONTROL)
+            if not (index == -1):
+                print('UA100CONTROL = ', midiDevs[UA100CONTROL])
+            else:
+                print('UA100CONTROL is not yet set!')
 
 
 class MainWindow(QtGui.QMainWindow):
@@ -1763,12 +1793,15 @@ class MainWindow(QtGui.QMainWindow):
             self.Mic1Pan2.hide()
             self.Mic1PanLcd2.hide()
             self.Mic2.show()
+        
         if (REAL_UA_MODE):
-            try:
-                pmout.WriteShort(CC_MIC1_CH, CC_MICLINESELECTOR_PAR, self.sender().property('state').toPyObject())
-            except AttributeError:
-                pmout.write_short(CC_MIC1_CH, CC_MICLINESELECTOR_PAR, self.sender().property('state').toPyObject())
-
+            p= mido.Parser()
+            p.feed([CC_MIC1_CH, CC_MICLINESELECTOR_PAR, self.sender().property('state').toPyObject()])
+            shortMsg = p.get_message()
+            if (DEBUG_MODE):
+                print('Message to be sent ', shortMsg)
+            pmout.send(shortMsg)
+            
         if (DEBUG_MODE):
             print(CC_MIC1_CH, ' ', CC_MICLINESELECTOR_PAR, ' ', self.sender().property('state').toPyObject() )
 
@@ -1851,15 +1884,18 @@ class MainWindow(QtGui.QMainWindow):
         '''
         custom slot to connect to the changes in the interface with WriteShort to send the control change messages
         '''
-
+        if (DEBUG_MODE == 1):
+                print(a,b,val)
+        
         if (REAL_UA_MODE):
-            try:
-                pmout.WriteShort(a, b, val)
-            except AttributeError:
-                pmout.write_short(a, b, val)
+            p= mido.Parser()
+            p.feed([a, b, val])
+            shortMsg = p.get_message()
+            if (DEBUG_MODE):
+                print('Message to be sent ', shortMsg)
+            pmout.send(shortMsg)
 
-            #if (DEBUG_MODE == 1):
-            #    print(hex(a),b,val)
+            
 
     def uniqueSolos(self, checked):
         '''
@@ -1874,18 +1910,26 @@ class MainWindow(QtGui.QMainWindow):
                 print(soloers)
                 print('unchecking and desoloing ')
                 print('soloing ', str(self.sender().parent().objectName()))
+            
             if (REAL_UA_MODE):
-                try:
-                    pmout.WriteShort(self.sender().parent().property('channel').toPyObject(), CC_SOLO_PAR, 1)
-                except AttibuteError:
-                    pmout.write_short(self.sender().parent().property('channel').toPyObject(), CC_SOLO_PAR, 1)
+                p= mido.Parser()
+                p.feed([self.sender().parent().property('channel').toPyObject(), CC_SOLO_PAR, 1])
+                shortMsg = p.get_message()
+                if (DEBUG_MODE):
+                    print('Message to be sent ', shortMsg)
+                pmout.send(shortMsg)
+            
             for soloer in soloers:
                 soloingObj = self.findChild(QtGui.QGroupBox, soloer)
+                
                 if (REAL_UA_MODE):
-                    try:
-                        pmout.WriteShort(soloingObj.property('channel').toPyObject(), CC_SOLO_PAR, 0)
-                    except AttibuteError:
-                        pmout.write_short(soloingObj.property('channel').toPyObject(), CC_SOLO_PAR, 0)
+                    p= mido.Parser()
+                    p.feed([soloingObj.property('channel').toPyObject(), CC_SOLO_PAR, 0])
+                    shortMsg = p.get_message()
+                    if (DEBUG_MODE):
+                        print('Message to be sent ', shortMsg)
+                    pmout.send(shortMsg)
+                
                 soloingButtonStr = soloer + 'Solo'
                 nomuteButtonStr = soloer + 'Mute'
                 #print soloingButtonStr
@@ -1903,15 +1947,15 @@ class MainWindow(QtGui.QMainWindow):
                 remuteButtonStr = soloer + 'Mute'
                 remuteButton = soloingObj.findChild(QtGui.QPushButton, remuteButtonStr)
                 remuteButton.show()
+            
+            
             if (REAL_UA_MODE):
-                try:
-                    pmout.WriteShort(self.sender().parent().property('channel').toPyObject(), CC_SOLO_PAR, 0)
-                except AttibuteError:
-                    pmout.write_short(self.sender().parent().property('channel').toPyObject(), CC_SOLO_PAR, 0)
-            else:
-                print(
-                    'pmout.WriteShort(', self.sender().parent().property('channel').toPyObject(), ',', CC_SOLO_PAR,
-                    '0)')
+                p= mido.Parser()
+                p.feed([self.sender().parent().property('channel').toPyObject(), CC_SOLO_PAR, 0])
+                shortMsg = p.get_message()
+                if (DEBUG_MODE):
+                    print('Message to be sent ', shortMsg)
+                pmout.send(shortMsg)
 
     def resetMixer(self):
         '''
@@ -1944,38 +1988,35 @@ class MainWindow(QtGui.QMainWindow):
 
         send_RQ1(MIXER_OUTPUT_CONTROL + MIXER_OUTPUT_MASTERLEVEL + MIXER_OUTPUT_MASTERLEVEL_SIZE)
         time.sleep(SLEEP_TIME)
-        answerList = sysexRead(4)
-        masterLevel = answerList[2][0][2]
+        
+        masterLevel = sysexRead()
+        if (DEBUG_MODE):
+            print('masterlevel=', masterLevel)
         self.MasterLineFader.setProperty("value", masterLevel)
 
         send_RQ1(MIXER_OUTPUT_CONTROL + MIXER_OUTPUT_WAVEREC + MIXER_OUTPUT_WAVEREC_SIZE)
         time.sleep(SLEEP_TIME)
-        answerList = sysexRead(4)
-        waverecLevel = answerList[2][0][2]
+        waverecLevel = sysexRead()
         self.WaveRecFader.setProperty("value", waverecLevel)
 
         send_RQ1(MIC1_FADER + MIC1_FADER_SIZE)
         time.sleep(SLEEP_TIME)
-        answerList = sysexRead(4)
-        mic1Level = answerList[2][0][2]
+        mic1Level = sysexRead()
         self.Mic1Fader.setProperty("value", mic1Level)
 
         send_RQ1(MIC2_FADER + MIC2_FADER_SIZE)
         time.sleep(SLEEP_TIME)
-        answerList = sysexRead(4)
-        mic2Level = answerList[2][0][2]
+        mic2Level = sysexRead()
         self.Mic2Fader.setProperty("value", mic2Level)
 
         send_RQ1(WAVE1_FADER + WAVE1_FADER_SIZE)
         time.sleep(SLEEP_TIME)
-        answerList = sysexRead(4)
-        wave1Level = answerList[2][0][2]
+        wave1Level = sysexRead()
         self.Wave1Fader.setProperty("value", wave1Level)
 
         send_RQ1(WAVE2_FADER + WAVE2_FADER_SIZE)
         time.sleep(SLEEP_TIME)
-        answerList = sysexRead(4)
-        wave2Level = answerList[2][0][2]
+        wave2Level = sysexRead()
         self.Wave2Fader.setProperty("value", wave2Level)
 
 
@@ -2268,29 +2309,43 @@ def actualMidiDevices():
     
     '''
     # Count the MIDI devices connected
+    # if (REAL_UA_MODE):
+    # #   numDevs = pm.get_count()
+    #     try:
+    #         numDevs = pm.CountDevices()
+    #     except AttributeError:
+    #         numDevs = pm.get_count()
+    # else:
+    #     numDevs = 5
+    #     # Initialize the device dictionary
+    # # midiDevs = { 0: (tuple), 1: (tuple), ... }
+    # #
     if (REAL_UA_MODE):
-    #   numDevs = pm.get_count()
-        try:
-            numDevs = pm.CountDevices()
-        except AttributeError:
-            numDevs = pm.get_count()
+        IODevs=mido.get_ioport_names()
+        numIODevs = len(IODevs)
+        
+        if (numIODevs == 0):
+            if (DEBUG_MODE == 1):
+                print('***************  No midi device found - and we should be in REAL UA mode! Exiting. Bye!')
+            sys.exit()
+        
+        if (DEBUG_MODE):
+            print('We have ', numIODevs, ' output devices:', IODevs)
     else:
-        numDevs = 5
-        # Initialize the device dictionary
+         numIODevs = 1
+         IODevs = {u'Dummy midi device 0:0'}
+    
+
+    # Initialize the device dictionary
     # midiDevs = { 0: (tuple), 1: (tuple), ... }
-    #
     midiDevs = {}
-    for dev in range(0, numDevs):
-        # the portmidi get_device_info() returns a tuple
-        if (REAL_UA_MODE):
-        #    midiDevs[dev] = pm.get_device_info(dev)
-            try:
-                midiDevs[dev] = pm.GetDeviceInfo(dev)
-            except AttributeError:
-                midiDevs[dev] = pm.get_device_info(dev)
-        else:
-            # fake entries...
-            midiDevs[dev] = ('pippo', 'pluto', 1, 1, 1)
+    for dev in range(0, numIODevs):        
+        midiDevs[dev] = IODevs[dev]
+            # try:
+            #     midiDevs[dev] = pm.GetDeviceInfo(dev)
+            # except AttributeError:
+            #     midiDevs[dev] = pm.get_device_info(dev)
+            
     return midiDevs
 
 
@@ -2304,24 +2359,29 @@ def rightMidiDevice(midiDevs):
     It scans the midiDevs (dictionary!) looking for something like 'UA-100 Control' with the output flag set to 1.
     '''
     for i in range(0, len(midiDevs)):
-        if (midiDevs[i][1] == 'UA-100 Control') & (midiDevs[i][3] == 1):
+        if ('UA-100 Control' in midiDevs[i]):
             if (DEBUG_MODE == 1):
                 print('Found something! The controller is device ', i, ', aka ', midiDevs[i][1])
             return int(i)
 
 
-def sysexRead(buffer_size):
+def sysexRead():
     global pmin
 
-    if (REAL_UA_MODE):
-        try:
-            answer = pmin.Read(buffer_size)
-        except AttributeError:
-            answer = pmin.read(buffer_size)
-    else:
-        answer = CC_0127_DEFAULT
-
-    return answer
+    # if (REAL_UA_MODE):
+    #     try:
+    #         answer = pmin.Read(buffer_size)
+    #     except AttributeError:
+    #         answer = pmin.read(buffer_size)
+    # else:
+    #     answer = CC_0127_DEFAULT
+    answerMsg = pmin.receive()
+    answerBytes = answerMsg.bytes()
+    value = answerBytes[11]
+    print('risposta:', answerMsg, ', aka ', answerBytes, '. Value is: ', value)
+    # need to parse answer again... 
+    
+    return value
 
 
 def send_RQ1(data):
@@ -2341,14 +2401,18 @@ def send_RQ1(data):
               + data \
               + checksum_result \
               + EOX
-    if (REAL_UA_MODE):
-        try:
-            pmout.WriteSysEx(pm.Time(), message)
-        except AttributeError:
-            pmout.write_sys_ex(pm.time(), message)
-
     if (DEBUG_MODE):
-        print("Message: ", message)
+        print("Message RQ1: ", message)
+    
+    if (REAL_UA_MODE):
+        p= mido.Parser()
+        p.feed(message)
+        sysEx_msg = p.get_message()
+        if (DEBUG_MODE):
+            print('Message to be sent: ', sysEx_msg)
+        pmout.send(sysEx_msg)
+    
+    
 
 
 def send_DT1(data):
@@ -2363,12 +2427,14 @@ def send_DT1(data):
     if (DEBUG_MODE):
         #print(message)
         print(np.array(message))
+    
     if (REAL_UA_MODE):
-        try:
-            pmout.WriteSysEx(pm.Time(), message)
-        except AttributeError:
-            pmout.write_sys_ex(pm.time(), message)
-
+        p= mido.Parser()
+        p.feed(message)
+        sysEx_msg = p.get_message()
+        if (DEBUG_MODE):
+            print('Message to be sent: ', sysEx_msg)
+        pmout.sysEx_send(msg)
 
 def checksum(toChecksum):
     '''
@@ -2388,18 +2454,24 @@ if ( __name__ == '__main__' ):
 
     # initialize the portmidi interface
 
-    if (REAL_UA_MODE):
-         #pm.init()
-         try:
-             pm.Initialize()
-             if (DEBUG_MODE):
-                print('pm.Initialize works')
-         except AttributeError:
-             pm.init()
-             if (DEBUG_MODE):
-                print('must use init()')
+    # if (REAL_UA_MODE):
+    #      #pm.init()
+    #      try:
+    #          pm.Initialize()
+    #          if (DEBUG_MODE):
+    #             print('pm.Initialize works')
+    #      except AttributeError:
+    #          pm.init()
+    #          if (DEBUG_MODE):
+    #             print('must use init()')
 
-
+    # INITIALIZATION NOT NEEDED ANYMORE WITH MIDO/RTMID - KEPT FOR THE RECORDS
+    
+    # setting the backend to rtmidi and alsa - Actually it's not wise to do it so, but it's ok for now.
+    mido.set_backend('mido.backends.rtmidi/LINUX_ALSA')
+    # *************************************************
+    # TODO: change it to be more general
+    
     # get the list of the Midi Devices according to portmidy
     midiDevs = actualMidiDevices()
 
@@ -2411,9 +2483,9 @@ if ( __name__ == '__main__' ):
         DEFAULT_UA100CONTROL = rightMidiDevice(midiDevs)
     else:
         DEFAULT_UA100CONTROL = 1
-
+    
     if (DEBUG_MODE == 1):
-        print('DEFAULT_UA100CONTROL = ', DEFAULT_UA100CONTROL)
+        print('DEFAULT_UA100CONTROL = ', midiDevs[DEFAULT_UA100CONTROL])
 
     # *******************************************************************************************************************
 
@@ -2431,11 +2503,11 @@ if ( __name__ == '__main__' ):
         sys.exit()
 
     if (DEBUG_MODE) and (REAL_UA_MODE):
-        print('DEFAULT_UA100CONTROL = ', DEFAULT_UA100CONTROL)
+        print('UA100CONTROL = ', midiDevs[UA100CONTROL])
 
     if (DEBUG_MODE):
         print(
-            'Opening device: ', DEFAULT_UA100CONTROL, ' for ouput and device: ', DEFAULT_UA100CONTROL + 1, 'for input')
+            'Opening device: ', midiDevs[UA100CONTROL], ' for input/ouput')
 
     if (REAL_UA_MODE):
         # Open device for output
@@ -2443,35 +2515,22 @@ if ( __name__ == '__main__' ):
         if (DEBUG_MODE):
             print('Trying the Output...')
         
-        try:
-            pmout = pm.midi.Output(UA100CONTROL)
-            if (DEBUG_MODE):
-                print('pm.midi.Output works')
-        except:
-            if (DEBUG_MODE):
-                print('pm.Output is our way...')
-            pmout = pm.Output(UA100CONTROL)
+        
+        pmout = mido.open_output(midiDevs[UA100CONTROL])
             
         
         if (DEBUG_MODE):
-            print('...Done! Just opened ',UA100CONTROL, ' for output')
+            print('...Done! Just opened ',midiDevs[UA100CONTROL], ' for output')
         
         # Open "the next" device for input
         
         if (DEBUG_MODE):
             print('Trying the Input...')
         
-        try:
-            pmin = pm.midi.Input(UA100CONTROL + 1)
-            if (DEBUG_MODE):
-                print('pm.midi.Input works')
-        except:
-            if (DEBUG_MODE):
-                print('pm.Input is our way...')
-            pmin = pm.Input(UA100CONTROL + 1)
+        pmin = mido.open_input(midiDevs[UA100CONTROL])
         
         if (DEBUG_MODE):
-            print('...Done! Just opened ',UA100CONTROL + 1, ' for input')
+            print('...Done! Just opened ',midiDevs[UA100CONTROL], ' for input')
 
     window = MainWindow()
     window.show()
