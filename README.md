@@ -12,7 +12,39 @@ I pretty like Qt (much better than gtk, even if it was my first love back in the
 If anyone is interested in helping me, *YOU ARE WELCOME*! I'd appreciate even corrections or comments on my 
 awful coding!
 
-#### A word about the "SaxMode" icon
+## Install and use
+
+### Prerequisites
+
+In order to use the ua100mix you need **python** (2.7 is what I tested, no idea if older versions work). 
+Besides, the ua100mix uses **mido** and **python-rtmidi**: the best way to install those libraries is with pip (https://pip.pypa.io/en/stable/).
+
+I wrote the ua100mix on Gentoo Linux: I know it works on OpenSuse and Ubuntu. I have no idea if you can run it successfully on any other system.
+
+### Install
+
+To install ua100mix just clone the git repo to your computer. 
+
+*YOU NEED GIT TO BE INSTALLED ON YOUR COMPUTER!*
+
+```shell
+$ mkdir devel
+$ cd devel
+$ git clone https://github.com/wishmerhill/ua100mix.git
+```
+
+### Run ua100mix
+
+From the ua100mix directory, launch main.py with your python interpreter:
+
+```shell
+$ cd ~/devel/ua100mix
+$ python main.py
+```
+## *portmidi* vs *mido + rtmidi*
+The first version of the ua100mix used portmidi for sending MIDI messages to the UA-100. After a user told me about his problems with Ubuntu's funny and buggy portmidi version, I discovered how old and buggy portmidi itself is. So I moved the code to mido and rtmidi. I find it *way* better: thanks Semyon for your help!
+
+###### A word about the "SaxMode" icon
 I use this mixer mainly to record my exercises with the saxophone, so I need a quick way to set the input and output levels as well as the recording and playback sources.
 
 ![Just a sample screenshot...](/screenshots/ua-100_mix.png?raw=true "UA-100 Mixer at work")
