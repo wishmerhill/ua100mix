@@ -32,6 +32,7 @@ $ mkdir devel
 $ cd devel
 $ git clone https://github.com/wishmerhill/ua100mix.git
 ```
+If you don't have git and don't want to install one you can just open https://github.com/wishmerhill/ua100mix and click "Clone or download"-> "Download ZIP" in top-right corner of the page, then extract files wherever you like.
 
 ### Run ua100mix
 
@@ -41,6 +42,11 @@ From the ua100mix directory, launch main.py with your python interpreter:
 $ cd ~/devel/ua100mix
 $ python main.py
 ```
+
+You can also create an executable for the program, so you don't have to use console all the time.
+On Ubuntu, you can just create launcher from desktop via right-click menu(at least on 16.04 you can). You'll need to point out the path to extracted files(working directory) and enter a command python "main.py", then go to permissions tab and click "Allow this file to run as program".
+You can do pretty much the same in any linux distributive by creating file with extension .sh in which you need to write pretty much the same you would do in terminal, then save it, open properties and again go to permissions tab and click "Allow this file to run as program".
+
 ## *portmidi* vs *mido + rtmidi*
 The first version of the ua100mix used portmidi for sending MIDI messages to the UA-100. After a user told me about his problems with Ubuntu's funny and buggy portmidi version, I discovered how old and buggy portmidi itself is. So I moved the code to mido and rtmidi. I find it *way* better: thanks Semyon for your help!
 
