@@ -1105,6 +1105,26 @@ if (True):
 
     )
 
+    COMPACT_INS_EFX_PARAMETERS[3] = (
+        ('Sens', '0 - 64 - 127', PARAM_0127, [0x03], 64),
+
+    )
+
+    COMPACT_INS_EFX_PARAMETERS[4] = (
+        ('Drive', '0 - 90 - 127', PARAM_0127, [0x03], 90),
+
+    )
+
+    COMPACT_INS_EFX_PARAMETERS[5] = (
+        ('Overdrive', '0 - 90 - 127', PARAM_0127, [0x03], 90),
+
+    )
+
+    COMPACT_INS_EFX_PARAMETERS[6] = (
+        ('Distorsion', '0 - 90 - 127', PARAM_0127, [0x03], 1127),
+
+    )
+
     #
     # .... many definitions after ....
     #
@@ -2043,17 +2063,17 @@ class CompactEffectsInsDialog(QtGui.QDialog):
         for effectType in COMPACT_INS_EFX_GROUP[index][1]:
             self.uiEffectTypeList.addItem(COMPACT_INS_EFX_TYPE[effectType][0])
         self.uiEffectTypeList.currentIndexChanged.connect(self.populateEffect)
-        self.populateEffect(0)
+        self.populateEffect(2)
 
-    def populateEffect(self, index):
+    def populateEffect(self, indice):
         self.uiEffectParameters.clear()
-        send_DT1([0x00, 0x40] + self.SenderHex + [0x00] + COMPACT_INS_EFX_TYPE[index][1])
+        send_DT1([0x00, 0x40] + self.SenderHex + [0x00] + COMPACT_INS_EFX_TYPE[indice][1])
         # I need to add an offset because of the grouping thing.
         # The offset is actually the first value of the range list in the EFX GROUP definition
         offset = COMPACT_INS_EFX_GROUP[self.InsEffectGroup][1][0]
         if (DEBUG_MODE):
-            print('Indice: ', index, ' Offset: ', offset)
-        for param in COMPACT_INS_EFX_PARAMETERS[index + offset]:
+            print('Indice: ', indice, ' Offset: ', offset)
+        for param in COMPACT_INS_EFX_PARAMETERS[indice + offset]:
             if (DEBUG_MODE):
                 print('dentro: ', param)
             item = CustomTreeItem(self.uiEffectParameters, param)
@@ -2434,7 +2454,7 @@ def send_DT1(data):
         sysEx_msg = p.get_message()
         if (DEBUG_MODE):
             print('Message to be sent: ', sysEx_msg)
-        pmout.sysEx_send(msg)
+        pmout.send(sysEx_msg)
 
 def checksum(toChecksum):
     '''
