@@ -915,6 +915,9 @@ if (True):
         #('Name', 'description', mergedRange, [0xXX], _default_)
     )
 
+    # TODO: fill up the missing FULL EFFECTS with their PARAMETERS
+
+    # ***********************************************************
     # COMPACT EFFECTS MODE
     # Let's define the SYS first. They are actually a bit easier.
 
@@ -1069,9 +1072,13 @@ if (True):
 
     COMPACT_INS_EFX_PARAMETERS = {}
 
+    # Noise suppressor
+
     COMPACT_INS_EFX_PARAMETERS[0] = (
         ('Noise Suppressor', '0 - 10 - 127', PARAM_0127, [0x25], 10),
     )
+
+    # Stereo Eq
 
     COMPACT_INS_EFX_PARAMETERS[1] = (
         ('Low Freq', '200/400Hz', {0: '200Hz', 1: '400Hz'}, [0x03], 0x00),
@@ -1089,6 +1096,8 @@ if (True):
         ('Noise Suppressor', '0 - 10 - 127', PARAM_0127, [0x25], 10)
     )
 
+    # Spectrum
+
     COMPACT_INS_EFX_PARAMETERS[2] = (
         ('Band 1', '-12dB - +5dB - +12dB', PARAM_12DB, [0x03], 0x45),
         ('Band 2', '-12dB - +2dB - +12dB', PARAM_12DB, [0x04], 0x42),
@@ -1105,34 +1114,66 @@ if (True):
 
     )
 
+    # TODo: Complete the definitions which lack some parameters...
+
+    # Enhancer
+
     COMPACT_INS_EFX_PARAMETERS[3] = (
         ('Sens', '0 - 64 - 127', PARAM_0127, [0x03], 64),
-
+        # ('Name', 'description', mergedRange, [0xXX], _default_),
+        # ('Name', 'description', mergedRange, [0xXX], _default_),
+        # ('Name', 'description', mergedRange, [0xXX], _default_),
+        # ('Name', 'description', mergedRange, [0xXX], _default_),
+        # ('Name', 'description', mergedRange, [0xXX], _default_)
     )
+
+    # Humanizer
 
     COMPACT_INS_EFX_PARAMETERS[4] = (
         ('Drive', '0 - 90 - 127', PARAM_0127, [0x03], 90),
-
+        # ('Name', 'description', mergedRange, [0xXX], _default_),
+        # ('Name', 'description', mergedRange, [0xXX], _default_),
+        # ('Name', 'description', mergedRange, [0xXX], _default_),
+        # ('Name', 'description', mergedRange, [0xXX], _default_),
+        # ('Name', 'description', mergedRange, [0xXX], _default_),
+        # ('Name', 'description', mergedRange, [0xXX], _default_),
+        # ('Name', 'description', mergedRange, [0xXX], _default_)
     )
+
+    # Overdrive
 
     COMPACT_INS_EFX_PARAMETERS[5] = (
         ('Overdrive', '0 - 90 - 127', PARAM_0127, [0x03], 90),
-
+        # ('Name', 'description', mergedRange, [0xXX], _default_),
+        # ('Name', 'description', mergedRange, [0xXX], _default_),
+        # ('Name', 'description', mergedRange, [0xXX], _default_),
+        # ('Name', 'description', mergedRange, [0xXX], _default_),
+        # ('Name', 'description', mergedRange, [0xXX], _default_),
+        # ('Name', 'description', mergedRange, [0xXX], _default_),
+        # ('Name', 'description', mergedRange, [0xXX], _default_)
     )
+
+    # Distorsion
 
     COMPACT_INS_EFX_PARAMETERS[6] = (
         ('Distorsion', '0 - 90 - 127', PARAM_0127, [0x03], 1127),
-
+        # ('Name', 'description', mergedRange, [0xXX], _default_),
+        # ('Name', 'description', mergedRange, [0xXX], _default_),
+        # ('Name', 'description', mergedRange, [0xXX], _default_),
+        # ('Name', 'description', mergedRange, [0xXX], _default_),
+        # ('Name', 'description', mergedRange, [0xXX], _default_),
+        # ('Name', 'description', mergedRange, [0xXX], _default_),
+        # ('Name', 'description', mergedRange, [0xXX], _default_)
     )
 
     #
-    # .... many definitions after ....
+    # TODO: Fill up the filter definitions
     #
 
     COMPACT_INS_EFX_PARAMETERS[47] = FULL_EFX_PARAMETERS[6]
 
     #
-    # .... many definitions after ....
+    # TODO: Fill up the filter definitions
     #
 
     COMPACT_INS_EFX_PARAMETERS[64] = (
@@ -2063,7 +2104,7 @@ class CompactEffectsInsDialog(QtGui.QDialog):
         for effectType in COMPACT_INS_EFX_GROUP[index][1]:
             self.uiEffectTypeList.addItem(COMPACT_INS_EFX_TYPE[effectType][0])
         self.uiEffectTypeList.currentIndexChanged.connect(self.populateEffect)
-        self.populateEffect(2)
+        self.populateEffect(index)
 
     def populateEffect(self, indice):
         self.uiEffectParameters.clear()
