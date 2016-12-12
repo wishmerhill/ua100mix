@@ -744,22 +744,18 @@ if (True):
     FULL_EFX_PARAMETERS = {}
 
     # FULL_EFX_PARAMETERS[]: How to build them (brainstorming) [in ITALIAN, sorry]
-    # Mi servono anche i range in forma umana oltre a quelli esadecimali per il SYSEX, in modo che lo spinbox mostri il valore umano e passi
-    # il valore esadecimale.
-    # al momento, se FULL_EFX_PARAMETERS[x] = par, abbiamo:
-    # par[0]: nome del parametro (es. 'Reverb Time');
-    # par[1]: range indicativo in forma 'umana' - lo metto in colonna 3 del QtreeWidgetItem
-    # par[2]: range esadecimale completo dei valori che puo' assumere il parametro -> quello che passo al SYSEX
-    # **** ora ho fatto diventare par[2] a sua volta un dizionario in cui la chiave e' il valoroa esadecimale da passare mentre l'argomento e' il valore 'umano'
-    # **** **** ad esempio: {0: '0ms', 1: '1ms'}
-    # par[3]: LSB/MSB del parametro -> da passare al SYSEX
-    # par[4]: metto il valore di default
+    # I need ranges in human form, bisides the HEX one for the SYSEX, so that the SPINBOX can show the human value and apply
+    # the HEX value (whereas the decimal value would be fine too)
+    # By now, if FULL_EFX_PARAMETERS[x] = par, we have
+    # par[0]: parameter name (i.e. 'Reverb Time');
+    # par[1]: range in "human" form
+    # par[2]: complete hex range -> the single values must be passed through SYSEX
+    # **** par[2] is a dictionaru where keys are hex values to pass and argument is the human value
+    # **** **** like: {0: '0ms', 1: '1ms'}
+    # par[3]: LSB/MSB of the parameter -> to pass to SYSEX
+    # par[4]: default value (hex or decimal)
     #
-    # posso
-    # 1. aggiungere quindi una colonna in cui inserisco una tupla dei valori 'umani'.
-    # 2. modificare par[2] facendolo diventare un dizionario nella forma {valore_hex: valore umano}
 
-    # l'implementazione attuale ha in par[2] un dizionario con associati i valori hex a quelli umani...
 
     # FULL EFFECT MODE
     FULL_EFX_TYPE[1] = ('High Quality Reverb', [0x00, 0x11])
