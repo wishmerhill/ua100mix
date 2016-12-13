@@ -1183,7 +1183,7 @@ if (True):
         # ('Name', 'description', mergedRange, [0xXX], _default_),
         # ('Name', 'description', mergedRange, [0xXX], _default_),
         # ('Name', 'description', mergedRange, [0xXX], _default_),
-        # ('Name', 'description', mergedRange, [0xXX], _default_)
+        ('Noise suppressor', '0 - 10 - 127', PARAM_0127, [0x25], 70)
     )
 
 
@@ -1199,8 +1199,29 @@ if (True):
         # ('Name', 'description', mergedRange, [0xXX], _default_),
         # ('Name', 'description', mergedRange, [0xXX], _default_),
         # ('Name', 'description', mergedRange, [0xXX], _default_),
-        # ('Name', 'description', mergedRange, [0xXX], _default_)
+        ('Level', '0 - 90 - 127', PARAM_0127, [0x16], 90),
+        ('Noise suppressor', '0 - 10 - 127', PARAM_0127 , [0x25], 10)
     )
+
+    # Auto Wah
+
+    COMPACT_INS_EFX_PARAMETERS[8] = (
+        ('Fil Type', 'LPF/BOF', {0: 'LPF', 1: 'BOF'} , [0x03], 127),
+        # ('Name', 'description', mergedRange, [0xXX], _default_),
+        # ('Name', 'description', mergedRange, [0xXX], _default_),
+        # ('Name', 'description', mergedRange, [0xXX], _default_),
+        # ('Name', 'description', mergedRange, [0xXX], _default_),
+        # ('Name', 'description', mergedRange, [0xXX], _default_),
+        # ('Name', 'description', mergedRange, [0xXX], _default_),
+        # ('Name', 'description', mergedRange, [0xXX], _default_),
+        # ('Name', 'description', mergedRange, [0xXX], _default_),
+        # ('Name', 'description', mergedRange, [0xXX], _default_),
+        # ('Name', 'description', mergedRange, [0xXX], _default_),
+        ('Noise suppressor', '0 - 10 - 127', PARAM_0127, [0x25], 10)
+    )
+
+    
+
 
 
     #
