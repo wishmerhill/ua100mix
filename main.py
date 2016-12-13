@@ -985,27 +985,41 @@ if (True):
     # Remember: they are grouped, as in the documentation
 
     COMPACT_INS_EFX_GROUP = ({
+                                 # Effects that modify the tone (filter type)
                                  0: ('Filter', range(0, 5)),
+                                 # Effects that distort the sound (distortion type)
                                  1: ('Distorsion', range(5, 7)),
+                                 # Effects that modulate the sound (modulation type)
                                  2: ('Modulation', range(7, 14)),
+                                 # Effects that affect the level (compressor type)
                                  3: ('Compressor', range(14, 16)),
+                                 # Effects that broaden the sound (chorus type)
                                  4: ('Chorus', range(16, 21)),
+                                 # Effects that reverberate the sound (delay/reverb type)
                                  5: ('Delay/Reverb', range(21, 29)),
+                                 # Effects that modify the pitch (pitch shift type)
                                  6: ('Pitch', range(29, 31)),
+                                 #  Other Effects
                                  7: ('Other', range(31, 35)),
+                                 # Effects that connect two types of effect in series (series 2)
                                  8: ('Connect 2 effects (series)', range(35, 47)),
+                                 # Effects that connect three or more types of effecs in series (series 3/series 4/series 5)
                                  9: ('Connect 3 or more effects (series)', range(47, 56)),
+                                 # Effects that connect two types of effect in parallel (parallel 2)
                                  10: ('Connect 2 effects (parallel)', range(56, 65))}
     )
 
     COMPACT_INS_EFX_TYPE = ({
+                                # Effects that modify the tone (filter type)
                                 0: ('Noise Suppressor', [0x00, 0x00]),
                                 1: ('Stereo Eq', [0x01, 0x00]),
                                 2: ('Spectrum', [0x01, 0x01]),
                                 3: ('Enhancer', [0x01, 0x02]),
                                 4: ('Humanizer', [0x01, 0x03]),
+                                # Effects that distort the sound (distortion type)
                                 5: ('Overdrive', [0x01, 0x10]),
                                 6: ('Distorsion', [0x01, 0x11]),
+                                # Effects that modulate the sound (modulation type)
                                 7: ('Phaser', [0x01, 0x20]),
                                 8: ('Auto Wah', [0x01, 0x21]),
                                 9: ('Rotary', [0x01, 0x22]),
@@ -1013,13 +1027,16 @@ if (True):
                                 11: ('Step Flanger', [0x01, 0x24]),
                                 12: ('Tremolo', [0x01, 0x25]),
                                 13: ('Auto Pan', [0x01, 0x26]),
+                                # Effects that affect the level (compressor type)
                                 14: ('Compressor', [0x01, 0x30]),
                                 15: ('Limiter', [0x01, 0x31]),
                                 16: ('Hexa Chorus', [0x01, 0x40]),
+                                # Effects that broaden the sound (chorus type)
                                 17: ('Tremolo Chorus', [0x01, 0x41]),
                                 18: ('Stereo Chorus', [0x01, 0x42]),
                                 19: ('Space D', [0x01, 0x43]),
                                 20: ('3D Chorus', [0x01, 0x44]),
+                                # Effects that reverberate the sound (delay/reverb type)
                                 21: ('Stereo Delay', [0x01, 0x50]),
                                 22: ('Mod Delay', [0x01, 0x51]),
                                 23: ('3 Tap Delay', [0x01, 0x52]),
@@ -1028,12 +1045,15 @@ if (True):
                                 26: ('Reverb', [0x01, 0x55]),
                                 27: ('Gate Reverb', [0x01, 0x56]),
                                 28: ('3D Delay', [0x01, 0x57]),
+                                # Effects that modify the pitch (pitch shift type)
                                 29: ('Pitch Shifter', [0x01, 0x60]),
                                 30: ('Fb P, Shifter', [0x01, 0x61]),
+                                #  Other Effects
                                 31: ('3D Auto', [0x01, 0x70]),
                                 32: ('3D Manual', [0x01, 0x71]),
                                 33: ('Lo-Fi 1', [0x01, 0x72]),
                                 34: ('Lo-Fi 2', [0x01, 0x73]),
+                                # Effects that connect two types of effect in series (series 2)
                                 35: ('OD -> Chorus', [0x02, 0x00]),
                                 36: ('OD -> Flanger', [0x02, 0x01]),
                                 37: ('OD -> Delay', [0x02, 0x02]),
@@ -1046,6 +1066,7 @@ if (True):
                                 44: ('Cho -> Delay', [0x02, 0x09]),
                                 45: ('FL -> Delay', [0x02, 0x0A]),
                                 46: ('Cho -> Flanger', [0x02, 0x0B]),
+                                # Effects that connect three or more types of effecs in series (series 3/series 4/series 5)
                                 47: ('Rotary Multi', [0x03, 0x00]),
                                 48: ('GTR Multi 1', [0x04, 0x00]),
                                 49: ('GTR Multi 2', [0x04, 0x01]),
@@ -1055,6 +1076,7 @@ if (True):
                                 53: ('Bass Multi', [0x04, 0x05]),
                                 54: ('E. Piano Multi', [0x04, 0x06]),
                                 55: ('Keyboard Multi', [0x05, 0x00]),
+                                # Effects that connect two types of effect in parallel (parallel 2)
                                 56: ('Cho / Delay', [0x11, 0x00]),
                                 57: ('FL / Delay', [0x11, 0x01]),
                                 58: ('Cho / Flanger', [0x11, 0x02]),
@@ -1136,10 +1158,12 @@ if (True):
         # ('Name', 'description', mergedRange, [0xXX], _default_)
     )
 
+    # Effects that distort the sound (distortion type)
+
     # Overdrive
 
     COMPACT_INS_EFX_PARAMETERS[5] = (
-        ('Overdrive', '0 - 90 - 127', PARAM_0127, [0x03], 90),
+        ('Drive', '0 - 90 - 127', PARAM_0127, [0x03], 90),
         # ('Name', 'description', mergedRange, [0xXX], _default_),
         # ('Name', 'description', mergedRange, [0xXX], _default_),
         # ('Name', 'description', mergedRange, [0xXX], _default_),
@@ -1152,7 +1176,7 @@ if (True):
     # Distorsion
 
     COMPACT_INS_EFX_PARAMETERS[6] = (
-        ('Distorsion', '0 - 90 - 127', PARAM_0127, [0x03], 1127),
+        ('Drive', '0 - 127', PARAM_0127, [0x03], 127),
         # ('Name', 'description', mergedRange, [0xXX], _default_),
         # ('Name', 'description', mergedRange, [0xXX], _default_),
         # ('Name', 'description', mergedRange, [0xXX], _default_),
@@ -1162,9 +1186,28 @@ if (True):
         # ('Name', 'description', mergedRange, [0xXX], _default_)
     )
 
+
+    # Effects that modulate the sound (modulation type)
+
+    # Phaser
+
+    COMPACT_INS_EFX_PARAMETERS[7] = (
+        #('Manual', '100Hz - 860Hz - 8kHz', PARAM_TYPE_12 *to be defined!* , [0x03], default),
+        ('Rate', '0.05Hz - 0.40Hz - 10.0Hz', PARAM_TYPE_6 , [0x04], 7),
+        # ('Name', 'description', mergedRange, [0xXX], _default_),
+        # ('Name', 'description', mergedRange, [0xXX], _default_),
+        # ('Name', 'description', mergedRange, [0xXX], _default_),
+        # ('Name', 'description', mergedRange, [0xXX], _default_),
+        # ('Name', 'description', mergedRange, [0xXX], _default_),
+        # ('Name', 'description', mergedRange, [0xXX], _default_)
+    )
+
+
     #
     # TODO: Fill up the filter definitions
     #
+
+    # rotary multi
 
     COMPACT_INS_EFX_PARAMETERS[47] = FULL_EFX_PARAMETERS[6]
 
@@ -2085,32 +2128,78 @@ class CompactEffectsInsDialog(QtGui.QDialog):
         # load the ui...
         self.ui = PyQt4.uic.loadUi('ui/compacteffectsinsdialog.ui', self)
 
+        # populate the effect groups
+
         for key in COMPACT_INS_EFX_GROUP.keys():
             self.uiEffectGroupsList.addItem(COMPACT_INS_EFX_GROUP[key][0])
 
+        # connect the group list to the effect type list in order to populate it
         self.uiEffectGroupsList.currentIndexChanged.connect(self.populateEffectType)
 
+        # populate the effect type list with the first one (0)
         self.populateEffectType(0)
 
+        # connect the set effect button with the relative function
         self.uiToggleEffect.toggled.connect(self.setEffect)
 
     def populateEffectType(self, index):
+        """
+        populate the list of effect types
+
+
+        """
+        # first, clear the previous list
         self.uiEffectTypeList.clear()
+
+        # remember in which group we are
         self.InsEffectGroup = index
+
+        # get the effect type names and put them in the drop down list
         for effectType in COMPACT_INS_EFX_GROUP[index][1]:
             self.uiEffectTypeList.addItem(COMPACT_INS_EFX_TYPE[effectType][0])
-        self.uiEffectTypeList.currentIndexChanged.connect(self.populateEffect)
-        self.populateEffect(index)
 
-    def populateEffect(self, indice):
+        # connect the effect type drop down widget with the parameters in order to populate the effect options
+        self.uiEffectTypeList.currentIndexChanged.connect(self.populateEffect)
+
+        # set the start effect type to 0
+        self.populateEffect(0)
+
+    def populateEffect(self, index):
+        """
+        populate the effect parameter.
+        BE CAREFUL! The offset shit is tricky. I must explain better, I did not understand it myself after a year.
+
+        :param index is relative to the effect group: we must add the offset to get to the right point.
+
+        """
+        # clear the parameters
         self.uiEffectParameters.clear()
+
+        # tell the UA-100 we are setting exactly those effect parameters
         send_DT1([0x00, 0x40] + self.SenderHex + [0x00] + COMPACT_INS_EFX_TYPE[indice][1])
-        # I need to add an offset because of the grouping thing.
-        # The offset is actually the first value of the range list in the EFX GROUP definition
+
+        # I need to add an offset because of the grouping for the compact insertion effects.
+        #
+        # Please note:
+        #
+        # COMPACT_INS_EFX_GROUP contains the GROUPS or TYPE
+        #
+        # The offset is actually the first value of the range list in the definition
+        #
+        # COMPACT_INS_EFX_TYPE misleading name containing the single effects
+        #
+        # COMPACT_INS_EFX_PARAMETERS[xxx] countains the parameters of the single effects
+        #
+
+        # read the offset of the specified group to reach the right effects
         offset = COMPACT_INS_EFX_GROUP[self.InsEffectGroup][1][0]
+
         if (DEBUG_MODE):
-            print('Indice: ', indice, ' Offset: ', offset)
-        for param in COMPACT_INS_EFX_PARAMETERS[indice + offset]:
+            print('Indice: ', index, ' Offset: ', offset)
+
+        # populate the effect parameters
+
+        for param in COMPACT_INS_EFX_PARAMETERS[index + offset]:
             if (DEBUG_MODE):
                 print('dentro: ', param)
             item = CustomTreeItem(self.uiEffectParameters, param)
