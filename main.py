@@ -1220,7 +1220,7 @@ if (True):
         ('Noise suppressor', '0 - 10 - 127', PARAM_0127, [0x25], 10)
     )
 
-    
+
 
 
 
