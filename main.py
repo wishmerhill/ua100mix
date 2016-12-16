@@ -1658,6 +1658,18 @@ if (True):
         ('Noise suppressor', '0 - 10 - 127', PARAM_0127, [0x25], 10)
     )
 
+    # 14: Compressor
+    COMPACT_INS_EFX_PARAMETERS[13] = (
+        # ('Name', 'description', mergedRange, [0xXX], _default_),
+        # ('Name', 'description', mergedRange, [0xXX], _default_),
+        # ('Name', 'description', mergedRange, [0xXX], _default_),
+        # ('Name', 'description', mergedRange, [0xXX], _default_),
+        # ('Name', 'description', mergedRange, [0xXX], _default_),
+        # ('Name', 'description', mergedRange, [0xXX], _default_),
+        ('Level', '0 - 127', PARAM_0127, [0x16], 127),
+        ('Noise suppressor', '0 - 20 - 127', PARAM_0127, [0x25], 20)
+    )
+
     #
     # TODO: Fill up the filter definitions
     #
@@ -2622,7 +2634,7 @@ class CompactEffectsInsDialog(QtGui.QDialog):
         self.uiEffectParameters.clear()
 
         # tell the UA-100 we are setting exactly those effect parameters
-        send_DT1([0x00, 0x40] + self.SenderHex + [0x00] + COMPACT_INS_EFX_TYPE[indice][1])
+        send_DT1([0x00, 0x40] + self.SenderHex + [0x00] + COMPACT_INS_EFX_TYPE[index][1])
 
         # I need to add an offset because of the grouping for the compact insertion effects.
         #
