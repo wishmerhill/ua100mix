@@ -12,6 +12,129 @@ import tools as tools
 import numpy as np
 
 np.set_printoptions(formatter={'int':hex})
+
+base_range = range(0x00,0x80)
+
+# PARAM_TYPE_2
+
+# semi_delay_1 = tools.ulist(200,550,5,"ms")
+# SEMIPAR_2_1 = tools.mergeRanges(range(0x00,0x47), semi_delay_1)
+# print(SEMIPAR_2_1)
+# semi_delay_2 = tools.ulist(560, 1000, 10, 'ms')
+# SEMIPAR_2_2 = tools.mergeRanges(range(0x047,0x074), semi_delay_2)
+# print(SEMIPAR_2_2)
+# SEMIPAR_2_1.update(SEMIPAR_2_2)
+# PARAM_TYPE_2 = SEMIPAR_2_1
+# print(PARAM_TYPE_2)
+
+
+# # PARAM_TYPE_3
+#
+# semi_delay_1 = tools.ulist(200,600,5,"ms")
+# SEMIPAR_3_1 = tools.mergeRanges(range(0x00,0x51), semi_delay_1)
+# print(SEMIPAR_3_1)
+# semi_delay_2 = tools.ulist(610, 1000, 10, 'ms')
+# SEMIPAR_3_2 = tools.mergeRanges(range(0x51,0x079), semi_delay_2)
+# print(SEMIPAR_3_2)
+# semi_delay_3 = 7 * ['1000']
+# SEMIPAR_3_3 = tools.mergeRanges(range(0x79,0x80), semi_delay_3)
+# SEMIPAR_3_1.update(SEMIPAR_3_2)
+# SEMIPAR_3_1.update(SEMIPAR_3_3)
+# PARAM_TYPE_3 = SEMIPAR_3_1
+# print(PARAM_TYPE_3)
+
+# PARAM_TYPE_7
+# rate = tools.ulist(0.05, 6.40, 0.05, 'Hz')
+# print(rate)
+# PARAM_TYPE_7 = tools.mergeRanges(range(0x00,0x80), rate)
+# print(PARAM_TYPE_7)
+
+#
+# PARAM_2412 = tools.mergeRanges(range(0x28, 0x4D), tools.ulist(-24, +12, 1))
+#
+# print(PARAM_2412)
+
+# PARAM_0127 = tools.mergeRanges(range(0x00, 0x80), tools.ulist(0, 127, 1))
+# print(PARAM_0127)
+
+#PARAM_9898 = tools.mergeRanges(range(0x0F, 0x72), tools.ulist(-98, +98, 2, '%'))
+#print(PARAM_9898)
+#
+# PARAM_100100 = tools.mergeRanges(range(0x0E, 0x73), tools.ulist(-100, +100, 2))
+# print(PARAM_100100)
+
+# SEMIPAR_11=[]
+# for hz in [250,315,400,500,630,800,1000,1250,1600,2000,2500,3150,4000,5000,6300,'Bypass']:
+#     for pippo in range(1,9):
+#         SEMIPAR_11.append(str(hz)+'{}'.format("Hz" if hz != "Bypass" else ""))
+# print(SEMIPAR_11)
+#
+# PAR_10= tools.mergeRanges(range(0x00,0x80),SEMIPAR_11)
+# print(PAR_11)
+
+# PARAM_TYPE_12
+# p = tools.ulist(100,300,10,'Hz')
+# print(len(p))
+# s = tools.ulist(320,1000,20,'Hz')
+# print(len(s))
+# t = tools.ulist(1100,8000,100,'Hz')
+# print(len(t))
+# q = 2 * ['8000Hz']
+#
+# p.extend(s)
+# print(len(p))
+# p.extend(t)
+# print(len(p))
+# p.extend(q)
+#z = tools.mergeRanges(range(0x00,0x80),p)
+
+#print(z)
+
+# PARAM_TYPE_13
+# c = 6 * ['L180(=R180)']
+# l = tools.rlist(168,1,-12,'L',4)
+#
+# print(len(l))
+# m = 4 * ['0']
+# print(len(m))
+# r = tools.rlist(12,179,12,'R',4)
+# print(len(r))
+# f = 6 * ['R180(=L180)']
+# print(len(f))
+#
+# c.extend(l)
+# c.extend(m)
+# c.extend(r)
+# c.extend(f)
+# base_range = range(0x00,0x80)
+# PARAM_TYPE_13 = tools.mergeRanges(base_range, c)
+# print(PARAM_TYPE_13)
+
+
+# PARAM_TYPE_14
+# d = tools.rlist(0,15,1,factor = 8)
+# p = tools.mergeRanges(base_range,d)
+# print(p)
+
+# PARAM_TYPE_17
+# d1 = tools.rlist(0.1,10,0.1,'Hz')
+# print(d1)
+# d2 = tools.rlist(11.0,38,1,'Hz')
+# print(d2)
+# d1.extend(d2)
+# print(len(d1))
+# p = tools.mergeRanges(base_range, d1)
+# print(p)
+
+# PARAM_TYPE_18
+# this is shortissimo - and it's not used anywhere!!
+# d1 = tools.rlist(60,200,20)
+# d2 = tools.rlist(300,400,100)
+# d1.extend(d2)
+# p = tools.mergeRanges(range(0x00,0x0A), d1)
+# print(p)
+
+
 #PARAM_CONV_1 = tools.mergeRanges(range(0x00,0x33),tools.ulist(0,5,0.1,'ms'))
 #PARAM_CONV_1_B = tools.mergeRanges(range(0x33,0x3D),tools.ulist(5.5,10,0.5))
 #PARAM_CONV_1_C = tools.mergeRanges(range(0x3D,0x65),tools.ulist(11,50,1))
@@ -82,11 +205,11 @@ np.set_printoptions(formatter={'int':hex})
 #
 # print(PARAM6_CONV_A)
 
-print(range(0x40, 0x57))
-print(tools.ulist(0, +22, 1,'dB'))
-PARAM_0_18DB = tools.mergeRanges(range(0x40, 0x57), tools.ulist(0, +22, 1,'dB'))
+#print(range(0x40, 0x57))
+#print(tools.ulist(0, +22, 1,'dB'))
+#PARAM_0_18DB = tools.mergeRanges(range(0x40, 0x57), tools.ulist(0, +22, 1,'dB'))
 
-print(PARAM_0_18DB)
+#print(PARAM_0_18DB)
 
 #PARAM_12DB = tools.mergeRanges(range(0x34,0x4D), tools.ulist(-12,+12,1,'dB'))
 #print(PARAM_12DB)
