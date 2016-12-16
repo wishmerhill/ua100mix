@@ -985,7 +985,7 @@ if (True):
                       5: '160', 6: '180', 7: '200', 8: '300', 9: '400'})
 
     # Those are funny. Non capire O~O
-    BALANCE_VALUES = ({0: 'D>0E', 1: 'D>0E', 2: 'D>1E', 3: 'D>3E', 4: 'D>4E', 5: 'D>6E', 6: 'D>7E',
+    PARAM_BALANCE = ({0: 'D>0E', 1: 'D>0E', 2: 'D>1E', 3: 'D>3E', 4: 'D>4E', 5: 'D>6E', 6: 'D>7E',
                        7: 'D>9E', 8: 'D>11E', 9: 'D>12E', 10: 'D>14E', 11: 'D>15E', 12: 'D>17E',
                        13: 'D>19E', 14: 'D>20E', 15: 'D>22E', 16: 'D>23E', 17: 'D>25E', 18: 'D>26E',
                        19: 'D>28E', 20: 'D>30E', 21: 'D>31E', 22: 'D>33E', 23: 'D>34E', 24: 'D>36E',
@@ -1099,6 +1099,44 @@ if (True):
                      103: '78', 104: '80', 105: '82', 106: '84', 107: '86', 108: '88',
                      109: '90', 110: '92', 111: '94', 112: '96', 113: '98', 114: '100'})
 
+    # FIXME:
+    # This parameter has a problem I don't know how to solve:
+    # in the manual it is shown as L63 - 0 - R63, bay spanning 0x00 to 0x7D. The first range is 127 and the second 128.
+    # To cope with this situation, I put 2 zeroes in the middle instead of 1.
+    # No idea if it's a good idea!
+    #
+    PARAM_PAN63 = ({0: 'L63', 1: 'L62', 2: 'L61', 3: 'L60', 4: 'L59', 5: 'L58', 6: 'L57', 7: 'L56',
+                    8: 'L55', 9: 'L54', 10: 'L53', 11: 'L52', 12: 'L51', 13: 'L50', 14: 'L49',
+                    15: 'L48', 16: 'L47', 17: 'L46', 18: 'L45', 19: 'L44', 20: 'L43', 21: 'L42',
+                    22: 'L41', 23: 'L40', 24: 'L39', 25: 'L38', 26: 'L37', 27: 'L36', 28: 'L35',
+                    29: 'L34', 30: 'L33', 31: 'L32', 32: 'L31', 33: 'L30', 34: 'L29', 35: 'L28',
+                    36: 'L27', 37: 'L26', 38: 'L25', 39: 'L24', 40: 'L23', 41: 'L22', 42: 'L21',
+                    43: 'L20', 44: 'L19', 45: 'L18', 46: 'L17', 47: 'L16', 48: 'L15', 49: 'L14',
+                    50: 'L13', 51: 'L12', 52: 'L11', 53: 'L10', 54: 'L9', 55: 'L8', 56: 'L7',
+                    57: 'L6', 58: 'L5', 59: 'L4', 60: 'L3', 61: 'L2', 62: 'L1', 63: '0', 64: '0',
+                    65: 'R1', 66: 'R2', 67: 'R3', 68: 'R4', 69: 'R5', 70: 'R6', 71: 'R7', 72: 'R8',
+                    73: 'R9', 74: 'R10', 75: 'R11', 76: 'R12', 77: 'R13', 78: 'R14', 79: 'R15',
+                    80: 'R16', 81: 'R17', 82: 'R18', 83: 'R19', 84: 'R20', 85: 'R21', 86: 'R22',
+                    87: 'R23', 88: 'R24', 89: 'R25', 90: 'R26', 91: 'R27', 92: 'R28', 93: 'R29',
+                    94: 'R30', 95: 'R31', 96: 'R32', 97: 'R33', 98: 'R34', 99: 'R35', 100: 'R36',
+                    101: 'R37', 102: 'R38', 103: 'R39', 104: 'R40', 105: 'R41', 106: 'R42',
+                    107: 'R43', 108: 'R44', 109: 'R45', 110: 'R46', 111: 'R47', 112: 'R48',
+                    113: 'R49', 114: 'R50', 115: 'R51', 116: 'R52', 117: 'R53', 118: 'R54',
+                    119: 'R55', 120: 'R56', 121: 'R57', 122: 'R58', 123: 'R59', 124: 'R60',
+                    125: 'R61', 126: 'R62', 127: 'R63'})
+
+
+    PARAM_PAN20 = ({0: '0', 1: '1', 2: '2', 3: '3', 4: '4', 5: '5', 6: '6', 7: '7', 8: '8',
+                    9: '9', 10: '10', 11: '11', 12: '12', 13: '13', 14: '14', 15: '15',
+                    16: '16', 17: '17', 18: '18', 19: '19', 20: '20'})
+
+    PARAM_DEPTH20 = ({44: '-20', 45: '-19', 46: '-18', 47: '-17', 48: '-16', 49: '-15',
+                      50: '-14', 51: '-13', 52: '-12', 53: '-11', 54: '-10', 55: '-9',
+                      56: '-8', 57: '-7', 58: '-6', 59: '-5', 60: '-4', 61: '-3', 62: '-2',
+                      63: '-1', 64: '0', 65: '1', 66: '2', 67: '3', 68: '4', 69: '5',
+                      70: '6', 71: '7', 72: '8', 73: '9', 74: '10', 75: '11', 76: '12',
+                      77: '13', 78: '14', 79: '15', 80: '16', 81: '17', 82: '18', 83: '19',
+                      84: '20'})
     # TODO: Finish to add all necessary PARAM constants to complete the effects...
 
     # Let's initialise the dictionaries with the parameters.
@@ -1132,7 +1170,7 @@ if (True):
         ('Diffusion', '0 - 9 - 10', tools.mergeRanges(range(0x00, 0x0B), tools.ulist(0, 10, 1)), [0x09], 0x09),
         ('Tone Low', '-12dB - 0dB - +12dB', PARAM_12DB, [0x0A], 0x40),
         ('Tone High', '-12dB - 0dB - +12dB', PARAM_12DB, [0x0B], 0x40),
-        ('Balance', 'D > 0E - D0 < E', BALANCE_VALUES, [0x0C], 0x7f),
+        ('Balance', 'D > 0E - D0 < E', PARAM_BALANCE, [0x0C], 0x7f),
         ('EQ Low Freq', '200/400Hz', {0: '200Hz', 1: '400Hz'}, [0x0D], 0x00),
         ('EQ Low Gain', '-12dB - 0dB - +12dB', PARAM_12DB, [0x0E], 0x40),
         ('EQ Mid1 Freq', '200Hz - 315Hz - 6300 Hz', PARAM_TYPE_10, [0x0F], 16),
@@ -1190,13 +1228,13 @@ if (True):
         ('EQ High Gain', '-12dB - -4dB - +12dB', PARAM_12DB, [0x0B], 0x3C),
         ('Ps P.Coarse', '-24  -0 - +12', PARAM_2412, [0x0C], 0x40),
         ('Ps P.Fine', '-100 -48 - +100', PARAM_100100, [0x0D], 40),
-        ('Ps Balance', 'D > 0E - D > 42E - D0 <E', BALANCE_VALUES, [0x0E], 28),
+        ('Ps Balance', 'D > 0E - D > 42E - D0 <E', PARAM_BALANCE, [0x0E], 28),
         ('Dly Time', '0ms - 260ms - 500ms', PARAM_TYPE_4, [0x0F], 112),
         ('Dly Feedback', '-98% - -10% - +98%', PARAM_9898, [0x10], 59),
-        ('Dly Balance', 'D > 0E - D > 22E - D0 < E', BALANCE_VALUES, [0x11], 15),
+        ('Dly Balance', 'D > 0E - D > 22E - D0 < E', PARAM_BALANCE, [0x11], 15),
         ('Cho Rate', '0.05 - 0.65 - 10.0', PARAM_TYPE_6, [0x12], 12),
         ('Cho Depth', '0 - 30 - 127', PARAM_0127, [0x13], 30),
-        ('Cho Balance', 'D > 0 E - D=E - D0 < E', BALANCE_VALUES, [0x14], 0)
+        ('Cho Balance', 'D > 0 E - D=E - D0 < E', PARAM_BALANCE, [0x14], 0)
     )
 
     FULL_EFX_TYPE[5] = ('Game', [0x00, 0x16])
@@ -1302,7 +1340,7 @@ if (True):
         ('HF Damp', '315Hz - 8kHz/Bypass', PARAM_TYPE_8, [0x09], 120),
         ('Cross HF Damp', '315Hz - 6.3kHz - 8kHz/Bypass', PARAM_TYPE_8, [0x0A], 104),
         ('Cross Balance', '0-98-127', PARAM_0127, [0x0B], 0x62),
-        ('Balance', 'D > 0E - D0 < E', BALANCE_VALUES, [0x0C], 0x7F)
+        ('Balance', 'D > 0E - D0 < E', PARAM_BALANCE, [0x0C], 0x7F)
     )
 
     COMPACT_SYS1_EFX_PARAMETERS[2] = (
@@ -1313,7 +1351,7 @@ if (True):
         ('Pre Dly', '0ms - 100ms', PARAM_TYPE_1, [0x06], 80),
         ('Rate', '0.05 - 0.35 - 10.0', PARAM_TYPE_6, [0x07], 6),
         ('Depth', '0-116-127', PARAM_0127, [0x08], 0x74),
-        ('Balance', 'D > 0E - D0 < E', BALANCE_VALUES, [0x09], 0x7F)
+        ('Balance', 'D > 0E - D0 < E', PARAM_BALANCE, [0x09], 0x7F)
     )
     COMPACT_SYS2_EFX_PARAMETERS = {}
 
@@ -1329,7 +1367,7 @@ if (True):
         ('HF Damp', '315Hz - 8kHz/Bypass', PARAM_TYPE_8, [0x09], 120),
         ('Cross HF Damp', '315Hz - 6.3kHz - 8kHz/Bypass', PARAM_TYPE_8, [0x0A], 104),
         ('Cross Balance', '0-98-127', PARAM_0127, [0x0B], 0x62),
-        ('Balance', 'D > 0E - D0 < E', BALANCE_VALUES, [0x0C], 0x7F)
+        ('Balance', 'D > 0E - D0 < E', PARAM_BALANCE, [0x0C], 0x7F)
     )
 
     COMPACT_SYS2_EFX_PARAMETERS[2] = (
@@ -1340,7 +1378,7 @@ if (True):
         # ('HF Damp'),
         ('Low Gain', '-12dB - +2dB - +12dB', PARAM_12DB, 66),
         ('High Gain', '-12dB - -6dB - +12dB', PARAM_12DB, 58),
-        ('Balance', 'D > 0E - D0 < E', BALANCE_VALUES, [0x09], 0x7F)
+        ('Balance', 'D > 0E - D0 < E', PARAM_BALANCE, [0x09], 0x7F)
     )
 
     # Now we must define the COMPACT INSERTION EFFECT.
@@ -1658,8 +1696,9 @@ if (True):
         ('Noise suppressor', '0 - 10 - 127', PARAM_0127, [0x25], 10)
     )
 
+    # Effects that affect the level (compressor type)
     # 14: Compressor
-    COMPACT_INS_EFX_PARAMETERS[13] = (
+    COMPACT_INS_EFX_PARAMETERS[14] = (
         # ('Name', 'description', mergedRange, [0xXX], _default_),
         # ('Name', 'description', mergedRange, [0xXX], _default_),
         # ('Name', 'description', mergedRange, [0xXX], _default_),
@@ -1667,10 +1706,42 @@ if (True):
         # ('Name', 'description', mergedRange, [0xXX], _default_),
         # ('Name', 'description', mergedRange, [0xXX], _default_),
         ('Level', '0 - 127', PARAM_0127, [0x16], 127),
+        ('Noise suppressor', '0 - 10 - 127', PARAM_0127, [0x25], 10)
+    )
+
+    # Limiter
+    COMPACT_INS_EFX_PARAMETERS[15] = (
+        # ('Name', 'description', mergedRange, [0xXX], _default_),
+        # ('Name', 'description', mergedRange, [0xXX], _default_),
+        # ('Name', 'description', mergedRange, [0xXX], _default_),
+        # ('Name', 'description', mergedRange, [0xXX], _default_),
+        # ('Name', 'description', mergedRange, [0xXX], _default_),
+        ('Hi Gain', '-12dB - 0dB - +12dB', PARAM_12DB, [0x14], 64),
+        ('Pan', 'L63 - 0 - R63', PARAM_PAN63, [0x15], 63),
+        ('Level', '0 - 127', PARAM_0127, [0x16], 127),
         ('Noise suppressor', '0 - 20 - 127', PARAM_0127, [0x25], 20)
     )
 
-    #
+    # Effects that broaden the sound (chorus type)
+
+    # 16: Hexa Chorus
+    COMPACT_INS_EFX_PARAMETERS[16] = (
+        ('Pre Dly', '0.0ms - 2.0ms - 100ms', PARAM_TYPE_1, [0x03], 20),
+        ('Rate', '0.05Hz - 0.50Hz - 10.0Hz', PARAM_TYPE_6, [0x04], 9),
+        ('Depth', '0 - 40 - 127', PARAM_0127, [0x05], 40),
+        ('Pre Dly Dev', '0 - 10 - 20', PARAM_PAN20, [0x06], 10),
+        ('Depth Dev', '-20 - 0 - +20', PARAM_DEPTH20, [0x07], 64),
+        ('Pan Dev', '0-20', PARAM_PAN20, [0x08], 0x14),
+        ('Balance', 'D > 0E - D=E - D0 < E', PARAM_BALANCE, [0x12], 64),
+        ('Low Gain', '-12dB - 0dB - +12dB', PARAM_12DB, [0x13], 64),
+        ('Hi Gain', '-12dB - 0dB - +12dB', PARAM_12DB, [0x14], 64),
+        ('Level', '0 - 127', PARAM_0127, [0x16], 127),
+        ('Noise suppressor', '0 - 10 - 127', PARAM_0127, [0x25], 10)
+    )
+
+
+
+
     # TODO: Fill up the filter definitions
     #
 
@@ -1697,7 +1768,7 @@ if (True):
         ('AW Rate', '0.05Hz - 2.00Hz - 10.0Hz', PARAM_TYPE_6, [0x0C], 39),
         ('AW Depth', '0 - 90 - 127', PARAM_0127, [0x0D], 90),
         ('AW Pol', 'Down/*Up*', PARAM_UP_DOWN, [0x0E], 1),
-        # ('AW Pan', 'L63 - 0 - R63', PARAM_PAN, [0x14], 0),
+        ('AW Pan', 'L63 - 0 - R63', PARAM_PAN63, [0x14], 0),
         ('AW Level', '0 - *127*', PARAM_0127, [0x15], 0x7f),
         ('Level', '0 - *127*', PARAM_0127, [0x16], 0x7f),
         ('Noise Suppressor', '0 - 10 - 127', PARAM_0127, [0x25], 10)

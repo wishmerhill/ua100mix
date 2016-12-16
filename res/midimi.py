@@ -15,6 +15,32 @@ np.set_printoptions(formatter={'int':hex})
 
 base_range = range(0x00,0x80)
 
+# PARAM_PAN63
+# l = tools.rlist(63,1,-1,'L',reverse = True)
+# r = tools.rlist(1,63,1,'R',reverse= True)
+# c = 2 * ['0']
+# l.extend(c)
+# l.extend(r)
+#
+# p = tools.mergeRanges(base_range,l)
+#
+# print(p)
+
+# PARAM_PAN20
+# d = tools.rlist(0,20,1)
+# print(len(d))
+# print(len(range(0x00,0x15)))
+# p = tools.mergeRanges(range(0x00,0x15),d)
+#
+# print(p)
+
+d = tools.rlist(-20,20,1)
+r = range(0x2c,0x55)
+p = tools.mergeRanges(r,d)
+print(p)
+
+
+
 # PARAM_TYPE_2
 
 # semi_delay_1 = tools.ulist(200,550,5,"ms")
@@ -348,3 +374,4 @@ base_range = range(0x00,0x80)
 
 # fosse: aa bb cc dd ee ff gg hh canale+dimensione farei [128 - (aa+bb+cc+dd+ee+ff+gg mod 128)] con tutti i valori in decimale.
 # fosse: aa bb cc dd ee ff  canale + dati, idem. 
+
