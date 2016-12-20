@@ -25,13 +25,15 @@ I wrote the ua100mix on Gentoo Linux: I know it works on OpenSuse and Ubuntu. I 
 
 To install ua100mix just clone the git repo to your computer. 
 
-*YOU NEED GIT TO BE INSTALLED ON YOUR COMPUTER!*
+#### With git
 
 ```shell
 $ mkdir devel
 $ cd devel
 $ git clone https://github.com/wishmerhill/ua100mix.git
 ```
+#### Without git
+
 If you don't have git and don't want to install one you can just open https://github.com/wishmerhill/ua100mix and click "Clone or download"-> "Download ZIP" in top-right corner of the page, then extract files wherever you like.
 
 ### Run ua100mix
