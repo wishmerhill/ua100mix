@@ -46,7 +46,7 @@ $ python main.py
 ```
 
 You can also create an executable for the program, so you don't have to use console all the time.
-On Ubuntu, you can just create launcher from desktop via right-click menu(at least on 16.04 you can). You'll need to point out the path to extracted files(working directory) and enter a command python "main.py", then go to permissions tab and click "Allow this file to run as program".
+On Ubuntu, you can just create launcher from desktop via right-click menu (at least on 16.04 you can). You'll need to point out the path to extracted files (working directory) and enter a command python "main.py", then go to permissions tab and click "Allow this file to run as program".
 You can do pretty much the same in any linux distributive by creating file with extension .sh in which you need to write pretty much the same you would do in terminal, then save it, open properties and again go to permissions tab and click "Allow this file to run as program".
 
 ## *portmidi* vs *mido + rtmidi*
