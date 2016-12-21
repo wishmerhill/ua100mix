@@ -46,12 +46,8 @@ logger.info('Starting the us100mix')
 #      0: No UA-100 present, for test purposes on other machines
 #      1: UA-100 present and working
 # NOTE: Could (and will) be automatically set to 0 if no UA-100 is found.
-#       The UA-100 discovery routine is based on ALSA - **** 
-#       ******* TO DO *******
-#       Let the discovery be usb id based?
-#       Well: actually, ALSA discovery could be better, as we have more information about the device.
-#       On the other hand, USB discovery will still need ALSA to get the device id to be used by portmidi.
-#       So: we stick on ALSA discovery.
+#       The UA-100 discovery routine is based on WHAT? - ****
+
 
 REAL_UA_MODE = 1
 logger.info('Setting REAL_UA_MODE to %s', REAL_UA_MODE )
