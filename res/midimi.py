@@ -34,11 +34,15 @@ base_range = range(0x00,0x80)
 #
 # print(p)
 
-d = tools.rlist(-20,20,1)
-r = range(0x2c,0x55)
+# d = tools.rlist(-20,20,1)
+# r = range(0x2c,0x55)
+# p = tools.mergeRanges(r,d)
+# print(p)
+
+d = tools.rlist(0,180,2)
+r = range(0x00,0x5b)
 p = tools.mergeRanges(r,d)
 print(p)
-
 
 
 # PARAM_TYPE_2

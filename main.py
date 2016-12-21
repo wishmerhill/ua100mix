@@ -24,6 +24,21 @@ __email__ = 'alberto.azzalini@gmail.com'
 
 DEBUG_MODE = 1
 
+# Let's get rid of DEBUG_MODE and move to the more professional logging
+import logging
+#logging.basicConfig(level=logging.DEBUG)
+logger = logging.getLogger(__name__)
+logger.setLevel(logging.DEBUG)
+handler = logging.StreamHandler()
+formatter = logging.Formatter(
+        '%(name)-12s %(levelname)-8s %(message)s')
+handler.setFormatter(formatter)
+logger.addHandler(handler)
+
+logger.info('Starting the us100mix')
+
+
+
 # ********************************
 # ***** UA MODE CONTROL **********
 #
@@ -39,21 +54,9 @@ DEBUG_MODE = 1
 #       So: we stick on ALSA discovery.
 
 REAL_UA_MODE = 1
+logger.info('Setting REAL_UA_MODE to %s', REAL_UA_MODE )
 
-# ********************************
-
-#       Just for the records:
-#
-#       install pyusb (first of all!)
-#       
-#       import sys
-#       import usb.core as u
-#       dev = u.find(idVendor=0x0582, idProduct=0x0000)
-#       if dev is None:
-#           print('sorry, no UA-100 found!')
-#       else:
-#       print('Well done! UA-100 is there to rock!')
-
+logger.info('Importing the required modules')
 import sys
 import functools
 
@@ -78,14 +81,9 @@ import numpy as np
 # try:
 #     import pyportmidi as pm
 # except ImportError:
-#     if (DEBUG_MODE):
-#         print('*** Warning *** pypm not found - still trying with pyPortMidi  ***')
 #     try:
 #         import pypm as pm
-#         
 #     except ImportError:
-#         if (DEBUG_MODE):
-#             print('*** Warning *** neither pypm nor pyPortmidi found - Switching to testing mode (REAL_UA_MODE = 0) ***')
 #         REAL_UA_MODE = 0
 # if not (REAL_UA_MODE) and (DEBUG_MODE):
 #     print('No portmidi implementation available! Running just in test mode')
@@ -96,9 +94,8 @@ try:
     import mido
     import rtmidi
 except ImportError:
-    if (DEBUG_MODE):
-        print('*** Warning *** mido and/or rtmidi not found - Switching to testing mode (REAL_UA_MODE = 0) ***')
-        REAL_UA_MODE = 0
+    logger.warning('*** Warning *** mido and/or rtmidi not found - Switching to testing mode (REAL_UA_MODE = 0) ***')
+    REAL_UA_MODE = 0
 import PyQt4.uic
 from PyQt4 import QtGui
 # from PyQt4 import QtCore
@@ -107,14 +104,12 @@ import signal
 import time
 import res.tools as tools
 
-if (DEBUG_MODE):
-    np.set_printoptions(formatter={'int': hex})
+np.set_printoptions(formatter={'int': hex})
 
 # Defining constants (taken from UA-100 documentation)
 # and copying some useful documentation excerts
 
-if (DEBUG_MODE):
-    print('Reading some MANY constants...')
+logger.info('Reading some MANY constants...')
 
 # just for convenience in code writing and editing
 # in DEFINING CONSTANTS
@@ -1137,6 +1132,22 @@ if (True):
                       70: '6', 71: '7', 72: '8', 73: '9', 74: '10', 75: '11', 76: '12',
                       77: '13', 78: '14', 79: '15', 80: '16', 81: '17', 82: '18', 83: '19',
                       84: '20'})
+
+    PARAM_PHASE = ({0: '0', 1: '2', 2: '4', 3: '6', 4: '8', 5: '10', 6: '12', 7: '14', 8: '16',
+                    9: '18', 10: '20', 11: '22', 12: '24', 13: '26', 14: '28', 15: '30',
+                    16: '32', 17: '34', 18: '36', 19: '38', 20: '40', 21: '42', 22: '44',
+                    23: '46', 24: '48', 25: '50', 26: '52', 27: '54', 28: '56', 29: '58',
+                    30: '60', 31: '62', 32: '64', 33: '66', 34: '68', 35: '70', 36: '72',
+                    37: '74', 38: '76', 39: '78', 40: '80', 41: '82', 42: '84', 43: '86',
+                    44: '88', 45: '90', 46: '92', 47: '94', 48: '96', 49: '98', 50: '100',
+                    51: '102', 52: '104', 53: '106', 54: '108', 55: '110', 56: '112',
+                    57: '114', 58: '116', 59: '118', 60: '120', 61: '122', 62: '124',
+                    63: '126', 64: '128', 65: '130', 66: '132', 67: '134', 68: '136',
+                    69: '138', 70: '140', 71: '142', 72: '144', 73: '146', 74: '148',
+                    75: '150', 76: '152', 77: '154', 78: '156', 79: '158', 80: '160',
+                    81: '162', 82: '164', 83: '166', 84: '168', 85: '170', 86: '172',
+                    87: '174', 88: '176', 89: '178', 90: '180'})
+
     # TODO: Finish to add all necessary PARAM constants to complete the effects...
 
     # Let's initialise the dictionaries with the parameters.
@@ -1711,11 +1722,11 @@ if (True):
 
     # Limiter
     COMPACT_INS_EFX_PARAMETERS[15] = (
-        # ('Name', 'description', mergedRange, [0xXX], _default_),
-        # ('Name', 'description', mergedRange, [0xXX], _default_),
-        # ('Name', 'description', mergedRange, [0xXX], _default_),
-        # ('Name', 'description', mergedRange, [0xXX], _default_),
-        # ('Name', 'description', mergedRange, [0xXX], _default_),
+        ('Threshold', '0 - 20 - 127', PARAM_0127, [0x03], 20),
+        #('Ratio', '1/1.5, 1/2, 1/4, 1/100', mergedRange, [0x04], 0x02),
+        ('Release', '0 - 100 - 127', PARAM_0127, [0x05], 100),
+        # ('Post Gain', '0/+6/+12/+18dB', mergedRange, [0x06], 0x02),
+        ('Low Gain', '-12dB - 0dB - +12dB', PARAM_12DB , [0x13], 64),
         ('Hi Gain', '-12dB - 0dB - +12dB', PARAM_12DB, [0x14], 64),
         ('Pan', 'L63 - 0 - R63', PARAM_PAN63, [0x15], 63),
         ('Level', '0 - 127', PARAM_0127, [0x16], 127),
@@ -1739,8 +1750,48 @@ if (True):
         ('Noise suppressor', '0 - 10 - 127', PARAM_0127, [0x25], 10)
     )
 
+    # 17: Tremolo Chorus
+    COMPACT_INS_EFX_PARAMETERS[17] = (
+        ('Pre Dly', '0.0ms - 2.0ms - 100ms', PARAM_TYPE_1, [0x03], 20),
+        ('Cho Rate', '0.05Hz - 0.50Hz - 10.0Hz', PARAM_TYPE_6, [0x04], 9),
+        ('Cho Depth', '0 - 40 - 127', PARAM_0127, [0x05], 40),
+        ('Trem Phase', '0 - 90 - 180', PARAM_PHASE, [0x06], 45),
+        ('Trem Rate', '0.05Hz - 4.00Hz - 10.0Hz', PARAM_TYPE_6, [0x07], 79),
+        ('Trem Sep', '0 - 110 - 127', PARAM_0127 , [0x08], 110),
+        ('Balance', 'D > 0E - D30 < E - D0 < E', PARAM_BALANCE, [0x12], 20),
+        ('Low Gain', '-12dB - 0dB - +12dB', PARAM_12DB, [0x13], 64),
+        ('Hi Gain', '-12dB - 0dB - +12dB', PARAM_12DB, [0x14], 64),
+        ('Level', '0 - 127', PARAM_0127, [0x16], 127),
+        ('Noise suppressor', '0 - 10 - 127', PARAM_0127, [0x25], 10)
+    )
 
 
+    # Generic Compact Insertion Effect:
+    # If you want to help, fill the fields:
+
+    # Name:         the name of the "Parameter" as in the docs (i.e. Pre Dly, Rate or whatever;
+    # Description:  human readable setting values. The *BOLD* value is the default. In the description, don't care about that;
+    # mergedRange:  this should be a dictionary of the possible values. If in doubt, leave the live commented and add 'TODO' tag at the end. I'll take care of it sooned or later;
+    # [0xXX]:       the HEX value of the parameter to be passed via SysEx messages. It's in the docs, so please DO fill it;
+    # _default_:    the default value. If you can't figure it out, just leave it as is (line commented)
+
+    # Uncomment line only if you are sure of what you do.
+    # if only one parameter is there, please leave the trailing COMMA (,). If more than one parameter is done, the last one CAN (but must not) be without the trailing COMMA.
+    # if the effect if finished (all parameters filled), the last one has no trailing comma.
+    #
+    #COMPACT_INS_EFX_PARAMETERS[XXXX] = (
+        # ('Name', 'description', mergedRange, [0xXX], _default_),
+        # ('Name', 'description', mergedRange, [0xXX], _default_),
+        # ('Name', 'description', mergedRange, [0xXX], _default_),
+        # ('Name', 'description', mergedRange, [0xXX], _default_),
+        # ('Name', 'description', mergedRange, [0xXX], _default_),
+        # ('Name', 'description', mergedRange, [0xXX], _default_),
+        # ('Name', 'description', mergedRange, [0xXX], _default_),
+        # ('Name', 'description', mergedRange, [0xXX], _default_),
+        # ('Name', 'description', mergedRange, [0xXX], _default_),
+        # ('Name', 'description', mergedRange, [0xXX], _default_)
+        # ADD ENOUGH LINES OR DELETE THOSE YOU DON'T NEED.
+    #)
 
     # TODO: Fill up the filter definitions
     #
@@ -2073,8 +2124,7 @@ if (True):
 # 	1108: (64) Phaser/Auto-wah
 
 
-if (DEBUG_MODE):
-    print('Done!')
+logger.info('Done!')
 
 
 class MidiDevsDialog(QtGui.QDialog):
@@ -2087,9 +2137,7 @@ class MidiDevsDialog(QtGui.QDialog):
 
         self.ui = PyQt4.uic.loadUi('ui/device_sel.ui', self)
 
-        if (DEBUG_MODE):
-            # print('DEFAULT_UA100CONTROL= ', DEFAULT_UA100CONTROL)
-            print('midiDevs=', midiDevs)
+        logger.debug('midiDevs= %s', midiDevs)
         for i in range(0, len(midiDevs)):
             self.outputDevicesList.addItem(str(midiDevs[i]), i)
 
@@ -2139,12 +2187,11 @@ class MidiDevsDialog(QtGui.QDialog):
         global UA100CONTROL
 
         UA100CONTROL = index
-        if (DEBUG_MODE == 1):
-            print('Index = ', index)
-            if not (index == -1):
-                print('UA100CONTROL = ', midiDevs[UA100CONTROL])
-            else:
-                print('UA100CONTROL is not yet set!')
+        logger.debug('Index = %s', index)
+        if not (index == -1):
+            logger.debug('UA100CONTROL = %s', midiDevs[UA100CONTROL])
+        else:
+            logger.debug('UA100CONTROL is not yet set!')
 
 
 class MainWindow(QtGui.QMainWindow):
@@ -2430,12 +2477,10 @@ class MainWindow(QtGui.QMainWindow):
             p = mido.Parser()
             p.feed([CC_MIC1_CH, CC_MICLINESELECTOR_PAR, self.sender().property('state').toPyObject()])
             shortMsg = p.get_message()
-            if (DEBUG_MODE):
-                print('Message to be sent ', shortMsg)
+            logger.debug('Message to be sent %s', shortMsg)
             pmout.send(shortMsg)
 
-        if (DEBUG_MODE):
-            print(CC_MIC1_CH, ' ', CC_MICLINESELECTOR_PAR, ' ', self.sender().property('state').toPyObject())
+        logger.debug('%s %s %s', CC_MIC1_CH, CC_MICLINESELECTOR_PAR, self.sender().property('state').toPyObject())
 
     def setEffectMode(self, value):
         '''
@@ -2449,17 +2494,10 @@ class MainWindow(QtGui.QMainWindow):
 
     def effectSelection(self):
         global MixerEffectMode
-        # if (DEBUG_MODE):
-        #    print(self.sender().objectName())
         if (MixerEffectMode == 0x04):
-            # if not (self.sender() in self.fullEffects):
-            #    self.fullEffects[self.sender()] = FullEffectsDialog(self)
-            # self.fullEffects[self.sender()].show()
             if (self.fullEffects):
-                # self.fullEffects.uiToggleEffect.setChecked(0)
                 self.fullEffects.close()
                 self.fullEffects = FullEffectsDialog(self)
-                # self.fullEffects.uiToggleEffect.setChecked(1)
             else:
                 self.fullEffects = FullEffectsDialog(self)
             self.fullEffects.show()
@@ -2516,15 +2554,13 @@ class MainWindow(QtGui.QMainWindow):
         '''
         custom slot to connect to the changes in the interface with WriteShort to send the control change messages
         '''
-        if (DEBUG_MODE == 1):
-            print(a, b, val)
+        logger.debug('Value change: %s %s %s', a, b, val)
 
         if (REAL_UA_MODE):
             p = mido.Parser()
             p.feed([a, b, val])
             shortMsg = p.get_message()
-            if (DEBUG_MODE):
-                print('Message to be sent ', shortMsg)
+            logger.debug('Message to be sent %s', shortMsg)
             pmout.send(shortMsg)
 
     def uniqueSolos(self, checked):
@@ -2536,17 +2572,15 @@ class MainWindow(QtGui.QMainWindow):
         soloers = ['Mic1', 'Mic2', 'Wave1', 'Wave2']
         soloers.remove(str(self.sender().parent().objectName()))
         if (checked):
-            if (DEBUG_MODE == 1):
-                print(soloers)
-                print('unchecking and desoloing ')
-                print('soloing ', str(self.sender().parent().objectName()))
+            logger.debug('soloers: %s', soloers)
+            logger.debug('unchecking and desoloing ')
+            logger.debig('soloing %s', str(self.sender().parent().objectName()))
 
             if (REAL_UA_MODE):
                 p = mido.Parser()
                 p.feed([self.sender().parent().property('channel').toPyObject(), CC_SOLO_PAR, 1])
                 shortMsg = p.get_message()
-                if (DEBUG_MODE):
-                    print('Message to be sent ', shortMsg)
+                logger.info('Message to be sent %s', shortMsg)
                 pmout.send(shortMsg)
 
             for soloer in soloers:
@@ -2556,8 +2590,7 @@ class MainWindow(QtGui.QMainWindow):
                     p = mido.Parser()
                     p.feed([soloingObj.property('channel').toPyObject(), CC_SOLO_PAR, 0])
                     shortMsg = p.get_message()
-                    if (DEBUG_MODE):
-                        print('Message to be sent ', shortMsg)
+                    logger.info('Message to be sent %s', shortMsg)
                     pmout.send(shortMsg)
 
                 soloingButtonStr = soloer + 'Solo'
@@ -2567,10 +2600,9 @@ class MainWindow(QtGui.QMainWindow):
                 nomuteButton = soloingObj.findChild(QtGui.QPushButton, nomuteButtonStr)
                 soloingButton.setChecked(False)
                 nomuteButton.hide()
-                if (DEBUG_MODE):
-                    # review those fucking debug messages. They are just fucking messed up!
-                    print('desoloing: ', soloingObj.objectName())
-                    print(soloingObj.property('channel').toPyObject())
+                # review those fucking debug messages. They are just fucking messed up!
+                logging.debug('desoloing: %s', soloingObj.objectName())
+                #print(soloingObj.property('channel').toPyObject())
         else:
             for soloer in soloers:
                 soloingObj = self.findChild(QtGui.QGroupBox, soloer)
@@ -2582,8 +2614,7 @@ class MainWindow(QtGui.QMainWindow):
                 p = mido.Parser()
                 p.feed([self.sender().parent().property('channel').toPyObject(), CC_SOLO_PAR, 0])
                 shortMsg = p.get_message()
-                if (DEBUG_MODE):
-                    print('Message to be sent ', shortMsg)
+                logger.info('Message to be sent %S', shortMsg)
                 pmout.send(shortMsg)
 
     def resetMixer(self):
@@ -2619,8 +2650,7 @@ class MainWindow(QtGui.QMainWindow):
         time.sleep(SLEEP_TIME)
 
         masterLevel = sysexRead()
-        if (DEBUG_MODE):
-            print('masterlevel=', masterLevel)
+        logger.info('masterlevel= %s', masterLevel)
         self.MasterLineFader.setProperty("value", masterLevel)
 
         send_RQ1(MIXER_OUTPUT_CONTROL + MIXER_OUTPUT_WAVEREC + MIXER_OUTPUT_WAVEREC_SIZE)
@@ -2723,14 +2753,12 @@ class CompactEffectsInsDialog(QtGui.QDialog):
         # read the offset of the specified group to reach the right effects
         offset = COMPACT_INS_EFX_GROUP[self.InsEffectGroup][1][0]
 
-        if (DEBUG_MODE):
-            print('Indice: ', index, ' Offset: ', offset)
+        logger.debug('Indice: %s, Offset: %s', index, offset)
 
         # populate the effect parameters
 
         for param in COMPACT_INS_EFX_PARAMETERS[index + offset]:
-            if (DEBUG_MODE):
-                print('dentro: ', param)
+            logger.debug('filling: %s', param)
             item = CustomTreeItem(self.uiEffectParameters, param)
 
     def sendEffect(self, value):
@@ -2740,11 +2768,11 @@ class CompactEffectsInsDialog(QtGui.QDialog):
 
         # first of all convert the passed value to list in order to send the SYSEX message
         valueToList = [value]
-        if (DEBUG_MODE):
-            print 'LSB/MSB for parameter:', self.sender().property('HEX').toPyObject()
+        logger.info('LSB/MSB for parameter: %s', self.sender().property('HEX').toPyObject())
 
         # if in real mode, actually send the message
-        send_DT1([0x00, 0x40] + self.SenderHex + self.sender().property('HEX').toPyObject() + valueToList)
+        if REAL_UA_MODE == 1:
+            send_DT1([0x00, 0x40] + self.SenderHex + self.sender().property('HEX').toPyObject() + valueToList)
 
     def setEffect(self, checked):
         '''
@@ -2753,8 +2781,7 @@ class CompactEffectsInsDialog(QtGui.QDialog):
         IT SWITCHES THE WHOLE THIG ON!
         '''
 
-        if (DEBUG_MODE):
-            print(self.SenderHex)
+        logger.debug('Sender Hex: %s',self.SenderHex)
         if (checked):
             checkedList = [0x01]
         else:
@@ -2791,14 +2818,12 @@ class CompactEffectsSysDialog(QtGui.QDialog):
         # This is the LSB/MSB of the effect type (i.e. High Quality Reverb, Mic Simulator) aka the FULL_EFX_TYPE[n][1] (hex value)
         self.uiEffectParameters.clear()
         if (self.SenderHex == [0x05]):
-            if (DEBUG_MODE):
-                print([0x00, 0x40] + self.SenderHex + [0x00] + COMPACT_SYS1_EFX_TYPE[index + 1][1])
+            logger.debug('Populate parameter DT1: %s', [0x00, 0x40] + self.SenderHex + [0x00] + COMPACT_SYS1_EFX_TYPE[index + 1][1])
             send_DT1([0x00, 0x40] + self.SenderHex + [0x00] + COMPACT_SYS1_EFX_TYPE[index + 1][1])
             for par in COMPACT_SYS1_EFX_PARAMETERS[index + 1]:
                 item = CustomTreeItem(self.uiEffectParameters, par)
         elif (self.SenderHex == [0x06]):
-            if (DEBUG_MODE):
-                print([0x00, 0x40] + self.SenderHex + [0x00] + COMPACT_SYS2_EFX_TYPE[index + 1][1])
+            logger.debug('Populate parameter DT1: %s',[0x00, 0x40] + self.SenderHex + [0x00] + COMPACT_SYS2_EFX_TYPE[index + 1][1])
             send_DT1([0x00, 0x40] + self.SenderHex + [0x00] + COMPACT_SYS2_EFX_TYPE[index + 1][1])
             for par in COMPACT_SYS2_EFX_PARAMETERS[index + 1]:
                 item = CustomTreeItem(self.uiEffectParameters, par)
@@ -2810,8 +2835,7 @@ class CompactEffectsSysDialog(QtGui.QDialog):
         IT SWITCHES THE WHOLE THIG ON!
         '''
 
-        if (DEBUG_MODE):
-            print(self.SenderHex)
+        logger.debug('Sender Hex: %s', self.SenderHex)
         if (checked):
             checkedList = [0x01]
         else:
@@ -2825,8 +2849,7 @@ class CompactEffectsSysDialog(QtGui.QDialog):
 
         # first of all convert the passed value to list in order to send the SYSEX message
         valueToList = [value]
-        if (DEBUG_MODE):
-            print 'LSB/MSB for parameter:', self.sender().property('HEX').toPyObject()
+        logger.debug('LSB/MSB for parameter: %s', self.sender().property('HEX').toPyObject())
 
         # if in real mode, actually send the message
         send_DT1([0x00, 0x40] + self.SenderHex + self.sender().property('HEX').toPyObject() + valueToList)
@@ -2868,8 +2891,7 @@ class FullEffectsDialog(QtGui.QDialog):
         IT SWITCHES THE WHOLE THIG ON!
         '''
 
-        if (DEBUG_MODE):
-            print(self.SenderHex)
+        logger.debug('Sender Hex: %s', self.SenderHex)
         if (checked):
             checkedList = [0x01]
             # self.EffectNameTextBox.setText(FULL_EFX_TYPE[self.actualEffectIndex][0])
@@ -2909,8 +2931,7 @@ class FullEffectsDialog(QtGui.QDialog):
 
         # first of all convert the passed value to list in order to send the SYSEX message
         valueToList = [value]
-        if (DEBUG_MODE):
-            print 'LSB/MSB for parameter:', self.sender().property('HEX').toPyObject()
+        logger.debug('LSB/MSB for parameter: %s', self.sender().property('HEX').toPyObject())
 
         # if in real mode, actually send the message
         send_DT1([0x00, 0x40] + self.SenderHex + self.sender().property('HEX').toPyObject() + valueToList)
@@ -2993,12 +3014,10 @@ def actualMidiDevices():
         numIODevs = len(IODevs)
 
         if (numIODevs == 0):
-            if (DEBUG_MODE == 1):
-                print('***************  No midi device found - and we should be in REAL UA mode! Exiting. Bye!')
+            logger.warning('***************  No midi device found - and we should be in REAL UA mode! Exiting. Bye!')
             sys.exit()
 
-        if (DEBUG_MODE):
-            print('We have ', numIODevs, ' output devices:', IODevs)
+        logger.info('We have %s output devices: %s', numIODevs,  IODevs)
     else:
         numIODevs = 1
         IODevs = {u'Dummy midi device 0:0'}
@@ -3027,8 +3046,7 @@ def rightMidiDevice(midiDevs):
     '''
     for i in range(0, len(midiDevs)):
         if ('UA-100 Control' in midiDevs[i]):
-            if (DEBUG_MODE == 1):
-                print('Found something! The controller is device ', i, ', aka ', midiDevs[i][1])
+            logger.info('Found something! The controller is device %s aka %s', i, midiDevs[i][1])
             return int(i)
 
 
@@ -3045,7 +3063,7 @@ def sysexRead():
     answerMsg = pmin.receive()
     answerBytes = answerMsg.bytes()
     value = answerBytes[11]
-    print('risposta:', answerMsg, ', aka ', answerBytes, '. Value is: ', value)
+    print('SysEx answer received:', answerMsg, ', aka ', answerBytes, '. Value is: ', value)
     # need to parse answer again... 
 
     return value
@@ -3068,15 +3086,13 @@ def send_RQ1(data):
               + data \
               + checksum_result \
               + EOX
-    if (DEBUG_MODE):
-        print("Message RQ1: ", message)
+    logger.info("Message RQ1: %s", message)
 
     if (REAL_UA_MODE):
         p = mido.Parser()
         p.feed(message)
         sysEx_msg = p.get_message()
-        if (DEBUG_MODE):
-            print('Message to be sent: ', sysEx_msg)
+        logger.info('Message to be sent: %s', sysEx_msg)
         pmout.send(sysEx_msg)
 
 
@@ -3089,16 +3105,13 @@ def send_DT1(data):
               + data \
               + checksum_result \
               + EOX
-    if (DEBUG_MODE):
-        # print(message)
-        print(np.array(message))
+    logger.info('DT1 Messagen: %s', np.array(message))
 
     if (REAL_UA_MODE):
         p = mido.Parser()
         p.feed(message)
         sysEx_msg = p.get_message()
-        if (DEBUG_MODE):
-            print('Message to be sent: ', sysEx_msg)
+        logger.info('Message to be sent: %s', sysEx_msg)
         pmout.send(sysEx_msg)
 
 
@@ -3141,8 +3154,7 @@ if (__name__ == '__main__'):
     # get the list of the Midi Devices according to portmidy
     midiDevs = actualMidiDevices()
 
-    if (DEBUG_MODE == 1):
-        print('MIDI DEVICES FOUND: ', len(midiDevs), '. They are: ', midiDevs)
+    logger.info('MIDI DEVICES FOUND: %s; they are: %s', len(midiDevs), midiDevs)
 
     # guess the right midi device
     if (REAL_UA_MODE):
@@ -3150,8 +3162,7 @@ if (__name__ == '__main__'):
     else:
         DEFAULT_UA100CONTROL = 1
 
-    if (DEBUG_MODE == 1):
-        print('DEFAULT_UA100CONTROL = ', midiDevs[DEFAULT_UA100CONTROL])
+    logger.debug('DEFAULT_UA100CONTROL = %s', midiDevs[DEFAULT_UA100CONTROL])
 
     # *******************************************************************************************************************
 
@@ -3164,37 +3175,30 @@ if (__name__ == '__main__'):
 
     if not dialog.exec_():
         # We quit if the the selection dialog quits
-        if (DEBUG_MODE == 1):
-            print('Bye.')
+        logger.info('Quitting. Bye!')
         sys.exit()
 
-    if (DEBUG_MODE) and (REAL_UA_MODE):
-        print('UA100CONTROL = ', midiDevs[UA100CONTROL])
+    if (REAL_UA_MODE):
+        logger.debug('UA100CONTROL = %s', midiDevs[UA100CONTROL])
 
-    if (DEBUG_MODE):
-        print(
-            'Opening device: ', midiDevs[UA100CONTROL], ' for input/ouput')
+    logger.debug('Opening device %s for input/ouput', midiDevs[UA100CONTROL])
 
     if (REAL_UA_MODE):
         # Open device for output
 
-        if (DEBUG_MODE):
-            print('Trying the Output...')
+        logger.info('Trying the Output...')
 
         pmout = mido.open_output(midiDevs[UA100CONTROL])
 
-        if (DEBUG_MODE):
-            print('...Done! Just opened ', midiDevs[UA100CONTROL], ' for output')
+        logger.info('...Done! Just opened %s for output.', midiDevs[UA100CONTROL])
 
         # Open "the next" device for input
 
-        if (DEBUG_MODE):
-            print('Trying the Input...')
+        logger.info('Trying the Input...')
 
         pmin = mido.open_input(midiDevs[UA100CONTROL])
 
-        if (DEBUG_MODE):
-            print('...Done! Just opened ', midiDevs[UA100CONTROL], ' for input')
+        logger.info('...Done! Just opened %s  for input', midiDevs[UA100CONTROL])
 
     window = MainWindow()
     window.show()
