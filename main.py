@@ -22,7 +22,7 @@ __email__ = 'alberto.azzalini@gmail.com'
 # 1: debug messages on stdout ON
 # 0: debug messages on stdout OFF
 
-DEBUG_MODE = 1
+# DEBUG_MODE = 1
 
 # Let's get rid of DEBUG_MODE and move to the more professional logging
 import logging
@@ -61,34 +61,6 @@ import sys
 import functools
 
 import numpy as np
-
-#
-# **************************************************************************************
-# **************************************************************************************
-# **************************************************************************************
-# **************************************************************************************
-# NEW IN BRANCH: trying to implement something better than pyPortMidi,
-#                which revealed itself to be broken and not maintained anymore.
-#
-#                From now on, we will rely on MIDO (https://github.com/olemb/mido)
-#
-#                MIDO itself CAN work with portmidi (which is default), but we move
-#                to rtmidi, which looks better.
-#
-#                Time to rewrite A LOT of the code. I hope to manage it.
-#                
-#
-# try:
-#     import pyportmidi as pm
-# except ImportError:
-#     try:
-#         import pypm as pm
-#     except ImportError:
-#         REAL_UA_MODE = 0
-# if not (REAL_UA_MODE) and (DEBUG_MODE):
-#     print('No portmidi implementation available! Running just in test mode')
-# elif (REAL_UA_MODE) and (DEBUG_MODE):
-#     print('Ok - We have a portmidi implementation. It is known as pm')
 
 try:
     import mido
@@ -2176,9 +2148,6 @@ class MidiDevsDialog(QtGui.QDialog):
             self.reccomendedLabel.setStyleSheet('color: red; font-style: bold')
         else:
             self.reccomendedLabel.setText('')
-            #
-            # if (DEBUG_MODE == 1):
-            #     print(midiDevs[index][2], midiDevs[index][3])
 
     def setMidiDevice(self, index):
         '''
@@ -2902,23 +2871,12 @@ class FullEffectsDialog(QtGui.QDialog):
 
     def populateEffect(self, index):
 
-        # first af all, sent the effect type to the UA-100
+        # first af all, send the effect type to the UA-100
         # This is the LSB/MSB of the effect type (i.e. High Quality Reverb, Mic Simulator) aka the FULL_EFX_TYPE[n][1] (hex value)
-        # if (DEBUG_MODE):
-        #    print([0x00, 0x40] + self.SenderHex + [0x00] + FULL_EFX_TYPE[index+1][1])
         send_DT1([0x00, 0x40] + self.SenderHex + [0x00] + FULL_EFX_TYPE[index + 1][1])
         self.actualEffectIndex = index + 1
 
         self.uiEffectParameters.clear()
-        # check if the list isn't yet there... but, as said, the instances are deleted... so what? and How?
-        # if not (index in self.effectList):
-        #    self.effectList[index]={}
-        #    for par in FULL_EFX_PARAMETERS[index+1]:
-        #        self.effectList[index][par[0]] = CustomTreeItem(self.uiEffectParameters, par)
-        # else:
-        #    print self.effectList[index]
-        #    for item in self.effectList[index]:
-        #        self.uiEffectParameters.addTopLevelItem(self.effectList[index][item])
 
         # "anonimously" polulate the QTreeWidget ...
         for par in FULL_EFX_PARAMETERS[index + 1]:
@@ -2960,20 +2918,13 @@ class CustomTreeItem(QtGui.QTreeWidgetItem):
         self.setText(0, par[0])
         self.spinBox = QtGui.QSpinBox(parent)
         self.spinBox.setProperty('HEX', par[3])
-        # self.spinBox.setValue(5)
 
-        # nell'implementazione con par[2] dizionario questa riga non va bene...
-        # self.spinBox.setRange(min(par[2]), max(par[2]))
-        # devo usare par[2].keys()
         self.spinBox.setValue(-1)
         self.spinBox.setRange(min(par[2].keys()), max(par[2].keys()))
 
         self.spinBox.setWrapping(1)
         parent.setItemWidget(self, 1, self.spinBox)
         self.setText(3, par[1])
-
-        # set the spinBox to some value, in order to let the next setValue trigger the signals
-
 
         self.spinBox.valueChanged.connect(self.setActualValue)
         # set the spinBox to some value, in order to let the next setValue trigger the signals
@@ -2997,18 +2948,7 @@ def actualMidiDevices():
     ('ALSA', 'UA-100 MIDI 2', 0, 1, 0)
     
     '''
-    # Count the MIDI devices connected
-    # if (REAL_UA_MODE):
-    # #   numDevs = pm.get_count()
-    #     try:
-    #         numDevs = pm.CountDevices()
-    #     except AttributeError:
-    #         numDevs = pm.get_count()
-    # else:
-    #     numDevs = 5
-    #     # Initialize the device dictionary
-    # # midiDevs = { 0: (tuple), 1: (tuple), ... }
-    # #
+
     if (REAL_UA_MODE):
         IODevs = mido.get_ioport_names()
         numIODevs = len(IODevs)
@@ -3027,10 +2967,6 @@ def actualMidiDevices():
     midiDevs = {}
     for dev in range(0, numIODevs):
         midiDevs[dev] = IODevs[dev]
-        # try:
-        #     midiDevs[dev] = pm.GetDeviceInfo(dev)
-        # except AttributeError:
-        #     midiDevs[dev] = pm.get_device_info(dev)
 
     return midiDevs
 
@@ -3039,7 +2975,7 @@ def rightMidiDevice(midiDevs):
     '''
     Guess the right device for sending Control Change and SysEx messages.
     
-    I suppose it is HEAVY dependant on pyPortMidi and ALSA: 
+    I suppose it is HEAVY dependant on rtMidi and ALSA:
     if *they* change something in the structure of the device info, we are lost!
     
     It scans the midiDevs (dictionary!) looking for something like 'UA-100 Control' with the output flag set to 1.
@@ -3053,13 +2989,6 @@ def rightMidiDevice(midiDevs):
 def sysexRead():
     global pmin
 
-    # if (REAL_UA_MODE):
-    #     try:
-    #         answer = pmin.Read(buffer_size)
-    #     except AttributeError:
-    #         answer = pmin.read(buffer_size)
-    # else:
-    #     answer = CC_0127_DEFAULT
     answerMsg = pmin.receive()
     answerBytes = answerMsg.bytes()
     value = answerBytes[11]
@@ -3076,7 +3005,7 @@ def send_RQ1(data):
     
     ** Note
     The first part of the message is fixed. What can change is the data (of course, it's function agument!)
-    AND the checksum, which on his side, depends on the data.
+    AND the checksum, which, on his side, depends on the data.
     '''
     global pmout, pmin
     checksum_result = checksum(data)
@@ -3131,27 +3060,12 @@ if (__name__ == '__main__'):
     signal.signal(signal.SIGINT, signal.SIG_DFL)
     # **************************** MIDI PART: could it go somewhere else? **********************************************
 
-    # initialize the portmidi interface
-
-    # if (REAL_UA_MODE):
-    #      #pm.init()
-    #      try:
-    #          pm.Initialize()
-    #          if (DEBUG_MODE):
-    #             print('pm.Initialize works')
-    #      except AttributeError:
-    #          pm.init()
-    #          if (DEBUG_MODE):
-    #             print('must use init()')
-
-    # INITIALIZATION NOT NEEDED ANYMORE WITH MIDO/RTMID - KEPT FOR THE RECORDS
-
     # setting the backend to rtmidi and alsa - Actually it's not wise to do it so, but it's ok for now.
     mido.set_backend('mido.backends.rtmidi/LINUX_ALSA')
     # *************************************************
     # TODO: change it to be more general
 
-    # get the list of the Midi Devices according to portmidy
+    # get the list of the Midi Devices according to rtMidi
     midiDevs = actualMidiDevices()
 
     logger.info('MIDI DEVICES FOUND: %s; they are: %s', len(midiDevs), midiDevs)
