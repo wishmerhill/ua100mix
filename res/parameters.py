@@ -1,3 +1,9 @@
+#!/usr/bin/python ua100mix/res/parameters.py
+
+# All the params imported into main.py
+# NOTE: this file will be imported as "from ... import *"
+# I read it's acceptable to do so for constants.
+
 import tools
 
 CC_0127_DEFAULT = 64
@@ -1047,6 +1053,8 @@ FULL_EFX_PARAMETERS = {}
 # par[4]: default value (hex or decimal)
 #
 
+# TODO: get rid of "mergeRange" to make the code faster.
+# So, we don't want to calculate the mergedRange on the fly, but put it statically in the definitions.
 
 # FULL EFFECT MODE
 FULL_EFX_TYPE[1] = ('High Quality Reverb', [0x00, 0x11])
@@ -1375,14 +1383,12 @@ COMPACT_INS_EFX_TYPE = ({
 
 COMPACT_INS_EFX_PARAMETERS = {}
 
-# Noise suppressor
-
+# 0: Noise suppressor
 COMPACT_INS_EFX_PARAMETERS[0] = (
     ('Noise Suppressor', '0 - 10 - 127', PARAM_0127, [0x25], 10),
 )
 
-# Stereo Eq
-
+# 1: Stereo Eq
 COMPACT_INS_EFX_PARAMETERS[1] = (
     ('Low Freq', '200/400Hz', {0: '200Hz', 1: '400Hz'}, [0x03], 0x00),
     ('Low Gain', '-12dB - +6dB - +12dB', PARAM_12DB, [0x04], 0x46),
@@ -1399,8 +1405,7 @@ COMPACT_INS_EFX_PARAMETERS[1] = (
     ('Noise Suppressor', '0 - 10 - 127', PARAM_0127, [0x25], 10)
 )
 
-# Spectrum
-
+# 2: Spectrum
 COMPACT_INS_EFX_PARAMETERS[2] = (
     ('Band 1', '-12dB - +5dB - +12dB', PARAM_12DB, [0x03], 0x45),
     ('Band 2', '-12dB - +2dB - +12dB', PARAM_12DB, [0x04], 0x42),
@@ -1419,8 +1424,7 @@ COMPACT_INS_EFX_PARAMETERS[2] = (
 
 # TODo: Complete the definitions which lack some parameters...
 
-# Enhancer
-
+# 3: Enhancer
 COMPACT_INS_EFX_PARAMETERS[3] = (
     ('Sens', '0 - 64 - 127', PARAM_0127, [0x03], 64),
     # ('Name', 'description', mergedRange, [0xXX], _default_),
@@ -1430,8 +1434,7 @@ COMPACT_INS_EFX_PARAMETERS[3] = (
     # ('Name', 'description', mergedRange, [0xXX], _default_)
 )
 
-# Humanizer
-
+# 4: Humanizer
 COMPACT_INS_EFX_PARAMETERS[4] = (
     ('Drive', '0 - 90 - 127', PARAM_0127, [0x03], 90),
     # ('Name', 'description', mergedRange, [0xXX], _default_),
@@ -1444,9 +1447,7 @@ COMPACT_INS_EFX_PARAMETERS[4] = (
 )
 
 # Effects that distort the sound (distortion type)
-
-# Overdrive
-
+# 5: Overdrive
 COMPACT_INS_EFX_PARAMETERS[5] = (
     ('Drive', '0 - 90 - 127', PARAM_0127, [0x03], 90),
     # ('Name', 'description', mergedRange, [0xXX], _default_),
@@ -1458,8 +1459,7 @@ COMPACT_INS_EFX_PARAMETERS[5] = (
     # ('Name', 'description', mergedRange, [0xXX], _default_)
 )
 
-# Distorsion
-
+# 6: Distorsion
 COMPACT_INS_EFX_PARAMETERS[6] = (
     ('Drive', '0 - 127', PARAM_0127, [0x03], 127),
     # ('Name', 'description', mergedRange, [0xXX], _default_),
@@ -1472,9 +1472,7 @@ COMPACT_INS_EFX_PARAMETERS[6] = (
 )
 
 # Effects that modulate the sound (modulation type)
-
-# Phaser
-
+# 7: Phaser
 COMPACT_INS_EFX_PARAMETERS[7] = (
     # ('Manual', '100Hz - 860Hz - 8kHz', PARAM_TYPE_12 *to be defined!* , [0x03], default),
     ('Rate', '0.05Hz - 0.40Hz - 10.0Hz', PARAM_TYPE_6, [0x04], 7),
@@ -1487,8 +1485,7 @@ COMPACT_INS_EFX_PARAMETERS[7] = (
     ('Noise suppressor', '0 - 10 - 127', PARAM_0127, [0x25], 10)
 )
 
-# Auto Wah
-
+# 8: Auto Wah
 COMPACT_INS_EFX_PARAMETERS[8] = (
     ('Fil Type', 'LPF/BOF', {0: 'LPF', 1: 'BOF'}, [0x03], 127),
     # ('Name', 'description', mergedRange, [0xXX], _default_),
@@ -1504,8 +1501,7 @@ COMPACT_INS_EFX_PARAMETERS[8] = (
     ('Noise suppressor', '0 - 10 - 127', PARAM_0127, [0x25], 10)
 )
 
-# Rotary
-
+# 9: Rotary
 COMPACT_INS_EFX_PARAMETERS[9] = (
     ('Low Slow', '0.05Hz - 0.35Hz - 10.0Hz', PARAM_TYPE_6, [0x03], 6),
     ('Low Fast', '0.05Hz - 6.40Hz - 10.0H', PARAM_TYPE_6, [0x04], 113),
@@ -1523,8 +1519,7 @@ COMPACT_INS_EFX_PARAMETERS[9] = (
     ('Noise suppressor', '0 - 10 - 127', PARAM_0127, [0x25], 10)
 )
 
-# Stereo Flanger
-
+# 10: Stereo Flanger
 COMPACT_INS_EFX_PARAMETERS[10] = (
     ('Pre Filter', 'Off/LPF/HPF', {0: 'Off', 1: 'LPF', 2: 'HPF'}, [0x03], 2),
     # ('Name', 'description', mergedRange, [0xXX], _default_),
@@ -1540,8 +1535,7 @@ COMPACT_INS_EFX_PARAMETERS[10] = (
     ('Noise suppressor', '0 - 10 - 127', PARAM_0127, [0x25], 10)
 )
 
-# Step Flanger
-
+# 11: Step Flanger
 COMPACT_INS_EFX_PARAMETERS[11] = (
     ('Pre Dly', '0.0ms - 1.0ms - 100ms', PARAM_TYPE_1, [0x03], 2),
     # ('Name', 'description', mergedRange, [0xXX], _default_),
@@ -1557,8 +1551,7 @@ COMPACT_INS_EFX_PARAMETERS[11] = (
     ('Noise suppressor', '0 - 10 - 127', PARAM_0127, [0x25], 10)
 )
 
-# Tremolo
-
+# 12: Tremolo
 COMPACT_INS_EFX_PARAMETERS[12] = (
     # ('Name', 'description', mergedRange, [0xXX], _default_),
     ('Mod Rate', '0.05Hz - 6.00Hz - 10.0Hz', PARAM_TYPE_6, [0x04], 109),
@@ -1569,8 +1562,7 @@ COMPACT_INS_EFX_PARAMETERS[12] = (
     ('Noise suppressor', '0 - 10 - 127', PARAM_0127, [0x25], 10)
 )
 
-# Auto Pan
-
+# 13: Auto Pan
 COMPACT_INS_EFX_PARAMETERS[13] = (
     # ('Name', 'description', mergedRange, [0xXX], _default_),
     # ('Name', 'description', mergedRange, [0xXX], _default_),
@@ -1594,7 +1586,7 @@ COMPACT_INS_EFX_PARAMETERS[14] = (
     ('Noise suppressor', '0 - 10 - 127', PARAM_0127, [0x25], 10)
 )
 
-# Limiter
+# 15: Limiter
 COMPACT_INS_EFX_PARAMETERS[15] = (
     ('Threshold', '0 - 20 - 127', PARAM_0127, [0x03], 20),
     #('Ratio', '1/1.5, 1/2, 1/4, 1/100', mergedRange, [0x04], 0x02),
@@ -1608,7 +1600,6 @@ COMPACT_INS_EFX_PARAMETERS[15] = (
 )
 
 # Effects that broaden the sound (chorus type)
-
 # 16: Hexa Chorus
 COMPACT_INS_EFX_PARAMETERS[16] = (
     ('Pre Dly', '0.0ms - 2.0ms - 100ms', PARAM_TYPE_1, [0x03], 20),
@@ -1639,7 +1630,6 @@ COMPACT_INS_EFX_PARAMETERS[17] = (
     ('Noise suppressor', '0 - 10 - 127', PARAM_0127, [0x25], 10)
 )
 
-
 # Generic Compact Insertion Effect:
 # If you want to help, fill the fields:
 
@@ -1667,15 +1657,13 @@ COMPACT_INS_EFX_PARAMETERS[17] = (
     # ADD ENOUGH LINES OR DELETE THOSE YOU DON'T NEED.
 #)
 
-# TODO: Fill up the filter definitions
 #
 
-# rotary multi
-
+# 47: Rotary Multi (same as Full Effect 6)
 COMPACT_INS_EFX_PARAMETERS[47] = FULL_EFX_PARAMETERS[6]
 
 #
-# TODO: Fill up the filter definitions
+# TODO: Go on and fill up the filter definitions
 #
 
 COMPACT_INS_EFX_PARAMETERS[64] = (
