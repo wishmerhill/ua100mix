@@ -24,9 +24,10 @@ __email__ = 'alberto.azzalini@gmail.com'
 
 # DEBUG_MODE = 1
 
-# Let's get rid of DEBUG_MODE and move to the more professional logging
+# Let's get rid of DEBUG_MODE and move to the more professional logging!
+# From now on, DEBUG_MODE is DEPRECATED!
 import logging
-#logging.basicConfig(level=logging.DEBUG)
+
 logger = logging.getLogger(__name__)
 logger.setLevel(logging.DEBUG)
 handler = logging.StreamHandler()
@@ -47,7 +48,7 @@ logger.info('Starting the us100mix')
 #      1: UA-100 present and working
 # NOTE: Could (and will) be automatically set to 0 if no UA-100 is found.
 #       The UA-100 discovery routine is based on WHAT? - ****
-
+#
 
 REAL_UA_MODE = 1
 logger.info('Setting REAL_UA_MODE to %s', REAL_UA_MODE )
@@ -402,7 +403,6 @@ if (True):
     # Parameters 10 to 18 are numbered and named wrongly the manual: count starts back from 1 and the names are just copied.
     # The right list can be found on page 66.
 
-
     # *1 : Pre Delay Time
     # *2 : Delay Time 1
     # *3 : Delay Time 2
@@ -676,10 +676,8 @@ if (True):
     # for hz in [200,250,315,400,500,630,800,1000,1250,1600,2000,2500,3150,4000,5000,6300]:
     #   for pippo in range(1,9):
     #      SEMIPAR_10.append(str(hz)+'Hz')
-    # print(SEMIPAR_10)
     #
     # PAR_10= tools.mergeRanges(range(0x00,0x80),SEMIPAR_10)
-    # print(PAR_10)
 
     # EQ Freq
     PARAM_TYPE_10 = (
@@ -709,10 +707,8 @@ if (True):
     # for hz in [250,315,400,500,630,800,1000,1250,1600,2000,2500,3150,4000,5000,6300,'Bypass']:
     #     for pippo in range(1,9):
     #         SEMIPAR_11.append(str(hz)+'{}'.format("Hz" if hz != "Bypass" else ""))
-    # print(SEMIPAR_11)
     #
     # PAR_10= tools.mergeRanges(range(0x00,0x80),SEMIPAR_11)
-    # print(PAR_11)
 
     PARAM_TYPE_11 = ({0: '250Hz', 1: '250Hz', 2: '250Hz', 3: '250Hz', 4: '250Hz', 5: '250Hz',
                       6: '250Hz', 7: '250Hz', 8: '315Hz', 9: '315Hz', 10: '315Hz', 11: '315Hz',
@@ -743,21 +739,14 @@ if (True):
 
     # PARAM_TYPE_12
     # p = tools.ulist(100,300,10,'Hz')
-    # print(len(p))
     # s = tools.ulist(320,1000,20,'Hz')
-    # print(len(s))
     # t = tools.ulist(1100,8000,100,'Hz')
-    # print(len(t))
     # q = 2 * ['8000Hz']
     #
     # p.extend(s)
-    # print(len(p))
     # p.extend(t)
-    # print(len(p))
     # p.extend(q)
     # z = tools.mergeRanges(range(0x00,0x80),p)
-
-    # print(z)
 
     PARAM_TYPE_12 = ({0: '100Hz', 1: '110Hz', 2: '120Hz', 3: '130Hz', 4: '140Hz', 5: '150Hz', 6: '160Hz',
                       7: '170Hz', 8: '180Hz', 9: '190Hz', 10: '200Hz', 11: '210Hz', 12: '220Hz',
@@ -790,13 +779,9 @@ if (True):
     # c = 6 * ['L180(=R180)']
     # l = tools.rlist(168,1,-12,'L',4)
     #
-    # print(len(l))
     # m = 4 * ['0']
-    # print(len(m))
     # r = tools.rlist(12,179,12,'R',4)
-    # print(len(r))
     # f = 6 * ['R180(=L180)']
-    # print(len(f))
     #
     # c.extend(l)
     # c.extend(m)
@@ -804,7 +789,6 @@ if (True):
     # c.extend(f)
     # base_range = range(0x00,0x80)
     # PARAM_TYPE_13 = tools.mergeRanges(base_range, c)
-    # print(PARAM_TYPE_13)
 
     PARAM_TYPE_13 = ({0: 'L180(=R180)', 1: 'L180(=R180)', 2: 'L180(=R180)', 3: 'L180(=R180)',
                       4: 'L180(=R180)', 5: 'L180(=R180)', 6: 'L168', 7: 'L168', 8: 'L168', 9: 'L168',
@@ -833,7 +817,6 @@ if (True):
     # PARAM_TYPE_14
     # d = tools.rlist(0,15,1,factor = 8)
     # p = tools.mergeRanges(base_range,d)
-    # print(p)
 
     PARAM_TYPE_14 = ({0: '0', 1: '0', 2: '0', 3: '0', 4: '0', 5: '0', 6: '0', 7: '0', 8: '1', 9: '1',
                       10: '1', 11: '1', 12: '1', 13: '1', 14: '1', 15: '1', 16: '2', 17: '2', 18: '2',
@@ -903,13 +886,9 @@ if (True):
 
     # PARAM_TYPE_17
     # d1 = tools.rlist(0.1,10,0.1,'Hz')
-    # print(d1)
     # d2 = tools.rlist(11.0,38,1,'Hz')
-    # print(d2)
     # d1.extend(d2)
-    # print(len(d1))
     # p = tools.mergeRanges(base_range, d1)
-    # print(p)
 
     PARAM_TYPE_17 = ({0: '0.1Hz', 1: '0.2Hz', 2: '0.3Hz', 3: '0.4Hz', 4: '0.5Hz', 5: '0.6Hz', 6: '0.7Hz',
                       7: '0.8Hz', 8: '0.9Hz', 9: '1.0Hz', 10: '1.1Hz', 11: '1.2Hz', 12: '1.3Hz',
@@ -942,7 +921,6 @@ if (True):
     # d2 = tools.rlist(300,400,100)
     # d1.extend(d2)
     # p = tools.mergeRanges(range(0x00,0x0A), d1)
-    # print(p)
 
     PARAM_TYPE_18 = ({0: '60', 1: '80', 2: '100', 3: '120', 4: '140',
                       5: '160', 6: '180', 7: '200', 8: '300', 9: '400'})
@@ -1116,6 +1094,24 @@ if (True):
                     81: '162', 82: '164', 83: '166', 84: '168', 85: '170', 86: '172',
                     87: '174', 88: '176', 89: '178', 90: '180'})
 
+    # PARAM_ROOM = tools.mergeRanges(range(0x00, 0x06), ['Room1', 'Room2', 'Plate1', 'Plate2', 'Hall1', 'Hall2'])
+    PARAM_ROOM = ({0: 'Room1', 1: 'Room2', 2: 'Plate1', 3: 'Plate2', 4: 'Hall1', 5: 'Hall2'})
+
+    # PARAM_HFDAMP = tools.mergeRanges(range(0x00, 0x0B), tools.ulist(-10, 0, 1))
+    PARAM_HFDAMP = ({0: '-10', 1: '-9', 2: '-8', 3: '-7', 4: '-6', 5: '-5',
+                     6: '-4', 7: '-3', 8: '-2', 9: '-1', 10: '0'})
+
+    # PARAM_DIFFUSION = tools.mergeRanges(range(0x00, 0x0B), tools.ulist(0, 10, 1))
+    PARAM_DIFFUSION = ({0: '0', 1: '1', 2: '2', 3: '3', 4: '4', 5: '5', 6: '6', 7: '7', 8: '8', 9: '9', 10: '10'})
+
+    #PARAM_FEEDBACK_48 = tools.mergeRanges(range(0x28, 0x59), tools.ulist(-48, +48, 2, '%'))
+    PARAM_FEEDBACK_48 = ({40: '-48%', 41: '-46%', 42: '-44%', 43: '-42%', 44: '-40%', 45: '-38%', 46: '-36%',
+                          47: '-34%', 48: '-32%', 49: '-30%', 50: '-28%', 51: '-26%', 52: '-24%', 53: '-22%',
+                          54: '-20%', 55: '-18%', 56: '-16%', 57: '-14%', 58: '-12%', 59: '-10%', 60: '-8%',
+                          61: '-6%', 62: '-4%', 63: '-2%', 64: '0%', 65: '2%', 66: '4%', 67: '6%', 68: '8%',
+                          69: '10%', 70: '12%', 71: '14%', 72: '16%', 73: '18%', 74: '20%', 75: '22%', 76: '24%',
+                          77: '26%', 78: '28%', 79: '30%', 80: '32%', 81: '34%', 82: '36%', 83: '38%', 84: '40%',
+                          85: '42%', 86: '44%', 87: '46%', 88: '48%'})
     # TODO: Finish to add all necessary PARAM constants to complete the effects...
 
     # Let's initialise the dictionaries with the parameters.
@@ -1139,14 +1135,13 @@ if (True):
     # FULL EFFECT MODE
     FULL_EFX_TYPE[1] = ('High Quality Reverb', [0x00, 0x11])
     FULL_EFX_PARAMETERS[1] = (
-        ('Type', 'Room1/2/Plate1/2/Hall1/2', tools.mergeRanges(range(0x00, 0x06), ['Room1', 'Room2', 'Plate1', 'Plate2', 'Hall1', 'Hall2']), [0x03],
-         0x03),
+        ('Type', 'Room1/2/Plate1/2/Hall1/2', PARAM_ROOM, [0x03], 0x03),
         ('Pre Dly', '0ms - 80ms - 635ms', PARAM_TYPE_5, [0x04], 0x10),
         ('Reverb Time', '0.1s - 2s - 38s', PARAM_TYPE_16, [0x05], 0x13),
-        ('HF Damp', '-10 - -4 -0', tools.mergeRanges(range(0x00, 0x0B), tools.ulist(-10, 0, 1)), [0x06], 0x06),
+        ('HF Damp', '-10 - -4 -0', PARAM_HFDAMP, [0x06], 0x06),
         ('ER Pre Dly', '0 - 40ms - 635 ms', PARAM_TYPE_5, [0x07], 0x08),
         ('ER Mix', '0 - 15 - 127', PARAM_0127, [0x08], 0x0f),
-        ('Diffusion', '0 - 9 - 10', tools.mergeRanges(range(0x00, 0x0B), tools.ulist(0, 10, 1)), [0x09], 0x09),
+        ('Diffusion', '0 - 9 - 10', PARAM_DIFFUSION, [0x09], 0x09),
         ('Tone Low', '-12dB - 0dB - +12dB', PARAM_12DB, [0x0A], 0x40),
         ('Tone High', '-12dB - 0dB - +12dB', PARAM_12DB, [0x0B], 0x40),
         ('Balance', 'D > 0E - D0 < E', PARAM_BALANCE, [0x0C], 0x7f),
@@ -1312,10 +1307,8 @@ if (True):
         ('Dly Tm LtoR', '0.0ms - 13.0ms - 360ms', PARAM_TYPE_4_SHORT, [0x04], 63),
         ('Dly Tm RtoR', '0.0ms - 100ms - 360ms', PARAM_TYPE_4_SHORT, [0x05], 96),
         ('Dly Tm RtoL', '0.0ms - 8.0ms - 360ms', PARAM_TYPE_4_SHORT, [0x06], 56),
-        ('Feedback Level', '-48% - -34% - +48%', tools.mergeRanges(range(0x28, 0x59), tools.ulist(-48, +48, 2, '%')),
-         [0x07], 0x36),
-        ('Cross Fd Level', '-48% - -34% - +48%', tools.mergeRanges(range(0x28, 0x59), tools.ulist(-48, +48, 2, '%')),
-         [0x08], 0x4A),
+        ('Feedback Level', '-48% - -34% - +48%', PARAM_FEEDBACK_48, [0x07], 47),
+        ('Cross Fd Level', '-48% - -34% - +48%', PARAM_FEEDBACK_48, [0x08], 47),
         ('HF Damp', '315Hz - 8kHz/Bypass', PARAM_TYPE_8, [0x09], 120),
         ('Cross HF Damp', '315Hz - 6.3kHz - 8kHz/Bypass', PARAM_TYPE_8, [0x0A], 104),
         ('Cross Balance', '0-98-127', PARAM_0127, [0x0B], 0x62),
@@ -1339,10 +1332,8 @@ if (True):
         ('Dly Tm LtoR', '0.0ms - 13.0ms - 360ms', PARAM_TYPE_4_SHORT, [0x04], 63),
         ('Dly Tm RtoR', '0.0ms - 100ms - 360ms', PARAM_TYPE_4_SHORT, [0x05], 96),
         ('Dly Tm RtoL', '0.0ms - 8.0ms - 360ms', PARAM_TYPE_4_SHORT, [0x06], 56),
-        ('Feedback Level', '-48% - -34% - +48%', tools.mergeRanges(range(0x28, 0x59), tools.ulist(-48, +48, 2, '%')),
-         [0x07], 0x36),
-        ('Cross Fd Level', '-48% - -34% - +48%', tools.mergeRanges(range(0x28, 0x59), tools.ulist(-48, +48, 2, '%')),
-         [0x08], 0x4A),
+        ('Feedback Level', '-48% - -34% - +48%', PARAM_FEEDBACK_48, [0x07], 47),
+        ('Cross Fd Level', '-48% - -34% - +48%', PARAM_FEEDBACK_48, [0x08], 47),
         ('HF Damp', '315Hz - 8kHz/Bypass', PARAM_TYPE_8, [0x09], 120),
         ('Cross HF Damp', '315Hz - 6.3kHz - 8kHz/Bypass', PARAM_TYPE_8, [0x0A], 104),
         ('Cross Balance', '0-98-127', PARAM_0127, [0x0B], 0x62),
@@ -1350,8 +1341,7 @@ if (True):
     )
 
     COMPACT_SYS2_EFX_PARAMETERS[2] = (
-        ('Type', 'Room1/2/Plate1/2/Hall1/2',
-         tools.mergeRanges(range(0x00, 0x06), ['Room1', 'Room2', 'Plate1', 'Plate2', 'Hall1', 'Hall2']), [0x03], 0x05),
+        ('Type', 'Room1/2/Plate1/2/Hall1/2', PARAM_ROOM, [0x03], 0x05),
         ('Pre Dly', '0ms - 100ms', PARAM_TYPE_1, [0x04], 0x7F),
         ('Reverb Time', '0 - 23 - 127', PARAM_0127, [0x05], 0x17),
         # ('HF Damp'),
@@ -2560,14 +2550,12 @@ class MainWindow(QtGui.QMainWindow):
 
                 soloingButtonStr = soloer + 'Solo'
                 nomuteButtonStr = soloer + 'Mute'
-                # print soloingButtonStr
                 soloingButton = soloingObj.findChild(QtGui.QPushButton, soloingButtonStr)
                 nomuteButton = soloingObj.findChild(QtGui.QPushButton, nomuteButtonStr)
                 soloingButton.setChecked(False)
                 nomuteButton.hide()
                 # review those fucking debug messages. They are just fucking messed up!
                 logging.debug('desoloing: %s', soloingObj.objectName())
-                #print(soloingObj.property('channel').toPyObject())
         else:
             for soloer in soloers:
                 soloingObj = self.findChild(QtGui.QGroupBox, soloer)
@@ -2614,33 +2602,33 @@ class MainWindow(QtGui.QMainWindow):
         send_RQ1(MIXER_OUTPUT_CONTROL + MIXER_OUTPUT_MASTERLEVEL + MIXER_OUTPUT_MASTERLEVEL_SIZE)
         time.sleep(SLEEP_TIME)
 
-        masterLevel = sysexRead()
-        logger.info('masterlevel= %s', masterLevel)
+        masterLevel = sysexRead(question = 'masterLevel')
+        #logger.info('masterlevel= %s', masterLevel)
         self.MasterLineFader.setProperty("value", masterLevel)
 
         send_RQ1(MIXER_OUTPUT_CONTROL + MIXER_OUTPUT_WAVEREC + MIXER_OUTPUT_WAVEREC_SIZE)
         time.sleep(SLEEP_TIME)
-        waverecLevel = sysexRead()
+        waverecLevel = sysexRead(question = "waverecLevel")
         self.WaveRecFader.setProperty("value", waverecLevel)
 
         send_RQ1(MIC1_FADER + MIC1_FADER_SIZE)
         time.sleep(SLEEP_TIME)
-        mic1Level = sysexRead()
+        mic1Level = sysexRead(question = "mic1Level")
         self.Mic1Fader.setProperty("value", mic1Level)
 
         send_RQ1(MIC2_FADER + MIC2_FADER_SIZE)
         time.sleep(SLEEP_TIME)
-        mic2Level = sysexRead()
+        mic2Level = sysexRead(question = "mic2Level")
         self.Mic2Fader.setProperty("value", mic2Level)
 
         send_RQ1(WAVE1_FADER + WAVE1_FADER_SIZE)
         time.sleep(SLEEP_TIME)
-        wave1Level = sysexRead()
+        wave1Level = sysexRead(question = "wave1Level")
         self.Wave1Fader.setProperty("value", wave1Level)
 
         send_RQ1(WAVE2_FADER + WAVE2_FADER_SIZE)
         time.sleep(SLEEP_TIME)
-        wave2Level = sysexRead()
+        wave2Level = sysexRead(question = "wave2Level")
         self.Wave2Fader.setProperty("value", wave2Level)
 
 
@@ -2982,13 +2970,13 @@ def rightMidiDevice(midiDevs):
             return int(i)
 
 
-def sysexRead():
+def sysexRead(question = "unknown"):
     global pmin
 
     answerMsg = pmin.receive()
     answerBytes = answerMsg.bytes()
     value = answerBytes[11]
-    print('SysEx answer received:', answerMsg, ', aka ', answerBytes, '. Value is: ', value)
+    logger.debug('SysEx answer for question %s received: %s, aka %s. Vaule is: %s', question, answerMsg, answerBytes, value)
     # need to parse answer again... 
 
     return value
@@ -3030,7 +3018,7 @@ def send_DT1(data):
               + data \
               + checksum_result \
               + EOX
-    logger.info('DT1 Messagen: %s', np.array(message))
+    logger.info('DT1 Message: %s', np.array(message))
 
     if (REAL_UA_MODE):
         p = mido.Parser()

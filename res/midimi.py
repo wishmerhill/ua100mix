@@ -7,7 +7,7 @@ Please, don't waste yout time reading this file
 
 import sys
 import os
-import pyportmidi as pm
+
 import tools as tools
 import numpy as np
 
@@ -39,12 +39,13 @@ base_range = range(0x00,0x80)
 # p = tools.mergeRanges(r,d)
 # print(p)
 
-d = tools.rlist(0,180,2)
-r = range(0x00,0x5b)
-p = tools.mergeRanges(r,d)
+# d = tools.rlist(0,180,2)
+# r = range(0x00,0x5b)
+# p = tools.mergeRanges(r,d)
+
+p = tools.mergeRanges(range(0x28, 0x59), tools.ulist(-48, +48, 2, '%'))
+
 print(p)
-
-
 # PARAM_TYPE_2
 
 # semi_delay_1 = tools.ulist(200,550,5,"ms")
