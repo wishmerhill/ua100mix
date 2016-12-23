@@ -20,14 +20,14 @@ __email__ = 'alberto.azzalini@gmail.com'
 import logging
 # configuring the logger so that it does not log anything coming from imported modules
 logger = logging.getLogger(__name__)
-logger.setLevel(logging.DEBUG)
+logger.setLevel(logging.INFO)
 handler = logging.StreamHandler()
 formatter = logging.Formatter(
         '%(name)-12s %(levelname)-8s %(message)s')
 handler.setFormatter(formatter)
 logger.addHandler(handler)
 
-logger.info('Starting the us100mix')
+logger.info('Starting the ua100mix')
 
 # ********************************
 # ***** UA MODE CONTROL **********
@@ -40,7 +40,7 @@ logger.info('Starting the us100mix')
 # THIS NEED REVISION. Is it any useful?
 
 REAL_UA_MODE = 1
-logger.info('Setting REAL_UA_MODE to %s', REAL_UA_MODE )
+logger.debug('Setting REAL_UA_MODE to %s', REAL_UA_MODE )
 
 logger.info('Importing some required modules')
 import sys
@@ -62,7 +62,6 @@ import time
 logger.info('Reading MANY constants...')
 # brutally importing all the parameters
 from res.parameters import *
-logger.info('Done!')
 
 np.set_printoptions(formatter={'int': hex})
 
@@ -373,7 +372,7 @@ class MainWindow(QtGui.QMainWindow):
 
         if self.sender().property('state') == 0x00:
             # Going to line mode...
-            logger.info('LineMode')
+            logger.debug('LineMode')
             self.sender().setProperty('state', 0x01)
             self.Mic1.setTitle('Line')
             self.uiInputModeLabel.setText('Line')
@@ -382,7 +381,7 @@ class MainWindow(QtGui.QMainWindow):
             self.Mic1PanLcd2.hide()
         elif self.sender().property('state') == 0x01:
             # going to Mic1 + Mic 2 Mode
-            logger.info('Mic1 + Mic2')
+            logger.debug('Mic1 + Mic2')
             self.sender().setProperty('state', 0x02)
             self.Mic1.setTitle('Mic1/GTR+Mic2')
             self.uiInputModeLabel.setText('Mic1\n+Mic2')
@@ -394,7 +393,7 @@ class MainWindow(QtGui.QMainWindow):
             #self.Mic1.setProperty
         elif self.sender().property('state') == 0x02:
             # Back to
-            logger.info('Mic1/Guitar')
+            logger.debug('Mic1/Guitar')
             self.sender().setProperty('state', 0x00)
             self.Mic1.setTitle('Mic1/Guitar')
             self.uiInputModeLabel.setText('Mic/GTR')
@@ -504,13 +503,13 @@ class MainWindow(QtGui.QMainWindow):
         if (checked):
             logger.debug('soloers: %s', soloers)
             logger.debug('unchecking and desoloing ')
-            logger.debig('soloing %s', str(self.sender().parent().objectName()))
+            logger.debug('soloing %s', str(self.sender().parent().objectName()))
 
             if (REAL_UA_MODE):
                 p = mido.Parser()
                 p.feed([self.sender().parent().property('channel').toPyObject(), CC_SOLO_PAR, 1])
                 shortMsg = p.get_message()
-                logger.info('Message to be sent %s', shortMsg)
+                logger.debug('Message to be sent %s', shortMsg)
                 pmout.send(shortMsg)
 
             for soloer in soloers:
@@ -520,7 +519,7 @@ class MainWindow(QtGui.QMainWindow):
                     p = mido.Parser()
                     p.feed([soloingObj.property('channel').toPyObject(), CC_SOLO_PAR, 0])
                     shortMsg = p.get_message()
-                    logger.info('Message to be sent %s', shortMsg)
+                    logger.debug('Message to be sent %s', shortMsg)
                     pmout.send(shortMsg)
 
                 soloingButtonStr = soloer + 'Solo'
@@ -542,7 +541,7 @@ class MainWindow(QtGui.QMainWindow):
                 p = mido.Parser()
                 p.feed([self.sender().parent().property('channel').toPyObject(), CC_SOLO_PAR, 0])
                 shortMsg = p.get_message()
-                logger.info('Message to be sent %S', shortMsg)
+                logger.debug('Message to be sent %S', shortMsg)
                 pmout.send(shortMsg)
 
     def resetMixer(self):
@@ -696,7 +695,7 @@ class CompactEffectsInsDialog(QtGui.QDialog):
 
         # first of all convert the passed value to list in order to send the SYSEX message
         valueToList = [value]
-        logger.info('LSB/MSB for parameter: %s', self.sender().property('HEX').toPyObject())
+        logger.debug('LSB/MSB for parameter: %s', self.sender().property('HEX').toPyObject())
 
         # if in real mode, actually send the message
         if REAL_UA_MODE == 1:
@@ -916,7 +915,7 @@ def actualMidiDevices():
             logger.warning('***************  No midi device found - and we should be in REAL UA mode! Exiting. Bye!')
             sys.exit()
 
-        logger.info('We have %s output devices: %s', numIODevs,  IODevs)
+        logger.debug('We have %s output devices: %s', numIODevs,  IODevs)
     else:
         numIODevs = 1
         IODevs = {u'Dummy midi device 0:0'}
@@ -941,7 +940,7 @@ def rightMidiDevice(midiDevs):
     '''
     for i in range(0, len(midiDevs)):
         if ('UA-100 Control' in midiDevs[i]):
-            logger.info('Found something! The controller is device %s aka %s', i, midiDevs[i][1])
+            logger.debug('Found something! The controller is device %s aka %s', i, midiDevs[i][1])
             return int(i)
 
 
@@ -974,13 +973,13 @@ def send_RQ1(data):
               + data \
               + checksum_result \
               + EOX
-    logger.info("Message RQ1: %s", message)
+    logger.debug("Message RQ1: %s", message)
 
     if (REAL_UA_MODE):
         p = mido.Parser()
         p.feed(message)
         sysEx_msg = p.get_message()
-        logger.info('Message to be sent: %s', sysEx_msg)
+        logger.debug('Message to be sent: %s', sysEx_msg)
         pmout.send(sysEx_msg)
 
 
@@ -993,13 +992,13 @@ def send_DT1(data):
               + data \
               + checksum_result \
               + EOX
-    logger.info('DT1 Message: %s', np.array(message))
+    logger.debug('DT1 Message: %s', np.array(message))
 
     if (REAL_UA_MODE):
         p = mido.Parser()
         p.feed(message)
         sysEx_msg = p.get_message()
-        logger.info('Message to be sent: %s', sysEx_msg)
+        logger.debug('Message to be sent: %s', sysEx_msg)
         pmout.send(sysEx_msg)
 
 
@@ -1027,7 +1026,7 @@ if (__name__ == '__main__'):
     # get the list of the Midi Devices according to rtMidi
     midiDevs = actualMidiDevices()
 
-    logger.info('MIDI DEVICES FOUND: %s; they are: %s', len(midiDevs), midiDevs)
+    logger.debug('MIDI DEVICES FOUND: %s; they are: %s', len(midiDevs), midiDevs)
 
     # guess the right midi device
     if (REAL_UA_MODE):
@@ -1059,19 +1058,19 @@ if (__name__ == '__main__'):
     if (REAL_UA_MODE):
         # Open device for output
 
-        logger.info('Trying the Output...')
+        logger.debug('Trying the Output...')
 
         pmout = mido.open_output(midiDevs[UA100CONTROL])
 
-        logger.info('...Done! Just opened %s for output.', midiDevs[UA100CONTROL])
+        logger.debug('...Done! Just opened %s for output.', midiDevs[UA100CONTROL])
 
         # Open "the next" device for input
 
-        logger.info('Trying the Input...')
+        logger.debug('Trying the Input...')
 
         pmin = mido.open_input(midiDevs[UA100CONTROL])
 
-        logger.info('...Done! Just opened %s  for input', midiDevs[UA100CONTROL])
+        logger.debug('...Done! Just opened %s  for input', midiDevs[UA100CONTROL])
 
     window = MainWindow()
     window.show()
