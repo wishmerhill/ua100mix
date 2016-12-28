@@ -1385,7 +1385,7 @@ FULL_EFX_PARAMETERS[13] = (
 
 # 14: Keyboard Multi
 # this is the same as COMPACT_INS_EFX_PARAMETERS[55]
-FULL_EFX_TYPE[14] = ('Keyboard Multi', [0x04, 0x06])
+FULL_EFX_TYPE[14] = ('Keyboard Multi', [0x05, 0x00])
 FULL_EFX_PARAMETERS[14] = (
     # ('Name', 'description', mergedRange, [0xXX], _default_),
     # ('Name', 'description', mergedRange, [0xXX], _default_),
