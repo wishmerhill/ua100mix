@@ -119,6 +119,7 @@ class MidiDevsDialog(QtGui.QDialog):
 
 
 class MainWindow(QtGui.QMainWindow):
+
     def __init__(self, parent=None):
         super(MainWindow, self).__init__(parent)
 
@@ -192,9 +193,9 @@ class MainWindow(QtGui.QMainWindow):
         self.Mic2Pan.setProperty("value", CC_PAN_MIDDLE)
 
         # I also need Mic1Pan2, a "copy" of Mic2 for the Mic1+Mic2 mode:
-        self.Mic1Pan2.valueChanged.connect(self.Mic1PanLcd2.display)
-        self.Mic1Pan2.valueChanged.connect(functools.partial(self.valueChange, CC_MIC2_CH, CC_PAN_PAR))
-        self.Mic1Pan2.setProperty("parameter", CC_PAN_PAR)
+        # self.Mic1Pan2.valueChanged.connect(self.Mic1PanLcd2.display)
+        # self.Mic1Pan2.valueChanged.connect(functools.partial(self.valueChange, CC_MIC2_CH, CC_PAN_PAR))
+        # self.Mic1Pan2.setProperty("parameter", CC_PAN_PAR)
 
         # Setting up Ins1&2
         self.Mic2Ins1.valueChanged.connect(functools.partial(self.valueChange, CC_MIC2_CH, CC_SEND1_PAR))

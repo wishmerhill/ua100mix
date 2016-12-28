@@ -1160,7 +1160,8 @@ FULL_EFX_PARAMETERS[5] = (
     # ('Level','', {}, [], )
 )
 
-# this is the same as COMPACT_INS_EFX_PARAMETERS[47] defines later (the other way round as described in the documentation)
+# 6: Rotary Multi
+# this is the same as COMPACT_INS_EFX_PARAMETERS[47] defined later (the other way round as described in the documentation)
 FULL_EFX_TYPE[6] = ('Rotary Multi', [0x03, 0x00])
 FULL_EFX_PARAMETERS[6] = (
     ('OD Drive', '0 - 40 - 127', PARAM_0127, [0x03], 40),
@@ -1183,10 +1184,12 @@ FULL_EFX_PARAMETERS[6] = (
     # ('Name', 'description', mergedRange, [0xXX], _default_),
     # ('Name', 'description', mergedRange, [0xXX], _default_)
 )
-# this is the same as COMPACT_INS_EFX_PARAMETERS[48] defines later (the other way round as described in the documentation)
-FULL_EFX_TYPE[7] = ('GTR Multi', [0x04, 0x00])
+
+# 7: GTR Multi 1
+# this is the same as COMPACT_INS_EFX_PARAMETERS[48] defined later (the other way round as described in the documentation)
+FULL_EFX_TYPE[7] = ('GTR Multi 1', [0x04, 0x00])
 FULL_EFX_PARAMETERS[7] = (
-    ('Cmp Atk', '0 - 8 - 127', PARAM_0127, [0x03], 80),
+    ('Cmp Atk', '0 - 80 - 127', PARAM_0127, [0x03], 80),
     # ('Name', 'description', mergedRange, [0xXX], _default_),
     # ('Name', 'description', mergedRange, [0xXX], _default_),
     # ('Name', 'description', mergedRange, [0xXX], _default_),
@@ -1208,6 +1211,206 @@ FULL_EFX_PARAMETERS[7] = (
     # ('Name', 'description', mergedRange, [0xXX], _default_),
     # ('Name', 'description', mergedRange, [0xXX], _default_)
 )
+
+# 8: GTR Multi 2
+# this is the same as COMPACT_INS_EFX_PARAMETERS[49]
+FULL_EFX_TYPE[8] = ('GTR Multi 2', [0x04, 0x01])
+FULL_EFX_PARAMETERS[8] = (
+    ('Cmp Atk', '0 - 80 - 127', PARAM_0127, [0x03], 80),
+    # ('Name', 'description', mergedRange, [0xXX], _default_),
+    # ('Name', 'description', mergedRange, [0xXX], _default_),
+    # ('Name', 'description', mergedRange, [0xXX], _default_),
+    # ('Name', 'description', mergedRange, [0xXX], _default_),
+    # ('Name', 'description', mergedRange, [0xXX], _default_),
+    # ('Name', 'description', mergedRange, [0xXX], _default_),
+    # ('Name', 'description', mergedRange, [0xXX], _default_),
+    # ('Name', 'description', mergedRange, [0xXX], _default_),
+    # ('Name', 'description', mergedRange, [0xXX], _default_),
+    # ('Name', 'description', mergedRange, [0xXX], _default_),
+    # ('Name', 'description', mergedRange, [0xXX], _default_),
+    # ('Name', 'description', mergedRange, [0xXX], _default_),
+    # ('Name', 'description', mergedRange, [0xXX], _default_),
+    # ('Name', 'description', mergedRange, [0xXX], _default_),
+    # ('Name', 'description', mergedRange, [0xXX], _default_),
+    # ('Name', 'description', mergedRange, [0xXX], _default_),
+    # ('Name', 'description', mergedRange, [0xXX], _default_),
+    # ('Name', 'description', mergedRange, [0xXX], _default_),
+    # ('Name', 'description', mergedRange, [0xXX], _default_),
+    # ('Name', 'description', mergedRange, [0xXX], _default_)
+    ('Level', '0 - 127', PARAM_0127, [0x16], 127),
+    ('Noise suppressor', '0 - 40 - 127', PARAM_0127, [0x25], 40)
+)
+
+# 9: GTR Multi 3
+# this is the same as COMPACT_INS_EFX_PARAMETERS[50]
+FULL_EFX_TYPE[9] = ('GTR Multi 3', [0x04, 0x02])
+FULL_EFX_PARAMETERS[9] = (
+    # ('Name', 'description', mergedRange, [0xXX], _default_),
+    # ('Name', 'description', mergedRange, [0xXX], _default_),
+    # ('Name', 'description', mergedRange, [0xXX], _default_),
+    # ('Name', 'description', mergedRange, [0xXX], _default_),
+    # ('Name', 'description', mergedRange, [0xXX], _default_),
+    # ('Name', 'description', mergedRange, [0xXX], _default_),
+    # ('Name', 'description', mergedRange, [0xXX], _default_),
+    # ('Name', 'description', mergedRange, [0xXX], _default_),
+    # ('Name', 'description', mergedRange, [0xXX], _default_),
+    # ('Name', 'description', mergedRange, [0xXX], _default_),
+    # ('Name', 'description', mergedRange, [0xXX], _default_),
+    # ('Name', 'description', mergedRange, [0xXX], _default_),
+    # ('Name', 'description', mergedRange, [0xXX], _default_),
+    # ('Name', 'description', mergedRange, [0xXX], _default_),
+    # ('Name', 'description', mergedRange, [0xXX], _default_),
+    # ('Name', 'description', mergedRange, [0xXX], _default_),
+    # ('Name', 'description', mergedRange, [0xXX], _default_),
+    # ('Name', 'description', mergedRange, [0xXX], _default_),
+    # ('Name', 'description', mergedRange, [0xXX], _default_),
+    # ('Name', 'description', mergedRange, [0xXX], _default_)
+    ('Level', '0 - 127', PARAM_0127, [0x16], 127),
+    ('Noise suppressor', '0 - 40 - 127', PARAM_0127, [0x25], 40)
+)
+
+# 10: Clean Gt Multi 1
+# this is the same as COMPACT_INS_EFX_PARAMETERS[51]
+FULL_EFX_TYPE[10] = ('Clean Gt Multi 1', [0x04, 0x03])
+FULL_EFX_PARAMETERS[10] = (
+    ('Cmp Atk', '0 - 80 - 127', PARAM_0127, [0x03], 80),
+    # ('Name', 'description', mergedRange, [0xXX], _default_),
+    # ('Name', 'description', mergedRange, [0xXX], _default_),
+    # ('Name', 'description', mergedRange, [0xXX], _default_),
+    # ('Name', 'description', mergedRange, [0xXX], _default_),
+    # ('Name', 'description', mergedRange, [0xXX], _default_),
+    # ('Name', 'description', mergedRange, [0xXX], _default_),
+    # ('Name', 'description', mergedRange, [0xXX], _default_),
+    # ('Name', 'description', mergedRange, [0xXX], _default_),
+    # ('Name', 'description', mergedRange, [0xXX], _default_),
+    # ('Name', 'description', mergedRange, [0xXX], _default_),
+    # ('Name', 'description', mergedRange, [0xXX], _default_),
+    # ('Name', 'description', mergedRange, [0xXX], _default_),
+    # ('Name', 'description', mergedRange, [0xXX], _default_),
+    # ('Name', 'description', mergedRange, [0xXX], _default_),
+    # ('Name', 'description', mergedRange, [0xXX], _default_),
+    # ('Name', 'description', mergedRange, [0xXX], _default_),
+    # ('Name', 'description', mergedRange, [0xXX], _default_),
+    # ('Name', 'description', mergedRange, [0xXX], _default_),
+    # ('Name', 'description', mergedRange, [0xXX], _default_),
+    # ('Name', 'description', mergedRange, [0xXX], _default_)
+    ('Level', '0 - 127', PARAM_0127, [0x16], 127),
+    ('Noise suppressor', '0 - 10 - 127', PARAM_0127, [0x25], 10)
+)
+
+# 11: Clean Gt Multi 2
+# this is the same as COMPACT_INS_EFX_PARAMETERS[52]
+FULL_EFX_TYPE[11] = ('Clean Gt Multi 2', [0x04, 0x04])
+FULL_EFX_PARAMETERS[11] = (
+    # ('Name', 'description', mergedRange, [0xXX], _default_),
+    # ('Name', 'description', mergedRange, [0xXX], _default_),
+    # ('Name', 'description', mergedRange, [0xXX], _default_),
+    # ('Name', 'description', mergedRange, [0xXX], _default_),
+    # ('Name', 'description', mergedRange, [0xXX], _default_),
+    # ('Name', 'description', mergedRange, [0xXX], _default_),
+    # ('Name', 'description', mergedRange, [0xXX], _default_),
+    # ('Name', 'description', mergedRange, [0xXX], _default_),
+    # ('Name', 'description', mergedRange, [0xXX], _default_),
+    # ('Name', 'description', mergedRange, [0xXX], _default_),
+    # ('Name', 'description', mergedRange, [0xXX], _default_),
+    # ('Name', 'description', mergedRange, [0xXX], _default_),
+    # ('Name', 'description', mergedRange, [0xXX], _default_),
+    # ('Name', 'description', mergedRange, [0xXX], _default_),
+    # ('Name', 'description', mergedRange, [0xXX], _default_),
+    # ('Name', 'description', mergedRange, [0xXX], _default_),
+    # ('Name', 'description', mergedRange, [0xXX], _default_),
+    # ('Name', 'description', mergedRange, [0xXX], _default_),
+    # ('Name', 'description', mergedRange, [0xXX], _default_),
+    # ('Name', 'description', mergedRange, [0xXX], _default_)
+    ('Level', '0 - 100 - 127', PARAM_0127, [0x16], 100),
+    ('Noise suppressor', '0 - 10 - 127', PARAM_0127, [0x25], 10)
+)
+
+# 12: Bass Multi
+# this is the same as COMPACT_INS_EFX_PARAMETERS[53]
+FULL_EFX_TYPE[12] = ('Bass Multi', [0x04, 0x05])
+FULL_EFX_PARAMETERS[12] = (
+    ('Cmp Atk', '0 - 80 - 127', PARAM_0127, [0x03], 80),
+    # ('Name', 'description', mergedRange, [0xXX], _default_),
+    # ('Name', 'description', mergedRange, [0xXX], _default_),
+    # ('Name', 'description', mergedRange, [0xXX], _default_),
+    # ('Name', 'description', mergedRange, [0xXX], _default_),
+    # ('Name', 'description', mergedRange, [0xXX], _default_),
+    # ('Name', 'description', mergedRange, [0xXX], _default_),
+    # ('Name', 'description', mergedRange, [0xXX], _default_),
+    # ('Name', 'description', mergedRange, [0xXX], _default_),
+    # ('Name', 'description', mergedRange, [0xXX], _default_),
+    # ('Name', 'description', mergedRange, [0xXX], _default_),
+    # ('Name', 'description', mergedRange, [0xXX], _default_),
+    # ('Name', 'description', mergedRange, [0xXX], _default_),
+    # ('Name', 'description', mergedRange, [0xXX], _default_),
+    # ('Name', 'description', mergedRange, [0xXX], _default_),
+    # ('Name', 'description', mergedRange, [0xXX], _default_),
+    # ('Name', 'description', mergedRange, [0xXX], _default_),
+    # ('Name', 'description', mergedRange, [0xXX], _default_),
+    # ('Name', 'description', mergedRange, [0xXX], _default_),
+    # ('Name', 'description', mergedRange, [0xXX], _default_),
+    # ('Name', 'description', mergedRange, [0xXX], _default_)
+    ('Level', '0 - 127', PARAM_0127, [0x16], 127),
+    ('Noise suppressor', '0 - 40 - 127', PARAM_0127, [0x25], 40)
+)
+
+# 13: E.Piano Multi
+# this is the same as COMPACT_INS_EFX_PARAMETERS[54]
+FULL_EFX_TYPE[13] = ('E.Piano Multi', [0x04, 0x06])
+FULL_EFX_PARAMETERS[13] = (
+    # ('Name', 'description', mergedRange, [0xXX], _default_),
+    # ('Name', 'description', mergedRange, [0xXX], _default_),
+    # ('Name', 'description', mergedRange, [0xXX], _default_),
+    # ('Name', 'description', mergedRange, [0xXX], _default_),
+    # ('Name', 'description', mergedRange, [0xXX], _default_),
+    # ('Name', 'description', mergedRange, [0xXX], _default_),
+    # ('Name', 'description', mergedRange, [0xXX], _default_),
+    # ('Name', 'description', mergedRange, [0xXX], _default_),
+    # ('Name', 'description', mergedRange, [0xXX], _default_),
+    # ('Name', 'description', mergedRange, [0xXX], _default_),
+    # ('Name', 'description', mergedRange, [0xXX], _default_),
+    # ('Name', 'description', mergedRange, [0xXX], _default_),
+    # ('Name', 'description', mergedRange, [0xXX], _default_),
+    # ('Name', 'description', mergedRange, [0xXX], _default_),
+    # ('Name', 'description', mergedRange, [0xXX], _default_),
+    # ('Name', 'description', mergedRange, [0xXX], _default_),
+    # ('Name', 'description', mergedRange, [0xXX], _default_),
+    # ('Name', 'description', mergedRange, [0xXX], _default_),
+    # ('Name', 'description', mergedRange, [0xXX], _default_),
+    # ('Name', 'description', mergedRange, [0xXX], _default_)
+    ('Level', '0 - 127', PARAM_0127, [0x16], 127),
+    ('Noise suppressor', '0 - 10 - 127', PARAM_0127, [0x25], 10)
+)
+
+# 14: Keyboard Multi
+# this is the same as COMPACT_INS_EFX_PARAMETERS[55]
+FULL_EFX_TYPE[14] = ('Keyboard Multi', [0x04, 0x06])
+FULL_EFX_PARAMETERS[14] = (
+    # ('Name', 'description', mergedRange, [0xXX], _default_),
+    # ('Name', 'description', mergedRange, [0xXX], _default_),
+    # ('Name', 'description', mergedRange, [0xXX], _default_),
+    # ('Name', 'description', mergedRange, [0xXX], _default_),
+    # ('Name', 'description', mergedRange, [0xXX], _default_),
+    # ('Name', 'description', mergedRange, [0xXX], _default_),
+    # ('Name', 'description', mergedRange, [0xXX], _default_),
+    # ('Name', 'description', mergedRange, [0xXX], _default_),
+    # ('Name', 'description', mergedRange, [0xXX], _default_),
+    # ('Name', 'description', mergedRange, [0xXX], _default_),
+    # ('Name', 'description', mergedRange, [0xXX], _default_),
+    # ('Name', 'description', mergedRange, [0xXX], _default_),
+    # ('Name', 'description', mergedRange, [0xXX], _default_),
+    # ('Name', 'description', mergedRange, [0xXX], _default_),
+    # ('Name', 'description', mergedRange, [0xXX], _default_),
+    # ('Name', 'description', mergedRange, [0xXX], _default_),
+    # ('Name', 'description', mergedRange, [0xXX], _default_),
+    # ('Name', 'description', mergedRange, [0xXX], _default_),
+    # ('Name', 'description', mergedRange, [0xXX], _default_),
+    # ('Name', 'description', mergedRange, [0xXX], _default_)
+    ('Level', '0 - 127', PARAM_0127, [0x16], 127),
+    ('Noise suppressor', '0 - 10 - 127', PARAM_0127, [0x25], 10)
+)
+
 
 # TODO: fill up the missing FULL EFFECTS with their PARAMETERS
 
@@ -1630,6 +1833,690 @@ COMPACT_INS_EFX_PARAMETERS[17] = (
     ('Noise suppressor', '0 - 10 - 127', PARAM_0127, [0x25], 10)
 )
 
+# 18: Stereo Chorus
+COMPACT_INS_EFX_PARAMETERS[18] = (
+    # ('Name', 'description', mergedRange, [0xXX], _default_),
+    # ('Name', 'description', mergedRange, [0xXX], _default_),
+    ('Depth', '0 - 80 - 127', PARAM_0127, [0x05], 80),
+    # ('Name', 'description', mergedRange, [0xXX], _default_),
+    # ('Name', 'description', mergedRange, [0xXX], _default_),
+    # ('Name', 'description', mergedRange, [0xXX], _default_),
+    # ('Name', 'description', mergedRange, [0xXX], _default_),
+    # ('Name', 'description', mergedRange, [0xXX], _default_),
+    # ('Name', 'description', mergedRange, [0xXX], _default_),
+    # ('Name', 'description', mergedRange, [0xXX], _default_),
+    # ('Name', 'description', mergedRange, [0xXX], _default_)
+    ('Level', '0 - 127', PARAM_0127, [0x16], 127),
+    ('Noise suppressor', '0 - 10 - 127', PARAM_0127, [0x25], 10)
+    # ADD ENOUGH LINES OR DELETE THOSE YOU DON'T NEED.
+)
+
+# 19: Space D
+COMPACT_INS_EFX_PARAMETERS[19] = (
+    ('Pre Filter', '0.0ms - 2.0ms - 100ms', PARAM_TYPE_1 , [0x03], 20),
+    ('Rate', '0.05Hz - 0.30Hz - 10.0Hz', PARAM_TYPE_6 , [0x04], 5),
+    ('Depth', '0 - 80 - 127', PARAM_0127, [0x05], 80),
+    # ('Name', 'description', mergedRange, [0xXX], _default_),
+    # ('Name', 'description', mergedRange, [0xXX], _default_),
+    # ('Name', 'description', mergedRange, [0xXX], _default_),
+    # ('Name', 'description', mergedRange, [0xXX], _default_),
+    # ('Name', 'description', mergedRange, [0xXX], _default_),
+    # ('Name', 'description', mergedRange, [0xXX], _default_),
+    # ('Name', 'description', mergedRange, [0xXX], _default_)
+    ('Level', '0 - 127', PARAM_0127, [0x16], 127),
+    ('Noise suppressor', '0 - 10 - 127', PARAM_0127, [0x25], 10)
+    # ADD ENOUGH LINES OR DELETE THOSE YOU DON'T NEED.
+)
+
+# 20: 3D Chorus
+COMPACT_INS_EFX_PARAMETERS[20] = (
+    # ('Name', 'description', mergedRange, [0xXX], _default_),
+    # ('Name', 'description', mergedRange, [0xXX], _default_),
+    # ('Name', 'description', mergedRange, [0xXX], _default_),
+    # ('Name', 'description', mergedRange, [0xXX], _default_),
+    # ('Name', 'description', mergedRange, [0xXX], _default_),
+    # ('Name', 'description', mergedRange, [0xXX], _default_),
+    # ('Name', 'description', mergedRange, [0xXX], _default_),
+    # ('Name', 'description', mergedRange, [0xXX], _default_),
+    # ('Name', 'description', mergedRange, [0xXX], _default_),
+    # ('Name', 'description', mergedRange, [0xXX], _default_)
+    ('Level', '0 - 127', PARAM_0127, [0x16], 100),
+    ('Noise suppressor', '0 - 10 - 127', PARAM_0127, [0x25], 10)
+    # ADD ENOUGH LINES OR DELETE THOSE YOU DON'T NEED.
+)
+
+# Effects that reverberate the sound (delay/reverd type)
+# 21: Stereo Delay
+COMPACT_INS_EFX_PARAMETERS[21] = (
+    # ('Name', 'description', mergedRange, [0xXX], _default_),
+    # ('Name', 'description', mergedRange, [0xXX], _default_),
+    # ('Name', 'description', mergedRange, [0xXX], _default_),
+    # ('Name', 'description', mergedRange, [0xXX], _default_),
+    # ('Name', 'description', mergedRange, [0xXX], _default_),
+    # ('Name', 'description', mergedRange, [0xXX], _default_),
+    # ('Name', 'description', mergedRange, [0xXX], _default_),
+    # ('Name', 'description', mergedRange, [0xXX], _default_),
+    # ('Name', 'description', mergedRange, [0xXX], _default_),
+    # ('Name', 'description', mergedRange, [0xXX], _default_)
+    ('Level', '0 - 127', PARAM_0127, [0x16], 127),
+    ('Noise suppressor', '0 - 10 - 127', PARAM_0127, [0x25], 10)
+    # ADD ENOUGH LINES OR DELETE THOSE YOU DON'T NEED.
+)
+
+# 22: Mod Delay
+COMPACT_INS_EFX_PARAMETERS[22] = (
+    # ('Name', 'description', mergedRange, [0xXX], _default_),
+    # ('Name', 'description', mergedRange, [0xXX], _default_),
+    # ('Name', 'description', mergedRange, [0xXX], _default_),
+    # ('Name', 'description', mergedRange, [0xXX], _default_),
+    # ('Name', 'description', mergedRange, [0xXX], _default_),
+    # ('Name', 'description', mergedRange, [0xXX], _default_),
+    # ('Name', 'description', mergedRange, [0xXX], _default_),
+    # ('Name', 'description', mergedRange, [0xXX], _default_),
+    # ('Name', 'description', mergedRange, [0xXX], _default_),
+    # ('Name', 'description', mergedRange, [0xXX], _default_)
+    ('Level', '0 - 100 - 127', PARAM_0127, [0x16], 100),
+    ('Noise suppressor', '0 - 10 - 127', PARAM_0127, [0x25], 10)
+    # ADD ENOUGH LINES OR DELETE THOSE YOU DON'T NEED.
+)
+
+# 23: 3 Tap Delay
+COMPACT_INS_EFX_PARAMETERS[23] = (
+    # ('Name', 'description', mergedRange, [0xXX], _default_),
+    # ('Name', 'description', mergedRange, [0xXX], _default_),
+    # ('Name', 'description', mergedRange, [0xXX], _default_),
+    # ('Name', 'description', mergedRange, [0xXX], _default_),
+    # ('Name', 'description', mergedRange, [0xXX], _default_),
+    # ('Name', 'description', mergedRange, [0xXX], _default_),
+    # ('Name', 'description', mergedRange, [0xXX], _default_),
+    # ('Name', 'description', mergedRange, [0xXX], _default_),
+    # ('Name', 'description', mergedRange, [0xXX], _default_),
+    # ('Name', 'description', mergedRange, [0xXX], _default_)
+    ('Level', '0 - 100 - 127', PARAM_0127, [0x16], 100),
+    ('Noise suppressor', '0 - 10 - 127', PARAM_0127, [0x25], 10)
+    # ADD ENOUGH LINES OR DELETE THOSE YOU DON'T NEED.
+)
+
+# 24: 4 Tap Delay
+COMPACT_INS_EFX_PARAMETERS[24] = (
+    # ('Name', 'description', mergedRange, [0xXX], _default_),
+    # ('Name', 'description', mergedRange, [0xXX], _default_),
+    # ('Name', 'description', mergedRange, [0xXX], _default_),
+    # ('Name', 'description', mergedRange, [0xXX], _default_),
+    # ('Name', 'description', mergedRange, [0xXX], _default_),
+    # ('Name', 'description', mergedRange, [0xXX], _default_),
+    # ('Name', 'description', mergedRange, [0xXX], _default_),
+    # ('Name', 'description', mergedRange, [0xXX], _default_),
+    # ('Name', 'description', mergedRange, [0xXX], _default_),
+    # ('Name', 'description', mergedRange, [0xXX], _default_)
+    ('Level', '0 - 100 - 127', PARAM_0127, [0x16], 100),
+    ('Noise suppressor', '0 - 10 - 127', PARAM_0127, [0x25], 10)
+    # ADD ENOUGH LINES OR DELETE THOSE YOU DON'T NEED.
+)
+
+# 25: Tm Ctrl Delay
+COMPACT_INS_EFX_PARAMETERS[25] = (
+    # ('Name', 'description', mergedRange, [0xXX], _default_),
+    # ('Name', 'description', mergedRange, [0xXX], _default_),
+    # ('Name', 'description', mergedRange, [0xXX], _default_),
+    # ('Name', 'description', mergedRange, [0xXX], _default_),
+    # ('Name', 'description', mergedRange, [0xXX], _default_),
+    # ('Name', 'description', mergedRange, [0xXX], _default_),
+    # ('Name', 'description', mergedRange, [0xXX], _default_),
+    # ('Name', 'description', mergedRange, [0xXX], _default_),
+    # ('Name', 'description', mergedRange, [0xXX], _default_),
+    # ('Name', 'description', mergedRange, [0xXX], _default_)
+    ('Level', '0 - 100 - 127', PARAM_0127, [0x16], 100),
+    ('Noise suppressor', '0 - 10 - 127', PARAM_0127, [0x25], 10)
+    # ADD ENOUGH LINES OR DELETE THOSE YOU DON'T NEED.
+)
+
+# 26: Reverb
+COMPACT_INS_EFX_PARAMETERS[26] = (
+    # ('Name', 'description', mergedRange, [0xXX], _default_),
+    # ('Name', 'description', mergedRange, [0xXX], _default_),
+    # ('Name', 'description', mergedRange, [0xXX], _default_),
+    # ('Name', 'description', mergedRange, [0xXX], _default_),
+    # ('Name', 'description', mergedRange, [0xXX], _default_),
+    # ('Name', 'description', mergedRange, [0xXX], _default_),
+    # ('Name', 'description', mergedRange, [0xXX], _default_),
+    # ('Name', 'description', mergedRange, [0xXX], _default_),
+    # ('Name', 'description', mergedRange, [0xXX], _default_),
+    # ('Name', 'description', mergedRange, [0xXX], _default_)
+    ('Level', '0 - 100 - 127', PARAM_0127, [0x16], 100),
+    ('Noise suppressor', '0 - 10 - 127', PARAM_0127, [0x25], 10)
+    # ADD ENOUGH LINES OR DELETE THOSE YOU DON'T NEED.
+)
+
+# 27: Gate Reverb
+COMPACT_INS_EFX_PARAMETERS[27] = (
+    # ('Name', 'description', mergedRange, [0xXX], _default_),
+    # ('Name', 'description', mergedRange, [0xXX], _default_),
+    # ('Name', 'description', mergedRange, [0xXX], _default_),
+    # ('Name', 'description', mergedRange, [0xXX], _default_),
+    # ('Name', 'description', mergedRange, [0xXX], _default_),
+    # ('Name', 'description', mergedRange, [0xXX], _default_),
+    # ('Name', 'description', mergedRange, [0xXX], _default_),
+    # ('Name', 'description', mergedRange, [0xXX], _default_),
+    # ('Name', 'description', mergedRange, [0xXX], _default_),
+    # ('Name', 'description', mergedRange, [0xXX], _default_)
+    ('Level', '0 - 100 - 127', PARAM_0127, [0x16], 100),
+    ('Noise suppressor', '0 - 10 - 127', PARAM_0127, [0x25], 10)
+    # ADD ENOUGH LINES OR DELETE THOSE YOU DON'T NEED.
+)
+
+# 28: 3D Delay
+COMPACT_INS_EFX_PARAMETERS[28] = (
+    # ('Name', 'description', mergedRange, [0xXX], _default_),
+    # ('Name', 'description', mergedRange, [0xXX], _default_),
+    # ('Name', 'description', mergedRange, [0xXX], _default_),
+    # ('Name', 'description', mergedRange, [0xXX], _default_),
+    # ('Name', 'description', mergedRange, [0xXX], _default_),
+    # ('Name', 'description', mergedRange, [0xXX], _default_),
+    # ('Name', 'description', mergedRange, [0xXX], _default_),
+    # ('Name', 'description', mergedRange, [0xXX], _default_),
+    # ('Name', 'description', mergedRange, [0xXX], _default_),
+    # ('Name', 'description', mergedRange, [0xXX], _default_)
+    ('Level', '0 - 100 - 127', PARAM_0127, [0x16], 100),
+    ('Noise suppressor', '0 - 10 - 127', PARAM_0127, [0x25], 10)
+    # ADD ENOUGH LINES OR DELETE THOSE YOU DON'T NEED.
+)
+
+# Effects tha modify the pitch (pitch shift type)
+# 29: 2 Pitch Shifter
+COMPACT_INS_EFX_PARAMETERS[29] = (
+    # ('Name', 'description', mergedRange, [0xXX], _default_),
+    # ('Name', 'description', mergedRange, [0xXX], _default_),
+    # ('Name', 'description', mergedRange, [0xXX], _default_),
+    # ('Name', 'description', mergedRange, [0xXX], _default_),
+    # ('Name', 'description', mergedRange, [0xXX], _default_),
+    # ('Name', 'description', mergedRange, [0xXX], _default_),
+    # ('Name', 'description', mergedRange, [0xXX], _default_),
+    # ('Name', 'description', mergedRange, [0xXX], _default_),
+    # ('Name', 'description', mergedRange, [0xXX], _default_),
+    # ('Name', 'description', mergedRange, [0xXX], _default_)
+    ('Level', '0 - 100 - 127', PARAM_0127, [0x16], 100),
+    ('Noise suppressor', '0 - 10 - 127', PARAM_0127, [0x25], 10)
+    # ADD ENOUGH LINES OR DELETE THOSE YOU DON'T NEED.
+)
+
+# 30: Fb P.Shifter
+COMPACT_INS_EFX_PARAMETERS[30] = (
+    # ('Name', 'description', mergedRange, [0xXX], _default_),
+    # ('Name', 'description', mergedRange, [0xXX], _default_),
+    # ('Name', 'description', mergedRange, [0xXX], _default_),
+    # ('Name', 'description', mergedRange, [0xXX], _default_),
+    # ('Name', 'description', mergedRange, [0xXX], _default_),
+    # ('Name', 'description', mergedRange, [0xXX], _default_),
+    # ('Name', 'description', mergedRange, [0xXX], _default_),
+    # ('Name', 'description', mergedRange, [0xXX], _default_),
+    # ('Name', 'description', mergedRange, [0xXX], _default_),
+    # ('Name', 'description', mergedRange, [0xXX], _default_)
+    ('Level', '0 - 100 - 127', PARAM_0127, [0x16], 100),
+    ('Noise suppressor', '0 - 10 - 127', PARAM_0127, [0x25], 10)
+    # ADD ENOUGH LINES OR DELETE THOSE YOU DON'T NEED.
+)
+
+# Other Effects
+# 31: 3D Auto
+COMPACT_INS_EFX_PARAMETERS[31] = (
+    # ('Name', 'description', mergedRange, [0xXX], _default_),
+    # ('Name', 'description', mergedRange, [0xXX], _default_),
+    # ('Name', 'description', mergedRange, [0xXX], _default_),
+    # ('Name', 'description', mergedRange, [0xXX], _default_),
+    # ('Name', 'description', mergedRange, [0xXX], _default_),
+    # ('Name', 'description', mergedRange, [0xXX], _default_),
+    # ('Name', 'description', mergedRange, [0xXX], _default_),
+    # ('Name', 'description', mergedRange, [0xXX], _default_),
+    # ('Name', 'description', mergedRange, [0xXX], _default_),
+    # ('Name', 'description', mergedRange, [0xXX], _default_)
+    ('Level', '0 - 127', PARAM_0127, [0x16], 127),
+    ('Noise suppressor', '0 - 10 - 127', PARAM_0127, [0x25], 10)
+    # ADD ENOUGH LINES OR DELETE THOSE YOU DON'T NEED.
+)
+
+# 32: 3D Manual
+COMPACT_INS_EFX_PARAMETERS[32] = (
+    # ('Name', 'description', mergedRange, [0xXX], _default_),
+    # ('Name', 'description', mergedRange, [0xXX], _default_)
+    ('Level', '0 - 127', PARAM_0127, [0x16], 127),
+    ('Noise suppressor', '0 - 10 - 127', PARAM_0127, [0x25], 10)
+    # ADD ENOUGH LINES OR DELETE THOSE YOU DON'T NEED.
+)
+
+# 33: Lo-Fi 1
+COMPACT_INS_EFX_PARAMETERS[33] = (
+    # ('Name', 'description', mergedRange, [0xXX], _default_),
+    # ('Name', 'description', mergedRange, [0xXX], _default_),
+    # ('Name', 'description', mergedRange, [0xXX], _default_),
+    # ('Name', 'description', mergedRange, [0xXX], _default_),
+    # ('Name', 'description', mergedRange, [0xXX], _default_),
+    # ('Name', 'description', mergedRange, [0xXX], _default_),
+    # ('Name', 'description', mergedRange, [0xXX], _default_),
+    # ('Name', 'description', mergedRange, [0xXX], _default_),
+    # ('Name', 'description', mergedRange, [0xXX], _default_),
+    # ('Name', 'description', mergedRange, [0xXX], _default_)
+    ('Level', '0 - 127', PARAM_0127, [0x16], 127),
+    ('Noise suppressor', '0 - 10 - 127', PARAM_0127, [0x25], 10)
+    # ADD ENOUGH LINES OR DELETE THOSE YOU DON'T NEED.
+)
+
+# 34: Lo-Fi 2
+COMPACT_INS_EFX_PARAMETERS[34] = (
+    # ('Name', 'description', mergedRange, [0xXX], _default_),
+    # ('Name', 'description', mergedRange, [0xXX], _default_),
+    # ('Name', 'description', mergedRange, [0xXX], _default_),
+    # ('Name', 'description', mergedRange, [0xXX], _default_),
+    # ('Name', 'description', mergedRange, [0xXX], _default_),
+    # ('Name', 'description', mergedRange, [0xXX], _default_),
+    # ('Name', 'description', mergedRange, [0xXX], _default_),
+    # ('Name', 'description', mergedRange, [0xXX], _default_),
+    # ('Name', 'description', mergedRange, [0xXX], _default_),
+    # ('Name', 'description', mergedRange, [0xXX], _default_)
+    ('Level', '0 - 127', PARAM_0127, [0x16], 127),
+    ('Noise suppressor', '0 - 10 - 127', PARAM_0127, [0x25], 10)
+    # ADD ENOUGH LINES OR DELETE THOSE YOU DON'T NEED.
+)
+
+# Effects that connect two types of effect in series (series 2)
+# 35: OD -> Chorus
+COMPACT_INS_EFX_PARAMETERS[35] = (
+    # ('Name', 'description', mergedRange, [0xXX], _default_),
+    # ('Name', 'description', mergedRange, [0xXX], _default_),
+    # ('Name', 'description', mergedRange, [0xXX], _default_),
+    # ('Name', 'description', mergedRange, [0xXX], _default_),
+    # ('Name', 'description', mergedRange, [0xXX], _default_),
+    # ('Name', 'description', mergedRange, [0xXX], _default_),
+    # ('Name', 'description', mergedRange, [0xXX], _default_),
+    # ('Name', 'description', mergedRange, [0xXX], _default_),
+    # ('Name', 'description', mergedRange, [0xXX], _default_),
+    # ('Name', 'description', mergedRange, [0xXX], _default_)
+    ('Level', '0 - 100 - 27', PARAM_0127, [0x16], 100),
+    ('Noise suppressor', '0 - 40 - 127', PARAM_0127, [0x25], 40)
+    # ADD ENOUGH LINES OR DELETE THOSE YOU DON'T NEED.
+)
+
+# 36: OD -> Flanger
+COMPACT_INS_EFX_PARAMETERS[36] = (
+    # ('Name', 'description', mergedRange, [0xXX], _default_),
+    # ('Name', 'description', mergedRange, [0xXX], _default_),
+    # ('Name', 'description', mergedRange, [0xXX], _default_),
+    # ('Name', 'description', mergedRange, [0xXX], _default_),
+    # ('Name', 'description', mergedRange, [0xXX], _default_),
+    # ('Name', 'description', mergedRange, [0xXX], _default_),
+    # ('Name', 'description', mergedRange, [0xXX], _default_),
+    # ('Name', 'description', mergedRange, [0xXX], _default_),
+    # ('Name', 'description', mergedRange, [0xXX], _default_),
+    # ('Name', 'description', mergedRange, [0xXX], _default_)
+    ('Level', '0 - 100 - 127', PARAM_0127, [0x16], 100),
+    ('Noise suppressor', '0 - 40 - 127', PARAM_0127, [0x25], 40)
+    # ADD ENOUGH LINES OR DELETE THOSE YOU DON'T NEED.
+)
+
+# 37: OD -> Delay
+COMPACT_INS_EFX_PARAMETERS[37] = (
+    # ('Name', 'description', mergedRange, [0xXX], _default_),
+    # ('Name', 'description', mergedRange, [0xXX], _default_),
+    # ('Name', 'description', mergedRange, [0xXX], _default_),
+    # ('Name', 'description', mergedRange, [0xXX], _default_),
+    # ('Name', 'description', mergedRange, [0xXX], _default_),
+    # ('Name', 'description', mergedRange, [0xXX], _default_),
+    # ('Name', 'description', mergedRange, [0xXX], _default_),
+    # ('Name', 'description', mergedRange, [0xXX], _default_),
+    # ('Name', 'description', mergedRange, [0xXX], _default_),
+    # ('Name', 'description', mergedRange, [0xXX], _default_)
+    ('Level', '0 - 127', PARAM_0127, [0x16], 127),
+    ('Noise suppressor', '0 - 40 - 127', PARAM_0127, [0x25], 40)
+    # ADD ENOUGH LINES OR DELETE THOSE YOU DON'T NEED.
+)
+
+# 38: DS -> Chorus
+COMPACT_INS_EFX_PARAMETERS[38] = (
+    # ('Name', 'description', mergedRange, [0xXX], _default_),
+    # ('Name', 'description', mergedRange, [0xXX], _default_),
+    # ('Name', 'description', mergedRange, [0xXX], _default_),
+    # ('Name', 'description', mergedRange, [0xXX], _default_),
+    # ('Name', 'description', mergedRange, [0xXX], _default_),
+    # ('Name', 'description', mergedRange, [0xXX], _default_),
+    # ('Name', 'description', mergedRange, [0xXX], _default_),
+    # ('Name', 'description', mergedRange, [0xXX], _default_),
+    # ('Name', 'description', mergedRange, [0xXX], _default_),
+    # ('Name', 'description', mergedRange, [0xXX], _default_)
+    ('Level', '0 - 100 - 127', PARAM_0127, [0x16], 100),
+    ('Noise suppressor', '0 - 40 - 127', PARAM_0127, [0x25], 40)
+    # ADD ENOUGH LINES OR DELETE THOSE YOU DON'T NEED.
+)
+
+# 39: DS -> Flanger
+COMPACT_INS_EFX_PARAMETERS[39] = (
+    # ('Name', 'description', mergedRange, [0xXX], _default_),
+    # ('Name', 'description', mergedRange, [0xXX], _default_),
+    # ('Name', 'description', mergedRange, [0xXX], _default_),
+    # ('Name', 'description', mergedRange, [0xXX], _default_),
+    # ('Name', 'description', mergedRange, [0xXX], _default_),
+    # ('Name', 'description', mergedRange, [0xXX], _default_),
+    # ('Name', 'description', mergedRange, [0xXX], _default_),
+    # ('Name', 'description', mergedRange, [0xXX], _default_),
+    # ('Name', 'description', mergedRange, [0xXX], _default_),
+    # ('Name', 'description', mergedRange, [0xXX], _default_)
+    ('Level', '0 - 100 - 127', PARAM_0127, [0x16], 100),
+    ('Noise suppressor', '0 - 40 - 127', PARAM_0127, [0x25], 40)
+    # ADD ENOUGH LINES OR DELETE THOSE YOU DON'T NEED.
+)
+
+# 40: DS -> Delay
+COMPACT_INS_EFX_PARAMETERS[40] = (
+    # ('Name', 'description', mergedRange, [0xXX], _default_),
+    # ('Name', 'description', mergedRange, [0xXX], _default_),
+    # ('Name', 'description', mergedRange, [0xXX], _default_),
+    # ('Name', 'description', mergedRange, [0xXX], _default_),
+    # ('Name', 'description', mergedRange, [0xXX], _default_),
+    # ('Name', 'description', mergedRange, [0xXX], _default_),
+    # ('Name', 'description', mergedRange, [0xXX], _default_),
+    # ('Name', 'description', mergedRange, [0xXX], _default_),
+    # ('Name', 'description', mergedRange, [0xXX], _default_),
+    # ('Name', 'description', mergedRange, [0xXX], _default_)
+    ('Level', '0 - 127', PARAM_0127, [0x16], 127),
+    ('Noise suppressor', '0 - 40 - 127', PARAM_0127, [0x25], 40)
+    # ADD ENOUGH LINES OR DELETE THOSE YOU DON'T NEED.
+)
+
+# 41: EH -> Chorus
+COMPACT_INS_EFX_PARAMETERS[41] = (
+    # ('Name', 'description', mergedRange, [0xXX], _default_),
+    # ('Name', 'description', mergedRange, [0xXX], _default_),
+    # ('Name', 'description', mergedRange, [0xXX], _default_),
+    # ('Name', 'description', mergedRange, [0xXX], _default_),
+    # ('Name', 'description', mergedRange, [0xXX], _default_),
+    # ('Name', 'description', mergedRange, [0xXX], _default_),
+    # ('Name', 'description', mergedRange, [0xXX], _default_),
+    # ('Name', 'description', mergedRange, [0xXX], _default_),
+    # ('Name', 'description', mergedRange, [0xXX], _default_),
+    # ('Name', 'description', mergedRange, [0xXX], _default_)
+    ('Level', '0 - 127', PARAM_0127, [0x16], 127),
+    ('Noise suppressor', '0 - 10 - 127', PARAM_0127, [0x25], 10)
+    # ADD ENOUGH LINES OR DELETE THOSE YOU DON'T NEED.
+)
+
+# 42: EH -> Flanger
+COMPACT_INS_EFX_PARAMETERS[42] = (
+    # ('Name', 'description', mergedRange, [0xXX], _default_),
+    # ('Name', 'description', mergedRange, [0xXX], _default_),
+    # ('Name', 'description', mergedRange, [0xXX], _default_),
+    # ('Name', 'description', mergedRange, [0xXX], _default_),
+    # ('Name', 'description', mergedRange, [0xXX], _default_),
+    # ('Name', 'description', mergedRange, [0xXX], _default_),
+    # ('Name', 'description', mergedRange, [0xXX], _default_),
+    # ('Name', 'description', mergedRange, [0xXX], _default_),
+    # ('Name', 'description', mergedRange, [0xXX], _default_),
+    # ('Name', 'description', mergedRange, [0xXX], _default_)
+    ('Level', '0 - 127', PARAM_0127, [0x16], 127),
+    ('Noise suppressor', '0 - 10 - 127', PARAM_0127, [0x25], 10)
+    # ADD ENOUGH LINES OR DELETE THOSE YOU DON'T NEED.
+)
+
+# 43: EH -> Delay
+COMPACT_INS_EFX_PARAMETERS[43] = (
+    # ('Name', 'description', mergedRange, [0xXX], _default_),
+    # ('Name', 'description', mergedRange, [0xXX], _default_),
+    # ('Name', 'description', mergedRange, [0xXX], _default_),
+    # ('Name', 'description', mergedRange, [0xXX], _default_),
+    # ('Name', 'description', mergedRange, [0xXX], _default_),
+    # ('Name', 'description', mergedRange, [0xXX], _default_),
+    # ('Name', 'description', mergedRange, [0xXX], _default_),
+    # ('Name', 'description', mergedRange, [0xXX], _default_),
+    # ('Name', 'description', mergedRange, [0xXX], _default_),
+    # ('Name', 'description', mergedRange, [0xXX], _default_)
+    ('Level', '0 - 127', PARAM_0127, [0x16], 127),
+    ('Noise suppressor', '0 - 10 - 127', PARAM_0127, [0x25], 10)
+    # ADD ENOUGH LINES OR DELETE THOSE YOU DON'T NEED.
+)
+
+# 44: Cho -> Delay
+COMPACT_INS_EFX_PARAMETERS[44] = (
+    # ('Name', 'description', mergedRange, [0xXX], _default_),
+    # ('Name', 'description', mergedRange, [0xXX], _default_),
+    # ('Name', 'description', mergedRange, [0xXX], _default_),
+    # ('Name', 'description', mergedRange, [0xXX], _default_),
+    # ('Name', 'description', mergedRange, [0xXX], _default_),
+    # ('Name', 'description', mergedRange, [0xXX], _default_),
+    # ('Name', 'description', mergedRange, [0xXX], _default_),
+    # ('Name', 'description', mergedRange, [0xXX], _default_),
+    # ('Name', 'description', mergedRange, [0xXX], _default_),
+    # ('Name', 'description', mergedRange, [0xXX], _default_)
+    ('Level', '0 - 127', PARAM_0127, [0x16], 127),
+    ('Noise suppressor', '0 - 10 - 127', PARAM_0127, [0x25], 10)
+    # ADD ENOUGH LINES OR DELETE THOSE YOU DON'T NEED.
+)
+
+# 45: FL -> Delay
+COMPACT_INS_EFX_PARAMETERS[45] = (
+    # ('Name', 'description', mergedRange, [0xXX], _default_),
+    # ('Name', 'description', mergedRange, [0xXX], _default_),
+    # ('Name', 'description', mergedRange, [0xXX], _default_),
+    # ('Name', 'description', mergedRange, [0xXX], _default_),
+    # ('Name', 'description', mergedRange, [0xXX], _default_),
+    # ('Name', 'description', mergedRange, [0xXX], _default_),
+    # ('Name', 'description', mergedRange, [0xXX], _default_),
+    # ('Name', 'description', mergedRange, [0xXX], _default_),
+    # ('Name', 'description', mergedRange, [0xXX], _default_),
+    # ('Name', 'description', mergedRange, [0xXX], _default_)
+    ('Level', '0 - 127', PARAM_0127, [0x16], 127),
+    ('Noise suppressor', '0 - 10 - 127', PARAM_0127, [0x25], 10)
+    # ADD ENOUGH LINES OR DELETE THOSE YOU DON'T NEED.
+)
+
+# 46: Cho -> Flanger
+COMPACT_INS_EFX_PARAMETERS[46] = (
+    # ('Name', 'description', mergedRange, [0xXX], _default_),
+    # ('Name', 'description', mergedRange, [0xXX], _default_),
+    # ('Name', 'description', mergedRange, [0xXX], _default_),
+    # ('Name', 'description', mergedRange, [0xXX], _default_),
+    # ('Name', 'description', mergedRange, [0xXX], _default_),
+    # ('Name', 'description', mergedRange, [0xXX], _default_),
+    # ('Name', 'description', mergedRange, [0xXX], _default_),
+    # ('Name', 'description', mergedRange, [0xXX], _default_),
+    # ('Name', 'description', mergedRange, [0xXX], _default_),
+    # ('Name', 'description', mergedRange, [0xXX], _default_)
+    ('Level', '0 - 127', PARAM_0127, [0x16], 127),
+    ('Noise suppressor', '0 - 10 - 127', PARAM_0127, [0x25], 10)
+    # ADD ENOUGH LINES OR DELETE THOSE YOU DON'T NEED.
+)
+
+#  Effects that connect three or more types of effect in series (series 3/series 4/series 5)
+# 47: Rotary Multi (same as Full Effect 6)
+COMPACT_INS_EFX_PARAMETERS[47] = FULL_EFX_PARAMETERS[6]
+
+# 48: GTR Multi (same as Full Effect 7)
+COMPACT_INS_EFX_PARAMETERS[48] = FULL_EFX_PARAMETERS[7]
+
+# 49: GTR Multi 2
+COMPACT_INS_EFX_PARAMETERS[49] = FULL_EFX_PARAMETERS[8]
+
+# 50: GTR Multi 3
+COMPACT_INS_EFX_PARAMETERS[50] = FULL_EFX_PARAMETERS[9]
+
+# 51: Clean Gt Multi 1
+COMPACT_INS_EFX_PARAMETERS[51] = FULL_EFX_PARAMETERS[10]
+
+# 52: Clean Gt Multi 2
+COMPACT_INS_EFX_PARAMETERS[52] = FULL_EFX_PARAMETERS[11]
+
+# 53: Bass Multi
+COMPACT_INS_EFX_PARAMETERS[53] = FULL_EFX_PARAMETERS[12]
+
+# 54: E.Piano Multi
+COMPACT_INS_EFX_PARAMETERS[54] = FULL_EFX_PARAMETERS[13]
+
+# 55: Keyboard Multi
+COMPACT_INS_EFX_PARAMETERS[55] = FULL_EFX_PARAMETERS[14]
+
+#  Effects that connect two types of effect in parallel (parallel 2)
+# 56: Cho / Delay
+COMPACT_INS_EFX_PARAMETERS[56] = (
+    # ('Name', 'description', mergedRange, [0xXX], _default_),
+    # ('Name', 'description', mergedRange, [0xXX], _default_),
+    # ('Name', 'description', mergedRange, [0xXX], _default_),
+    # ('Name', 'description', mergedRange, [0xXX], _default_),
+    # ('Name', 'description', mergedRange, [0xXX], _default_),
+    # ('Name', 'description', mergedRange, [0xXX], _default_),
+    # ('Name', 'description', mergedRange, [0xXX], _default_),
+    # ('Name', 'description', mergedRange, [0xXX], _default_),
+    # ('Name', 'description', mergedRange, [0xXX], _default_),
+    # ('Name', 'description', mergedRange, [0xXX], _default_)
+    ('Level', '0 - 127', PARAM_0127, [0x16], 127),
+    ('Noise suppressor', '0 - 10 - 127', PARAM_0127, [0x25], 10)
+    # ADD ENOUGH LINES OR DELETE THOSE YOU DON'T NEED.
+)
+
+
+# 57: FL / Delay
+COMPACT_INS_EFX_PARAMETERS[57] = (
+    # ('Name', 'description', mergedRange, [0xXX], _default_),
+    # ('Name', 'description', mergedRange, [0xXX], _default_),
+    # ('Name', 'description', mergedRange, [0xXX], _default_),
+    # ('Name', 'description', mergedRange, [0xXX], _default_),
+    # ('Name', 'description', mergedRange, [0xXX], _default_),
+    # ('Name', 'description', mergedRange, [0xXX], _default_),
+    # ('Name', 'description', mergedRange, [0xXX], _default_),
+    # ('Name', 'description', mergedRange, [0xXX], _default_),
+    # ('Name', 'description', mergedRange, [0xXX], _default_),
+    # ('Name', 'description', mergedRange, [0xXX], _default_)
+    ('Level', '0 - 127', PARAM_0127, [0x16], 127),
+    ('Noise suppressor', '0 - 10 - 127', PARAM_0127, [0x25], 10)
+    # ADD ENOUGH LINES OR DELETE THOSE YOU DON'T NEED.
+)
+
+
+# 58: Cho /Flanger
+COMPACT_INS_EFX_PARAMETERS[58] = (
+    # ('Name', 'description', mergedRange, [0xXX], _default_),
+    # ('Name', 'description', mergedRange, [0xXX], _default_),
+    # ('Name', 'description', mergedRange, [0xXX], _default_),
+    # ('Name', 'description', mergedRange, [0xXX], _default_),
+    # ('Name', 'description', mergedRange, [0xXX], _default_),
+    # ('Name', 'description', mergedRange, [0xXX], _default_),
+    # ('Name', 'description', mergedRange, [0xXX], _default_),
+    # ('Name', 'description', mergedRange, [0xXX], _default_),
+    # ('Name', 'description', mergedRange, [0xXX], _default_),
+    # ('Name', 'description', mergedRange, [0xXX], _default_)
+    ('Level', '0 - 127', PARAM_0127, [0x16], 127),
+    ('Noise suppressor', '0 - 10 - 127', PARAM_0127, [0x25], 10)
+    # ADD ENOUGH LINES OR DELETE THOSE YOU DON'T NEED.
+)
+
+
+# 59: OD1 / OD2
+COMPACT_INS_EFX_PARAMETERS[59] = (
+    # ('Name', 'description', mergedRange, [0xXX], _default_),
+    # ('Name', 'description', mergedRange, [0xXX], _default_),
+    # ('Name', 'description', mergedRange, [0xXX], _default_),
+    # ('Name', 'description', mergedRange, [0xXX], _default_),
+    # ('Name', 'description', mergedRange, [0xXX], _default_),
+    # ('Name', 'description', mergedRange, [0xXX], _default_),
+    # ('Name', 'description', mergedRange, [0xXX], _default_),
+    # ('Name', 'description', mergedRange, [0xXX], _default_),
+    # ('Name', 'description', mergedRange, [0xXX], _default_),
+    # ('Name', 'description', mergedRange, [0xXX], _default_)
+    ('Level', '0 - 127', PARAM_0127, [0x16], 127),
+    ('Noise suppressor', '0 - 40 - 127', PARAM_0127, [0x25], 40)
+    # ADD ENOUGH LINES OR DELETE THOSE YOU DON'T NEED.
+)
+
+
+# 60: OD / Rotary
+COMPACT_INS_EFX_PARAMETERS[60] = (
+    # ('Name', 'description', mergedRange, [0xXX], _default_),
+    # ('Name', 'description', mergedRange, [0xXX], _default_),
+    # ('Name', 'description', mergedRange, [0xXX], _default_),
+    # ('Name', 'description', mergedRange, [0xXX], _default_),
+    # ('Name', 'description', mergedRange, [0xXX], _default_),
+    # ('Name', 'description', mergedRange, [0xXX], _default_),
+    # ('Name', 'description', mergedRange, [0xXX], _default_),
+    # ('Name', 'description', mergedRange, [0xXX], _default_),
+    # ('Name', 'description', mergedRange, [0xXX], _default_),
+    # ('Name', 'description', mergedRange, [0xXX], _default_)
+    ('Level', '0 - 127', PARAM_0127, [0x16], 127),
+    ('Noise suppressor', '0 - 40 - 127', PARAM_0127, [0x25], 40)
+    # ADD ENOUGH LINES OR DELETE THOSE YOU DON'T NEED.
+)
+
+
+# 61: OD / Phaser
+COMPACT_INS_EFX_PARAMETERS[61] = (
+    # ('Name', 'description', mergedRange, [0xXX], _default_),
+    # ('Name', 'description', mergedRange, [0xXX], _default_),
+    # ('Name', 'description', mergedRange, [0xXX], _default_),
+    # ('Name', 'description', mergedRange, [0xXX], _default_),
+    # ('Name', 'description', mergedRange, [0xXX], _default_),
+    # ('Name', 'description', mergedRange, [0xXX], _default_),
+    # ('Name', 'description', mergedRange, [0xXX], _default_),
+    # ('Name', 'description', mergedRange, [0xXX], _default_),
+    # ('Name', 'description', mergedRange, [0xXX], _default_),
+    # ('Name', 'description', mergedRange, [0xXX], _default_)
+    ('Level', '0 - 127', PARAM_0127, [0x16], 127),
+    ('Noise suppressor', '0 - 40 - 127', PARAM_0127, [0x25], 40)
+    # ADD ENOUGH LINES OR DELETE THOSE YOU DON'T NEED.
+)
+
+
+# 62: OD / AutoWah
+COMPACT_INS_EFX_PARAMETERS[62] = (
+    # ('Name', 'description', mergedRange, [0xXX], _default_),
+    # ('Name', 'description', mergedRange, [0xXX], _default_),
+    # ('Name', 'description', mergedRange, [0xXX], _default_),
+    # ('Name', 'description', mergedRange, [0xXX], _default_),
+    # ('Name', 'description', mergedRange, [0xXX], _default_),
+    # ('Name', 'description', mergedRange, [0xXX], _default_),
+    # ('Name', 'description', mergedRange, [0xXX], _default_),
+    # ('Name', 'description', mergedRange, [0xXX], _default_),
+    # ('Name', 'description', mergedRange, [0xXX], _default_),
+    # ('Name', 'description', mergedRange, [0xXX], _default_)
+    ('Level', '0 - 127', PARAM_0127, [0x16], 127),
+    ('Noise suppressor', '0 - 40 - 127', PARAM_0127, [0x25], 40)
+    # ADD ENOUGH LINES OR DELETE THOSE YOU DON'T NEED.
+)
+
+
+# 63: PH / Rotary
+COMPACT_INS_EFX_PARAMETERS[63] = (
+    # ('Name', 'description', mergedRange, [0xXX], _default_),
+    # ('Name', 'description', mergedRange, [0xXX], _default_),
+    # ('Name', 'description', mergedRange, [0xXX], _default_),
+    # ('Name', 'description', mergedRange, [0xXX], _default_),
+    # ('Name', 'description', mergedRange, [0xXX], _default_),
+    # ('Name', 'description', mergedRange, [0xXX], _default_),
+    # ('Name', 'description', mergedRange, [0xXX], _default_),
+    # ('Name', 'description', mergedRange, [0xXX], _default_),
+    # ('Name', 'description', mergedRange, [0xXX], _default_),
+    # ('Name', 'description', mergedRange, [0xXX], _default_)
+    ('Level', '0 - 127', PARAM_0127, [0x16], 127),
+    ('Noise suppressor', '0 - 10 - 127', PARAM_0127, [0x25], 10)
+    # ADD ENOUGH LINES OR DELETE THOSE YOU DON'T NEED.
+)
+
+# 64: PH /AutoWah
+COMPACT_INS_EFX_PARAMETERS[64] = (
+    # ('PH Man', 'description', mergedRange, [0xXX], _default_),
+    # ('PH Rate', 'description', mergedRange, [0xXX], _default_),
+    ('PH Depth', '0 - 70 - 127', PARAM_0127, [0x05], 70),
+    ('PH Reso', '0 - *127*', PARAM_0127, [0x06], 127),
+    ('PH Mix', '0 - *127*', PARAM_0127, [0x07], 127),
+    # ('PH Pan', 'description', mergedRange, [0xXX], _default_),
+    ('PH Level', '0 - 90 - 127', PARAM_0127, [0x13], 90),
+    # ('AW Filter', 'description', mergedRange, [0xXX], _default_),
+    ('AW Sens', '0 - 40 - 127', PARAM_0127, [0x09], 40),
+    ('AW Man', '0 - 10 - 127', PARAM_0127, [0x0A], 10),
+    ('AW Peak', '0 - 20 - 127', PARAM_0127, [0x0B], 20),
+    ('AW Rate', '0.05Hz - 2.00Hz - 10.0Hz', PARAM_TYPE_6, [0x0C], 39),
+    ('AW Depth', '0 - 90 - 127', PARAM_0127, [0x0D], 90),
+    ('AW Pol', 'Down/*Up*', PARAM_UP_DOWN, [0x0E], 1),
+    ('AW Pan', 'L63 - 0 - R63', PARAM_PAN63, [0x14], 0),
+    ('AW Level', '0 - *127*', PARAM_0127, [0x15], 0x7f),
+    ('Level', '0 - *127*', PARAM_0127, [0x16], 0x7f),
+    ('Noise Suppressor', '0 - 10 - 127', PARAM_0127, [0x25], 10)
+)
+
 # Generic Compact Insertion Effect:
 # If you want to help, fill the fields:
 
@@ -1658,34 +2545,6 @@ COMPACT_INS_EFX_PARAMETERS[17] = (
 #)
 
 #
-
-# 47: Rotary Multi (same as Full Effect 6)
-COMPACT_INS_EFX_PARAMETERS[47] = FULL_EFX_PARAMETERS[6]
-
-#
-# TODO: Go on and fill up the filter definitions
-#
-
-COMPACT_INS_EFX_PARAMETERS[64] = (
-    # ('PH Man', 'description', mergedRange, [0xXX], _default_),
-    # ('PH Rate', 'description', mergedRange, [0xXX], _default_),
-    ('PH Depth', '0 - 70 - 127', PARAM_0127, [0x05], 70),
-    ('PH Reso', '0 - *127*', PARAM_0127, [0x06], 127),
-    ('PH Mix', '0 - *127*', PARAM_0127, [0x07], 127),
-    # ('PH Pan', 'description', mergedRange, [0xXX], _default_),
-    ('PH Level', '0 - 90 - 127', PARAM_0127, [0x13], 90),
-    # ('AW Filter', 'description', mergedRange, [0xXX], _default_),
-    ('AW Sens', '0 - 40 - 127', PARAM_0127, [0x09], 40),
-    ('AW Man', '0 - 10 - 127', PARAM_0127, [0x0A], 10),
-    ('AW Peak', '0 - 20 - 127', PARAM_0127, [0x0B], 20),
-    ('AW Rate', '0.05Hz - 2.00Hz - 10.0Hz', PARAM_TYPE_6, [0x0C], 39),
-    ('AW Depth', '0 - 90 - 127', PARAM_0127, [0x0D], 90),
-    ('AW Pol', 'Down/*Up*', PARAM_UP_DOWN, [0x0E], 1),
-    ('AW Pan', 'L63 - 0 - R63', PARAM_PAN63, [0x14], 0),
-    ('AW Level', '0 - *127*', PARAM_0127, [0x15], 0x7f),
-    ('Level', '0 - *127*', PARAM_0127, [0x16], 0x7f),
-    ('Noise Suppressor', '0 - 10 - 127', PARAM_0127, [0x25], 10)
-)
 
 # The VT Effect Mode
 
