@@ -1026,6 +1026,56 @@ PARAM_FEEDBACK_48 = ({40: '-48%', 41: '-46%', 42: '-44%', 43: '-42%', 44: '-40%'
                       69: '10%', 70: '12%', 71: '14%', 72: '16%', 73: '18%', 74: '20%', 75: '22%', 76: '24%',
                       77: '26%', 78: '28%', 79: '30%', 80: '32%', 81: '34%', 82: '36%', 83: '38%', 84: '40%',
                       85: '42%', 86: '44%', 87: '46%', 88: '48%'})
+
+# PARAM_LMGAIN_6024 = tools.mergeRanges(range(0x04, 0x59), tools.ulist(-60, +24, 1, 'dB'))
+PARAM_LMGAIN_6024 = ({4: '-60dB', 5: '-59dB', 6: '-58dB', 7: '-57dB', 8: '-56dB', 9: '-55dB', 10: '-54dB', 11: '-53dB',
+                      12: '-52dB', 13: '-51dB', 14: '-50dB', 15: '-49dB', 16: '-48dB', 17: '-47dB', 18: '-46dB',
+                      19: '-45dB', 20: '-44dB', 21: '-43dB', 22: '-42dB', 23: '-41dB', 24: '-40dB', 25: '-39dB',
+                      26: '-38dB', 27: '-37dB', 28: '-36dB', 29: '-35dB', 30: '-34dB', 31: '-33dB', 32: '-32dB',
+                      33: '-31dB', 34: '-30dB', 35: '-29dB', 36: '-28dB', 37: '-27dB', 38: '-26dB', 39: '-25dB',
+                      40: '-24dB', 41: '-23dB', 42: '-22dB', 43: '-21dB', 44: '-20dB', 45: '-19dB', 46: '-18dB',
+                      47: '-17dB', 48: '-16dB', 49: '-15dB', 50: '-14dB', 51: '-13dB', 52: '-12dB', 53: '-11dB',
+                      54: '-10dB', 55: '-9dB', 56: '-8dB', 57: '-7dB', 58: '-6dB', 59: '-5dB', 60: '-4dB', 61: '-3dB',
+                      62: '-2dB', 63: '-1dB', 64: '0dB', 65: '1dB', 66: '2dB', 67: '3dB', 68: '4dB', 69: '5dB',
+                      70: '6dB', 71: '7dB', 72: '8dB', 73: '9dB', 74: '10dB', 75: '11dB', 76: '12dB', 77: '13dB',
+                      78: '14dB', 79: '15dB', 80: '16dB', 81: '17dB', 82: '18dB', 83: '19dB', 84: '20dB',
+                      85: '21dB', 86: '22dB', 87: '23dB', 88: '24dB'})
+#PARAM_LMTHRESHOLD_60_0 = tools.mergeRanges(range(0x04, 0x041), tools.ulist(-60, 0, 1, 'dB'))
+PARAM_LMTHRESHOLD_60_0 = ({4: '-60dB', 5: '-59dB', 6: '-58dB', 7: '-57dB', 8: '-56dB', 9: '-55dB', 10: '-54dB',
+                           11: '-53dB', 12: '-52dB', 13: '-51dB', 14: '-50dB', 15: '-49dB', 16: '-48dB', 17: '-47dB',
+                           18: '-46dB', 19: '-45dB', 20: '-44dB', 21: '-43dB', 22: '-42dB', 23: '-41dB', 24: '-40dB',
+                           25: '-39dB', 26: '-38dB', 27: '-37dB', 28: '-36dB', 29: '-35dB', 30: '-34dB', 31: '-33dB',
+                           32: '-32dB', 33: '-31dB', 34: '-30dB', 35: '-29dB', 36: '-28dB', 37: '-27dB', 38: '-26dB',
+                           39: '-25dB', 40: '-24dB', 41: '-23dB', 42: '-22dB', 43: '-21dB', 44: '-20dB', 45: '-19dB',
+                           46: '-18dB', 47: '-17dB', 48: '-16dB', 49: '-15dB', 50: '-14dB', 51: '-13dB', 52: '-12dB',
+                           53: '-11dB', 54: '-10dB', 55: '-9dB', 56: '-8dB', 57: '-7dB', 58: '-6dB', 59: '-5dB',
+                           60: '-4dB', 61: '-3dB', 62: '-2dB', 63: '-1dB', 64: '0dB'})
+
+# PARAM_MODESELECT = tools.mergeRanges(range(0x00, 0x06), tools.ulist(1, 6, 1))
+PARAM_MODESELECT = {0: '1', 1: '2', 2: '3', 3: '4', 4: '5', 5: '6'}
+
+# PARAM_ENHANCER = tools.mergeRanges(range(0x00, 0x80), tools.ulist(-64, 63, 1))
+PARAM_ENHANCER =({0: '-64', 1: '-63', 2: '-62', 3: '-61', 4: '-60', 5: '-59', 6: '-58', 7: '-57', 8: '-56', 9: '-55',
+                  10: '-54', 11: '-53', 12: '-52', 13: '-51', 14: '-50', 15: '-49', 16: '-48', 17: '-47', 18: '-46',
+                  19: '-45', 20: '-44', 21: '-43', 22: '-42', 23: '-41', 24: '-40', 25: '-39', 26: '-38', 27: '-37',
+                  28: '-36', 29: '-35', 30: '-34', 31: '-33', 32: '-32', 33: '-31', 34: '-30', 35: '-29', 36: '-28',
+                  37: '-27', 38: '-26', 39: '-25', 40: '-24', 41: '-23', 42: '-22', 43: '-21', 44: '-20', 45: '-19',
+                  46: '-18', 47: '-17', 48: '-16', 49: '-15', 50: '-14', 51: '-13', 52: '-12', 53: '-11', 54: '-10',
+                  55: '-9', 56: '-8', 57: '-7', 58: '-6', 59: '-5', 60: '-4', 61: '-3', 62: '-2', 63: '-1', 64: '0',
+                  65: '1', 66: '2', 67: '3', 68: '4', 69: '5', 70: '6', 71: '7', 72: '8', 73: '9', 74: '10', 75: '11',
+                  76: '12', 77: '13', 78: '14', 79: '15', 80: '16', 81: '17', 82: '18', 83: '19', 84: '20', 85: '21',
+                  86: '22', 87: '23', 88: '24', 89: '25', 90: '26', 91: '27', 92: '28', 93: '29', 94: '30', 95: '31',
+                  96: '32', 97: '33', 98: '34', 99: '35', 100: '36', 101: '37', 102: '38', 103: '39', 104: '40',
+                  105: '41', 106: '42', 107: '43', 108: '44', 109: '45', 110: '46', 111: '47', 112: '48', 113: '49',
+                  114: '50', 115: '51', 116: '52', 117: '53', 118: '54', 119: '55', 120: '56', 121: '57', 122: '58',
+                  123: '59', 124: '60', 125: '61', 126: '62', 127: '63'})
+
+#PARAM_MODE_1_4 = tools.mergeRanges(range(0x00, 0x04), ['Mode1', 'Mode2', 'Mode3', 'Mode4'])
+PARAM_MODETYPE_1_4 = {0: 'Mode1', 1: 'Mode2', 2: 'Mode3', 3: 'Mode4'}
+
+# PARAM_PREFILTER = tools.mergeRanges(range(0x00, 0x03), ['Off', 'LPF', 'HPF'])
+PARAM_PREFILTER = {0: 'Off', 1: 'LPF', 2: 'HPF'}
+
 # TODO: Finish to add all necessary PARAM constants to complete the effects...
 
 # Let's initialise the dictionaries with the parameters.
@@ -1087,9 +1137,8 @@ FULL_EFX_PARAMETERS[2] = (
     ('Distance', '0-127', PARAM_0127, [0x0B], 0),
     ('Limiter Switch', 'Off/On', PARAM_ON_OFF, [0x0C], 0),
     ('Lm Freq', '20Hz - 115Hz - 2000Hz', PARAM_TYPE_15, [0x0D], 40),
-    ('Lm Gain', '-60dB - +2dB - +24dB', tools.mergeRanges(range(0x04, 0x59), tools.ulist(-60, +24, 1, 'dB')), [0x0E], 66),
-    ('Lm Threshold', '-60db - 0dB', tools.mergeRanges(range(0x04, 0x041), tools.ulist(-60, 0, 1, 'dB')), [0x0F],
-     0x40),
+    ('Lm Gain', '-60dB - +2dB - +24dB', PARAM_LMGAIN_6024, [0x0E], 66),
+    ('Lm Threshold', '-60db - 0dB', PARAM_LMTHRESHOLD_60_0, [0x0F], 0x40),
     ('Lm Attack', '0 - 20 - 127', PARAM_0127, [0x10], 20),
     ('Lm Release', '0 - 30 - 127', PARAM_0127, [0x11], 30)
 )
@@ -1097,11 +1146,11 @@ FULL_EFX_PARAMETERS[2] = (
 FULL_EFX_TYPE[3] = ('Vocoder', [0x00, 0x13])
 FULL_EFX_PARAMETERS[3] = (
     ('Speech Input', 'Mic1/2/Wave1/2', {0: 'Mic1', 1: 'Mic2', 2: 'Wave1', 3: 'Wave2'}, [0x03], 0x00),
-    ('Mode Select', '1 - 3 - 6', tools.mergeRanges(range(0x00, 0x06), tools.ulist(1, 6, 1)), [0x04], 0x02),
+    ('Mode Select', '1 - 3 - 6', PARAM_MODESELECT, [0x04], 0x02),
     ('Speech Gain', '0 - 100 - 127', PARAM_0127, [0x05], 100),
     ('Speech Cutoff', '250Hz - 630Hz - 800Hz', PARAM_TYPE_9, [0x06], 32),
     ('Speech Mix Level', '0 - 25 -127', PARAM_0127, [0x07], 25),
-    ('Response Time', 'Slow/Normal/Fast', {0: 'Slow', 1: 'Normal', 3: 'Fast'}, [0x08], 0x01),
+    ('Response Time', 'Slow/Normal/Fast', {0: 'Slow', 1: 'Normal', 2: 'Fast'}, [0x08], 0x01),
     ('Level', '0 - 127', PARAM_0127, [0x09], 0x7F)
 )
 
@@ -1110,7 +1159,7 @@ FULL_EFX_PARAMETERS[4] = (
     ('Ns Threshold', '0 - 127', PARAM_0127, [0x03], 0x00),
     ('Lm Threshol', '0 - 127', PARAM_0127, [0x04], 0x7F),
     ('De-esser Level', '0 - 127', PARAM_0127, [0x05], 0x08),
-    ('Enhancer Level', '-64 - +5 - +63', tools.mergeRanges(range(0x00, 0x80), tools.ulist(-64, 63, 1)), [0x06], 69),
+    ('Enhancer Level', '-64 - +5 - +63', PARAM_ENHANCER, [0x06], 69),
     ('EQ Low Gain', '-12dB - 0dB - +12dB', PARAM_12DB, [0x07], 0x41),
     ('EQ Mid Freq', '200Hz - 800Hz - 6300 Hz', PARAM_TYPE_10, [0x08], 48),
     ('EQ Mid Q', '0.5/1.0/2.0/4.0/9.0', {0: '0.5', 1: '1.0', 2: '2.0', 3: '4.0', 4: '9.0'}, [0x09], 1),
@@ -1129,12 +1178,12 @@ FULL_EFX_PARAMETERS[4] = (
 
 FULL_EFX_TYPE[5] = ('Game', [0x00, 0x16])
 FULL_EFX_PARAMETERS[5] = (
-    ('Enhancer Level', '-64 - +35 - +63', tools.mergeRanges(range(0x00, 0x80), tools.ulist(-64, 63, 1)), [0x03], 69),
+    ('Enhancer Level', '-64 - +35 - +63', PARAM_ENHANCER, [0x03], 69),
     ('Low Boost Level', '0dB - +8dB - 18dB', PARAM_0_18DB, [0x04], 72),
     ('Low Boost Freq','60Hz - 400Hz', PARAM_TYPE_17, [0x05], 9),
     ('Lm Mix Level','0 - 127', PARAM_0127 , [0x06], 127),
     ('GtRv Mix Level','0 - 70 - 127', PARAM_0127 , [0x07], 70),
-    ('Rv Mix Level','0 - 60 - 12', PARAM_0127, [0x08], 60),
+    ('Rv Mix Level','0 - 60 - 127', PARAM_0127, [0x08], 60),
     ('3D Switch','Off / On', PARAM_ON_OFF , [0x09], 1),
     ('3D Range','1 - 3 -4', PARAM_1_4, [0x0A], 2),
     ('Out','Speaker/Phones', {0: 'Speaker', 1: 'Phones'}, [0x0B], 0),
@@ -1159,22 +1208,22 @@ FULL_EFX_PARAMETERS[6] = (
     ('OD Drive', '0 - 40 - 127', PARAM_0127, [0x03], 40),
     ('OD Sw', 'Off/*On', PARAM_ON_OFF, [0x04], 1),
     ('EQ L Gain', '-12dB - 0dB - +12dB', PARAM_12DB, [0x05], 0x41),
-    # ('Name', 'description', mergedRange, [0xXX], _default_),
-    # ('Name', 'description', mergedRange, [0xXX], _default_),
-    # ('Name', 'description', mergedRange, [0xXX], _default_),
-    # ('Name', 'description', mergedRange, [0xXX], _default_),
-    # ('Name', 'description', mergedRange, [0xXX], _default_),
-    # ('Name', 'description', mergedRange, [0xXX], _default_),
-    # ('Name', 'description', mergedRange, [0xXX], _default_),
-    # ('Name', 'description', mergedRange, [0xXX], _default_),
-    # ('Name', 'description', mergedRange, [0xXX], _default_),
-    # ('Name', 'description', mergedRange, [0xXX], _default_),
-    # ('Name', 'description', mergedRange, [0xXX], _default_),
-    # ('Name', 'description', mergedRange, [0xXX], _default_),
-    # ('Name', 'description', mergedRange, [0xXX], _default_),
-    # ('Name', 'description', mergedRange, [0xXX], _default_),
-    # ('Name', 'description', mergedRange, [0xXX], _default_),
-    # ('Name', 'description', mergedRange, [0xXX], _default_)
+    ('EQ M Fq', '200Hz - 1.6kHz - 6.3kHz', PARAM_TYPE_10, [0x06], 72),
+    # ('EQ M Q', '0.5/1.0/2.0/4.0/9.0', mergedRange, [0x07], _default_),
+    ('EQ M Gain', '-12dB - 0dB - +12dB', PARAM_12DB, [0x08], 64),
+    ('EQ H Gain', '-12dB - 0dB - +12dB', PARAM_12DB, [0x09], 64),
+    ('RT L Slow', '0.05Hz - 0.35Hz - 10.0Hz', PARAM_TYPE_6, [0x0A], 6),
+    ('RT L Fast', '0.05Hz - 6.40Hz - 10.0Hz', PARAM_TYPE_6, [0x0B], 113),
+    ('RT Lo Accl', '0 - 3 - 15', PARAM_TYPE_14, [0x0C], 24),
+    ('RT Lo Lev', '0 - 127', PARAM_0127, [0x0D], 127),
+    ('RT H Slow', '0.05Hz - 0.90Hz - 10.0Hz', PARAM_TYPE_6, [0x0E], 17),
+    ('RT H Fast', '0.05Hz - 7.50Hz - 10.0Hz', PARAM_TYPE_6, [0x0F], 120),
+    ('RT Hi Accl', '0 - 11 - 15', PARAM_TYPE_14, [0x10], 88),
+    ('RT Hi Lev', '0 - 64 - 127', PARAM_0127, [0x11], 64),
+    ('RT Sept', '0 - 90 - 127', PARAM_0127, [0x12], 90),
+    #('RT Speed', 'Slow/Fast', mergedRange, [0x13], _default_),
+    ('Level', '0 - 127', PARAM_0127, [0x16], 127),
+    ('Noise suppressor', '0 - 30 - 127', PARAM_0127, [0x25], 30)
 )
 
 # 7: GTR Multi 1
@@ -1435,9 +1484,8 @@ COMPACT_SYS1_EFX_PARAMETERS[1] = (
 )
 
 COMPACT_SYS1_EFX_PARAMETERS[2] = (
-    ('Type', 'Mode1 -2 -4', tools.mergeRanges(range(0x00, 0x04), ['Mode1', 'Mode2', 'Mode3', 'Mode4']), [0x03],
-     0x01),
-    ('Pre Filter', 'Off/LPF/HPF', tools.mergeRanges(range(0x00, 0x03), ['Off', 'LPF', 'HPF']), [0x04], 0x02),
+    ('Type', 'Mode 1 - 2 - 4', PARAM_MODETYPE_1_4, [0x03], 0x01),
+    ('Pre Filter', 'Off/LPF/HPF', PARAM_PREFILTER, [0x04], 0x02),
     ('Cutoff', '250Hz - 630Hz - 8000Hz', PARAM_TYPE_9, [0x05], 32),
     ('Pre Dly', '0ms - 100ms', PARAM_TYPE_1, [0x06], 80),
     ('Rate', '0.05 - 0.35 - 10.0', PARAM_TYPE_6, [0x07], 6),
@@ -1463,7 +1511,7 @@ COMPACT_SYS2_EFX_PARAMETERS[2] = (
     ('Type', 'Room1/2/Plate1/2/Hall1/2', PARAM_ROOM, [0x03], 0x05),
     ('Pre Dly', '0ms - 100ms', PARAM_TYPE_1, [0x04], 0x7F),
     ('Reverb Time', '0 - 23 - 127', PARAM_0127, [0x05], 0x17),
-    # ('HF Damp'),
+    ('HF Damp','315 - 8kHz/Bypass', PARAM_TYPE_8, [0X06], 120),
     ('Low Gain', '-12dB - +2dB - +12dB', PARAM_12DB, 66),
     ('High Gain', '-12dB - -6dB - +12dB', PARAM_12DB, 58),
     ('Balance', 'D > 0E - D0 < E', PARAM_BALANCE, [0x09], 0x7F)
