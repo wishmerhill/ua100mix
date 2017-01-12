@@ -38,9 +38,10 @@ logger.info('Starting the ua100mix')
 # NOTE: Could (and will) be automatically set to 0 if no UA-100 is found.
 #       The UA-100 discovery routine is based on WHAT? - ****
 # THIS NEED REVISION. Is it any useful?
+# as of 12.01.2017 all references to REAL_UA_MODE in the code are gone.
 
-REAL_UA_MODE = 1
-logger.debug('Setting REAL_UA_MODE to %s', REAL_UA_MODE )
+#REAL_UA_MODE = 1
+#logger.debug('Setting REAL_UA_MODE to %s', REAL_UA_MODE )
 
 logger.info('Importing some required modules')
 import sys
@@ -50,25 +51,25 @@ try:
     import mido
     import rtmidi
 except ImportError:
-    logger.warning('*** Warning *** mido and/or rtmidi not found - Switching to testing mode (REAL_UA_MODE = 0) ***')
-    REAL_UA_MODE = 0
+    logger.warning('*** Warning *** mido and/or rtmidi not found. Can\'t go on, Bye.')
+
 mido.set_backend('mido.backends.rtmidi/LINUX_ALSA')
 import PyQt4.uic
 from PyQt4 import QtGui
-# from PyQt4 import QtCore
-# from types import MethodType
 import signal
 import time
 
 logger.info('Reading MANY constants...')
-# brutally importing all the parameters
+# brutally importing all the parameters. I read somewhere in this case * is not deprecated.
 from res.parameters import *
 
+# get data in hex
 np.set_printoptions(formatter={'int': hex})
 
 class MidiDevsDialog(QtGui.QDialog):
     '''
     First of all, we ask for the right device to use. In fact, we know which one... and thus, we can easily guess.
+    Meanwhile this dialog is not really useful anymore. Soon it will gently disappear.
     '''
     def __init__(self, parent=None):
         super(MidiDevsDialog, self).__init__(parent)
@@ -92,8 +93,7 @@ class MidiDevsDialog(QtGui.QDialog):
         self.dialogQuit.clicked.connect(self.reject)
 
         # set the current index to the guessed right outpud midi device for the UA100 controller
-        if (REAL_UA_MODE):
-            self.outputDevicesList.setCurrentIndex(DEFAULT_UA100CONTROL)
+        self.outputDevicesList.setCurrentIndex(DEFAULT_UA100CONTROL)
 
     def updateDeviceLabels(self, index):
         '''
@@ -118,7 +118,6 @@ class MidiDevsDialog(QtGui.QDialog):
         else:
             logger.debug('UA100CONTROL is not yet set!')
 
-
 class MainWindow(QtGui.QMainWindow):
 
     def __init__(self, parent=None):
@@ -127,26 +126,23 @@ class MainWindow(QtGui.QMainWindow):
         # load the ui
         self.ui = PyQt4.uic.loadUi('ui/main.ui', self)
 
-        # Opening the MIDI ports
-        midiDevs = actualMidiDevices()
-        UA100CONTROL = rightMidiDevice(midiDevs)
-        device = midiDevs[UA100CONTROL]
-        try:
-            self.pmout = mido.open_output(device)
-            self.pmin = mido.open_input(device, callback = self.callback)
-        except:
-            print('No ports! Bye')
-            sys.exit()
+        self.__doOpenPorts()
 
         # inizialize the dicts containing the definitions for the 3 effect dialog types
         self.fullEffects = {}
         self.compactEffectsSys = {}
         self.compactEffectsIns = {}
 
-        # setup menus
-        self.actionReset_Mixer.triggered.connect(self.resetMixer)
-        self.actionQuit.triggered.connect(QtGui.qApp.quit)
+        # init the menus
+        self.__doSetupMenus()
 
+        # init all the GUI elements
+        self.__doSetupGui()
+
+        # init the levels
+        self.__setInitMixerLevels__()
+
+    def __doSetupGui(self):
         # TODO: Decide if 'changer' is useful and in case put it everwhere!
 
         # *************** MIC1 *********************
@@ -155,19 +151,22 @@ class MainWindow(QtGui.QMainWindow):
 
         # Setting Up the Mic1 Fader
         self.Mic1Fader.valueChanged.connect(self.Mic1Lcd.display)
-        self.Mic1Fader.valueChanged.connect(functools.partial(self.valueChange, CC_MIC1_CH, CC_MAIN_FADER_PAR, changer = 'Mic1Fader'))
+        self.Mic1Fader.valueChanged.connect(
+            functools.partial(self.valueChange, CC_MIC1_CH, CC_MAIN_FADER_PAR, changer='Mic1Fader'))
         self.Mic1Fader.setProperty("parameter", CC_MAIN_FADER_PAR)
 
         # Setting Up the Mic1 Pan Dial
         self.Mic1Pan.valueChanged.connect(self.Mic1PanLcd.display)
-        self.Mic1Pan.valueChanged.connect(functools.partial(self.valueChange, CC_MIC1_CH, CC_PAN_PAR, changer = 'Mic1Pan'))
+        self.Mic1Pan.valueChanged.connect(
+            functools.partial(self.valueChange, CC_MIC1_CH, CC_PAN_PAR, changer='Mic1Pan'))
         self.Mic1Pan.setProperty("parameter", CC_PAN_PAR)
         # center...
         self.Mic1Pan.setProperty("value", CC_PAN_MIDDLE)
 
         # I also need Mic1Pan2, a "copy" of Mic2 for the Mic1+Mic2 mode:
         self.Mic1Pan2.valueChanged.connect(self.Mic1PanLcd2.display)
-        self.Mic1Pan2.valueChanged.connect(functools.partial(self.valueChange, CC_MIC2_CH, CC_PAN_PAR, changer = 'Mic1Pan2'))
+        self.Mic1Pan2.valueChanged.connect(
+            functools.partial(self.valueChange, CC_MIC2_CH, CC_PAN_PAR, changer='Mic1Pan2'))
         self.Mic1Pan2.setProperty("parameter", CC_PAN_PAR)
         self.Mic1Pan2.setProperty("value", CC_PAN_MIDDLE)
 
@@ -345,10 +344,6 @@ class MainWindow(QtGui.QMainWindow):
         self.EffSys2Button.setProperty('HEX', [0x06])
         self.EffSys2Button.clicked.connect(self.effectSelection)
 
-        if (REAL_UA_MODE):
-            self.__setInitMixerLevels__()
-            pass
-
         self.uiInputModeButton.setProperty('state', 0x00)
         self.Mic1Pan2.hide()
         self.Mic1PanLcd2.hide()
@@ -365,6 +360,24 @@ class MainWindow(QtGui.QMainWindow):
 
         self.SaxModeButton.clicked.connect(self.saxMode)
 
+    def __doOpenPorts(self):
+
+        # Opening the MIDI ports
+        midiDevs = actualMidiDevices()
+        UA100CONTROL = rightMidiDevice(midiDevs)
+        device = midiDevs[UA100CONTROL]
+        try:
+            self.pmout = mido.open_output(device)
+            self.pmin = mido.open_input(device, callback=self.callback)
+        except:
+            print('No ports! Bye')
+            sys.exit()
+
+    def __doSetupMenus(self):
+        # setup menus
+        self.actionReset_Mixer.triggered.connect(self.resetMixer)
+        self.actionQuit.triggered.connect(QtGui.qApp.quit)
+
     def callback(self, message):
         '''
         Manage the callback of the input port.
@@ -372,8 +385,15 @@ class MainWindow(QtGui.QMainWindow):
         :param message:
         :return:
         '''
-        logger.info('Message: %s', np.array(message.bytes()))
+        logger.info('Message: %s', message.bytes())
+        print(message)
+        print(message.bytes()[-7:-3])
+        if (message.bytes()[-7:-3]) == [0,64,0,0]:
+            i = int(message.bytes()[-3])
+            print('Man you are turning the control think!')
+            print(UA100_MODE_DATARANGE[i])
         self.latestmsg = message
+
 
     def saxMode(self):
         '''
@@ -389,7 +409,6 @@ class MainWindow(QtGui.QMainWindow):
         
         need a tree way button...
         MIC/LINE 21 (15H)       0: Mic Mode, 1: Line Mode, 2: MIC1+MIC2 Mod
-        
         '''
 
         if self.sender().property('state') == 0x00:
@@ -424,13 +443,11 @@ class MainWindow(QtGui.QMainWindow):
             self.Mic1PanLcd2.hide()
             self.Mic2.show()
 
-        if (REAL_UA_MODE):
-            p = mido.Parser()
-            p.feed([CC_MIC1_CH, CC_MICLINESELECTOR_PAR, self.sender().property('state').toPyObject()])
-            shortMsg = p.get_message()
-            logger.debug('Message to be sent %s', shortMsg)
-            pmout.send(shortMsg)
-
+        p = mido.Parser()
+        p.feed([CC_MIC1_CH, CC_MICLINESELECTOR_PAR, self.sender().property('state').toPyObject()])
+        shortMsg = p.get_message()
+        logger.debug('Message to be sent %s', shortMsg)
+        self.pmout.send(shortMsg)
         logger.debug('%s %s %s', CC_MIC1_CH, CC_MICLINESELECTOR_PAR, self.sender().property('state').toPyObject())
 
     def setEffectMode(self, value):
@@ -506,13 +523,11 @@ class MainWindow(QtGui.QMainWindow):
         custom slot to connect to the changes in the interface with WriteShort to send the control change messages
         '''
         logger.debug('Value change: %s %s %s. Changer is %s', a, b, val, changer)
-
-        if (REAL_UA_MODE):
-            p = mido.Parser()
-            p.feed([a, b, val])
-            shortMsg = p.get_message()
-            logger.debug('Message to be sent %s', shortMsg)
-            self.pmout.send(shortMsg)
+        p = mido.Parser()
+        p.feed([a, b, val])
+        shortMsg = p.get_message()
+        logger.debug('Message to be sent %s', shortMsg)
+        self.pmout.send(shortMsg)
 
     def uniqueSolos(self, checked):
         '''
@@ -527,22 +542,20 @@ class MainWindow(QtGui.QMainWindow):
             logger.debug('unchecking and desoloing ')
             logger.debug('soloing %s', str(self.sender().parent().objectName()))
 
-            if (REAL_UA_MODE):
-                p = mido.Parser()
-                p.feed([self.sender().parent().property('channel').toPyObject(), CC_SOLO_PAR, 1])
-                shortMsg = p.get_message()
-                logger.debug('Message to be sent %s', shortMsg)
-                self.pmout.send(shortMsg)
+            p = mido.Parser()
+            p.feed([self.sender().parent().property('channel').toPyObject(), CC_SOLO_PAR, 1])
+            shortMsg = p.get_message()
+            logger.debug('Message to be sent %s', shortMsg)
+            self.pmout.send(shortMsg)
 
             for soloer in soloers:
                 soloingObj = self.findChild(QtGui.QGroupBox, soloer)
 
-                if (REAL_UA_MODE):
-                    p = mido.Parser()
-                    p.feed([soloingObj.property('channel').toPyObject(), CC_SOLO_PAR, 0])
-                    shortMsg = p.get_message()
-                    logger.debug('Message to be sent %s', shortMsg)
-                    self.pmout.send(shortMsg)
+                p = mido.Parser()
+                p.feed([soloingObj.property('channel').toPyObject(), CC_SOLO_PAR, 0])
+                shortMsg = p.get_message()
+                logger.debug('Message to be sent %s', shortMsg)
+                self.pmout.send(shortMsg)
 
                 soloingButtonStr = soloer + 'Solo'
                 nomuteButtonStr = soloer + 'Mute'
@@ -559,12 +572,11 @@ class MainWindow(QtGui.QMainWindow):
                 remuteButton = soloingObj.findChild(QtGui.QPushButton, remuteButtonStr)
                 remuteButton.show()
 
-            if (REAL_UA_MODE):
-                p = mido.Parser()
-                p.feed([self.sender().parent().property('channel').toPyObject(), CC_SOLO_PAR, 0])
-                shortMsg = p.get_message()
-                logger.debug('Message to be sent %S', shortMsg)
-                self.pmout.send(shortMsg)
+            p = mido.Parser()
+            p.feed([self.sender().parent().property('channel').toPyObject(), CC_SOLO_PAR, 0])
+            shortMsg = p.get_message()
+            logger.debug('Message to be sent %S', shortMsg)
+            self.pmout.send(shortMsg)
 
     def resetMixer(self):
         '''
@@ -639,7 +651,6 @@ class MainWindow(QtGui.QMainWindow):
         # wave2Level = sysexRead(self.pmin, question = "wave2Level")
         wave2Level = self.getParsedValue(self.latestmsg)
         self.Wave2Fader.setProperty("value", wave2Level)
-
 
 class CompactEffectsInsDialog(QtGui.QDialog):
     def __init__(self, parent=None):
@@ -738,8 +749,7 @@ class CompactEffectsInsDialog(QtGui.QDialog):
         logger.debug('LSB/MSB for parameter: %s', self.sender().property('HEX').toPyObject())
 
         # if in real mode, actually send the message
-        if REAL_UA_MODE == 1:
-            send_DT1([0x00, 0x40] + self.SenderHex + self.sender().property('HEX').toPyObject() + valueToList, self.pmout)
+        send_DT1([0x00, 0x40] + self.SenderHex + self.sender().property('HEX').toPyObject() + valueToList, self.pmout)
 
     def setEffect(self, checked):
         '''
@@ -747,14 +757,12 @@ class CompactEffectsInsDialog(QtGui.QDialog):
         
         IT SWITCHES THE WHOLE THIG ON!
         '''
-
         logger.debug('Sender Hex: %s',self.SenderHex)
         if (checked):
             checkedList = [0x01]
         else:
             checkedList = [0x00]
         send_DT1([0x00, 0x40, 0x40] + self.SenderHex + checkedList, self.pmout)
-
 
 class CompactEffectsSysDialog(QtGui.QDialog):
     def __init__(self, parent=None):
@@ -824,7 +832,6 @@ class CompactEffectsSysDialog(QtGui.QDialog):
 
         # if in real mode, actually send the message
         send_DT1([0x00, 0x40] + self.SenderHex + self.sender().property('HEX').toPyObject() + valueToList, self.pmout)
-
 
 class FullEffectsDialog(QtGui.QDialog):
     '''
@@ -900,7 +907,6 @@ class FullEffectsDialog(QtGui.QDialog):
         # if in real mode, actually send the message
         send_DT1([0x00, 0x40] + self.SenderHex + self.sender().property('HEX').toPyObject() + valueToList, self.pmout)
 
-
 class CustomTreeItem(QtGui.QTreeWidgetItem):
     '''
     Just a dirty way to populate the QTreeWidget with custom items containing each a QSpinBox.
@@ -941,7 +947,6 @@ class CustomTreeItem(QtGui.QTreeWidgetItem):
     def setActualValue(self, value):
         self.setText(2, self.par[2][value])
 
-
 def actualMidiDevices():
     '''
     This should enumerate the devices to (later on) give then the possibility to choose one or guess the right one
@@ -955,18 +960,14 @@ def actualMidiDevices():
     
     '''
 
-    if (REAL_UA_MODE):
-        IODevs = mido.get_ioport_names()
-        numIODevs = len(IODevs)
+    IODevs = mido.get_ioport_names()
+    numIODevs = len(IODevs)
 
-        if (numIODevs == 0):
-            logger.warning('***************  No midi device found - and we should be in REAL UA mode! Exiting. Bye!')
-            sys.exit()
+    if (numIODevs == 0):
+        logger.warning('***************  No midi device found - and we should be in REAL UA mode! Exiting. Bye!')
+        sys.exit()
 
-        logger.debug('We have %s output devices: %s', numIODevs,  IODevs)
-    else:
-        numIODevs = 1
-        IODevs = {u'Dummy midi device 0:0'}
+    logger.debug('We have %s output devices: %s', numIODevs,  IODevs)
 
     # Initialize the device dictionary
     # midiDevs = { 0: (tuple), 1: (tuple), ... }
@@ -975,7 +976,6 @@ def actualMidiDevices():
         midiDevs[dev] = IODevs[dev]
 
     return midiDevs
-
 
 def rightMidiDevice(midiDevs):
     '''
@@ -991,7 +991,6 @@ def rightMidiDevice(midiDevs):
             logger.debug('Found something! The controller is device %s aka %s', i, midiDevs[i][1])
             return int(i)
 
-
 def sysexRead(pmin, question = "unknown"):
     answerMsg = pmin.receive()
     answerBytes = answerMsg.bytes()
@@ -1000,7 +999,6 @@ def sysexRead(pmin, question = "unknown"):
     # need to parse answer again... 
 
     return value
-
 
 def send_RQ1(data, pmout):
     '''
@@ -1021,16 +1019,13 @@ def send_RQ1(data, pmout):
               + EOX
     logger.debug("Message RQ1: %s", message)
 
-    if (REAL_UA_MODE):
-        p = mido.Parser()
-        p.feed(message)
-        sysEx_msg = p.get_message()
-        logger.debug('Message to be sent: %s', sysEx_msg)
-        pmout.send(sysEx_msg)
-
+    p = mido.Parser()
+    p.feed(message)
+    sysEx_msg = p.get_message()
+    logger.debug('Message to be sent: %s', sysEx_msg)
+    pmout.send(sysEx_msg)
 
 def send_DT1(data, pmout):
-
     checksum_result = checksum(data)
     message = DT1_STATUS \
               + UA_SYSEX_ID \
@@ -1040,13 +1035,11 @@ def send_DT1(data, pmout):
               + EOX
     logger.debug('DT1 Message: %s', np.array(message))
 
-    if (REAL_UA_MODE):
-        p = mido.Parser()
-        p.feed(message)
-        sysEx_msg = p.get_message()
-        logger.debug('Message to be sent: %s', sysEx_msg)
-        pmout.send(sysEx_msg)
-
+    p = mido.Parser()
+    p.feed(message)
+    sysEx_msg = p.get_message()
+    logger.debug('Message to be sent: %s', sysEx_msg)
+    pmout.send(sysEx_msg)
 
 def checksum(toChecksum):
     '''
@@ -1056,9 +1049,6 @@ def checksum(toChecksum):
     checksum_value = (128 - (sum(toChecksum) % 128))
     checksum_list = [checksum_value]
     return list(checksum_list)
-
-def print_message(message):
-    print(message)
 
 if (__name__ == '__main__'):
 

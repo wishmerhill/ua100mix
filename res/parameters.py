@@ -213,7 +213,7 @@ UA100_CONTROL = [0x00, 0x40, 0x00]
 # MODE
 UA100_MODE = [0x00]
 UA100_MODE_SIZE = [0x00, 0x00, 0x00, 0x01]
-# UA100_MODE_DATARANGE = range(0x01,10)
+UA100_MODE_DATARANGE = tools.mergeRanges(range(0x01,10), ['PC Mode(VT Effect Mode)','','PC Mode(Compact Effect Mode)','PC Mode(Full Effect Mode)','VT Mode','Vocal Mode','Guitar Mode','GAME Mode','BYPASS Mode'])
 # 1: PC Mode(VT Effect Mode)
 # 3: PC Mode(Compact Effect Mode)
 # 4: PC Mode(Full Effect Mode)
