@@ -366,7 +366,14 @@ class MainWindow(QtGui.QMainWindow):
         self.SaxModeButton.clicked.connect(self.saxMode)
 
     def callback(self, message):
-        pass
+        '''
+        Manage the callback of the input port.
+        TODO: parse here (maybe with a function) the content and possibly do something.
+        :param message:
+        :return:
+        '''
+        logger.info('Message: %s', np.array(message.bytes()))
+        self.latestmsg = message
 
     def saxMode(self):
         '''
@@ -378,7 +385,6 @@ class MainWindow(QtGui.QMainWindow):
 
     def setInputMode(self):
         '''
-        
         The MIC1-GUITAR/LINE/MIC1+MIC2 toggler
         
         need a tree way button...
@@ -583,6 +589,14 @@ class MainWindow(QtGui.QMainWindow):
 
         self.Mic1Pan2.setProperty("value", CC_PAN_MIDDLE)
 
+    def getParsedValue(self, message):
+        answerBytes = message.bytes()
+        value = answerBytes[-3]
+        logger.info('Parsed Value is: %s', value)
+        # need to parse answer again...
+
+        return value
+
     def __setInitMixerLevels__(self):
         '''
         It works. It send SYSEX and reads answers. But there must me a better way to read and write.
@@ -591,34 +605,39 @@ class MainWindow(QtGui.QMainWindow):
 
         send_RQ1(MIXER_OUTPUT_CONTROL + MIXER_OUTPUT_MASTERLEVEL + MIXER_OUTPUT_MASTERLEVEL_SIZE, self.pmout)
         time.sleep(SLEEP_TIME)
-
-        masterLevel = sysexRead(self.pmin, question = 'masterLevel')
-        #logger.info('masterlevel= %s', masterLevel)
+        #masterLevel = sysexRead(self.pmin, question = 'masterLevel')
+        masterLevel = self.getParsedValue(self.latestmsg)
+        logger.info('masterlevel= %s', masterLevel)
         self.MasterLineFader.setProperty("value", masterLevel)
 
         send_RQ1(MIXER_OUTPUT_CONTROL + MIXER_OUTPUT_WAVEREC + MIXER_OUTPUT_WAVEREC_SIZE, self.pmout)
         time.sleep(SLEEP_TIME)
-        waverecLevel = sysexRead(self.pmin, question = "waverecLevel")
+        #waverecLevel = sysexRead(self.pmin, question = "waverecLevel")
+        waverecLevel = self.getParsedValue(self.latestmsg)
         self.WaveRecFader.setProperty("value", waverecLevel)
 
         send_RQ1(MIC1_FADER + MIC1_FADER_SIZE, self.pmout)
         time.sleep(SLEEP_TIME)
-        mic1Level = sysexRead(self.pmin, question = "mic1Level")
+        #mic1Level = sysexRead(self.pmin, question = "mic1Level")
+        mic1Level = self.getParsedValue(self.latestmsg)
         self.Mic1Fader.setProperty("value", mic1Level)
 
         send_RQ1(MIC2_FADER + MIC2_FADER_SIZE, self.pmout)
         time.sleep(SLEEP_TIME)
-        mic2Level = sysexRead(self.pmin, question = "mic2Level")
+        # mic2Level = sysexRead(self.pmin, question = "mic2Level")
+        mic2Level = self.getParsedValue(self.latestmsg)
         self.Mic2Fader.setProperty("value", mic2Level)
 
         send_RQ1(WAVE1_FADER + WAVE1_FADER_SIZE, self.pmout)
         time.sleep(SLEEP_TIME)
-        wave1Level = sysexRead(self.pmin, question = "wave1Level")
+        # wave1Level = sysexRead(self.pmin, question = "wave1Level")
+        wave1Level = self.getParsedValue(self.latestmsg)
         self.Wave1Fader.setProperty("value", wave1Level)
 
         send_RQ1(WAVE2_FADER + WAVE2_FADER_SIZE, self.pmout)
         time.sleep(SLEEP_TIME)
-        wave2Level = sysexRead(self.pmin, question = "wave2Level")
+        # wave2Level = sysexRead(self.pmin, question = "wave2Level")
+        wave2Level = self.getParsedValue(self.latestmsg)
         self.Wave2Fader.setProperty("value", wave2Level)
 
 
@@ -627,8 +646,8 @@ class CompactEffectsInsDialog(QtGui.QDialog):
         super(CompactEffectsInsDialog, self).__init__(parent)
         self.pmin = parent.pmin
         self.pmout = parent.pmout
-        logger.info('*************** pmin is %s', self.pmin)
-        logger.info('*************** pmout is %s', self.pmout)
+        logger.debug('*************** pmin is %s', self.pmin)
+        logger.debug('*************** pmout is %s', self.pmout)
 
         # here is where I store the channel choosen fo the effect (mic1, mic2, wave1, wave2, sys1, sys2)
         self.SenderHex = parent.sender().property('HEX').toPyObject()
