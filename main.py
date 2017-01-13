@@ -18,6 +18,7 @@ __email__ = 'alberto.azzalini@gmail.com'
 
 # this is in place of the old DEBUG_MODE (awful!)
 import logging
+
 # configuring the logger so that it does not log anything coming from imported modules
 logger = logging.getLogger(__name__)
 logger.setLevel(logging.INFO)
@@ -27,26 +28,9 @@ formatter = logging.Formatter(
 handler.setFormatter(formatter)
 logger.addHandler(handler)
 
-logger.info('Starting the ua100mix')
-
-# ********************************
-# ***** UA MODE CONTROL **********
-#
-# SET:
-#      0: No UA-100 present, for test purposes on other machines
-#      1: UA-100 present and working
-# NOTE: Could (and will) be automatically set to 0 if no UA-100 is found.
-#       The UA-100 discovery routine is based on WHAT? - ****
-# THIS NEED REVISION. Is it any useful?
-# as of 12.01.2017 all references to REAL_UA_MODE in the code are gone.
-
-#REAL_UA_MODE = 1
-#logger.debug('Setting REAL_UA_MODE to %s', REAL_UA_MODE )
-
+# Import phase
 logger.info('Importing some required modules')
-import sys
-import functools
-import numpy as np
+import sys, functools, numpy as np, signal, time
 try:
     import mido
     import rtmidi
@@ -54,16 +38,16 @@ except ImportError:
     logger.warning('*** Warning *** mido and/or rtmidi not found. Can\'t go on, Bye.')
 
 mido.set_backend('mido.backends.rtmidi/LINUX_ALSA')
+
+# importing GUI modules
 import PyQt4.uic
 from PyQt4 import QtGui
-import signal
-import time
 
-logger.info('Reading MANY constants...')
 # brutally importing all the parameters. I read somewhere in this case * is not deprecated.
+logger.info('Reading MANY constants...')
 from res.parameters import *
 
-# get data in hex
+# get data in hex format (sometime it is useful, as the whole documentation expresses parameters in hex)
 np.set_printoptions(formatter={'int': hex})
 
 class MidiDevsDialog(QtGui.QDialog):
@@ -71,11 +55,10 @@ class MidiDevsDialog(QtGui.QDialog):
     First of all, we ask for the right device to use. In fact, we know which one... and thus, we can easily guess.
     Meanwhile this dialog is not really useful anymore. Soon it will gently disappear.
     '''
+    
     def __init__(self, parent=None):
         super(MidiDevsDialog, self).__init__(parent)
-
         self.ui = PyQt4.uic.loadUi('ui/device_sel.ui', self)
-
         logger.debug('midiDevs= %s', midiDevs)
         for i in range(0, len(midiDevs)):
             self.outputDevicesList.addItem(str(midiDevs[i]), i)
@@ -102,7 +85,8 @@ class MidiDevsDialog(QtGui.QDialog):
         if (index == DEFAULT_UA100CONTROL):
             self.reccomendedLabel.setText('RECCOMENDED!\r\nYou don\'t really want to change it!')
             self.reccomendedLabel.setStyleSheet('color: red; font-style: bold')
-        else:
+        
+        :
             self.reccomendedLabel.setText('')
 
     def setMidiDevice(self, index):
@@ -119,14 +103,17 @@ class MidiDevsDialog(QtGui.QDialog):
             logger.debug('UA100CONTROL is not yet set!')
 
 class MainWindow(QtGui.QMainWindow):
-
+    '''
+    Defining the main window of the program.
+    '''
     def __init__(self, parent=None):
         super(MainWindow, self).__init__(parent)
 
         # load the ui
         self.ui = PyQt4.uic.loadUi('ui/main.ui', self)
-
-        self.__doOpenPorts()
+        
+        # Call the funtion that opens the MIDI ports
+        self.doOpenPorts()
 
         # inizialize the dicts containing the definitions for the 3 effect dialog types
         self.fullEffects = {}
@@ -134,15 +121,15 @@ class MainWindow(QtGui.QMainWindow):
         self.compactEffectsIns = {}
 
         # init the menus
-        self.__doSetupMenus()
+        self.doSetupMenus()
 
         # init all the GUI elements
-        self.__doSetupGui()
+        self.doSetupGui()
 
         # init the levels
-        self.__setInitMixerLevels__()
+        self.setInitMixerLevels()
 
-    def __doSetupGui(self):
+    def doSetupGui(self):
         # TODO: Decide if 'changer' is useful and in case put it everwhere!
 
         # *************** MIC1 *********************
@@ -360,7 +347,7 @@ class MainWindow(QtGui.QMainWindow):
 
         self.SaxModeButton.clicked.connect(self.saxMode)
 
-    def __doOpenPorts(self):
+    def doOpenPorts(self):
 
         # Opening the MIDI ports
         midiDevs = actualMidiDevices()
@@ -373,7 +360,7 @@ class MainWindow(QtGui.QMainWindow):
             print('No ports! Bye')
             sys.exit()
 
-    def __doSetupMenus(self):
+    def doSetupMenus(self):
         # setup menus
         self.actionReset_Mixer.triggered.connect(self.resetMixer)
         self.actionQuit.triggered.connect(QtGui.qApp.quit)
@@ -609,7 +596,7 @@ class MainWindow(QtGui.QMainWindow):
 
         return value
 
-    def __setInitMixerLevels__(self):
+    def setInitMixerLevels(self):
         '''
         It works. It send SYSEX and reads answers. But there must me a better way to read and write.
         Actually there is, but I'm lazy.
@@ -837,7 +824,7 @@ class FullEffectsDialog(QtGui.QDialog):
     '''
     The full effect dialog.
     For every single effect selected, I should check if there are already instances for the effect. If not, generate it, if yes, use the old ones.
-    BUT after I clead the QTreeWidget the instances of the QTreeWidgetItems get deleted. There should be a better way.
+    BUT after I clear the QTreeWidget the instances of the QTreeWidgetItems get deleted. There should be a better way.
     To achieve this, sadly, we need to classify the items...
     '''
 
@@ -915,7 +902,6 @@ class CustomTreeItem(QtGui.QTreeWidgetItem):
     ************************************** TODO **********************************************
     set limits, mean value, default value and possibly also a better way to show the values...
     ******************************************************************************************
-    
     '''
 
     def __init__(self, parent, par):
@@ -949,55 +935,51 @@ class CustomTreeItem(QtGui.QTreeWidgetItem):
 
 def actualMidiDevices():
     '''
-    This should enumerate the devices to (later on) give then the possibility to choose one or guess the right one
-    Returns a dictionary with tuples like 
-    
-    midiDevs = { 0: (tuple), 1: (tuple), ... }
-    
-    where the tuple is in the format:
-    
-    ('ALSA', 'UA-100 MIDI 2', 0, 1, 0)
-    
+    This should enumerate the devices to (later on) guess the right one.  
     '''
 
     IODevs = mido.get_ioport_names()
     numIODevs = len(IODevs)
 
     if (numIODevs == 0):
-        logger.warning('***************  No midi device found - and we should be in REAL UA mode! Exiting. Bye!')
+        logger.warning('***************  No midi device found - check your connections! In the meanwhile, we leave. Bye!')
         sys.exit()
 
-    logger.debug('We have %s output devices: %s', numIODevs,  IODevs)
+    logger.info('It looks good: we have %s output devices: %s', numIODevs,  IODevs)
 
     # Initialize the device dictionary
-    # midiDevs = { 0: (tuple), 1: (tuple), ... }
+    # isn't it a useless snipplet????????
     midiDevs = {}
     for dev in range(0, numIODevs):
         midiDevs[dev] = IODevs[dev]
+    logger.info('iodevs: %s, mididevs: %s. If the two of them are identical, then remove the silly code above, please!', IODevs, midiDevs)
+    # TODO: Deninitely check this stuff.
 
     return midiDevs
 
 def rightMidiDevice(midiDevs):
     '''
     Guess the right device for sending Control Change and SysEx messages.
-    
-    I suppose it is HEAVY dependant on rtMidi and ALSA:
-    if *they* change something in the structure of the device info, we are lost!
-    
-    It scans the midiDevs (dictionary!) looking for something like 'UA-100 Control' with the output flag set to 1.
+    It scans the midiDevs (dictionary!) looking for something like 'UA-100 Control'.
     '''
     for i in range(0, len(midiDevs)):
         if ('UA-100 Control' in midiDevs[i]):
-            logger.debug('Found something! The controller is device %s aka %s', i, midiDevs[i][1])
+            logger.info("I suppose the UA-100 controller is device %s aka %s. Let's go on and hope I am right.", i, midiDevs[i][1])
             return int(i)
+        else:
+            logger.info("I'm not able to find any UA-100 controller. I give up. Check your connections and try again. Bye!")
+            sys.exit()
 
 def sysexRead(pmin, question = "unknown"):
+    """
+    This function is obsolete and will be deleted soon. The mido callback facility on the MIDI input device polls the
+    messages received and sorts them out. See getParsedValue function.
+    The receive() method actually hinderns the whole thingm blocking the program without raising any exception.
+    """
     answerMsg = pmin.receive()
     answerBytes = answerMsg.bytes()
     value = answerBytes[10]
     logger.debug('SysEx answer for question %s received: %s, aka %s. Vaule is: %s', question, answerMsg, answerBytes, value)
-    # need to parse answer again... 
-
     return value
 
 def send_RQ1(data, pmout):
@@ -1051,65 +1033,12 @@ def checksum(toChecksum):
     return list(checksum_list)
 
 if (__name__ == '__main__'):
-
     # brutal way to catch the CTRL+C signal if run in the console...
     signal.signal(signal.SIGINT, signal.SIG_DFL)
-    # **************************** MIDI PART: could it go somewhere else? **********************************************
-
-    # setting the backend to rtmidi and alsa - Actually it's not wise to do it so, but it's ok for now.
-
-    # *************************************************
-    # TODO: change it to be more general
-
-    # get the list of the Midi Devices according to rtMidi
-    #midiDevs = actualMidiDevices()
-
-    #logger.info('MIDI DEVICES FOUND: %s; they are: %s', len(midiDevs), midiDevs)
-
-    # guess the right midi device
-    #if (REAL_UA_MODE):
-    #    DEFAULT_UA100CONTROL = rightMidiDevice(midiDevs)
-    #else:
-    #    DEFAULT_UA100CONTROL = 1
-
-    #logger.debug('DEFAULT_UA100CONTROL = %s', midiDevs[DEFAULT_UA100CONTROL])
-
-    # *******************************************************************************************************************
 
     app = None
     if (not app):
         app = QtGui.QApplication([])
-
-    #dialog = MidiDevsDialog()
-    #dialog.show()
-
-    #if not dialog.exec_():
-        # We quit if the the selection dialog quits
-    #    logger.info('Quitting. Bye!')
-    #    sys.exit()
-
-    #if (REAL_UA_MODE):
-    #    logger.debug('UA100CONTROL = %s', midiDevs[UA100CONTROL])
-
-    #logger.debug('Opening device %s for input/ouput', midiDevs[UA100CONTROL])
-
-    # if (REAL_UA_MODE):
-    #     # Open device for output
-    #
-    #     logger.debug('Trying the Output...')
-    #
-    #     pmout = mido.open_output(midiDevs[UA100CONTROL])
-    #
-    #     logger.debug('...Done! Just opened %s for output.', midiDevs[UA100CONTROL])
-    #
-    #     # Open "the next" device for input
-    #
-    #     logger.debug('Trying the Input...')
-    #
-    #     pmin = mido.open_input(midiDevs[UA100CONTROL])
-    #
-    #     logger.debug('...Done! Just opened %s  for input', midiDevs[UA100CONTROL])
-
 
     window = MainWindow()
     window.show()
