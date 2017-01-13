@@ -85,8 +85,7 @@ class MidiDevsDialog(QtGui.QDialog):
         if (index == DEFAULT_UA100CONTROL):
             self.reccomendedLabel.setText('RECCOMENDED!\r\nYou don\'t really want to change it!')
             self.reccomendedLabel.setStyleSheet('color: red; font-style: bold')
-        
-        :
+
             self.reccomendedLabel.setText('')
 
     def setMidiDevice(self, index):
@@ -433,7 +432,8 @@ class MainWindow(QtGui.QMainWindow):
         p = mido.Parser()
         p.feed([CC_MIC1_CH, CC_MICLINESELECTOR_PAR, self.sender().property('state').toPyObject()])
         shortMsg = p.get_message()
-        logger.debug('Message to be sent %s', shortMsg)
+
+        logger.debug('Message to be sent for setInputMode %s', shortMsg)
         self.pmout.send(shortMsg)
         logger.debug('%s %s %s', CC_MIC1_CH, CC_MICLINESELECTOR_PAR, self.sender().property('state').toPyObject())
 
@@ -882,6 +882,7 @@ class FullEffectsDialog(QtGui.QDialog):
         for par in FULL_EFX_PARAMETERS[index + 1]:
             item = CustomTreeItem(self.uiEffectParameters, par)
 
+
     def sendEffect(self, value):
         '''
         We send the values set to the UA-100. The effects are only active when also the switch is checked.
@@ -894,6 +895,7 @@ class FullEffectsDialog(QtGui.QDialog):
         # if in real mode, actually send the message
         send_DT1([0x00, 0x40] + self.SenderHex + self.sender().property('HEX').toPyObject() + valueToList, self.pmout)
 
+
 class CustomTreeItem(QtGui.QTreeWidgetItem):
     '''
     Just a dirty way to populate the QTreeWidget with custom items containing each a QSpinBox.
@@ -903,6 +905,7 @@ class CustomTreeItem(QtGui.QTreeWidgetItem):
     set limits, mean value, default value and possibly also a better way to show the values...
     ******************************************************************************************
     '''
+
 
     def __init__(self, parent, par):
         '''
@@ -930,45 +933,38 @@ class CustomTreeItem(QtGui.QTreeWidgetItem):
         self.spinBox.valueChanged.connect(parent.parent().sendEffect)
         self.spinBox.setValue(par[4])
 
+
     def setActualValue(self, value):
         self.setText(2, self.par[2][value])
 
+
 def actualMidiDevices():
-    '''
-    This should enumerate the devices to (later on) guess the right one.  
-    '''
+    """
+    This should enumerate the devices to (later on) guess the right one.
+    """
 
-    IODevs = mido.get_ioport_names()
-    numIODevs = len(IODevs)
-
-    if (numIODevs == 0):
+    IOMidiDevs = mido.get_ioport_names()
+    if (len(IOMidiDevs) == 0):
         logger.warning('***************  No midi device found - check your connections! In the meanwhile, we leave. Bye!')
         sys.exit()
-
     logger.info('It looks good: we have %s output devices: %s', numIODevs,  IODevs)
+    #return midiDevs
+    return IOMidiDevs
 
-    # Initialize the device dictionary
-    # isn't it a useless snipplet????????
-    midiDevs = {}
-    for dev in range(0, numIODevs):
-        midiDevs[dev] = IODevs[dev]
-    logger.info('iodevs: %s, mididevs: %s. If the two of them are identical, then remove the silly code above, please!', IODevs, midiDevs)
-    # TODO: Deninitely check this stuff.
-
-    return midiDevs
 
 def rightMidiDevice(midiDevs):
-    '''
+    """
     Guess the right device for sending Control Change and SysEx messages.
     It scans the midiDevs (dictionary!) looking for something like 'UA-100 Control'.
-    '''
+    """
     for i in range(0, len(midiDevs)):
         if ('UA-100 Control' in midiDevs[i]):
-            logger.info("I suppose the UA-100 controller is device %s aka %s. Let's go on and hope I am right.", i, midiDevs[i][1])
+            logger.info("I suppose the UA-100 controller is device %s aka %s. Let's go on and hope I am right.", i, midiDevs[i])
             return int(i)
         else:
             logger.info("I'm not able to find any UA-100 controller. I give up. Check your connections and try again. Bye!")
             sys.exit()
+
 
 def sysexRead(pmin, question = "unknown"):
     """
@@ -981,6 +977,7 @@ def sysexRead(pmin, question = "unknown"):
     value = answerBytes[10]
     logger.debug('SysEx answer for question %s received: %s, aka %s. Vaule is: %s', question, answerMsg, answerBytes, value)
     return value
+
 
 def send_RQ1(data, pmout):
     '''
@@ -1007,6 +1004,7 @@ def send_RQ1(data, pmout):
     logger.debug('Message to be sent: %s', sysEx_msg)
     pmout.send(sysEx_msg)
 
+
 def send_DT1(data, pmout):
     checksum_result = checksum(data)
     message = DT1_STATUS \
@@ -1017,11 +1015,13 @@ def send_DT1(data, pmout):
               + EOX
     logger.debug('DT1 Message: %s', np.array(message))
 
+
     p = mido.Parser()
     p.feed(message)
     sysEx_msg = p.get_message()
     logger.debug('Message to be sent: %s', sysEx_msg)
     pmout.send(sysEx_msg)
+
 
 def checksum(toChecksum):
     '''
@@ -1031,6 +1031,7 @@ def checksum(toChecksum):
     checksum_value = (128 - (sum(toChecksum) % 128))
     checksum_list = [checksum_value]
     return list(checksum_list)
+
 
 if (__name__ == '__main__'):
     # brutal way to catch the CTRL+C signal if run in the console...
