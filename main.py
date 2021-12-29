@@ -20,7 +20,7 @@ __email__ = 'alberto.azzalini@gmail.com'
 import logging
 # configuring the logger so that it does not log anything coming from imported modules
 logger = logging.getLogger(__name__)
-logger.setLevel(logging.INFO)
+logger.setLevel(logging.DEBUG)
 handler = logging.StreamHandler()
 formatter = logging.Formatter(
         '%(name)-12s %(levelname)-8s %(message)s')
@@ -39,7 +39,7 @@ logger.info('Starting the ua100mix')
 #       The UA-100 discovery routine is based on WHAT? - ****
 # THIS NEED REVISION. Is it any useful?
 
-REAL_UA_MODE = 1
+REAL_UA_MODE = 0
 logger.debug('Setting REAL_UA_MODE to %s', REAL_UA_MODE )
 
 logger.info('Importing some required modules')
@@ -52,8 +52,8 @@ try:
 except ImportError:
     logger.warning('*** Warning *** mido and/or rtmidi not found - Switching to testing mode (REAL_UA_MODE = 0) ***')
     REAL_UA_MODE = 0
-import PyQt4.uic
-from PyQt4 import QtGui
+import PyQt5.uic
+from PyQt5 import QtWidgets
 # from PyQt4 import QtCore
 # from types import MethodType
 import signal
@@ -65,14 +65,14 @@ from res.parameters import *
 
 np.set_printoptions(formatter={'int': hex})
 
-class MidiDevsDialog(QtGui.QDialog):
+class MidiDevsDialog(QtWidgets.QDialog):
     '''
     First of all, we ask for the right device to use. In fact, we know which one... and thus, we can easily guess.
     '''
     def __init__(self, parent=None):
         super(MidiDevsDialog, self).__init__(parent)
 
-        self.ui = PyQt4.uic.loadUi('ui/device_sel.ui', self)
+        self.ui = PyQt5.uic.loadUi('ui/device_sel.ui', self)
 
         logger.debug('midiDevs= %s', midiDevs)
         for i in range(0, len(midiDevs)):
@@ -118,13 +118,13 @@ class MidiDevsDialog(QtGui.QDialog):
             logger.debug('UA100CONTROL is not yet set!')
 
 
-class MainWindow(QtGui.QMainWindow):
+class MainWindow(QtWidgets.QMainWindow):
 
     def __init__(self, parent=None):
         super(MainWindow, self).__init__(parent)
 
         # load the ui
-        self.ui = PyQt4.uic.loadUi('ui/main.ui', self)
+        self.ui = PyQt5.uic.loadUi('ui/main.ui', self)
 
         # inizialize the dicts containing the definitions for the 3 effect dialog types
         self.fullEffects = {}
@@ -133,7 +133,7 @@ class MainWindow(QtGui.QMainWindow):
 
         # setup menus
         self.actionReset_Mixer.triggered.connect(self.resetMixer)
-        self.actionQuit.triggered.connect(QtGui.qApp.quit)
+        self.actionQuit.triggered.connect(QtWidgets.qApp.quit)
 
         # TODO: Decide if 'changer' is useful and in case put it everwhere!
 
@@ -514,7 +514,7 @@ class MainWindow(QtGui.QMainWindow):
                 pmout.send(shortMsg)
 
             for soloer in soloers:
-                soloingObj = self.findChild(QtGui.QGroupBox, soloer)
+                soloingObj = self.findChild(QtWidgets.QGroupBox, soloer)
 
                 if (REAL_UA_MODE):
                     p = mido.Parser()
@@ -525,17 +525,17 @@ class MainWindow(QtGui.QMainWindow):
 
                 soloingButtonStr = soloer + 'Solo'
                 nomuteButtonStr = soloer + 'Mute'
-                soloingButton = soloingObj.findChild(QtGui.QPushButton, soloingButtonStr)
-                nomuteButton = soloingObj.findChild(QtGui.QPushButton, nomuteButtonStr)
+                soloingButton = soloingObj.findChild(QtWidgets.QPushButton, soloingButtonStr)
+                nomuteButton = soloingObj.findChild(QtWidgets.QPushButton, nomuteButtonStr)
                 soloingButton.setChecked(False)
                 nomuteButton.hide()
                 # review those fucking debug messages. They are just fucking messed up!
                 logging.debug('desoloing: %s', soloingObj.objectName())
         else:
             for soloer in soloers:
-                soloingObj = self.findChild(QtGui.QGroupBox, soloer)
+                soloingObj = self.findChild(QtWidgets.QGroupBox, soloer)
                 remuteButtonStr = soloer + 'Mute'
-                remuteButton = soloingObj.findChild(QtGui.QPushButton, remuteButtonStr)
+                remuteButton = soloingObj.findChild(QtWidgets.QPushButton, remuteButtonStr)
                 remuteButton.show()
 
             if (REAL_UA_MODE):
@@ -607,13 +607,13 @@ class MainWindow(QtGui.QMainWindow):
         self.Wave2Fader.setProperty("value", wave2Level)
 
 
-class CompactEffectsInsDialog(QtGui.QDialog):
+class CompactEffectsInsDialog(QtWidgets.QDialog):
     def __init__(self, parent=None):
         super(CompactEffectsInsDialog, self).__init__(parent)
         # here is where I store the channel choosen fo the effect (mic1, mic2, wave1, wave2, sys1, sys2)
         self.SenderHex = parent.sender().property('HEX').toPyObject()
         # load the ui...
-        self.ui = PyQt4.uic.loadUi('ui/compacteffectsinsdialog.ui', self)
+        self.ui = PyQt5.uic.loadUi('ui/compacteffectsinsdialog.ui', self)
 
         # populate the effect groups
 
@@ -717,13 +717,13 @@ class CompactEffectsInsDialog(QtGui.QDialog):
         send_DT1([0x00, 0x40, 0x40] + self.SenderHex + checkedList)
 
 
-class CompactEffectsSysDialog(QtGui.QDialog):
+class CompactEffectsSysDialog(QtWidgets.QDialog):
     def __init__(self, parent=None):
         super(CompactEffectsSysDialog, self).__init__(parent)
         # here is where I store the channel choosen fo the effect (mic1, mic2, wave1, wave2, sys1, sys2)
         self.SenderHex = parent.sender().property('HEX').toPyObject()
         # load the ui...
-        self.ui = PyQt4.uic.loadUi('ui/compacteffectssysdialog.ui', self)
+        self.ui = PyQt5.uic.loadUi('ui/compacteffectssysdialog.ui', self)
         if self.SenderHex == [0x05]:
             self.setWindowTitle('System 1 - ' + self.windowTitle())
             self.uiEffectTypeList.addItem(COMPACT_SYS1_EFX_TYPE[1][0])
@@ -783,7 +783,7 @@ class CompactEffectsSysDialog(QtGui.QDialog):
         send_DT1([0x00, 0x40] + self.SenderHex + self.sender().property('HEX').toPyObject() + valueToList)
 
 
-class FullEffectsDialog(QtGui.QDialog):
+class FullEffectsDialog(QtWidgets.QDialog):
     '''
     The full effect dialog.
     For every single effect selected, I should check if there are already instances for the effect. If not, generate it, if yes, use the old ones.
@@ -797,9 +797,9 @@ class FullEffectsDialog(QtGui.QDialog):
         # here is where I store the channel choosen fo the effect (mic1, mic2, wave1, wave2, sys1, sys2)
         self.SenderHex = parent.sender().property('HEX').toPyObject()
         # QLineEditStr = 'uiEffectName' + self.sender().text()
-        # self.EffectNameTextBox = self.parent().findChild(QtGui.QLineEdit, QLineEditStr)
+        # self.EffectNameTextBox = self.parent().findChild(QtWidgets.QLineEdit, QLineEditStr)
         # load the ui...
-        self.ui = PyQt4.uic.loadUi('ui/fulleffectsdialog.ui', self)
+        self.ui = PyQt5.uic.loadUi('ui/fulleffectsdialog.ui', self)
 
         # look for the FULL_EFX_TYPEs and populate the combo box (drop down menu)
         for key in FULL_EFX_TYPE.keys():
@@ -854,7 +854,7 @@ class FullEffectsDialog(QtGui.QDialog):
         send_DT1([0x00, 0x40] + self.SenderHex + self.sender().property('HEX').toPyObject() + valueToList)
 
 
-class CustomTreeItem(QtGui.QTreeWidgetItem):
+class CustomTreeItem(QtWidgets.QTreeWidgetItem):
     '''
     Just a dirty way to populate the QTreeWidget with custom items containing each a QSpinBox.
     
@@ -871,11 +871,11 @@ class CustomTreeItem(QtGui.QTreeWidgetItem):
         name   (str)         : Item's name. just an example.
         '''
 
-        ## Init super class ( QtGui.QTreeWidgetItem )
+        ## Init super class ( QtWidgets.QTreeWidgetItem )
         super(CustomTreeItem, self).__init__(parent)
         self.par = par
         self.setText(0, par[0])
-        self.spinBox = QtGui.QSpinBox(parent)
+        self.spinBox = QtWidgets.QSpinBox(parent)
         self.spinBox.setProperty('HEX', par[3])
 
         self.spinBox.setValue(-1)
@@ -919,13 +919,16 @@ def actualMidiDevices():
         logger.debug('We have %s output devices: %s', numIODevs,  IODevs)
     else:
         numIODevs = 1
-        IODevs = {u'Dummy midi device 0:0'}
+        IODevs = [u'Dummy midi device 0:0']
+        logger.debug('In REAL_UA_MODE = 0. IODevs is: %s', IODevs)
 
     # Initialize the device dictionary
     # midiDevs = { 0: (tuple), 1: (tuple), ... }
     midiDevs = {}
     for dev in range(0, numIODevs):
         midiDevs[dev] = IODevs[dev]
+    logger.debug('In REAL_UA_MODE = %s. midiDevs is: %s', REAL_UA_MODE, midiDevs)
+    
 
     return midiDevs
 
@@ -1033,7 +1036,7 @@ if (__name__ == '__main__'):
     if (REAL_UA_MODE):
         DEFAULT_UA100CONTROL = rightMidiDevice(midiDevs)
     else:
-        DEFAULT_UA100CONTROL = 1
+        DEFAULT_UA100CONTROL = 0
 
     logger.debug('DEFAULT_UA100CONTROL = %s', midiDevs[DEFAULT_UA100CONTROL])
 
@@ -1041,7 +1044,7 @@ if (__name__ == '__main__'):
 
     app = None
     if (not app):
-        app = QtGui.QApplication([])
+        app = QtWidgets.QApplication([])
 
     dialog = MidiDevsDialog()
     dialog.show()

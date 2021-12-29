@@ -4,7 +4,7 @@
 # NOTE: this file will be imported as "from ... import *"
 # I read it's acceptable to do so for constants.
 
-import tools
+import res.tools
 
 CC_0127_DEFAULT = 64
 CC_PAN_MIDDLE = 64
